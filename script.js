@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Flag to track if the popup is actively showing
     let isPopupVisible = false;
-    let loadingInterval = null; // Variable to hold interval ID
+    let loadingInterval = null;
 
     function showPopup() {
         isPopupVisible = true;
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 clearInterval(loadingInterval);
                 blackout.style.display = 'block';
                 virusMessage.classList.remove("hidden");
-                closeButton.style.display = "block"; // Show close button
+                closeButton.style.display = "block"; 
             }
         }, 500);
     }
@@ -62,8 +62,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function to close the popup and hide the blackout overlay
     function closePopup() {
-        isPopupVisible = false; // Set flag to false
-        clearInterval(loadingInterval); // Stop loading interval
+        isPopupVisible = false; 
+        clearInterval(loadingInterval); 
         popup.style.display = "none";
         blackout.style.display = 'none';
         alertSound.pause();
