@@ -354,7 +354,22 @@ body {
 
                     if (data.status === 'ok') {
                         data.items.forEach(item => {
-    const snippet = item.description.length > 400 ? item.description.substring(0, 400) + '...' : item.description;
+    // Create a temporary element to parse the description and remove images
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = item.description;
+
+    // Remove all image tags from the description
+    const images = tempDiv.getElementsByTagName('img');
+    while (images.length > 0) {
+        images[0].parentNode.removeChild(images[0]);
+    }
+
+    // Get the cleaned description
+    const cleanedDescription = tempDiv.innerHTML;
+
+    // Truncate the description if it's too long
+    const snippet = cleanedDescription.length > 400 ? cleanedDescription.substring(0, 400) + '...' : cleanedDescription;
+
     const feedItem = document.createElement('div');
     feedItem.className = 'feed-item';
     feedItem.innerHTML = `
