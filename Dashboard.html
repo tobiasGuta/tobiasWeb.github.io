@@ -26,8 +26,8 @@
         }
 
         header {
-            width: 10000%;
-            padding: 0.1px;
+            width: 100%; /* Adjusted header width */
+            padding: 10px; /* Increased padding for better spacing */
             text-align: center;
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
         }
@@ -51,14 +51,14 @@
             flex-wrap: wrap;
             font-family: 'Press Start 2P', cursive;
             width: 100%;
-            padding: 0px 0;
+            padding: 10px 0; /* Adjusted padding for nav */
         }
 
         nav a {
             margin: 5px;
             color: white;
             text-decoration: none;
-            padding: 10px;
+            padding: 10px 15px; /* Adjusted padding for better touch targets */
             border: 1px solid #00ff00;
             border-radius: 5px;
             transition: background 0.3s;
@@ -70,13 +70,13 @@
         }
 
         .feed-container {
-    margin-top: 10px;
-    width: 95vw; /* Full width of the viewport */
-    background-color: transparent;
-    padding: 0;
-    overflow-y: auto;
-    max-height: 70vh; /* Keeps height limited for scrolling */
-}
+            margin-top: 10px;
+            width: 95vw; /* Full width of the viewport */
+            background-color: transparent;
+            padding: 0;
+            overflow-y: auto;
+            max-height: 70vh; /* Keeps height limited for scrolling */
+        }
 
         .feed-item {
             display: flex;
@@ -148,7 +148,7 @@
             }
 
             nav a {
-                padding: 8px; /* Smaller padding for mobile */
+                padding: 8px 10px; /* Smaller padding for mobile */
                 font-size: 0.9em; /* Slightly smaller font */
             }
 
@@ -185,8 +185,6 @@
             <span class="emoji">🛡️</span>
         </h1>
     </header>
-    
-    
 
     <nav>
         <a href="index.html"><i class="fas fa-home"></i> Back</a>
@@ -376,41 +374,29 @@
 
                                 const footerDiv = document.createElement('div');
                                 footerDiv.className = 'footer';
-                                footerDiv.textContent = `Posted on ${new Date(feed.pubDate).toLocaleDateString()}`;
+                                const pubDate = new Date(feed.pubDate).toLocaleString();
+                                footerDiv.innerHTML = `<strong>Published:</strong> ${pubDate} <a href="${feed.link}" target="_blank">Read more</a>`;
 
-                                const link = document.createElement('a');
-                                link.href = feed.link;
-                                link.textContent = 'Read more';
-                                link.target = '_blank';
-
-                                // Append elements to contentDiv
+                                // Append elements to feed item
                                 contentDiv.appendChild(title);
                                 contentDiv.appendChild(badge);
                                 contentDiv.appendChild(description);
-                                contentDiv.appendChild(footerDiv);
-                                contentDiv.appendChild(link);
-
-                                // Append elements to feedItem
                                 feedItem.appendChild(profileImg);
                                 feedItem.appendChild(contentDiv);
+                                feedItem.appendChild(footerDiv);
 
-                                // Append feedItem to feedContainer
+                                // Append the feed item to the container
                                 feedContainer.appendChild(feedItem);
                             }
                         });
                     }
                 } catch (error) {
-                    console.error('Error fetching feed:', error);
+                    console.error('Error fetching feeds:', error);
                 }
             }
         }
 
-        // Load feeds on page load
-        window.onload = fetchFeeds;
-
-        // Refresh feeds every 10 minutes (600,000 milliseconds)
-        setInterval(fetchFeeds, 600000);
+        fetchFeeds(); // Initial fetch on load
     </script>
 </body>
-
 </html>
