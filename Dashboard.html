@@ -15,7 +15,7 @@
     <style>
 
 html, body {
-    height: 100%; /* Make sure the body and html take full height */
+    height: 100%;
     margin: 0;
 }
 
@@ -28,68 +28,54 @@ body {
 }
 
 header {
-    width: 100%; /* Keep the header full width */
+    width: 100%;
     padding: 20px;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Deeper shadow */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 header h1 {
     margin: 0;
     font-size: 3em;
-    color: #00ff00; /* Neon green color for hacker-style */
-    font-family: 'Courier New', Courier, monospace; /* Monospace font */
-    text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00; /* Glowing text effect */
-    display: inline; /* Keep the title inline with emojis */
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
 }
 
 header .emoji {
     font-size: 5rem;
-    color: #ff3e3e; /* Red color for the emojis */
-    text-shadow: 0 0 5px #ff3e3e, 0 0 10px #ff3e3e; /* Glowing red effect */
-    display: inline; /* Keep emojis inline with the title */
-    vertical-align: middle; /* Align emojis vertically with the text */
-}
-
-header .emoji:first-child {
-    margin-right: 10px; /* Space between the left emoji and the title */
-}
-
-header .emoji:last-child {
-    margin-left: 10px; /* Space between the title and the right emoji */
+    color: #ff3e3e;
+    text-shadow: 0 0 5px #ff3e3e, 0 0 10px #ff3e3e;
+    display: inline;
+    vertical-align: middle;
 }
 
 nav {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    font-family: 'Press Start 2P', cursive; /* Apply the hacking theme font */
+    font-family: 'Press Start 2P', cursive;
 }
 
 nav a {
-    margin: 0 0px;
+    margin: 0 5px;
     color: white;
     text-decoration: none;
-    padding: 20px;
-}
-
-nav a:hover {
-    color: #2AF7A5;
+    padding: 10px 20px;
 }
 
 .feed-container {
     margin-top: 10px;
-    width: 95%; /* Full width */
-    max-width: none; /* Allow it to stretch fully */
-    background-color: transparent; /* Optional: keep it transparent */
-    padding: 0; /* Optional: no padding */
-    overflow-y: auto; /* Scrollable if content overflows */
-    max-height: 73vh; /* Keeps height limited for scrolling */
+    width: 95%;
+    max-width: none;
+    padding: 0;
+    overflow-y: auto;
+    max-height: 73vh;
 }
-
 
 .feed-item {
     display: flex;
+    flex-direction: row; /* Ensure items are in a row */
     align-items: flex-start;
     background-color: #1e1e2f;
     padding: 20px;
@@ -98,6 +84,7 @@ nav a:hover {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
     margin-bottom: 20px;
     color: #e0e0e0;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
 
 .feed-item img {
@@ -109,32 +96,6 @@ nav a:hover {
 
 .feed-item .content {
     flex: 1;
-}
-
-.feed-item .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.feed-item .header h2 {
-    margin: 0;
-    font-size: 1.5em;
-    color: #ff6f61;
-}
-
-.badge {
-    background-color: #6b42f4;
-    padding: 4px 8px;
-    border-radius: 5px;
-    font-size: 0.9em;
-    color: #fff;
-    margin-left: 10px;
-}
-
-.feed-item p {
-    margin: 10px 0;
-    font-size: 1em;
 }
 
 .footer {
@@ -154,6 +115,39 @@ nav a:hover {
 .feed-item a:hover {
     text-decoration: underline;
 }
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2em; /* Decrease font size for smaller screens */
+    }
+
+    header .emoji {
+        font-size: 4rem; /* Adjust emoji size */
+    }
+
+    nav a {
+        padding: 10px; /* Reduce padding for nav links */
+    }
+
+    .feed-item {
+        flex-direction: column; /* Stack items in column on small screens */
+        align-items: flex-start; /* Align items to the left */
+    }
+
+    .feed-item img {
+        margin-bottom: 10px; /* Add space below the image */
+    }
+
+    .feed-item .content {
+        text-align: left; /* Align text to left */
+    }
+
+    .footer {
+        font-size: 0.8em; /* Smaller footer text */
+    }
+}
+
 
 
     </style>
