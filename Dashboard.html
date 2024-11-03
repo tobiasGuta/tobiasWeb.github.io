@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <title>🛡️💀 Cybersecurity Threat Intelligence Dashboard 💀🛡️</title>
     <meta name="author" content="Gerard King">
@@ -13,17 +13,17 @@
     <meta name="website" content="www.gerardking.dev">
     <meta name="donate" content="Ethereum Address: 0xc637a25e49bb3814f26952fbe81ff18cf81aa1da">
     <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            font-family: 'Courier New', Courier, monospace;
-            background-color: #1c1c1c;
-            color: #e0e0e0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 0 10px;
-        }
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #1c1c1c;
+    color: #e0e0e0;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
 
         header {
             width: 100%;
@@ -34,13 +34,13 @@
 
         header h1 {
             margin: 0;
-            font-size: 2.5em;
+            font-size: 2em; /* Adjusted font size */
             color: #00ff00;
             text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
         }
 
         header .emoji {
-            font-size: 3rem;
+            font-size: 2em; /* Adjusted emoji size */
             color: #ff3e3e;
             text-shadow: 0 0 5px #ff3e3e, 0 0 10px #ff3e3e;
         }
@@ -55,7 +55,7 @@
         }
 
         nav a {
-            margin: 20px;
+            margin: 5px;
             color: white;
             text-decoration: none;
             padding: 10px 15px;
@@ -70,13 +70,13 @@
         }
 
         .feed-container {
-            margin-top: 30px;
-            width: 95vw;
+            margin-top: 10px;
+            width: 100%;
             background-color: transparent;
             padding: 0;
-            overflow-y: auto;
+            overflow-y: auto; /* Enable vertical scrolling */
             max-height: 70vh;
-            
+            box-sizing: border-box;
         }
 
         .feed-item {
@@ -89,6 +89,8 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
             margin-bottom: 20px;
             color: #e0e0e0;
+            width: 100%; /* Ensure the feed items take full width */
+            box-sizing: border-box; /* Include padding in width */
         }
 
         .feed-item img {
@@ -145,16 +147,19 @@
         /* Media Queries for Responsiveness */
         @media (max-width: 600px) {
             header h1 {
-                font-size: 2em;
+                font-size: 1.5em; /* Further reduced font size */
+            }
+
+            header .emoji {
+                font-size: 1.5em; /* Further reduced emoji size */
             }
 
             nav a {
                 padding: 8px 10px;
-                font-size: 0.9em;
+                font-size: 0.8em;
             }
 
             .feed-container {
-                width: 100%;
                 padding: 0 5px;
             }
 
@@ -236,17 +241,8 @@
             "http://blogs.technet.com/mmpc/rss.xml",
             "http://blogs.technet.com/msrc/rss.xml",
             "http://cybersecuritynews.es/feed/",
-            "http://cyberseguridad.net/index.php?format=feed&type=rss",
-            "http://feeds.feedblitz.com/alienvault-blogs&x=1",
-            "http://feeds.feedblitz.com/alienvault-security-essentials",
-            "http://feeds.feedburner.com/andreafortuna",
-            "http://feeds.feedburner.com/darknethackers",
-            "http://feeds.feedburner.com/dragonjar/pKru",
-            "http://feeds.feedburner.com/FluProject",
-            "http://feeds.feedburner.com/PentestTools",
-            "http://feeds.trendmicro.com/TrendMicroResearch",
-            "http://feeds.trendmicro.com/TrendMicroSecurityAdvisories",
-            "http://iscxml.sans.org/rssfeed.xml",
+            "http://threatpost.com/feed/",
+            "http://feeds.feedburner.com/ThreatPost",
             "http://www.securityfocus.com/rss",
             "http://www.threathunters.com/feed/",
             "http://www.weforum.org/agenda/2020/12/cybersecurity-tech-feed",
@@ -286,11 +282,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             fetchFeeds();
         });
-
-        // Optional: You can add a resize event listener to adjust styles on window resize
-        window.addEventListener('resize', () => {
-            // Here you can add any adjustments if needed for different screen sizes
-        });
     </script>
 </body>
+
 </html>
