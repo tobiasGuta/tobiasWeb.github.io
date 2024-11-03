@@ -13,22 +13,24 @@
     <meta name="website" content="www.gerardking.dev">
     <meta name="donate" content="Ethereum Address: 0xc637a25e49bb3814f26952fbe81ff18cf81aa1da">
     <style>
-body {
-    font-family: Arial, sans-serif;
+
+html, body {
+    height: 100%; /* Make sure the body and html take full height */
     margin: 0;
-    padding: 0;
-    background-color: #1c1c1c;
-    color: #e0e0e0;
+}
+
+body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #1c1c1c;
+    color: #e0e0e0;
 }
 
 header {
-    background-color: #1c1c1c; /* Dark background */
+    width: 100%; /* Keep the header full width */
     padding: 20px;
     text-align: center;
-    width: 100%;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Deeper shadow */
 }
 
@@ -65,7 +67,7 @@ nav {
 }
 
 nav a {
-    margin: 0 15px;
+    margin: 0 0px;
     color: white;
     text-decoration: none;
     padding: 20px;
@@ -75,16 +77,16 @@ nav a:hover {
     color: #2AF7A5;
 }
 
-
 .feed-container {
-    margin-top: 20px;
-    width: 90%;
-    max-width: 1200px;
-    background-color: transparent; /* Remove the background from the container */
-    padding: 0; /* Remove padding to let individual feed items handle it */
-    overflow-y: auto;
-    max-height: 80vh;
+    margin-top: 10px;
+    width: 95%; /* Full width */
+    max-width: none; /* Allow it to stretch fully */
+    background-color: transparent; /* Optional: keep it transparent */
+    padding: 0; /* Optional: no padding */
+    overflow-y: auto; /* Scrollable if content overflows */
+    max-height: 73vh; /* Keeps height limited for scrolling */
 }
+
 
 .feed-item {
     display: flex;
