@@ -13,171 +13,193 @@
     <meta name="website" content="www.gerardking.dev">
     <meta name="donate" content="Ethereum Address: 0xc637a25e49bb3814f26952fbe81ff18cf81aa1da">
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #1c1c1c;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 10px;
+        }
 
-html, body {
-    height: 100%; /* Make sure the body and html take full height */
-    margin: 0;
-}
+        header {
+            width: 10000%;
+            padding: 0.1px;
+            text-align: center;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+        }
 
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #1c1c1c;
-    color: #e0e0e0;
-}
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
+        }
 
-header {
-    width: 100%; /* Keep the header full width */
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Deeper shadow */
-}
+        header .emoji {
+            font-size: 3rem;
+            color: #ff3e3e;
+            text-shadow: 0 0 5px #ff3e3e, 0 0 10px #ff3e3e;
+        }
 
-header h1 {
-    margin: 0;
-    font-size: 3em;
-    color: #00ff00; /* Neon green color for hacker-style */
-    font-family: 'Courier New', Courier, monospace; /* Monospace font */
-    text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00; /* Glowing text effect */
-    display: inline; /* Keep the title inline with emojis */
-}
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            font-family: 'Press Start 2P', cursive;
+            width: 100%;
+            padding: 0px 0;
+        }
 
-header .emoji {
-    font-size: 5rem;
-    color: #ff3e3e; /* Red color for the emojis */
-    text-shadow: 0 0 5px #ff3e3e, 0 0 10px #ff3e3e; /* Glowing red effect */
-    display: inline; /* Keep emojis inline with the title */
-    vertical-align: middle; /* Align emojis vertically with the text */
-}
+        nav a {
+            margin: 5px;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
 
-header .emoji:first-child {
-    margin-right: 10px; /* Space between the left emoji and the title */
-}
+        nav a:hover {
+            background: #00ff00;
+            color: #1c1c1c;
+        }
 
-header .emoji:last-child {
-    margin-left: 10px; /* Space between the title and the right emoji */
-}
-
-nav {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    font-family: 'Press Start 2P', cursive; /* Apply the hacking theme font */
-}
-
-nav a {
-    margin: 0 0px;
-    color: white;
-    text-decoration: none;
-    padding: 20px;
-}
-
-nav a:hover {
-    color: #2AF7A5;
-}
-
-.feed-container {
+        .feed-container {
     margin-top: 10px;
-    width: 95%; /* Full width */
-    max-width: none; /* Allow it to stretch fully */
-    background-color: transparent; /* Optional: keep it transparent */
-    padding: 0; /* Optional: no padding */
-    overflow-y: auto; /* Scrollable if content overflows */
-    max-height: 73vh; /* Keeps height limited for scrolling */
+    width: 95vw; /* Full width of the viewport */
+    background-color: transparent;
+    padding: 0;
+    overflow-y: auto;
+    max-height: 70vh; /* Keeps height limited for scrolling */
 }
 
+        .feed-item {
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            background-color: #1e1e2f;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            color: #e0e0e0;
+        }
 
-.feed-item {
-    display: flex;
-    align-items: flex-start;
-    background-color: #1e1e2f;
-    padding: 20px;
-    border-radius: 8px;
-    border: 1px solid #444;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-    margin-bottom: 20px;
-    color: #e0e0e0;
-}
+        .feed-item img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px; /* Space below the image */
+        }
 
-.feed-item img {
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    margin-right: 15px;
-}
+        .feed-item .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.feed-item .content {
-    flex: 1;
-}
+        .feed-item .header h2 {
+            margin: 0;
+            font-size: 1.2em; /* Responsive font size */
+            color: #ff6f61;
+        }
 
-.feed-item .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        .badge {
+            background-color: #6b42f4;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            color: #fff;
+            margin-left: 10px;
+        }
 
-.feed-item .header h2 {
-    margin: 0;
-    font-size: 1.5em;
-    color: #ff6f61;
-}
+        .feed-item p {
+            margin: 10px 0;
+            font-size: 0.9em; /* Responsive font size */
+        }
 
-.badge {
-    background-color: #6b42f4;
-    padding: 4px 8px;
-    border-radius: 5px;
-    font-size: 0.9em;
-    color: #fff;
-    margin-left: 10px;
-}
+        .footer {
+            font-size: 0.8em; /* Responsive font size */
+            color: #888;
+            margin-top: 10px;
+        }
 
-.feed-item p {
-    margin: 10px 0;
-    font-size: 1em;
-}
+        .feed-item a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #61dafb;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-.footer {
-    font-size: 0.9em;
-    color: #888;
-    margin-top: 10px;
-}
+        .feed-item a:hover {
+            text-decoration: underline;
+        }
 
-.feed-item a {
-    display: inline-block;
-    margin-top: 10px;
-    color: #61dafb;
-    text-decoration: none;
-    font-weight: bold;
-}
+        /* Media Queries for Responsiveness */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2em; /* Smaller font size for mobile */
+            }
 
-.feed-item a:hover {
-    text-decoration: underline;
-}
+            nav a {
+                padding: 8px; /* Smaller padding for mobile */
+                font-size: 0.9em; /* Slightly smaller font */
+            }
 
+            .feed-container {
+                width: 100%;
+                padding: 0 5px; /* Padding adjustments */
+            }
 
+            .feed-item {
+                padding: 10px; /* Smaller padding for feed items */
+            }
+
+            .feed-item img {
+                width: 40px; /* Smaller profile image */
+                height: 40px;
+            }
+
+            .feed-item .header h2 {
+                font-size: 1em; /* Smaller title font */
+            }
+
+            .footer {
+                font-size: 0.7em; /* Smaller footer font */
+            }
+        }
     </style>
 </head>
 
 <body>
     <header>
-        <div class="emoji">💀🛡</div>
-        <h1>Cybeseurity Threat Intelligence Dashboard</h1>
-        <div class="emoji">💀🛡</div>
+        <h1>
+            <span class="emoji">💀</span>
+            Cybersecurity Threat Intelligence Dashboard 
+            <span class="emoji">🛡️</span>
+        </h1>
     </header>
+    
+    
 
     <nav>
         <a href="index.html"><i class="fas fa-home"></i> Back</a>
     </nav>
-    
-   <div class="feed-container" id="feedContainer">
+
+    <div class="feed-container" id="feedContainer">
         <!-- RSS feed content will be dynamically loaded here -->
     </div>
 
     <script>
         const feedContainer = document.getElementById('feedContainer');
         const rssFeeds = [
-            "https://www.us-cert.gov/ncas/alerts.xml",
+        "https://www.us-cert.gov/ncas/alerts.xml",
             "https://www.bleepingcomputer.com/feed/",
             "https://threatpost.com/feed/",
             "https://www.darkreading.com/rss.xml",
@@ -318,74 +340,73 @@ nav a:hover {
         const proxyUrl = "https://api.rss2json.com/v1/api.json?rss_url=";
 
         async function fetchFeeds() {
-    feedContainer.innerHTML = ''; // Clear container before loading new content
-    const seenTitles = new Set(); // Set to track unique titles
+            feedContainer.innerHTML = ''; // Clear container before loading new content
+            const seenTitles = new Set(); // Set to track unique titles
 
-    for (let feedUrl of rssFeeds) {
-        try {
-            const response = await fetch(proxyUrl + encodeURIComponent(feedUrl));
-            const data = await response.json();
+            for (let feedUrl of rssFeeds) {
+                try {
+                    const response = await fetch(proxyUrl + encodeURIComponent(feedUrl));
+                    const data = await response.json();
 
-            if (data.items) {
-                data.items.slice(0, 3).forEach(feed => { // Limit to the 3 latest items per feed
-                    if (!seenTitles.has(feed.title)) { // Check if the title is unique
-                        seenTitles.add(feed.title); // Add the title to the Set
+                    if (data.items) {
+                        data.items.slice(0, 3).forEach(feed => { // Limit to the 3 latest items per feed
+                            if (!seenTitles.has(feed.title)) { // Check if the title is unique
+                                seenTitles.add(feed.title); // Add the title to the Set
 
-                        const feedItem = document.createElement('div');
-                        feedItem.className = 'feed-item';
+                                const feedItem = document.createElement('div');
+                                feedItem.className = 'feed-item';
 
-                        // Profile placeholder image
-                        const profileImg = document.createElement('img');
-                        profileImg.src = 'https://t3.ftcdn.net/jpg/07/74/42/64/360_F_774426405_EDSBqyiN5sLpq8kqNiKUk60SOWMviwOY.jpg'; // Replace with a relevant image URL if available
-                        profileImg.alt = 'Profile Picture';
+                                // Profile placeholder image
+                                const profileImg = document.createElement('img');
+                                profileImg.src = 'https://t3.ftcdn.net/jpg/07/74/42/64/360_F_774426405_EDSBqyiN5sLpq8kqNiKUk60SOWMviwOY.jpg'; // Replace with a relevant image URL if available
+                                profileImg.alt = 'Profile Picture';
 
-                        const contentDiv = document.createElement('div');
-                        contentDiv.className = 'content';
+                                const contentDiv = document.createElement('div');
+                                contentDiv.className = 'content';
 
-                        const title = document.createElement('h2');
-                        title.textContent = feed.title;
+                                const title = document.createElement('h2');
+                                title.textContent = feed.title;
 
-                        const badge = document.createElement('span');
-                        badge.className = 'badge';
-                        badge.textContent = 'News'; // Static badge text for demo purposes
+                                const badge = document.createElement('span');
+                                badge.className = 'badge';
+                                badge.textContent = 'News'; // Static badge text for demo purposes
 
-                        const description = document.createElement('p');
-                        description.innerHTML = feed.description;
+                                const description = document.createElement('p');
+                                description.innerHTML = feed.description;
 
-                        const footerDiv = document.createElement('div');
-                        footerDiv.className = 'footer';
-                        footerDiv.textContent = `Posted on ${new Date(feed.pubDate).toLocaleDateString()}`;
+                                const footerDiv = document.createElement('div');
+                                footerDiv.className = 'footer';
+                                footerDiv.textContent = `Posted on ${new Date(feed.pubDate).toLocaleDateString()}`;
 
-                        const link = document.createElement('a');
-                        link.href = feed.link;
-                        link.textContent = 'Read more';
-                        link.target = '_blank';
+                                const link = document.createElement('a');
+                                link.href = feed.link;
+                                link.textContent = 'Read more';
+                                link.target = '_blank';
 
-                        // Append elements to contentDiv
-                        contentDiv.appendChild(title);
-                        contentDiv.appendChild(badge);
-                        contentDiv.appendChild(description);
-                        contentDiv.appendChild(footerDiv);
-                        contentDiv.appendChild(link);
+                                // Append elements to contentDiv
+                                contentDiv.appendChild(title);
+                                contentDiv.appendChild(badge);
+                                contentDiv.appendChild(description);
+                                contentDiv.appendChild(footerDiv);
+                                contentDiv.appendChild(link);
 
-                        // Append elements to feedItem
-                        feedItem.appendChild(profileImg);
-                        feedItem.appendChild(contentDiv);
+                                // Append elements to feedItem
+                                feedItem.appendChild(profileImg);
+                                feedItem.appendChild(contentDiv);
 
-                        // Append feedItem to feedContainer
-                        feedContainer.appendChild(feedItem);
+                                // Append feedItem to feedContainer
+                                feedContainer.appendChild(feedItem);
+                            }
+                        });
                     }
-                });
+                } catch (error) {
+                    console.error('Error fetching feed:', error);
+                }
             }
-        } catch (error) {
-            console.error('Error fetching feed:', error);
         }
-    }
-}
-
 
         // Load feeds on page load
-        fetchFeeds();
+        window.onload = fetchFeeds;
 
         // Refresh feeds every 10 minutes (600,000 milliseconds)
         setInterval(fetchFeeds, 600000);
