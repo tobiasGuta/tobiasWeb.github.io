@@ -358,7 +358,7 @@ body, html {
 
                     if (data.status === 'ok') {
                         data.items.forEach(item => {
-                            const snippet = item.description.length > 10000 ? item.description.substring(0, 400) + '...' : item.description;
+                            const snippet = item.description.length > 9000 ? item.description.substring(0, 400) + '...' : item.description;
     const feedItem = document.createElement('div');
     feedItem.className = 'feed-item';
     feedItem.innerHTML = `
