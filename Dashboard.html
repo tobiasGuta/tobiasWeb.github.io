@@ -345,49 +345,54 @@ body {
         ];
 
         async function fetchFeeds() {
-            feedContainer.innerHTML = ''; // Clear the container before loading new items
+    feedContainer.innerHTML = ''; // Clear the container before loading new items
+    const seenTitles = new Set(); // Track seen titles
 
-            for (const feed of rssFeeds) {
-                try {
-                    const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
-                    const data = await response.json();
+    for (const feed of rssFeeds) {
+        try {
+            const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
+            const data = await response.json();
 
-                    if (data.status === 'ok') {
-                        data.items.forEach(item => {
-    // Create a temporary element to parse the description and remove images
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = item.description;
+            if (data.status === 'ok') {
+                data.items.forEach(item => {
+                    if (!seenTitles.has(item.title)) { // Check for duplicates
+                        seenTitles.add(item.title); // Mark title as seen
 
-    // Remove all image tags from the description
-    const images = tempDiv.getElementsByTagName('img');
-    while (images.length > 0) {
-        images[0].parentNode.removeChild(images[0]);
-    }
+                        // Create a temporary element to parse the description and remove images
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = item.description;
 
-    // Get the cleaned description
-    const cleanedDescription = tempDiv.innerHTML;
+                        // Remove all image tags from the description
+                        const images = tempDiv.getElementsByTagName('img');
+                        while (images.length > 0) {
+                            images[0].parentNode.removeChild(images[0]);
+                        }
 
-    // Truncate the description if it's too long
-    const snippet = cleanedDescription.length > 400 ? cleanedDescription.substring(0, 400) + '...' : cleanedDescription;
+                        // Get the cleaned description
+                        const cleanedDescription = tempDiv.innerHTML;
 
-    const feedItem = document.createElement('div');
-    feedItem.className = 'feed-item';
-    feedItem.innerHTML = `
-        <div class="header">
-            <h2>${item.title}</h2>
-            <span class="badge">${item.pubDate}</span>
-        </div>
-        <p>${snippet}</p>
-        <a href="${item.link}" target="_blank">Read more</a>
-    `;
-    feedContainer.appendChild(feedItem);
-});
+                        // Truncate the description if it's too long
+                        const snippet = cleanedDescription.length > 400 ? cleanedDescription.substring(0, 400) + '...' : cleanedDescription;
+
+                        const feedItem = document.createElement('div');
+                        feedItem.className = 'feed-item';
+                        feedItem.innerHTML = `
+                            <div class="header">
+                                <h2>${item.title}</h2>
+                                <span class="badge">${item.pubDate}</span>
+                            </div>
+                            <p>${snippet}</p>
+                            <a href="${item.link}" target="_blank">Read more</a>
+                        `;
+                        feedContainer.appendChild(feedItem);
                     }
-                } catch (error) {
-                    console.error('Error fetching feeds:', error);
-                }
+                });
             }
+        } catch (error) {
+            console.error('Error fetching feeds:', error);
         }
+    }
+}
 
         // Fetch feeds on initial load
         document.addEventListener('DOMContentLoaded', () => {
