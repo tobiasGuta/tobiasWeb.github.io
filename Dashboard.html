@@ -94,6 +94,12 @@ body {
     color: #e0e0e0;
     width: 100%; /* Ensure the feed items take full width */
     box-sizing: border-box; /* Include padding in width */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation transition for hover */
+}
+
+.feed-item:hover {
+    transform: translateY(-5px); /* Move the item slightly upwards */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7); /* Slightly more intense shadow on hover */
 }
 
     .feed-item img {
