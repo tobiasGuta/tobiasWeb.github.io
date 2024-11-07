@@ -25,53 +25,79 @@
     </nav>
     
     <section class="projects-container">
-        <h2>Latest Posts</h2>
-        <div id="blogPosts"></div>
+        <h2>Latest Posts from StationX</h2>
+        <div id="stationXPosts"></div>
+
+        <h2>Latest Posts from EFF</h2>
+        <div id="effPosts"></div>
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/rss-parser@3.0.0/dist/rss-parser.min.js"></script>
     <script>
+        // Initialize RSS parser
         const parser = new RSSParser();
 
-        // Function to fetch and display the feed from a given URL
-        async function fetchFeed(url, container) {
-            try {
-                const feed = await parser.parseURL(url);
-                let output = '<ul class="blog-list">';
+        // Function to truncate content for snippets (e.g., show only 200 characters)
+        function truncateContent(content, maxLength = 200) {
+            if (content.length > maxLength) {
+                return content.substring(0, maxLength) + '...';
+            }
+            return content;
+        }
 
+        // Fetch and display the RSS feed from StationX
+        async function fetchStationXFeed() {
+            try {
+                const feed = await parser.parseURL('https://www.stationx.net/feed/');
+                const blogContainer = document.getElementById('stationXPosts');
+                
+                let output = '<ul class="blog-list">';
                 feed.items.forEach(item => {
                     output += `<li class="blog-item">
                         <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
                         <small class="blog-date">${item.pubDate}</small>
-                        <p class="blog-snippet">${item.contentSnippet}</p>
+                        <p class="blog-snippet">${truncateContent(item.contentSnippet, 200)}</p>
                         <a href="${item.link}" target="_blank" class="read-more">Read More</a>
                     </li>`;
                 });
-
                 output += '</ul>';
-                container.innerHTML = output;
+                blogContainer.innerHTML = output;
             } catch (error) {
-                console.error('Error fetching RSS feed:', error);
-                container.innerHTML = "<p>Error loading posts.</p>";
+                console.error('Error fetching StationX RSS feed:', error);
             }
         }
 
-        // Combine both StationX and EFF RSS feeds
-        function fetchAllFeeds() {
-            const blogContainer = document.getElementById('blogPosts');
-            
-            // Fetch StationX feed
-            fetchFeed('https://www.stationx.net/feed/', blogContainer);
-            
-            // Fetch EFF feed and append to the same container
-            fetchFeed('https://www.eff.org/rss/updates.xml', blogContainer);
+        // Fetch and display the RSS feed from EFF
+        async function fetchEFFFeed() {
+            try {
+                const feed = await parser.parseURL('https://www.eff.org/rss/updates.xml');
+                const blogContainer = document.getElementById('effPosts');
+                
+                let output = '<ul class="blog-list">';
+                feed.items.forEach(item => {
+                    output += `<li class="blog-item">
+                        <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
+                        <small class="blog-date">${item.pubDate}</small>
+                        <p class="blog-snippet">${truncateContent(item.contentSnippet, 200)}</p>
+                        <a href="${item.link}" target="_blank" class="read-more">Read More</a>
+                    </li>`;
+                });
+                output += '</ul>';
+                blogContainer.innerHTML = output;
+            } catch (error) {
+                console.error('Error fetching EFF RSS feed:', error);
+            }
         }
 
-        // Initial fetch when the page loads
-        fetchAllFeeds();
+        // Call the functions to fetch and display the feeds
+        fetchStationXFeed();
+        fetchEFFFeed();
 
-        // Set an interval to fetch the feeds every 10 minutes (600000 ms)
-        setInterval(fetchAllFeeds, 600000);
+        // Update every 10 minutes (600000 ms)
+        setInterval(() => {
+            fetchStationXFeed();
+            fetchEFFFeed();
+        }, 600000);
     </script>
 </body>
 </html>
