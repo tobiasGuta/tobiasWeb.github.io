@@ -20,42 +20,52 @@
     <nav>
         <a href="index.html"><i class="fas fa-home"></i> Intro</a>
         <a href="qa.html"><i class="fas fa-question-circle"></i> Q&A</a>
-        <a href="blogs.html"><i class="fas fa-blog"></i> Blogs and News</a>
+        <a href="blogs.html"><i class="fas fa-blog"></i> Blogs</a>
         <a href="resources.html"><i class="fas fa-hands-helping"></i> Resources</a>
     </nav>
     
     <section class="projects-container">
-        <div class="project-item">
-            <h2>Privacy Guides</h2>
-            <img src="privacyguide.png" alt="Image of blog 1">
-            <p>PrivacyGuides.org is a website that provides resources and recommendations for maintaining online privacy and security. It offers guides, tools, and advice on a range of topics such as secure communication, protecting personal data, and choosing privacy-focused software and services. The goal is to help users navigate the complex landscape of digital privacy and make informed decisions about how to protect their information online.</p>
-            <a href="https://www.privacyguides.org/en/" target="_blank" class="learn-more-button"> Privacy-Guide link</a>
-        </div>
-        <div class="project-item">
-            <h2>lockbit seized</h2>
-            <img src="lockbitseized.png" alt="Image of blog 1">
-            <p>The FBI and its international allies have seized a dark-web site that the world’s most prolific ransomware gang has used to extort its victims</p>
-            <a href="https://www.cnn.com/2024/02/19/politics/fbi-ransomware-lockbit-dark-web-site/index.html" target="_blank" class="learn-more-button"> News link</a>
-        </div>
-        <div class="project-item">
-            <h2>BreachForums seized</h2>
-            <img src="breachforum.png" alt="Image of blog 1">
-            <p>Breach forums are clandestine online platforms where cybercriminals trade, sell, and share stolen data obtained through various illicit means such as hacking, phishing, or malware attacks. These forums operate on the dark web or hidden parts of the internet, often requiring special software or configurations to access, thereby providing a veil of anonymity to participants</p>
-            <a href="https://thehackernews.com/2024/05/fbi-seizes-breachforums-again-urges.html" target="_blank" class="learn-more-button"> News link</a>
-        </div>
-        <div class="project-item">
-            <h2>Privacy Tool</h2>
-            <img src="privacytool.png" alt="Image of blog 1">
-            <p>You are being watched. Private and state-sponsored organizations are monitoring and recording your online activities. PrivacyTools.io provides services, tools and privacy guides to counter global mass surveillance. Established in 2015 after Edward Snowden's revelations, and is now the most popular privacy website.</p>
-            <a href="https://www.privacytools.io/" target="_blank" class="learn-more-button"> Blog link</a>
-        </div>
-        <div class="project-item">
-            <h2>EFF</h2>
-            <img src="eff.png" alt="Image of blog 1">
-            <p>The Electronic Frontier Foundation is the leading nonprofit organization defending civil liberties in the digital world. Founded in 1990, EFF champions user privacy, free expression, and innovation through impact litigation, policy analysis, grassroots activism, and technology development. EFF's mission is to ensure that technology supports freedom, justice, and innovation for all people of the world.</p>
-            <a href="https://www.eff.org/" target="_blank" class="learn-more-button"> Blog link</a>
-        </div>
-        
+        <h2>Latest Posts from Different Blogs</h2>
+        <div id="blogPosts"></div>
     </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/rss-parser@3.0.0/dist/rss-parser.min.js"></script>
+    <script>
+        // Initialize RSS parser
+        const parser = new RSSParser();
+    
+        // Fetch and display the RSS feed
+        async function fetchFeed() {
+            try {
+                const feed = await parser.parseURL('https://www.stationx.net/feed/');
+                const blogContainer = document.getElementById('blogPosts');
+                
+                // Create an unordered list to display posts
+                let output = '<ul class="blog-list">';
+                
+                feed.items.forEach(item => {
+                    output += `<li class="blog-item">
+                        <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
+                        <small class="blog-date">${item.pubDate}</small>
+                        <p class="blog-snippet">${item.contentSnippet}</p>
+                        <p class="blog-categories">Categories: ${item.categories ? item.categories.join(', ') : 'N/A'}</p>
+                        <a href="${item.link}" target="_blank" class="read-more">Read More</a>
+                    </li>`;
+                });
+                
+                output += '</ul>';
+                blogContainer.innerHTML = output;
+            } catch (error) {
+                console.error('Error fetching RSS feed:', error);
+            }
+        }
+    
+        // Initial fetch when the page loads
+        fetchFeed();
+    
+        // Set an interval to fetch the feed every 10 minutes (600000 ms)
+        setInterval(fetchFeed, 600000);
+    </script>
+    
 </body>
 </html>

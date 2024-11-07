@@ -454,3 +454,74 @@ footer {
 .popup-content {
     animation: flicker 1s infinite;
 }
+
+/* Styling for blog feed */
+.blog-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+.blog-item {
+    background: rgba(0, 0, 0, 0.7); /* Dark background */
+    border: 1px solid #2AF7A5; /* Green border */
+    border-radius: 8px;
+    padding: 15px;
+    margin: 20px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+}
+
+.blog-item:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.blog-title {
+    font-size: 20px;
+    color: #2AF7A5;
+    text-decoration: none;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.blog-title:hover {
+    color: #fff;
+}
+
+.blog-date {
+    font-size: 12px;
+    color: #888;
+}
+
+.blog-snippet {
+    color: white;
+    font-size: 16px;
+    margin-top: 10px;
+    line-height: 1.5;
+}
+
+.blog-author,
+.blog-categories {
+    font-size: 14px;
+    color: #bbb;
+}
+
+.read-more {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #2AF7A5;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.read-more:hover {
+    background-color: #1d9d80;
+}
+
+.blog-list a {
+    text-decoration: none;
+}
+
+
