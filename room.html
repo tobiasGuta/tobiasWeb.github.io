@@ -20,30 +20,27 @@
         }
 
         /* Main page styling */
-body {
-    color: #00ff00;
-    font-family: 'Courier New', Courier, monospace;
-    margin: 0;
-    padding: 0;
-    background: rgba(0, 0, 0, 0.85);
-    height: 100%; /* Ensure full page height */
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: flex-start; /* Align content at the top */
-    overflow-y: auto; /* Allow vertical scrolling */
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-}
-
-        /* Content styling to center room sections horizontally, align at the top vertically */
-        .content {
-            position: relative;
-            z-index: 1;
-            margin-top: 100px; /* Space for glitch heading */
+        body {
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            background: rgba(0, 0, 0, 0.85);
+            height: 100%;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Center room sections horizontally */
-            width: 100%; /* Ensure it takes the full width */
-            text-align: center; /* Center text inside */
+            justify-content: flex-start; /* Align content at the top */
+            overflow-y: auto;
+        }
+
+        /* Content styling */
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 120px; /* Space for glitch heading */
+            width: 100%;
         }
 
         /* Glitch Text Effect */
@@ -52,7 +49,7 @@ body {
             top: 0;
             left: 50%;
             transform: translateX(-50%); /* Center the text horizontally */
-            padding-top: 20px; /* Adjust top padding to control the space from top */
+            padding-top: 20px;
         }
 
         .glitch {
@@ -96,9 +93,14 @@ body {
             padding: 15px;
             border-radius: 5px;
             background-color: rgba(0, 0, 0, 0.7);
-            width: 80%; /* Make room sections more responsive */
-            max-width: 800px; /* Limit max width */
-            text-align: left; /* Left align text inside room section */
+            text-align: left;
+            transition: transform 0.3s ease-in-out, margin 0.3s ease;
+        }
+
+        /* When room section is expanded */
+        .room-section.open {
+            transform: scale(1.05);
+            margin-bottom: 40px;
         }
 
         h2 {
@@ -110,27 +112,62 @@ body {
             color: #ffff00;
         }
 
+        /* Collapsible content */
         .collapsible-content {
             display: none;
             padding-top: 10px;
             position: relative;
+            animation: fadeIn 0.5s ease-in;
         }
 
-        .collapsible-content code {
-            display: block;
-            background: #111;
-            padding: 10px;
-            border-radius: 5px;
-            white-space: pre-wrap;
-        }
-
+        /* Fade-in animation */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
 
-        .collapsible-content {
-            animation: fadeIn 0.5s ease-in;
+        /* Back Button Styling */
+        .back-button {
+            background-color: #00ff00;
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-button:hover {
+            background-color: #00cc00;
+        }
+
+        /* Center Back Button */
+        .back-button-container {
+            position: relative;
+            text-align: center;
+            margin-top: 100px; /* Adjust space to move below the rooms */
+        }
+
+        nav {
+            display: inline-block;
+            position: relative;
+        }
+
+        nav a {
+            margin: 5px;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: #00ff00;
+            color: #1c1c1c;
         }
     </style>
 </head>
@@ -141,6 +178,11 @@ body {
     <!-- Glitch Heading -->
     <div class="glitch-container">
         <h1 class="glitch" data-text="TryHackMe Rooms">TryHackMe Rooms</h1>
+    </div>
+
+    <!-- Back Button Container (Centered) -->
+    <div class="back-button-container">
+        <button class="back-button" onclick="window.location.href='community.html'">Back</button>
     </div>
 
     <!-- Content with Room Sections -->
@@ -195,16 +237,21 @@ body {
                 </div>
             </div>
         </div>
-
-        <!-- Add more rooms as needed -->
-
     </div>
 
+    <!-- JavaScript for Toggling Content and Scaling -->
     <script>
-        // JavaScript function to toggle collapsible content
-        function toggleContent(id) {
-            const content = document.getElementById(id);
-            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        function toggleContent(roomId) {
+            var content = document.getElementById(roomId);
+            var roomSection = content.closest('.room-section');
+            
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                roomSection.classList.remove('open'); // Remove 'open' class to return to normal size
+            } else {
+                content.style.display = 'block';
+                roomSection.classList.add('open'); // Add 'open' class to scale up the section
+            }
         }
     </script>
 </body>
