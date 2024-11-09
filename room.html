@@ -333,7 +333,7 @@
         <div class="solution-section" id="solution-room1-q3" style="display: none;">
             <p><strong>Info:</strong> We got this email from Sphinx. </p>
             <img src="mail3.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> First, we need to run a scan on the virus sample sampl2[.]exe to see what we can find.</p>
+            <p><strong>Solution:</strong> First, we need to run a scan on the virus sample sampl3[.]exe to see what we can find.</p>
             <img src="dnns.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
             <p><strong>Solution:</strong> This virus also makes requests, but this time to specific domains instead of direct IP addresses. This method is advantageous for hackers because it helps them hide their true IP address, making it harder for security systems to trace the origin of the attack. By using domain names, attackers can also leverage techniques like Dynamic DNS or cloud-based services to further obscure their location.</p>
             <img src="dnsrule.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
@@ -350,7 +350,7 @@
         <div class="solution-section" id="solution-room1-q4" style="display: none;">
             <p><strong>Info:</strong> We got this email from Sphinx. </p>
             <img src="email4.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> First, we need to run a scan on the virus sample sampl1[.]exe to see what we can find.</p>
+            <p><strong>Solution:</strong> First, we need to run a scan on the virus sample sampl4[.]exe to see what we can find.</p>
             <img src="registrac.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
             <p><strong>Solution:</strong> This virus does even worse things, such as modifying the registry at HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\Real-Time Protection. This is the key for Windows Defender's Real-Time Protection. By tampering with it, the virus disables Windows Defender, preventing it from alerting the user to any malicious activity.</p>
             <img src="sigmarule.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
@@ -365,14 +365,14 @@
         </div>
 
         <div class="solution-section" id="solution-room1-q5" style="display: none;">
-            <p><strong>Solution:</strong></p>
-            <pre><code>none</code></pre>
-
-            <!-- Example Demonstration inside Solution -->
-            <div>
-                <h3>Example Demonstration for Question 5:</h3>
-                <img src="https://via.placeholder.com/500" alt="Room 5 Demonstration" style="max-width: 100%; height: auto;">
-            </div>
+            <p><strong>Info:</strong> We got this email from Sphinx. He also provided a log file</p>
+            <img src="mail5.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <img src="logfile.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Solution:</strong> First, we need to run a scan on the virus sample sampl5[.]exe to see what we can find.</p>
+            <img src="sample5.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Solution:</strong> This virus is even worse because it makes a lot of POST requests to a specific IP. To avoid detection, it establishes a connection every 30 minutes and sends a request of size 97 bytes. It's like it's communicating with a C2 (Command and Control) server</p>
+            <img src="c2.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Solution:</strong> Let's create a Sigma rule to detect and block any attempts to connect to this specific Command and Control (C2) server. Sigma rules allow us to define detection patterns for suspicious activities across different security platforms. In this case, the rule would be designed to identify any network traffic trying to establish a connection with the identified C2 server, and then block it to prevent the malware from communicating with its attacker. By implementing this rule, we can strengthen our defenses and prevent the malware from receiving further commands or exfiltrating data</p>
         </div>
 
         <button class="solution-button" onclick="toggleSolution('room1-q5', event)">Show Solution</button>
@@ -383,14 +383,14 @@
         </div>
 
         <div class="solution-section" id="solution-room1-q6" style="display: none;">
-            <p><strong>Solution:</strong></p>
-            <pre><code>none</code></pre>
-
-            <!-- Example Demonstration inside Solution -->
-            <div>
-                <h3>Example Demonstration for Question 6:</h3>
-                <img src="https://via.placeholder.com/500" alt="Room 6 Demonstration" style="max-width: 100%; height: auto;">
-            </div>
+            <p><strong>Info:</strong> We got this email from Sphinx. He also provided a  Commands log file </p>
+            <img src="sample6.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <img src="commandlog.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Solution:</strong> First, we need to run a scan on the virus sample sampl2[.]exe to see what we can find.</p>
+            <img src="comvir.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Solution:</strong> This virus is running a series of commands on the infected system to gather important information. It collects system details and network configuration data, likely to be used for reconnaissance or further exploitation.</p>
+            <img src="sigmareco.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Solution:</strong> Let's create a Sigma rule to detect a specific string being run, in this case: %temp%\exfiltr8[.]log.</p>
         </div>
 
         <button class="solution-button" onclick="toggleSolution('room1-q6', event)">Show Solution</button>
