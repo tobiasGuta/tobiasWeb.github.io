@@ -331,14 +331,13 @@
         </div>
 
         <div class="solution-section" id="solution-room1-q3" style="display: none;">
-            <p><strong>Solution:</strong></p>
-            <pre><code>none</code></pre>
-
-            <!-- Example Demonstration inside Solution -->
-            <div>
-                <h3>Example Demonstration for Question 3:</h3>
-                <img src="https://via.placeholder.com/500" alt="Room 3 Demonstration" style="max-width: 100%; height: auto;">
-            </div>
+            <p><strong>Info:</strong> We got this email from Sphinx. </p>
+            <img src="mail3.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Solution:</strong> First, we need to run a scan on the virus sample sampl2[.]exe to see what we can find.</p>
+            <img src="dnns.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Solution:</strong> This virus also makes requests, but this time to specific domains instead of direct IP addresses. This method is advantageous for hackers because it helps them hide their true IP address, making it harder for security systems to trace the origin of the attack. By using domain names, attackers can also leverage techniques like Dynamic DNS or cloud-based services to further obscure their location.</p>
+            <img src="dnsrule.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Solution:</strong> Let's set up a DNS rule to block any connection to this Domain, Creating a DNS rule to block a domain involves configuring your network or firewall to prevent any device on your network from resolving a specific domain to its associated IP address. When a device tries to access a domain, the DNS server translates the domain name into an IP address. By creating a DNS block rule, you're essentially telling the DNS server to deny the request to resolve that domain, making it impossible for the malware or malicious activity to reach its destination.</p>
         </div>
 
         <button class="solution-button" onclick="toggleSolution('room1-q3', event)">Show Solution</button>
@@ -349,14 +348,13 @@
         </div>
 
         <div class="solution-section" id="solution-room1-q4" style="display: none;">
-            <p><strong>Solution:</strong></p>
-            <pre><code>none</code></pre>
-
-            <!-- Example Demonstration inside Solution -->
-            <div>
-                <h3>Example Demonstration for Question 4:</h3>
-                <img src="https://via.placeholder.com/500" alt="Room 4 Demonstration" style="max-width: 100%; height: auto;">
-            </div>
+            <p><strong>Info:</strong> We got this email from Sphinx. </p>
+            <img src="email4.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Solution:</strong> First, we need to run a scan on the virus sample sampl1[.]exe to see what we can find.</p>
+            <img src="registrac.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Solution:</strong> This virus does even worse things, such as modifying the registry at HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\Real-Time Protection. This is the key for Windows Defender's Real-Time Protection. By tampering with it, the virus disables Windows Defender, preventing it from alerting the user to any malicious activity.</p>
+            <img src="sigmarule.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Solution:</strong> Let's create a Sigma rule to detect this type of event, Sigma rules are a standardized, flexible way to define detection logic for various security events across different security platforms. They are designed to be platform-agnostic, meaning they can be used with any SIEM (Security Information and Event Management) system to identify suspicious activities.</p>
         </div>
 
         <button class="solution-button" onclick="toggleSolution('room1-q4', event)">Show Solution</button>
