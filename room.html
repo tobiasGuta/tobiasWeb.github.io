@@ -242,58 +242,70 @@
             <div id="room1" class="collapsible-content">
                 <p><strong>Description:</strong> Can you chase a simulated adversary up the Pyramid of Pain until they finally back down?</p>
                 <p><strong>Challenge Approach:</strong> The tester will be attempting to execute malware samples on a simulated internal user workstation. At the same time, you will need to configure PicoSecure's security tools to detect and prevent the malware from executing.</p>
-                <code>
-                    # Sample Commands
-                    nmap -sV -A 10.10.10.10
-                    ffuf -u http://10.10.10.10/FUZZ -w /usr/share/wordlists/dirb/common.txt
-                </code>
-                <p><strong>Solution:</strong> None:</p>
-                <code>
-                    # Example SQL Injection Payload
-                    username: ' OR '1'='1
-                    password: ' OR '1'='1
-                </code>
+                <div class="question-section" style="margin-top: 60px;">
+                    <p><strong>Question:</strong> What is the first flag you receive after successfully detecting sample1.exe?</p>
+                </div>
+
+                <div class="solution-section" id="solution-room1" style="display: none;">
+                    <p><strong>Solution:</strong></p>
+                    <pre><code>none</code></pre>
+                </div>
+
+                <!-- Toggle Button for Solution -->
+                <button onclick="toggleSolution('room1')">Show Solution</button>
 
                 <!-- Adding an image for room 1 demonstration -->
                 <div>
                     <h3>Example Demonstration for Room 1:</h3>
-                    <img src="https://via.placeholder.com/500" alt="Room 1 Demonstration" style="max-width: 100%; height: auto; border-radius: 5px;">
+                    <img src="https://via.placeholder.com/500" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
                 </div>
             </div>
         </div>
 
         <!-- Room 2 -->
         <div class="room-section">
-            <h2 onclick="toggleContent('room2')">Room 2: Entry Point 🔐</h2>
+            <h2 onclick="toggleContent('room2')">Room 2: Defcon 🛡️</h2>
             <div id="room2" class="collapsible-content">
-                <p><strong>Description:</strong> Navigate through the access control points to gain access to the vulnerable system.</p>
-                <p><strong>Challenge Approach:</strong> Exploit the security vulnerabilities to escalate privileges and access the admin panel.</p>
-                <code>
-                    # Sample Commands
-                    nmap -sC -sV 10.10.10.20
-                    sqlmap -u "http://10.10.10.20/login.php?username=admin&password=admin" --risk=3 --level=5
-                </code>
-                <p><strong>Solution:</strong> None:</p>
-                <code>
-                    # Example XSS Payload
-                    test
-                </code>
+                <p><strong>Description:</strong> Explore and analyze traffic from a network-based challenge with real-time logs.</p>
+                <p><strong>Challenge Approach:</strong> Investigate and identify network traffic anomalies and provide the appropriate solutions based on your analysis.</p>
+                <div class="question-section">
+                    <p><strong>Question:</strong> Which protocol was used for the malicious activity detected in the logs?</p>
+                </div>
 
-                <!-- Adding an image for room 2 demonstration -->
+                <div class="solution-section" id="solution-room2" style="display: none;">
+                    <p><strong>Solution:</strong></p>
+                    <pre><code>TCP</code></pre>
+                </div>
+
+                <!-- Toggle Button for Solution -->
+                <button onclick="toggleSolution('room2')">Show Solution</button>
+
+                <!-- Adding an image for room 2 -->
                 <div>
                     <h3>Example Demonstration for Room 2:</h3>
-                    <img src="https://via.placeholder.com/500" alt="Room 2 Demonstration" style="max-width: 100%; height: auto; border-radius: 5px;">
+                    <img src="https://via.placeholder.com/500" alt="Room 2 Demonstration" style="max-width: 100%; height: auto;">
                 </div>
             </div>
         </div>
-
-        <!-- Add more room sections as needed -->
     </div>
 
     <script>
         function toggleContent(room) {
-            const content = document.getElementById(room);
-            content.style.display = (content.style.display === "none" || content.style.display === "") ? "block" : "none";
+            var content = document.getElementById(room);
+            content.style.display = (content.style.display === 'none' || content.style.display === '') ? 'block' : 'none';
+        }
+
+        function toggleSolution(room) {
+            var solution = document.getElementById("solution-" + room);
+            var button = event.target;
+
+            if (solution.style.display === 'none' || solution.style.display === '') {
+                solution.style.display = 'block';
+                button.textContent = "Hide Solution";
+            } else {
+                solution.style.display = 'none';
+                button.textContent = "Show Solution";
+            }
         }
     </script>
 </body>
