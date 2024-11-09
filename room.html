@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon-16x16.png" type="image/x-icon">
+    <title>TryHackMe Rooms</title>
+    <style>
+        /* Background container for animated GIF */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.pinimg.com/originals/38/1c/63/381c630b05c0e00afe8f986acb8658b6.gif') no-repeat center center fixed;
+            background-size: cover;
+            z-index: -1;
+            opacity: 0.2;
+        }
+
+        /* Main page styling */
+body {
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.85);
+    height: 100%; /* Ensure full page height */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: flex-start; /* Align content at the top */
+    overflow-y: auto; /* Allow vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+        /* Content styling to center room sections horizontally, align at the top vertically */
+        .content {
+            position: relative;
+            z-index: 1;
+            margin-top: 100px; /* Space for glitch heading */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center room sections horizontally */
+            width: 100%; /* Ensure it takes the full width */
+            text-align: center; /* Center text inside */
+        }
+
+        /* Glitch Text Effect */
+        .glitch-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%); /* Center the text horizontally */
+            padding-top: 20px; /* Adjust top padding to control the space from top */
+        }
+
+        .glitch {
+            font-size: 2.5em;
+            color: #00ff00;
+            animation: glitch 1s infinite;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #ff00ff;
+            opacity: 0.8;
+            clip: rect(0, 900px, 0, 0);
+            animation: glitch 1s infinite;
+        }
+
+        .glitch::after {
+            color: #00ffff;
+            left: 2px;
+            animation: glitch 1.2s infinite;
+        }
+
+        @keyframes glitch {
+            0% { clip: rect(42px, 9999px, 44px, 0); transform: translate(0px, 0px); }
+            20% { clip: rect(0px, 9999px, 44px, 0); transform: translate(2px, -2px); }
+            40% { clip: rect(10px, 9999px, 38px, 0); transform: translate(-2px, 0px); }
+            60% { clip: rect(15px, 9999px, 44px, 0); transform: translate(0px, 2px); }
+            80% { clip: rect(30px, 9999px, 40px, 0); transform: translate(-1px, -1px); }
+            100% { clip: rect(20px, 9999px, 40px, 0); transform: translate(1px, 1px); }
+        }
+
+        /* Room Section Styling */
+        .room-section {
+            border: 1px solid #00ff00;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.7);
+            width: 80%; /* Make room sections more responsive */
+            max-width: 800px; /* Limit max width */
+            text-align: left; /* Left align text inside room section */
+        }
+
+        h2 {
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        h2:hover {
+            color: #ffff00;
+        }
+
+        .collapsible-content {
+            display: none;
+            padding-top: 10px;
+            position: relative;
+        }
+
+        .collapsible-content code {
+            display: block;
+            background: #111;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .collapsible-content {
+            animation: fadeIn 0.5s ease-in;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Container -->
+    <div class="background-container"></div>
+
+    <!-- Glitch Heading -->
+    <div class="glitch-container">
+        <h1 class="glitch" data-text="TryHackMe Rooms">TryHackMe Rooms</h1>
+    </div>
+
+    <!-- Content with Room Sections -->
+    <div class="content">
+        <!-- Room 1 -->
+        <div class="room-section">
+            <h2 onclick="toggleContent('room1')">Room 1: None 🚀</h2>
+            <div id="room1" class="collapsible-content">
+                <p><strong>Description:</strong> None.</p>
+                <p><strong>Challenge Approach:</strong> None.</p>
+                <code>
+                    # Sample Commands
+                    nmap -sV -A 10.10.10.10
+                    ffuf -u http://10.10.10.10/FUZZ -w /usr/share/wordlists/dirb/common.txt
+                </code>
+                <p><strong>Solution:</strong> None:</p>
+                <code>
+                    # Example SQL Injection Payload
+                    username: ' OR '1'='1
+                    password: ' OR '1'='1
+                </code>
+
+                <!-- Adding an image for room 1 demonstration -->
+                <div>
+                    <h3>Example Demonstration for Room 1:</h3>
+                    <img src="https://via.placeholder.com/500" alt="Room 1 Demonstration" style="max-width: 100%; height: auto; border-radius: 5px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Room 2 -->
+        <div class="room-section">
+            <h2 onclick="toggleContent('room2')">Room 2: None 🐍</h2>
+            <div id="room2" class="collapsible-content">
+                <p><strong>Description:</strong> None.</p>
+                <p><strong>Challenge Approach:</strong> None.</p>
+                <code>
+                    # Example SQL Injection Payload
+                    username: ' OR '1'='1
+                    password: ' OR '1'='1
+                </code>
+                <p><strong>Solution:</strong> None.</p>
+                <code>
+                    # Solution Commands
+                    curl -X POST -d "username=' OR '1'='1&password=' OR '1'='1" http://target.com/login
+                </code>
+
+                <!-- Adding an image for room 2 demonstration -->
+                <div>
+                    <h3>Example Demonstration for Room 2:</h3>
+                    <img src="https://via.placeholder.com/500" alt="Room 2 Demonstration" style="max-width: 100%; height: auto; border-radius: 5px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Add more rooms as needed -->
+
+    </div>
+
+    <script>
+        // JavaScript function to toggle collapsible content
+        function toggleContent(id) {
+            const content = document.getElementById(id);
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+</body>
+</html>
