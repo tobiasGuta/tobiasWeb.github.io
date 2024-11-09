@@ -29,8 +29,9 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Align content at the top */
-            overflow-y: auto;
+            justify-content: flex-start;
+            overflow-x: hidden; /* Hide horizontal overflow */
+            overflow-y: auto; /* Allow vertical scrolling */
         }
 
         /* Content styling */
@@ -39,7 +40,7 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            margin-top: 120px; /* Space for glitch heading */
+            margin-top: 120px;
             width: 100%;
         }
 
@@ -48,7 +49,7 @@
             position: absolute;
             top: 0;
             left: 50%;
-            transform: translateX(-50%); /* Center the text horizontally */
+            transform: translateX(-50%);
             padding-top: 20px;
         }
 
@@ -95,6 +96,8 @@
             background-color: rgba(0, 0, 0, 0.7);
             text-align: left;
             transition: transform 0.3s ease-in-out, margin 0.3s ease;
+            width: 100%;
+            max-width: 800px; /* Constrain width for larger screens */
         }
 
         /* When room section is expanded */
@@ -135,7 +138,7 @@
             border-radius: 5px;
             font-size: 1.2em;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 100px;
             text-align: center;
         }
 
@@ -147,9 +150,10 @@
         .back-button-container {
             position: relative;
             text-align: center;
-            margin-top: 100px; /* Adjust space to move below the rooms */
+            margin-top: 20px;
         }
 
+        /* Navigation links styling */
         nav {
             display: inline-block;
             position: relative;
@@ -168,6 +172,51 @@
         nav a:hover {
             background: #00ff00;
             color: #1c1c1c;
+        }
+
+        /* Responsive styling for small screens (iPhone) */
+        @media only screen and (max-width: 600px) {
+            .glitch {
+                font-size: 2em;
+            }
+
+            .glitch-container {
+                padding-top: 10px;
+            }
+
+            h2 {
+                font-size: 1.2em;
+            }
+
+            .room-section {
+                padding: 10px;
+                width: 90%;
+                margin: 10px;
+            }
+
+            .back-button {
+                font-size: 1em;
+                margin-top: 70px;
+                padding: 8px 16px;
+            }
+
+            .back-button-container {
+                margin-top: 20px;
+            }
+
+            /* Ensure the back button stays centered */
+            .content {
+                margin-top: 70px;
+            }
+
+            .room-section h2 {
+                font-size: 1.2em;
+            }
+
+            .collapsible-content {
+                font-size: 0.9em;
+                padding: 8px;
+            }
         }
     </style>
 </head>
@@ -189,10 +238,10 @@
     <div class="content">
         <!-- Room 1 -->
         <div class="room-section">
-            <h2 onclick="toggleContent('room1')">Room 1: None 🚀</h2>
+            <h2 onclick="toggleContent('room1')">Room 1: Summit 🚀</h2>
             <div id="room1" class="collapsible-content">
-                <p><strong>Description:</strong> None.</p>
-                <p><strong>Challenge Approach:</strong> None.</p>
+                <p><strong>Description:</strong> Can you chase a simulated adversary up the Pyramid of Pain until they finally back down?</p>
+                <p><strong>Challenge Approach:</strong> The tester will be attempting to execute malware samples on a simulated internal user workstation. At the same time, you will need to configure PicoSecure's security tools to detect and prevent the malware from executing.</p>
                 <code>
                     # Sample Commands
                     nmap -sV -A 10.10.10.10
@@ -215,19 +264,19 @@
 
         <!-- Room 2 -->
         <div class="room-section">
-            <h2 onclick="toggleContent('room2')">Room 2: None 🐍</h2>
+            <h2 onclick="toggleContent('room2')">Room 2: Entry Point 🔐</h2>
             <div id="room2" class="collapsible-content">
-                <p><strong>Description:</strong> None.</p>
-                <p><strong>Challenge Approach:</strong> None.</p>
+                <p><strong>Description:</strong> Navigate through the access control points to gain access to the vulnerable system.</p>
+                <p><strong>Challenge Approach:</strong> Exploit the security vulnerabilities to escalate privileges and access the admin panel.</p>
                 <code>
-                    # Example SQL Injection Payload
-                    username: ' OR '1'='1
-                    password: ' OR '1'='1
+                    # Sample Commands
+                    nmap -sC -sV 10.10.10.20
+                    sqlmap -u "http://10.10.10.20/login.php?username=admin&password=admin" --risk=3 --level=5
                 </code>
-                <p><strong>Solution:</strong> None.</p>
+                <p><strong>Solution:</strong> None:</p>
                 <code>
-                    # Solution Commands
-                    curl -X POST -d "username=' OR '1'='1&password=' OR '1'='1" http://target.com/login
+                    # Example XSS Payload
+                    test
                 </code>
 
                 <!-- Adding an image for room 2 demonstration -->
@@ -237,21 +286,14 @@
                 </div>
             </div>
         </div>
+
+        <!-- Add more room sections as needed -->
     </div>
 
-    <!-- JavaScript for Toggling Content and Scaling -->
     <script>
-        function toggleContent(roomId) {
-            var content = document.getElementById(roomId);
-            var roomSection = content.closest('.room-section');
-            
-            if (content.style.display === 'block') {
-                content.style.display = 'none';
-                roomSection.classList.remove('open'); // Remove 'open' class to return to normal size
-            } else {
-                content.style.display = 'block';
-                roomSection.classList.add('open'); // Add 'open' class to scale up the section
-            }
+        function toggleContent(room) {
+            const content = document.getElementById(room);
+            content.style.display = (content.style.display === "none" || content.style.display === "") ? "block" : "none";
         }
     </script>
 </body>
