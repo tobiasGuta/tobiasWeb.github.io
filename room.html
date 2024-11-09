@@ -249,6 +249,23 @@
                 padding: 8px;
             }
         }
+        .solution-button {
+            background-color: transparent;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            padding: 10px 20px;
+            margin-top: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: color 0.4s, background-color 0.4s;
+            box-shadow: 0 0 5px #00ff00;
+        }
+
+        .solution-button:hover {
+            color: #1c1c1c;
+            background-color: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+        }
     </style>
 </head>
 <body>
@@ -267,77 +284,76 @@
 
     <!-- Content with Room Sections -->
     <div class="content">
-        <!-- Room 1 -->
-        <div class="room-section">
-            <h2 onclick="toggleContent('room1')">Room 1: Summit 🚀</h2>
-            <div id="room1" class="collapsible-content">
-                <p><strong>Description:</strong> Can you chase a simulated adversary up the Pyramid of Pain until they finally back down?</p>
-                <p><strong>Challenge Approach:</strong> The tester will be attempting to execute malware samples on a simulated internal user workstation. At the same time, you will need to configure PicoSecure's security tools to detect and prevent the malware from executing.</p>
-                <div class="question-section" style="margin-top: 60px;">
-                    <p><strong>Question:</strong> What is the first flag you receive after successfully detecting sample1.exe?</p>
-                </div>
-
-                <div class="solution-section" id="solution-room1" style="display: none;">
-                    <p><strong>Solution:</strong></p>
-                    <pre><code>none</code></pre>
-                </div>
-
-                <!-- Toggle Button for Solution -->
-                <button onclick="toggleSolution('room1')">Show Solution</button>
-
-                <!-- Adding an image for room 1 demonstration -->
-                <div>
-                    <h3>Example Demonstration for Room 1:</h3>
-                    <img src="https://via.placeholder.com/500" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-                </div>
-            </div>
+<!-- Room 1 -->
+<div class="room-section">
+    <h2 onclick="toggleContent('room1')">Room 1: Summit 🚀</h2>
+    <div id="room1" class="collapsible-content">
+        <p><strong>Description:</strong> Can you chase a simulated adversary up the Pyramid of Pain until they finally back down?</p>
+        <p><strong>Challenge Approach:</strong> The tester will be attempting to execute malware samples on a simulated internal user workstation. At the same time, you will need to configure PicoSecure's security tools to detect and prevent the malware from executing.</p>
+        <div class="question-section" style="margin-top: 60px;">
+            <p><strong>Question:</strong> What is the first flag you receive after successfully detecting sample1.exe?</p>
         </div>
 
-        <!-- Room 2 -->
-        <div class="room-section">
-            <h2 onclick="toggleContent('room2')">Room 2: Defcon 🛡️</h2>
-            <div id="room2" class="collapsible-content">
-                <p><strong>Description:</strong> Explore and analyze traffic from a network-based challenge with real-time logs.</p>
-                <p><strong>Challenge Approach:</strong> Investigate and identify network traffic anomalies and provide the appropriate solutions based on your analysis.</p>
-                <div class="question-section">
-                    <p><strong>Question:</strong> Which protocol was used for the malicious activity detected in the logs?</p>
-                </div>
+        <div class="solution-section" id="solution-room1" style="display: none;">
+            <p><strong>Solution:</strong></p>
+            <pre><code>none</code></pre>
+        </div>
 
-                <div class="solution-section" id="solution-room2" style="display: none;">
-                    <p><strong>Solution:</strong></p>
-                    <pre><code>TCP</code></pre>
-                </div>
+        <!-- Toggle Button for Solution -->
+        <button class="solution-button" onclick="toggleSolution('room1', event)">Show Solution</button>
 
-                <!-- Toggle Button for Solution -->
-                <button onclick="toggleSolution('room2')">Show Solution</button>
-
-                <!-- Adding an image for room 2 -->
-                <div>
-                    <h3>Example Demonstration for Room 2:</h3>
-                    <img src="https://via.placeholder.com/500" alt="Room 2 Demonstration" style="max-width: 100%; height: auto;">
-                </div>
-            </div>
+        <!-- Adding an image for room 1 demonstration -->
+        <div>
+            <h3>Example Demonstration for Room 1:</h3>
+            <img src="https://via.placeholder.com/500" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
         </div>
     </div>
+</div>
 
-    <script>
-        function toggleContent(room) {
-            var content = document.getElementById(room);
-            content.style.display = (content.style.display === 'none' || content.style.display === '') ? 'block' : 'none';
+<!-- Room 2 -->
+<div class="room-section">
+    <h2 onclick="toggleContent('room2')">Room 2: Defcon 🛡️</h2>
+    <div id="room2" class="collapsible-content">
+        <p><strong>Description:</strong> Explore and analyze traffic from a network-based challenge with real-time logs.</p>
+        <p><strong>Challenge Approach:</strong> Investigate and identify network traffic anomalies and provide the appropriate solutions based on your analysis.</p>
+        <div class="question-section">
+            <p><strong>Question:</strong> Which protocol was used for the malicious activity detected in the logs?</p>
+        </div>
+
+        <div class="solution-section" id="solution-room2" style="display: none;">
+            <p><strong>Solution:</strong></p>
+            <pre><code>TCP</code></pre>
+        </div>
+
+        <!-- Toggle Button for Solution -->
+        <button class="solution-button" onclick="toggleSolution('room2', event)">Show Solution</button>
+
+        <!-- Adding an image for room 2 -->
+        <div>
+            <h3>Example Demonstration for Room 2:</h3>
+            <img src="https://via.placeholder.com/500" alt="Room 2 Demonstration" style="max-width: 100%; height: auto;">
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleContent(room) {
+        var content = document.getElementById(room);
+        content.style.display = (content.style.display === 'none' || content.style.display === '') ? 'block' : 'none';
+    }
+
+    function toggleSolution(room, event) {
+        var solution = document.getElementById("solution-" + room);
+        var button = event.target;
+
+        if (solution.style.display === 'none' || solution.style.display === '') {
+            solution.style.display = 'block';
+            button.textContent = "Hide Solution";
+        } else {
+            solution.style.display = 'none';
+            button.textContent = "Show Solution";
         }
-
-        function toggleSolution(room) {
-            var solution = document.getElementById("solution-" + room);
-            var button = event.target;
-
-            if (solution.style.display === 'none' || solution.style.display === '') {
-                solution.style.display = 'block';
-                button.textContent = "Hide Solution";
-            } else {
-                solution.style.display = 'none';
-                button.textContent = "Show Solution";
-            }
-        }
-    </script>
+    }
+</script>
 </body>
 </html>
