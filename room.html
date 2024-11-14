@@ -353,7 +353,7 @@
             <img src="email4.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
             <p><strong>Solution:</strong> First, we need to run a scan on the virus sample sampl4[.]exe to see what we can find.</p>
             <img src="registrac.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> This virus does even worse things, such as modifying the registry at HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\Real-Time Protection. This is the key for Windows Defender's Real-Time Protection. By tampering with it, the virus disables Windows Defender, preventing it from alerting the user to any malicious activity.</p>
+            <p><strong>Solution:</strong> This virus does even worse things, such as modifying the registry at Microsoft\Windows Defender\Real-Time Protection. This is the key for Windows Defender's Real-Time Protection. By tampering with it, the virus disables Windows Defender, preventing it from alerting the user to any malicious activity.</p>
             <img src="sigmarule.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
             <p><strong>Solution:</strong> Let's create a Sigma rule to detect this type of event, Sigma rules are a standardized, flexible way to define detection logic for various security events across different security platforms. They are designed to be platform-agnostic, meaning they can be used with any SIEM (Security Information and Event Management) system to identify suspicious activities.</p>
         </div>
