@@ -404,23 +404,37 @@
 
 <!-- Room 2 -->
 <div class="room-section">
-    <h2 onclick="toggleContent('room2')">Room 2: Defcon 🛡️</h2>
+    <h2 onclick="toggleContent('room2')">Tactical Detection 🛡️</h2>
     <div id="room2" class="collapsible-content">
-        <p><strong>Description:</strong> Explore and analyze traffic from a network-based challenge with real-time logs.</p>
-        <p><strong>Challenge Approach:</strong> Investigate and identify network traffic anomalies and provide the appropriate solutions based on your analysis.</p>
+        <img src="tacticaldetection.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p><strong>Description:</strong> understand the mindset behind choosing a tactical approach in alerting and detecting threats, IOAs, IOCs, etc.</p>
+        <p><strong>Challenge Approach:</strong> the most efficient ways to bolster an organization's security posture by leveraging detection mechanisms and walking the user through setting them up tactically. This should serve as a baseline where the user will be able to learn the basics, implement them in their functions, and make them truly their own.</p>
         <div class="question-section">
-            <p><strong>Question:</strong> Which protocol was used for the malicious activity detected in the logs?</p>
+            <p><strong>Setting up a Basic Tripwire</strong></p>
         </div>
 
         <div class="solution-section" id="solution-room2" style="display: none;">
-            <p><strong>Solution:</strong></p>
-            <pre><code>TCP</code></pre>
-            
-            <!-- Adding an image for room 2 demonstration inside the solution -->
-            <div>
-                <h3>Example Demonstration for Room 2:</h3>
-                <img src="https://via.placeholder.com/500" alt="Room 2 Demonstration" style="max-width: 100%; height: auto;">
-            </div>
+            <p><strong>Info:</strong> Open The local security policy application, then navigate to Security Settings → Local Policies → Audit Policy and Open the Audit object access policy.</p>
+            <img src="localapplication.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Info:</strong> Check the boxes next to Success and Failure, then click Apply and OK to ensure that all access attempts—whether successful or not—will be logged. Once you're done, you can close the Local Security Policy application.</p>
+            <img src="succandfai.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Info:</strong> After configuring the Local Security Policy, monitoring won’t start automatically. We need to specify which files or folders to track. To set this up, right-click on the desktop, choose New → Text Document, and name the file Secret Document.</p>
+            <img src="note.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Infor:</strong>  Then, right-click the file, select Properties → Security → Advanced → Auditing to set up monitoring for this document in our tripwire configuration</p>
+            <img src="properties.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Info:</strong> This is where we will create and specify an audit entry for our Secret Document. Click on Add → Select a principal.</p>
+            <img src="propertiesname.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Info:</strong> This pop-up allows us to specify which users or groups we want to be notified about when they access the Secret Document. While you can be very specific, for this example, we’ll keep it simple. In the text box, type "Everyone" and press Enter to monitor all users.</p>
+            <img src="propn.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <img src="donevery.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Info:</strong> The Principal should now show "Everyone," and the permissions will allow you to specify which actions to audit on the Secret Document. For a broader selection, click Show advanced permissions in the top-right corner. Once you're done, click OK, then Apply and OK on the Audit entry page, and finally, click OK on the Secret Document properties. If you're tracking multiple files, it’s recommended to organize them into folders for easier auditing. The setup is now complete, and auditing is active for the Secret Document. Any access attempts will be logged in the Security event log with Event ID 4663, which can be filtered and used to generate alerts, allowing analysts to quickly detect when a tripwire is triggered, thereby enhancing the organization's security.</p>
+            <img src="done.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Detecting:</strong> Now it's time to detect it.</p>
+            <p><strong>Info:</strong> Let's open this file using CMD.</p>
+            <img src="notcm.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Info:</strong> Now, let's use the FullEventLogView application to view the logs.</p>
+            <img src="loappl.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Lessons Learned:</strong> Applying tactical detection is important because it enables proactive monitoring of system activities and potential security threats in real-time. By auditing access to sensitive files, such as the Secret Document, and logging every interaction with them, you can quickly identify suspicious or unauthorized behavior. This helps in detecting potential security breaches early, enabling swift response and mitigation.</p>
         </div>
 
         <!-- Toggle Button for Solution -->
