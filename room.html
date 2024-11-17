@@ -478,6 +478,55 @@
     </div>
 </div>
 
+<!-- Room 4 -->
+<div class="room-section">
+    <h2 onclick="toggleContent('room4')">Tryhackme: Trooper 
+        <img src="https://flagcdn.com/w40/cn.png" alt="China Flag" width="20" height="15">
+    </h2>
+    <div id="room4" class="collapsible-content">
+        <img src="grouptropper.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p><strong>Description:</strong> A multinational technology company has been the target of several cyber attacks in the past few months. The attackers have been successful in stealing sensitive intellectual property and causing disruptions to the company's operations. A threat advisory report about similar attacks has been shared, and as a CTI analyst, your task is to identify the Tactics, Techniques, and Procedures (TTPs) being used by the Threat group and gather as much information as possible about their identity and motive. .</p>
+        <p><strong>Challenge Approach:</strong> you will utilise the OpenCTI platform as well as the MITRE ATT&CK navigator</p>
+        <div class="question-section">
+            <p><strong>Let's do it</strong></p>
+        </div>
+
+        <div class="solution-section" id="solution-room4" style="display: none;">
+            <p><strong>Question:</strong> What kind of phishing campaign does APT X use as part of their TTPs?</p>
+            <embed src="APT X_USBFerry.pdf" type="application/pdf" width="100%" height="500px">
+            <p style="font-family: 'Courier New', monospace; color: #00ff00; text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;">
+                If the PDF doesn’t display, 
+                <a href="APT X_USBFerry.pdf" download style="color: #00ff00; text-decoration: none;">
+                    click here to download it
+                </a>
+                <span class="cursor">|</span>.
+            </p>
+            <p><strong>Question:</strong> What is the name of the malware used by APT X?</p>
+            <p><strong>Question:</strong>What is the malware's STIX ID?</p>
+            <img src="usbb1.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <img src="usbb2.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Question:</strong>With the use of a USB, what technique did APT X use for initial access?</p>
+            <img src="subb3.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Question:</strong>What is the identity of APT X? </p>
+            <img src="ggrroup.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Question:</strong>On OpenCTI, how many Attack Pattern techniques are associated with the APT?</p>
+            <img src="attackpattern.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Question:</strong>What is the name of the tool linked to the APT?</p>
+            <img src="togroup.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Question:</strong>Load up the Navigator. What is the sub-technique used by the APT under Valid Accounts?</p>
+            <img src="locgroup.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Question:</strong>Under what Tactics does the technique above fall?</p>
+            <img src="iatac.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <img src="tecgroup.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Question:</strong>What technique is the group known for using under the tactic Collection?</p>
+            <img src="autgroup.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        </div>
+
+        <!-- Toggle Button for Solution -->
+        <button class="solution-button" onclick="toggleSolution('room4', event)">Show Solution</button>
+    </div>
+</div>
+
 <script>
     function toggleContent(room) {
         var content = document.getElementById(room);
