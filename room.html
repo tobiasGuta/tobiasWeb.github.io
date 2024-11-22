@@ -567,6 +567,20 @@
                 <span class="prompt">$</span> ping -c 5 VICTIM-IP
             </div>
             <img src="pin2.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Info:</strong>  Run Snort in Logger Mode.</p>
+            <p><strong>Important:</strong> Before diving into generating and analyzing logs, it's crucial to understand Linux file ownership and permissions. Snort requires superuser (root) privileges to sniff network traffic. When you run Snort using the sudo command, any log files it creates will be owned by the root account. As a result, you'll need root privileges to access and analyze these log files.</p>
+            <p><strong>Info:</strong>  Logging with parameter "-l".</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo snort -dev -l .
+            </div>
+            <p><strong>Info:</strong> Snort captures and logs packets to a specified directory, which can be set in the snort.config file. Alternatively, you can use the -l option to specify a custom directory for log files. While the default log directory is ideal for ongoing monitoring, the -l option is particularly handy for testing scenarios, For example, using -l . in the command saves the logs directly to the current working directory.</p>
+            <p><strong>Inportant:</strong> Note that the log file names will be different in your case. </p>
+            <div class="terminal">
+                <span class="prompt">$</span> ls .        
+                <br>
+                <br>
+                snort.log.123456789
+            </div>
         </div>
 
         <!-- Toggle Button for Solution -->
