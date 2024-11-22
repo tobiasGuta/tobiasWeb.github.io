@@ -581,6 +581,92 @@
                 <br>
                 snort.log.123456789
             </div>
+            <p><strong>Info:</strong> Logging with parameter "-K ASCII"</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo snort -dev -K ASCII -l .
+            </div>
+            <p><strong>Inportant:</strong> Note that the log file names will be different in your case. </p>
+            <div class="terminal">
+                <span class="prompt">$</span> ls .        
+                <br>
+                <br>
+                192.168.43.112  172.16.87.25  snort.log.123456789
+            </div>
+            <p><strong>Info:</strong> On examining the generated folders, you'll notice that the logs are stored in an organized, categorized format and saved as ASCII files. This means the logs can be easily read and analyzed directly, without requiring a Snort instance to interpret them.</p>
+            <p><strong>Info:</strong> In ASCII mode, logs are stored in a human-readable format and split into multiple files, making it easy to view them with a simple text editor. On the other hand, logs in binary format are not readable by humans and must be analyzed using tools like Snort or tcpdump to make sense of the data.</p>
+            <p><strong>Info:</strong> Reading generated logs with parameter "-r"</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo snort -r snort.log.123456789       
+                <br>
+                <br>
+                Running in packet dump mode
+
+                        --== Initializing Snort ==--
+                Initializing Output Plugins!
+                pcap DAQ configured to read-file.
+                Acquiring network traffic from "snort.log.123456789".
+
+                        --== Initialization Complete ==--
+                ...
+                Commencing packet processing (pid=3025)
+                WARNING: No preprocessors configured for policy 0.
+                12/02-08:15:05.567834 10.0.0.5 -> 8.8.8.8
+                UDP TTL:128 TOS:0x10 ID:10045 IpLen:20 DgmLen:72
+                SrcPort:55444 DstPort:53  
+                DNS Query: www.example.com
+                =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+                WARNING: No preprocessors configured for policy 0.
+                12/02-08:16:12.789654 192.168.1.101 -> 93.184.216.34
+                TCP TTL:64 TOS:0x0 ID:34560 IpLen:20 DgmLen:52 DF
+                Seq:123456789  Ack:987654321 Win:8192
+                Flags: S  SYN Packet
+                ===============================================================================
+                Packet I/O Totals:
+                Received:           75
+                Analyzed:           75 (100.000%)
+                    Dropped:            0 (  0.000%)
+                Filtered:            0 (  0.000%)
+                Outstanding:            0 (  0.000%)
+                Injected:            0
+                ===============================================================================
+                Breakdown by protocol (includes rebuilt packets):
+                ...
+                    Total:           75
+                ===============================================================================
+                Snort exiting
+            </div>
+            <p><strong>Inportant:</strong> It's important to note that Snort can process and interpret binary-format logs, which can also be viewed using tools like tcpdump and Wireshark. However, if you generate logs using the -K ASCII parameter, Snort will be unable to read them. As shown in the output above, Snort successfully read and displayed the log file in the same way it would when operating in sniffer mode.</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo tcpdump -r snort.log.123456789 -ntc 10       
+                <br>
+                <br>
+                reading from file snort.log.123456789, link-type EN10MB (Ethernet)
+                IP 10.1.2.3 > 192.168.0.5: TCP 12345 > 80 [SYN] Seq=1 Ack=0 Win=65535 Len=0
+                IP 192.168.0.5 > 10.1.2.3: TCP 80 > 12345 [SYN, ACK] Seq=1 Ack=2 Win=8192 Len=0
+                IP 10.1.2.3 > 192.168.0.5: TCP 12345 > 80 [ACK] Seq=2 Ack=1 Win=65535 Len=0
+                IP 192.168.0.5 > 10.1.2.3: HTTP GET /index.html HTTP/1.1
+                IP 10.1.2.3 > 192.168.0.5: HTTP 200 OK
+                IP 192.168.0.5 > 10.1.2.3: TCP 80 > 12345 [FIN, ACK] Seq=1000 Ack=2000 Win=8192 Len=0
+                IP 10.1.2.3 > 192.168.0.5: TCP 12345 > 80 [FIN, ACK] Seq=2000 Ack=1001 Win=65535 Len=0
+                IP 192.168.0.5 > 10.1.2.3: UDP 12345 > 53 Len=50
+                IP 10.1.2.3 > 192.168.0.5: UDP 53 > 12345 Len=50
+                IP 192.168.0.5 > 10.1.2.3: TCP 80 > 12345 [RST] Seq=1000 Win=0 Len=0
+            </div>
+            <p><strong>Info:</strong> The -r parameter enables users to apply filters to binary log files. By using this parameter along with Berkeley Packet Filters (BPF), you can narrow down the processed logs to view only specific packets that match your filter criteria.</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo snort -r myfile.log -X
+                <br>
+                <span class="prompt">$</span> sudo snort -r myfile.log icmp
+                <br>
+                <span class="prompt">$</span> sudo snort -r myfile.log tcp
+                <br>
+                <span class="prompt">$</span> sudo snort -r myfile.log 'udp and port 53'
+            </div>
+            <p><strong>Inportant:</strong> The result will be similar to the previous one, but it will display only packets that match the specified protocol. You can also control how many packets to process by using the -n parameter. For example, the following command will process just the first 10 packets from the log: </p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo snort -dvr logname.log -n 10
+            </div>
+            <p><strong>Resources about BPF:</strong> https://tinyurl.com/42kymtty <br>https://tinyurl.com/2k4ha737<br>https://tinyurl.com/3nx43hpp</p>
         </div>
 
         <!-- Toggle Button for Solution -->
