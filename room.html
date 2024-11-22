@@ -266,6 +266,18 @@
             background-color: #00ff00;
             box-shadow: 0 0 10px #00ff00;
         }
+        .terminal {
+      background-color: #1e1e1e; /* Dark terminal background */
+      color: #d4d4d4; /* Light text for contrast */
+      padding: 15px;
+      border-radius: 8px;
+      font-family: 'Courier New', Courier, monospace; /* Monospace font for terminal look */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+      overflow-x: auto; /* Handles long commands gracefully */
+    }
+    .prompt {
+      color: #00ff00; /* Green color for the terminal prompt */
+    }
     </style>
 </head>
 <body>
@@ -524,6 +536,40 @@
 
         <!-- Toggle Button for Solution -->
         <button class="solution-button" onclick="toggleSolution('room4', event)">Show Solution</button>
+    </div>
+</div>
+
+<!-- Room 5 -->
+<div class="room-section">
+    <h2 onclick="toggleContent('room5')">Snort - Intrusion Detection System (IDS) and an Intrusion Prevention System (IPS) 🐷 </h2>
+    <div id="room5" class="collapsible-content">
+        <img src="snort.png" alt="Room 5 Demonstration" style="max-width: 100%; height: auto;">
+        <p><strong>Description:</strong> Snort is a powerful open-source network intrusion detection system (IDS) and intrusion prevention system (IPS) developed by Martin Roesch and maintained by Cisco Systems. It analyzes network traffic in real-time, identifying suspicious patterns or behaviors that may indicate a security threat. With its extensive rule-based language, Snort can detect attacks, log malicious traffic, and even block it when configured as an IPS.</p>
+        <p><strong>Challenge Approach:</strong> Setting up Snort</p>
+        <div class="question-section">
+            <p><strong>Let's do it</strong></p>
+        </div>
+
+        <div class="solution-section" id="solution-room5" style="display: none;">
+            <p><strong>Info:</strong>Let's start by installing Snort. You can find the information on this website: snort[.]org.</p>
+            <p><strong>Installation:</strong> If you're using Linux, you can install Snort by running the following command:</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo apt install snort -y
+            </div>
+            <p><strong>Info:</strong>  Setting up Snort using the -X option for full packet dump mode.</p>
+            <p><strong>Info:</strong> Sending a ping request to the machine to check if Snort is able to detect it</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo snort -X
+            </div>
+            <img src="pin1.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <div class="terminal">
+                <span class="prompt">$</span> ping -c 5 VICTIM-IP
+            </div>
+            <img src="pin2.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        </div>
+
+        <!-- Toggle Button for Solution -->
+        <button class="solution-button" onclick="toggleSolution('room5', event)">Show Solution</button>
     </div>
 </div>
 
