@@ -666,7 +666,80 @@
             <div class="terminal">
                 <span class="prompt">$</span> sudo snort -dvr logname.log -n 10
             </div>
-            <p><strong>Resources about BPF:</strong> https://tinyurl.com/42kymtty <br>https://tinyurl.com/2k4ha737<br>https://tinyurl.com/3nx43hpp</p>
+            <p><strong>Resources about BPF:</strong> https://tinyurl.com/42kymtty <br>https://tinyurl.com/2k4ha737<br>https://tinyurl.com/3nx43hpp<br></p>
+            <p><strong>Important:</strong> IDS/IPS mode helps you manage the traffic according to user-defined rules, (N)IDS/IPS mode depends on the rules and configuration.</p>
+            <p><strong>Info:</strong> NIDS mode parameters</p>
+            <p><strong>paramater -c:</strong> Defining the configuration file.</p>
+            <p><strong>paramater -T:</strong> Testing the configuration file.</p>
+            <p><strong>paramater -N:</strong> Disable logging.</p>
+            <p><strong>paramater -D:</strong> Background mode.</p>
+            <p><strong>paramater -A:</strong> Alert modes;<br>full: Full alert mode, providing all possible<br>information about the alert. This one also is the default mode; once you use -A and don't specify any mode, snort uses this mode.<br>fast:  Fast mode shows the alert message, timestamp, source and destination IP, along with port numbers.<br>console: Provides fast style alerts on the console screen.<br>cmg: CMG style, basic header details with payload in hex and text format.<br>none: Disabling alerting<br></p>
+            <p><strong>Info:</strong> Once you start running IDS/IPS mode, you need to use rules.</p>
+            <p><strong>Rule ICMP:</strong> pre-defined ICMP rule as an example</p>
+            <div class="terminal">
+                <span class="prompt"></span> alert icmp any any <> any any  (msg: "ICMP Packet Found"; sid: 100001; rev:1;)
+            </div>
+            <p><strong>Info:</strong> This rule is located in "/etc/snort/rules/local.rules"</p>
+            <p><strong>Info:</strong> Snort generates an "alert" file whenever it detects traffic that matches one of its alert rules. Additionally, when you run Snort in IPS (Intrusion Prevention System) or IDS (Intrusion Detection System) mode, its sniffing and logging functions operate in a semi-passive manner by default. To fully utilize these features, you can enable them explicitly using various parameters, such as:</p>
+            <p><strong>paramaters:</strong><br>-i: Specify the network interface to monitor.<br>-v: Run in verbose mode to display packet details.<br>-d: Decode application layer data.<br>-e: Include link-layer information.<br>-X: Display full packet details in hexadecimal and ASCII.<br>-l: Define the logging directory.<br>-K ASCII: Save logs in plain text format for easier reading.<br></p>
+            <p><strong>Info:</strong> IDS/IPS mode with parameter "-N" (disable logging)</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo snort -c /etc/snort/snort.conf -N
+            </div>
+            <p><strong>Inportant:</strong> When you run Snort with specific parameters like -v (verbosity) or -X (full packet dump), the requested information will be displayed directly in the terminal. However, this means Snort won't save any logs to the designated log folder. Essentially, enabling these options redirects the output to the console instead of creating log files.</p>
+            <p><strong>Info:</strong> IDS/IPS mode with parameter "-D" background mode</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo snort -c /etc/snort/snort.conf -D
+            </div>
+            <p><strong>Inportant:</strong> When you run Snort with specific parameters like -v (verbosity) or -X (full packet dump) with packet logger mode (-l) you will still have the logs in the logs folder, but there will be no output in the console.</p>
+            <p><strong>Info:</strong> Background mode will create a process, and you can check this process by executing this command in Linux:</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo snort -c /etc/snort/snort.conf -Dps -ef | grep snort
+                <br>
+                <br>
+                root        1030    1800  0 02:05 ?        00:00:00 snort -c /etc/snort/snort.conf -D
+            </div>
+            <p><strong>Info:</strong> If you want to kill this process, you need to execute the following command:</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo kill 1030
+            </div>
+            <p><strong>Important:</strong> It is not recommended to use this mode unless you have a working knowledge of Snort and stable configuration.</p>
+            <p><strong>Info:</strong> IDS/IPS mode with parameter "-A console" </p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo snort -c /etc/snort/snort.conf -A console
+            </div>
+            <p><strong>Info:</strong> IDS/IPS mode with parameter "-A cmg"</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo snort -c /etc/snort/snort.conf -A cmg
+            </div>
+            <p><strong>cmg mode:</strong> Cmg mode provides full packet details along with rule information.</p>
+            <p><strong>Info:</strong> IDS/IPS mode with parameter "-A fast"</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo snort -c /etc/snort/snort.conf -A fast
+            </div>
+            <p><strong>fast mode:</strong> fast style alerts contain summary information on the action like direction and alert header.</p>
+            <p><strong>Info:</strong> IDS/IPS mode with parameter "-A full"</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo snort -c /etc/snort/snort.conf -A full
+            </div>
+            <p><strong>full mode:</strong> full style alerts contain all possible information on the action.</p>
+            <p><strong>Info:</strong> IDS/IPS mode with parameter "-A none"</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo snort -c /etc/snort/snort.conf -A none
+            </div>
+            <p><strong>Important:</strong> here is no alert file. Snort only generated the log file.</p>
+            <p><strong>Info:</strong> IDS/IPS mode: "Using rule file without configuration file"</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo snort -c /etc/snort/rules/local.rules -A console
+            </div>
+            <p><strong>Info:</strong> IPS mode and dropping packets</p>
+            <p><strong>Note:</strong> To activate Snort in IPS mode, you can use the -Q parameter along with --daq afpacket. Alternatively, you can enable IPS mode by modifying the snort.conf file. The Data Acquisition (DAQ) modules are essential for IPS functionality. Using the afpacket module allows Snort to act as an IPS. For example, specify the interfaces like this: -i eth0:eth1. It's important to note that Snort in IPS mode requires at least two network interfaces—one for incoming traffic and another for outgoing traffic.</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo snort -c /etc/snort/snort.conf -q -Q --daq afpacket -i eth0:eth1 -A console
+                <br>
+                <br>
+                10/14-02:30:50.80000  [Drop] [**] [1:1000001:0] ICMP Packet found [**] [Priority: 0] {ICMP} 192.180.100.15 -> 192.180.100.114
+            </div>
         </div>
 
         <!-- Toggle Button for Solution -->
