@@ -48,6 +48,11 @@ header {
     margin: 0 10px;
 }
 
+h1 {
+    font-size: 20px; /* Adjust the size to your preference */
+}
+
+
 h2 {
     color: #2AF7A5;
 }
