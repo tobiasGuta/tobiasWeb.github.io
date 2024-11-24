@@ -10,7 +10,7 @@
     <style>
         /* General page styling */
         body {
-            background-color: #000; /* Jet black background for a darker vibe */
+            background-color: #282A36; /* Jet black background for a darker vibe */
             color: #33ff33; /* Neon green text for a hacker effect */
             font-family: 'Courier New', monospace; /* Monospace font for terminal look */
             line-height: 1.6;
@@ -94,8 +94,8 @@
 
         /* Preformatted text (public key) styling */
         pre {
-            background-color: #111; /* Very dark background for key block */
-            color: #00ff00; /* Bright neon green text for the key */
+            background-color: #282A36; /* Very dark background for key block */
+            color: white; /* Bright neon green text for the key */
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.5); /* Green glow and red accents */
@@ -111,23 +111,7 @@
             max-height: 300px; /* Set maximum height to avoid excessive scrolling */
             overflow-y: auto; /* Vertical scrolling if the content exceeds the set height */
         }
-
-        /* Pulse animation for the public key box */
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 20px rgba(0, 255, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.5);
-            }
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 0 40px rgba(0, 255, 0, 1), 0 0 60px rgba(255, 0, 0, 0.7);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 20px rgba(0, 255, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.5);
-            }
-        }
-
+        
         /* Footer styling */
         footer {
             margin-top: 30px;
@@ -171,54 +155,6 @@
             transform: scale(1.1);
         }
 
-        /* "Big Brother" warning message styling */
-        #big-brother {
-            position: fixed;
-            bottom: 15px;
-            left: 60%;
-            transform: translateX(-50%);
-            color: #ff0000; /* Blood red color for intensity */
-            font-size: 1rem;
-            text-transform: uppercase;
-            animation: pulse-red 1s infinite alternate;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000, 0 0 50px #ff0000;
-            z-index: 90;
-        }
-
-        /* Pulse animation for Big Brother text */
-        @keyframes pulse-red {
-            0% {
-                transform: scale(1);
-                text-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000, 0 0 50px #ff0000;
-            }
-            50% {
-                transform: scale(1.1);
-                text-shadow: 0 0 30px #ff0000, 0 0 60px #ff0000;
-            }
-            100% {
-                transform: scale(1);
-                text-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000, 0 0 50px #ff0000;
-            }
-        }
-
-        /* Media Queries for responsiveness */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem; /* Smaller font for header */
-            }
-            h2 {
-                font-size: 1.5rem; /* Smaller font for subheading */
-            }
-            pre {
-                font-size: 0.9rem; /* Adjust font size for better readability */
-                width: 95%;
-            }
-            .intro-btn {
-                font-size: 14px;
-                padding: 8px 16px;
-            }
-        }
         a {
     text-transform: none; /* Ensures text is not capitalized */
 }
@@ -292,8 +228,6 @@ cEU=
     <footer>
         <p><i id="copy-icon" class="fas fa-copy" onclick="copyToClipboard()"> Copy</i></p>
     </footer>
-        <!-- Big Brother warning message -->
-        <div id="big-brother">Big Brother is watching you...</div>
 
     <script>
         function copyToClipboard() {
