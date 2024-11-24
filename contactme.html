@@ -123,6 +123,11 @@
         form.reset();
       }
     };
+
+    // Reset the form when the page is loaded after form submission
+    window.onload = () => {
+      document.getElementById('fs-frm').reset();
+    };
   </script>
 </body>
 </html>
