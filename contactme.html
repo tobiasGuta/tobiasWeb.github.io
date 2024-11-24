@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="favicon-16x16.png" type="image/x-icon">
   <title>Contact Me</title>
   <style>
     body {
@@ -26,6 +25,45 @@
       text-transform: uppercase;
       letter-spacing: 2px;
       font-weight: bold;
+    }
+
+    .intro-btn {
+      background: transparent;
+      color: #fff;
+      border: 2px solid transparent;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 20px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .intro-btn i {
+      margin-right: 8px;
+    }
+
+    /* Normal link hover */
+    .intro-btn:hover {
+      color: #2AF7A5;
+      animation: pulse 1s infinite;
+      box-shadow: 0 0 10px #2AF7A5, 0 0 20px #2AF7A5, 0 0 30px #2AF7A5; /* Glowing effect */
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
     }
 
     form {
@@ -97,6 +135,9 @@
   </style>
 </head>
 <body>
+  <!-- Intro Button -->
+  <a href="index.html" class="intro-btn"><i class="fas fa-home"></i> Intro</a>
+
   <h1>Contact Me</h1>
   <form id="fs-frm" name="simple-contact-form" accept-charset="utf-8" action="https://formspree.io/f/xqakddkd" method="post">
     <fieldset id="fs-frm-inputs">
