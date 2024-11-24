@@ -6,6 +6,7 @@
     <title>My Public PGP Key</title>
     <!-- Add Font Awesome for the clipboard icon -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="favicon-16x16.png" type="image/x-icon">
     <style>
         /* General page styling */
         body {
@@ -173,16 +174,16 @@
         /* "Big Brother" warning message styling */
         #big-brother {
             position: fixed;
-            bottom: 10px;
-            left: 50%;
+            bottom: 15px;
+            left: 60%;
             transform: translateX(-50%);
             color: #ff0000; /* Blood red color for intensity */
-            font-size: 1.5rem;
+            font-size: 1rem;
             text-transform: uppercase;
             animation: pulse-red 1s infinite alternate;
             letter-spacing: 2px;
             text-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000, 0 0 50px #ff0000;
-            z-index: 100;
+            z-index: 90;
         }
 
         /* Pulse animation for Big Brother text */
@@ -291,9 +292,8 @@ cEU=
     <footer>
         <p><i id="copy-icon" class="fas fa-copy" onclick="copyToClipboard()"> Copy</i></p>
     </footer>
-
-    <!-- Big Brother warning message -->
-    <div id="big-brother">Big Brother is watching you...</div>
+        <!-- Big Brother warning message -->
+        <div id="big-brother">Big Brother is watching you...</div>
 
     <script>
         function copyToClipboard() {
