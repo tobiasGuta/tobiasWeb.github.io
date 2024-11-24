@@ -8,16 +8,20 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         /* General page styling */
-        body {
-            background-color: #000; /* Jet black background for a darker vibe */
-            color: #33ff33; /* Neon green text for a hacker effect */
-            font-family: 'Courier New', monospace; /* Monospace font for terminal look */
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-            overflow: hidden;
-        }
+        html, body {
+    width: 100%; /* Ensure the entire page uses 100% width */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+body {
+    background-color: #000;
+    color: #33ff33;
+    font-family: 'Courier New', monospace;
+    line-height: 1.6;
+    text-align: center;
+}
 
         /* Header styling */
         header {
@@ -93,23 +97,21 @@
 
         /* Preformatted text (public key) styling */
         pre {
-            background-color: #111; /* Very dark background for key block */
-            color: #00ff00; /* Bright neon green text for the key */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.5); /* Green glow and red accents */
-            word-wrap: break-word;
-            white-space: pre-wrap;
-            font-size: 1rem; /* Adjusted for better readability */
-            line-height: 1.4;
-            margin: 20px auto;
-            width: 90%; /* More centered */
-            animation: pulse 2s infinite; /* Subtle pulsing effect */
-            max-width: 100%; /* Prevents it from stretching too much */
-            overflow-x: auto; /* Horizontal scrolling if needed */
-            max-height: 300px; /* Set maximum height to avoid excessive scrolling */
-            overflow-y: auto; /* Vertical scrolling if the content exceeds the set height */
-        }
+    background-color: #111;
+    color: #00ff00;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.5);
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    font-size: 1rem;
+    line-height: 1.4;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
+    overflow-y: auto; /* Allow vertical scrolling */
+}
 
         /* Pulse animation for the public key box */
         @keyframes pulse {
@@ -203,21 +205,22 @@
 
         /* Media Queries for responsiveness */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem; /* Smaller font for header */
-            }
-            h2 {
-                font-size: 1.5rem; /* Smaller font for subheading */
-            }
-            pre {
-                font-size: 0.9rem; /* Adjust font size for better readability */
-                width: 95%;
-            }
-            .intro-btn {
-                font-size: 14px;
-                padding: 8px 16px;
-            }
-        }
+    h1 {
+        font-size: 1.8rem; /* Slightly smaller font size */
+    }
+
+    pre {
+        font-size: 0.9rem; /* Adjust font size */
+        width: 100%; /* Ensure it takes full width */
+        margin: 10px; /* Reduce margin to prevent overflow */
+    }
+
+    .intro-btn {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
         a {
     text-transform: none; /* Ensures text is not capitalized */
 }
