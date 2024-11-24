@@ -9,6 +9,10 @@
     <link rel="icon" href="favicon-16x16.png" type="image/x-icon">
     <style>
         /* General page styling */
+        
+        html, body {
+    height: 10%;
+}
         body {
             background-color: #14161E; /* Jet black background for a darker vibe */
             color: #33ff33; /* Neon green text for a hacker effect */
@@ -96,7 +100,7 @@
         pre {
             background-color: #14161E; /* Very dark background for key block */
             color: white; /* Bright neon green text for the key */
-            padding: 10px;
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.5); /* Green glow and red accents */
             word-wrap: break-word;
@@ -104,7 +108,7 @@
             font-size: 1rem; /* Adjusted for better readability */
             line-height: 1.4;
             margin: 20px auto;
-            width: 80%; /* More centered */
+            width: 90%; /* More centered */
             animation: pulse 2s infinite; /* Subtle pulsing effect */
             max-width: 100%; /* Prevents it from stretching too much */
             overflow-x: auto; /* Horizontal scrolling if needed */
@@ -115,6 +119,7 @@
         /* Footer styling */
         footer {
             margin-top: 30px;
+            margin-bottom: 50px;
             color: #777;
             font-size: 0.9rem;
             text-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000;
@@ -226,6 +231,7 @@
             -----END PGP PUBLIC KEY BLOCK-----
         </pre>
     </main>
+
     <script>
         function copyToClipboard() {
             var text = document.getElementById("pgp-key").textContent;
