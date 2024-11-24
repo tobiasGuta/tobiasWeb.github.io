@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon-16x16.png" type="image/x-icon">
     <title>CTF Rooms</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         /* Background container for animated GIF */
         .background-container {
@@ -13,7 +14,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #282A36; /* Dracula dark background */
+    background-color:  #14161E; /* Dracula dark background */
     color: #f8f8f2; /* Light text color for contrast */
     font-family: 'Courier New', Courier, monospace; /* Monospace font for hacker aesthetic */
     z-index: -1; /* Ensure it stays behind other content */
@@ -130,59 +131,51 @@
         }
 
         /* Hacking themed Back Button */
-        .back-button {
-            background-color: transparent;
-            color: #00ff00;
-            border: 2px solid #00ff00;
-            padding: 12px 24px;
-            border-radius: 5px;
-            font-size: 1.2em;
-            cursor: pointer;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: color 0.4s, background-color 0.4s;
-            box-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 15px #00ff00;
-        }
+.back-button {
+    background-color: transparent; /* Transparent background */
+    color: white; /* White text by default */
+    border: none; /* No border initially */
+    padding: 12px 24px;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    outline: none; /* Remove the default outline (browser specific) */
+    transition: color 0.3s, box-shadow 0.3s; /* Smooth transition for color and shadow */
+}
 
-        .back-button:hover {
-            color: #1c1c1c;
-            background-color: #00ff00;
-            box-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00;
-            animation: pulse 1s infinite;
-        }
+/* Normal link hover (for back button) */
+.back-button:hover {
+    color: #2AF7A5; /* Change text color to #2AF7A5 */
+    animation: pulse 1s infinite; /* Apply pulse effect */
+    box-shadow: 0 0 10px #2AF7A5, 0 0 20px #2AF7A5, 0 0 30px #2AF7A5; /* Glowing effect */
+    border: 2px solid #2AF7A5; /* Border appears only when hovering */
+}
 
-        /* Pulse animation for hacker vibes */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
+/* Pulse animation for hacker vibes */
+@keyframes pulse {
+    0% { 
+        transform: scale(1);
+        opacity: 1; 
+    }
+    50% { 
+        transform: scale(1.1); 
+        opacity: 0.8; 
+    }
+    100% { 
+        transform: scale(1); 
+        opacity: 1; 
+    }
+}
 
-        .back-button:before {
-            content: '←';
-            position: absolute;
-            left: -10px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.8em;
-            opacity: 0;
-            animation: typewriter 1.2s steps(10) infinite;
-        }
-
-        /* Typewriter effect */
-        @keyframes typewriter {
-            0% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-
-        /* Center Back Button */
-        .back-button-container {
-            position: relative;
-            text-align: center;
-            margin-top: 130px;
-        }
-
+/* Back Button Container */
+.back-button-container {
+    position: relative;
+    text-align: center;
+    margin-top: 130px; /* Keep the position as it was */
+}
 
         /* Navigation links styling */
         nav {
@@ -289,10 +282,12 @@
         <h1 class="glitch" data-text="CTF Rooms & Sec Tips">CTF Rooms & Sec Tips</h1>
     </div>
 
-    <!-- Back Button Container (Centered) -->
     <div class="back-button-container">
-        <button class="back-button" onclick="window.location.href='community.html'">Back</button>
+        <button class="back-button" onclick="window.location.href='community.html'">
+            <i class="fas fa-users"></i> Back
+        </button>
     </div>
+    
 
     <!-- Content with Room Sections -->
     <div class="content">
