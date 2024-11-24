@@ -51,6 +51,46 @@
             }
         }
 
+        /* Intro button styling */
+        .intro-btn {
+            background: transparent;
+            color: #fff;
+            border: 2px solid transparent;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .intro-btn i {
+            margin-right: 8px;
+        }
+
+        /* Normal link hover */
+        .intro-btn:hover {
+            color: #2AF7A5;
+            animation: pulse 1s infinite;
+            box-shadow: 0 0 10px #2AF7A5, 0 0 20px #2AF7A5, 0 0 30px #2AF7A5; /* Glowing effect */
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
         /* Preformatted text (public key) styling */
         pre {
             background-color: #111; /* Very dark background for key block */
@@ -167,37 +207,31 @@
                 font-size: 2rem; /* Smaller font for header */
             }
             h2 {
-                font-size: 1.5rem; /* Smaller font for sub-header */
+                font-size: 1.5rem; /* Smaller font for subheading */
             }
             pre {
-                font-size: 0.9rem; /* Smaller font for public key */
-                max-height: 200px; /* Adjust height on small screens */
+                font-size: 0.9rem; /* Adjust font size for better readability */
+                width: 95%;
             }
-            #copy-icon {
-                font-size: 1.5rem; /* Smaller icon */
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 10px; /* Reduce padding on small screens */
-            }
-            h1 {
-                font-size: 1.5rem; /* Even smaller font for mobile screens */
-            }
-            h2 {
-                font-size: 1.2rem;
+            .intro-btn {
+                font-size: 14px;
+                padding: 8px 16px;
             }
         }
+        a {
+    text-transform: none; /* Ensures text is not capitalized */
+}
     </style>
 </head>
 <body>
     <header>
-        <h1>My Public PGP Key</h1>
-        <p>Use this key to send me encrypted messages. Stay safe.</p>
+        <h1>Public PGP Key</h1>
+        <p>Use this key to send me encrypted <a href="contactme.html" target="_blank">messages</a>. Stay safe.</p>
+        <a href="index.html" class="intro-btn"><i class="fas fa-home"></i> Intro</a>
     </header>
-
-    <pre id="pgp-key">
+    <main>
+        <!-- Your public PGP key or other content goes here -->
+        <pre id="pgp-key">
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mQINBGdDdV8BEAC4chWeRV5epUImU/DAK0UBrXx1RIRpkOqlGc8Ee5GPS7o84kff
@@ -250,13 +284,16 @@ lBAyCRSFDnAtGOhbq88PZ+Gwyw9bthOaexW6wnD5WoTGNCEFZPx9bcbQcWbuHUc2
 cEU=
 =RPYh
 -----END PGP PUBLIC KEY BLOCK-----
-    </pre>
 
+            
+        </pre>
+    </main>
     <footer>
         <p><i id="copy-icon" class="fas fa-copy" onclick="copyToClipboard()"> Copy</i></p>
     </footer>
 
-    <div id="big-brother">Big Brother is Watching You.....</div>
+    <!-- Big Brother warning message -->
+    <div id="big-brother">Big Brother is watching you...</div>
 
     <script>
         function copyToClipboard() {
