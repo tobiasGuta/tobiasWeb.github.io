@@ -735,6 +735,65 @@
                 <br>
                 10/14-02:30:50.80000  [Drop] [**] [1:1000001:0] ICMP Packet found [**] [Priority: 0] {ICMP} 192.180.100.15 -> 192.180.100.114
             </div>
+            <p><strong>Important:</strong> Snort is not just for monitoring network traffic, logging data, or identifying and blocking threats. It also has a feature called "PCAP read/investigate mode," which allows you to analyze PCAP files. When you load a PCAP file into Snort, it processes the data and provides you with traffic statistics by default, along with any alerts based on the rules you've set up. This means you can investigate network traffic that has already been captured in a PCAP file, not just live traffic.</p>
+            <p><strong>Info:</strong> When you read a PCAP file without using any specific settings or parameters, Snort will just give you a basic overview of the packets and provide general statistics about the file. This is usually not very helpful. The real advantage of using Snort to analyze a PCAP file comes when you apply Snort's rules, which allow you to identify known threat patterns. This makes the investigation process faster and more efficient by automatically detecting potential threats based on these predefined patterns.</p>
+            <p><strong>Snort Mode:</strong> PCAP mode parameters</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>-r / --pcap-single=  </td>
+                        <td>    Read a single pcap</td>
+                    </tr>
+                    <tr>
+                        <td>--pcap-list=""  </td>
+                        <td>    Read pcaps provided in command (space separated).</td>
+                    </tr>
+                    <tr>
+                        <td>--pcap-show</td>
+                        <td>    Show pcap name on console during processing.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>Info:</strong> Investigating single PCAP with parameter "-r"</p>
+            <div class="terminal">
+                <span class="prompt">$</span> sudo snort -c /etc/snort/snort.conf -q -r icmp-test.pcap -A console -n 10
+                <br>
+                <br>
+                12/12-12:13:29.167955  [**] [1:10000001:0] ICMP Packet found [**] [Priority: 0] {ICMP} 192.168.175.129 -> 142.250.187.110
+            </div>
+            <p><strong>Info:</strong> snort identified the traffic and prompted the alerts according to our ruleset.</p>
+            <p><strong>Info:</strong> Investigating multiple PCAPs with parameter "--pcap-list"</p>
+            <div class="terminal">
+                <span class="prompt">$</span>  sudo snort -c /etc/snort/snort.conf -q --pcap-list="icmp-test.pcap http2.pcap" -A console
+                <br>
+                <br>
+                12/12-12:13:29.167955  [**] [1:10000001:0] ICMP Packet found [**] [Priority: 0] {ICMP} 192.168.175.129 -> 142.250.187.110
+                <br>
+                ...
+                <br>
+                12/12-12:13:31.204104  [**] [1:10000001:0] ICMP Packet found [**] [Priority: 0] {ICMP} 142.250.187.110 -> 192.168.175.129
+            </div>
+            <p><strong>Info:</strong> snort identified the traffic and prompted the alerts according to our ruleset.</p>
+            <p><strong>Info:</strong> Investigating multiple PCAPs with parameter "--pcap-show"</p>
+            <div class="terminal">
+                <span class="prompt">$</span>  sudo snort -c /etc/snort/snort.conf -q --pcap-list="icmp-test.pcap http2.pcap" -A console --pcap-show 
+                <br>
+                <br>
+                Reading network traffic from "icmp-test.pcap" with snaplen = 1514
+                12/12-12:13:29.167955  [**] [1:10000001:0] ICMP Packet found [**] [Priority: 0] {ICMP} 192.168.175.129 -> 142.250.187.110
+                <br>
+                ...
+                <br>
+                Reading network traffic from "http2.pcap" with snaplen = 1514
+                12/12-12:13:35.213176  [**] [1:10000001:0] ICMP Packet found [**] [Priority: 0] {ICMP} 142.250.187.110 -> 192.168.175.129
+            </div>
+            <p><strong>Info:</strong>  snort identified the traffic, distinguished each pcap file and prompted the alerts according to our ruleset. </p>
         </div>
 
         <!-- Toggle Button for Solution -->
