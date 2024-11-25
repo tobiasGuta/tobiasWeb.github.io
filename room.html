@@ -794,6 +794,257 @@
                 12/12-12:13:35.213176  [**] [1:10000001:0] ICMP Packet found [**] [Priority: 0] {ICMP} 142.250.187.110 -> 192.168.175.129
             </div>
             <p><strong>Info:</strong>  snort identified the traffic, distinguished each pcap file and prompted the alerts according to our ruleset. </p>
+            <p><strong>Question:</strong> How does a Snort rule really work?</p>
+            <img src="snorul.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Info:</strong> A Snort rule defines an action, protocol, source and destination IPs, source and destination ports, and options to specify conditions for detecting or responding to network traffic.</p>
+            <p><strong>Important:</strong> By default, Snort operates in passive mode, meaning it only monitors network traffic and alerts you about suspicious activity, functioning as an Intrusion Detection System (IDS). To enable Intrusion Prevention System (IPS) functionality, where Snort can actively block malicious traffic, you need to switch it to "inline mode."</p>
+            <p><strong>Info:</strong> The Snort rule structure is easy to understand but difficult to produce. You should be familiar with rule options and related details to create efficient rules. </p>
+            <p><strong>Info:</strong> Rules cannot be processed without a header, which is mandatory, while rule options are optional. However, without using rule options, it becomes nearly impossible to detect complex or advanced attacks.</p>
+            <table border="1">
+                <tr>
+                  <th>Component</th>
+                  <th>Description</th>
+                </tr>
+                <tr>
+                  <td><b>Action</b></td>
+                  <td>There are different actions a rule can take. It's important to understand how they work and test them before applying rules to live systems. Common actions include:</td>
+                </tr>
+                <tr>
+                  <td>Alert</td>
+                  <td>Triggers an alert and logs the packet.</td>
+                </tr>
+                <tr>
+                  <td>Log</td>
+                  <td>Simply logs the packet without triggering an alert.</td>
+                </tr>
+                <tr>
+                  <td>Drop</td>
+                  <td>Blocks the packet and logs it for review.</td>
+                </tr>
+                <tr>
+                  <td>Reject</td>
+                  <td>Blocks the packet, logs it, and also terminates the session associated with the packet.</td>
+                </tr>
+                <tr>
+                  <td><b>Protocol</b></td>
+                  <td>This defines the type of protocol that the rule is designed to filter. Snort supports four protocols in the rules: IP, TCP, UDP, and ICMP. While specific protocols like FTP aren't directly available, you can filter traffic based on port numbers, such as TCP traffic on port 21 to detect FTP traffic.</td>
+                </tr>
+              </table>
+            <p><strong>Info:</strong> IP and Port Numbers</p>
+            <p><strong>Note:</strong> These parameters identify the source and destination IP addresses and associated port numbers filtered for the rule.</p>
+            <table border="1" style="width: 100%;">
+                <tr>
+                  <th>Rule Type</th>
+                  <th>Description</th>
+                </tr>
+                <tr>
+                  <td><b>IP Filtering</b></td>
+                  <td>This rule creates an alert for each ICMP packet originating from the 192.168.1.56 IP address.</td>
+                </tr>
+                <tr>
+                  <td><b>Filter an IP Range</b></td>
+                  <td>This rule creates an alert for each ICMP packet from the 192.168.1.0/24 subnet.</td>
+                </tr>
+                <tr>
+                  <td><b>Filter Multiple IP Ranges</b></td>
+                  <td>This rule creates an alert for each ICMP packet from either the 192.168.1.0/24 or 10.1.1.0/24 subnets.</td>
+                </tr>
+                <tr>
+                  <td><b>Exclude IP Addresses/Ranges</b></td>
+                  <td>This rule creates an alert for each ICMP packet not originating from the 192.168.1.0/24 subnet.</td>
+                </tr>
+                <tr>
+                  <td><b>Port Filtering</b></td>
+                  <td>This rule creates an alert for each TCP packet sent to port 21.</td>
+                </tr>
+                <tr>
+                  <td><b>Exclude a Specific Port</b></td>
+                  <td>This rule creates an alert for each TCP packet not sent to port 21.</td>
+                </tr>
+                <tr>
+                  <td><b>Filter a Port Range (Type 1)</b></td>
+                  <td>This rule creates an alert for each TCP packet sent to ports between 1-1024.</td>
+                </tr>
+                <tr>
+                  <td><b>Filter a Port Range (Type 2)</b></td>
+                  <td>This rule creates an alert for each TCP packet sent to ports less than or equal to 1024.</td>
+                </tr>
+                <tr>
+                  <td><b>Filter a Port Range (Type 3)</b></td>
+                  <td>This rule creates an alert for each TCP packet sent to source ports higher than or equal to 1025.</td>
+                </tr>
+                <tr>
+                  <td><b>Filter a Port Range (Type 4)</b></td>
+                  <td>This rule creates an alert for each TCP packet sent to port 21 or 23.</td>
+                </tr>
+              </table>
+              <p><strong>Info:</strong> The direction operator indicates the traffic flow to be filtered by Snort. The left side of the rule shows the source, and the right side shows the destination. see the picture above</p>
+              <table border="1" style="width: 30%;">
+                <tr>
+                  <th>Flow Type</th>
+                  <th>Description</th>
+                </tr>
+                <tr>
+                  <td><b>-></b></td>
+                  <td>Source to destination flow.</td>
+                </tr>
+                <tr>
+                  <td><b><></b></td>
+                  <td>Bidirectional flow.</td>
+                </tr>
+              </table>              
+              <p><strong>Note:</strong> that there is no "<-" operator in Snort.</p>
+              <p><strong>Info:</strong> three main rule options in Snort</p>
+              <table border="1" style="width: 100%;">
+                <tr>
+                  <th>Rule Option Type</th>
+                  <th>Description</th>
+                </tr>
+                <tr>
+                  <td><b>General Rule Options</b></td>
+                  <td>Fundamental rule options for Snort.</td>
+                </tr>
+                <tr>
+                  <td><b>Payload Rule Options</b></td>
+                  <td>Rule options that help investigate the payload data and detect specific payload patterns.</td>
+                </tr>
+                <tr>
+                  <td><b>Non-Payload Rule Options</b></td>
+                  <td>Rule options that focus on non-payload data to create specific patterns and identify network issues.</td>
+                </tr>
+              </table>
+              <p><strong>Info:</strong> General Rule Options</p>
+              <table border="1" style="width: 100%;">
+                <tr>
+                  <th>Rule Field</th>
+                  <th>Description</th>
+                </tr>
+                <tr>
+                  <td><b>Msg</b></td>
+                  <td>The message field is a basic prompt and identifier for the rule. When triggered, it displays a summary of the event in the console or log.</td>
+                </tr>
+                <tr>
+                  <td><b>Sid</b></td>
+                  <td>Snort rule IDs (SID) must have a proper format and unique value. There are three scopes for SIDs:
+                    <ul>
+                      <li>&lt;100: Reserved rules</li>
+                      <li>100-999,999: Rules that come with the build</li>
+                      <li>&gt;=1,000,000: User-created rules</li>
+                    </ul>
+                    Rules created by users should have SIDs greater than 100,000,000, and each SID must be unique.</td>
+                </tr>
+                <tr>
+                  <td><b>Reference</b></td>
+                  <td>This field provides additional information or references, such as CVE IDs or external links, explaining the purpose of the rule or associated threat patterns. It helps analysts during alert investigations.</td>
+                </tr>
+                <tr>
+                  <td><b>Rev</b></td>
+                  <td>The rev field tracks rule revisions. Analysts can use this to understand rule improvements, as each rule has a unique revision number. No auto-backup is available, so analysts must maintain rule history manually.</td>
+                </tr>
+                <tr>
+                  <td><b>Example Rule</b></td>
+                  <td>alert icmp any any &lt;&gt; any any (msg: "ICMP Packet Found"; sid: 100001; reference: cve, CVE-XXXX; rev: 1;)</td>
+                </tr>
+              </table>              
+              <p><strong>Info:</strong> Payload Detection Rule Options</p>
+              <table border="1" style="width: 100%;">
+                <tr>
+                  <th>Rule Field</th>
+                  <th>Description</th>
+                </tr>
+                <tr>
+                  <td><b>Content</b></td>
+                  <td>Matches specific payload data by ASCII, HEX, or both. This option can be used multiple times in a rule. However, the more specific patterns you add, the more time it takes to investigate packets.</td>
+                </tr>
+                <tr>
+                  <td><b>Example: ASCII Mode</b></td>
+                  <td>Creates an alert for each HTTP packet containing the keyword "GET". Case-sensitive.</td>
+                </tr>
+                <tr>
+                  <td><b>Example Rule (ASCII)</b></td>
+                  <td>alert tcp any any &lt;&gt; any 80 (msg: "GET Request Found"; content:"GET"; sid: 100001; rev:1;)</td>
+                </tr>
+                <tr>
+                  <td><b>Example: HEX Mode</b></td>
+                  <td>Creates an alert for HTTP packets with the HEX representation of "GET".</td>
+                </tr>
+                <tr>
+                  <td><b>Example Rule (HEX)</b></td>
+                  <td>alert tcp any any &lt;&gt; any 80 (msg: "GET Request Found"; content:"|47 45 54|"; sid: 100001; rev:1;)</td>
+                </tr>
+                <tr>
+                  <td><b>Nocase</b></td>
+                  <td>Disables case sensitivity in the content match, making searches more flexible.</td>
+                </tr>
+                <tr>
+                  <td><b>Example Rule (Nocase)</b></td>
+                  <td>alert tcp any any &lt;&gt; any 80 (msg: "GET Request Found"; content:"GET"; nocase; sid: 100001; rev:1;)</td>
+                </tr>
+                <tr>
+                  <td><b>Fast_pattern</b></td>
+                  <td>Optimizes the content search by prioritizing a specific content match for faster packet analysis. It is case-insensitive and can only be used once per rule. It's especially useful when there are multiple content options.</td>
+                </tr>
+                <tr>
+                  <td><b>Example Rule (Fast_pattern)</b></td>
+                  <td>alert tcp any any &lt;&gt; any 80 (msg: "GET Request Found"; content:"GET"; fast_pattern; content:"www"; sid: 100001; rev:1;)</td>
+                </tr>
+              </table>              
+              <p><strong>Info:</strong> Non-Payload Detection Rule Options</p>
+              <p><strong>Note:</strong> There are rule options that focus on non-payload data. These options will help create specific patterns and identify network issues.</p>
+              <table border="1" style="width: 100%;">
+                <tr>
+                  <th>Rule Field</th>
+                  <th>Description</th>
+                </tr>
+                <tr>
+                  <td><b>ID</b></td>
+                  <td>Filters based on the IP ID field. The ID field can be used to identify packets with a specific IP identification number.</td>
+                </tr>
+                <tr>
+                  <td><b>Example Rule (ID)</b></td>
+                  <td>alert tcp any any &lt;&gt; any any (msg: "ID TEST"; id:123456; sid: 100001; rev:1;)</td>
+                </tr>
+                <tr>
+                  <td><b>Flags</b></td>
+                  <td>Filters based on TCP flags. The following flags can be used:
+                    <ul>
+                      <li>F - FIN</li>
+                      <li>S - SYN</li>
+                      <li>R - RST</li>
+                      <li>P - PSH</li>
+                      <li>A - ACK</li>
+                      <li>U - URG</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td><b>Example Rule (Flags)</b></td>
+                  <td>alert tcp any any &lt;&gt; any any (msg: "FLAG TEST"; flags:S; sid: 100001; rev:1;)</td>
+                </tr>
+                <tr>
+                  <td><b>Dsize</b></td>
+                  <td>Filters based on the packet payload size. You can define a size range or use conditions like greater than or less than a specified size.</td>
+                </tr>
+                <tr>
+                  <td><b>Example Rule (Dsize)</b></td>
+                  <td>alert ip any any &lt;&gt; any any (msg: "SEQ TEST"; dsize:100<>300; sid: 100001; rev:1;)</td>
+                </tr>
+                <tr>
+                  <td><b>Sameip</b></td>
+                  <td>Filters for duplication of source and destination IP addresses in the packet.</td>
+                </tr>
+                <tr>
+                  <td><b>Example Rule (Sameip)</b></td>
+                  <td>alert ip any any &lt;&gt; any any (msg: "SAME-IP TEST"; sameip; sid: 100001; rev:1;)</td>
+                </tr>
+              </table>              
+              <p><strong>Important:</strong>  once you create a rule, it is a local rule and should be in your "local.rules" file. This file is located under "/etc/snort/rules/local.rules". </p>
+              <div class="terminal">
+                <span class="prompt">$</span> sudo gedit /etc/snort/rules/local.rules 
+            </div>
+              <p><strong>Info:</strong>  That is your "local.rules" file. </p>
+              <img src="locrul.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+              <p><strong>Info:</strong> Note that there are some default rules activated with snort instance. </p>
         </div>
 
         <!-- Toggle Button for Solution -->
