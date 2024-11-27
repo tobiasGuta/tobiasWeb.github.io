@@ -1045,6 +1045,34 @@
               <p><strong>Info:</strong>  That is your "local.rules" file. </p>
               <img src="locrul.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
               <p><strong>Info:</strong> Note that there are some default rules activated with snort instance. </p>
+              <br>
+              <br>
+              <br>
+              <br>
+              <H1>Hands-on experience challenge.</H1>
+              <p><strong>Problem:</strong> Write a single rule to detect "all TCP port 80 traffic" packets in the given pcap file.</p>
+              <p><strong>My Rule:</strong> This is the rule that I have come for this challenge.
+              <img src="mysnorule.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+              <div class="terminal">
+                <span class="prompt">$</span> alert tcp any any <> any 80 (msg: "detect port 80 trafic"; sid: 100001; rev:1;)
+              </div>
+              <p><strong>1:</strong> What is the number of detected packets?
+              <img src="solvpac.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+              <img src="numbofpack.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+              <p><strong>2:</strong> What is the destination address of packet 63?
+              <p><strong>Info:</strong> Investigate the log file.
+              <p><strong>Note:</strong> Remember that we have a lot of packages to analyze, so we need to find packet 63. This can be shortened by using the switch
+              <img src="ques3.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+              <p><strong>3:</strong> What is the ACK number of packet 64?
+              <img src="ques64.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+              <p><strong>3:</strong> What is the SEQ number of packet 62?
+              <img src="seq62.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+              <p><strong>3:</strong> What is the TTL of packet 65??
+              <img src="tripleques.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+              <p><strong>3:</strong> What is the source IP of packet 65?
+              <img src="tripleques.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+              <p><strong>3:</strong> What is the source port of packet 65?
+              <img src="tripleques.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
         </div>
 
         <!-- Toggle Button for Solution -->
