@@ -1208,6 +1208,105 @@
         <p><strong>2. Recovery:</strong> After the investigation, organizations create and execute a recovery plan to remove threats and restore systems. Normal business operations should resume as quickly as possible.</p>
         <p><strong>Question:</strong> What happens after the incident is resolved?</p>
         <p>Once an incident is fully handled, a detailed report is created to document the cause, impact, and response actions. Additionally, "lessons learned" activities are conducted to identify weaknesses in current defenses and implement measures to prevent future incidents of the same nature.</p>
+        <p><strong>In the Preparation Stage </strong> of incident handling, there are two key objectives:</p>
+
+        <ol>
+          <li><strong>Establishing Incident Handling Capability:</strong> This involves setting up a team and processes to effectively manage incidents when they occur. The team needs to be ready to identify, respond to, and mitigate security incidents in an organized way.</li>
+          <li><strong>Implementing Protective Measures:</strong> Although incident handling is not responsible for protection, having protective measures in place is vital for minimizing the likelihood and impact of incidents. These measures include things like securing endpoints, hardening servers, using multi-factor authentication, and managing privileged access.</li>
+        </ol>
+
+        <p><strong>Preparation Prerequisites</strong></p>
+        <p>Before an incident occurs, several foundational elements must be in place:</p>
+
+        <ol>
+          <li><strong>Skilled Incident Handling Team Members:</strong> The organization should have knowledgeable team members, either in-house or outsourced, who understand incident handling. At a minimum, basic knowledge must exist internally.</li>
+          <li><strong>Trained Workforce:</strong> Employees should be trained through security awareness activities or other training programs to recognize and report potential incidents.</li>
+          <li><strong>Clear Policies and Documentation:</strong> Written procedures and policies should cover incident handling steps, roles, responsibilities, and communication plans. These documents will guide the team during an actual incident.</li>
+          <li><strong>Tools:</strong> Both software and hardware tools are necessary for incident handling, such as forensic tools, network capture tools, and communication systems.</li>
+        </ol>
+
+        <p><strong>Clear Policies and Documentation</strong></p>
+        <p>The documentation created in the preparation phase must include the following:</p>
+
+        <ul>
+          <li><strong>Incident Handling Team Contacts:</strong> Ensure all team members' roles and contact info are clearly outlined.</li>
+          <li><strong>Legal and Compliance Contacts:</strong> Information for the legal team, law enforcement, external teams, and other departments that may need to be contacted during or after an incident.</li>
+          <li><strong>Incident Response Procedures:</strong> Well-defined response plans, including procedures for information sharing, escalation, and collaboration.</li>
+          <li><strong>Baseline Information:</strong> Knowledge of system configurations and network diagrams to understand what's "normal" and to quickly spot deviations during an incident.</li>
+          <li><strong>User Accounts with Elevated Privileges:</strong> Pre-configured accounts with necessary privileges to allow the incident team to act swiftly during an incident, and that can be disabled after the incident is resolved.</li>
+          <li><strong>Procurement Flexibility:</strong> The ability to quickly acquire tools or resources without bureaucratic delays to avoid slowdowns during critical moments.</li>
+          <li><strong>Forensic/Investigative Cheat Sheets:</strong> Predefined checklists or procedures to guide investigators during the forensic process, minimizing mistakes in the heat of the moment.</li>
+          <li><strong>Compliance Knowledge:</strong> Familiarize the team with legal and compliance requirements related to incidents, such as data breach notification laws (e.g., GDPR).</li>
+          <li><strong>Effective Reporting Capability:</strong> During an incident, accurate documentation is essential. Teams should document every step taken with precise timestamps, results, and personnel involved, focusing on the "who, what, when, where, why, and how."</li>
+        </ul>
+
+        <p><strong>Tools (Software & Hardware)</strong></p>
+        <p>Having the right tools is crucial. These tools should enable the team to capture, preserve, and analyze evidence, as well as respond to incidents effectively:</p>
+
+        <ul>
+          <li><strong>Laptops/Workstations:</strong> Devices used for investigation, free of corporate security software (e.g., antivirus), to prevent interference with the analysis of malware.</li>
+          <li><strong>Forensic Tools:</strong> Software for acquiring disk images, capturing memory, analyzing logs, and identifying Indicators of Compromise (IOCs).</li>
+          <li><strong>Network Tools:</strong> Network capture and analysis tools, network cables, and switches for investigating network traffic during an incident.</li>
+          <li><strong>Hardware Tools:</strong> Items like write blockers (to preserve evidence), screwdrivers, and power cables for dealing with physical devices or equipment during investigations.</li>
+          <li><strong>Incident Handling System:</strong> A system for tracking incidents, documenting actions, and managing the incident lifecycle.</li>
+          <li><strong>Jump Bag:</strong> A portable set of tools that the team can grab quickly to respond to an incident without wasting time gathering resources.</li>
+        </ul>
+
+        <p><strong>Additional Considerations</strong></p>
+        <ul>
+          <li><strong>Independent Documentation System:</strong> It's critical that the incident documentation system is separate from the organization's infrastructure. This ensures that in case of a compromise, the documentation remains safe and available.</li>
+          <li><strong>Communication Channels:</strong> Use communication tools that are separate from the organization's systems. If adversaries have control over your network, email and internal systems may be compromised, so secure external communication channels are needed.</li>
+        </ul>
+        <p><strong>Protecting Against Incidents</strong></p>
+        <p>Although protecting against incidents isn't directly the responsibility of an incident handling team, it’s crucial for them to be aware of protection efforts. By understanding what protective measures are in place, they can better identify and analyze threats, and know where to look for evidence during an incident investigation.</p>
+
+        <p><strong>Key Protective Measures</strong></p>
+
+        <p><strong>DMARC (Domain-based Message Authentication, Reporting, and Conformance)</strong></p>
+        <p><strong>Purpose</strong>: DMARC is an email protection mechanism that helps prevent phishing by verifying the authenticity of incoming emails. It works on top of <strong>SPF</strong> (Sender Policy Framework) and <strong>DKIM</strong> (DomainKeys Identified Mail).</p>
+        <p><strong>How it works</strong>: If an email pretends to come from your organization, DMARC helps reject it before it reaches the recipient.</p>
+        <p><strong>Challenge</strong>: While easy to set up, thorough testing is necessary to avoid blocking legitimate emails unintentionally. False positives can occur, especially with emails sent from third-party services that may fail DMARC checks.</p>
+
+        <p><strong>Endpoint Hardening & EDR (Endpoint Detection and Response)</strong></p>
+        <p><strong>Endpoint Hardening</strong>: This involves securing endpoint devices (like workstations and laptops), which are often the primary entry points for attackers. Recommended actions include:</p>
+        <ul>
+          <li>Disabling <strong>LLMNR</strong> and <strong>NetBIOS</strong> to reduce risks from local network-based attacks.</li>
+          <li>Implementing <strong>LAPS</strong> (Local Administrator Password Solution) to manage admin privileges.</li>
+          <li>Restricting <strong>PowerShell</strong> to prevent misuse by attackers.</li>
+          <li>Enabling <strong>Attack Surface Reduction</strong> rules in security tools like <strong>Microsoft Defender</strong>.</li>
+          <li>Whitelisting applications, which involves blocking the execution of unauthorized files from places like user directories.</li>
+          <li>Using <strong>host-based firewalls</strong> to limit unnecessary network traffic.</li>
+        </ul>
+        <p><strong>EDR Solutions</strong>: Implement <strong>EDR</strong> tools to detect malicious behavior and provide deeper visibility into threats on endpoints.</p>
+
+        <p><strong>Network Protection</strong></p>
+        <p><strong>Network Segmentation</strong>: Isolating business-critical systems to prevent attackers from easily spreading across the network. Systems should only have access as required for their business function.</p>
+        <p><strong>IDS/IPS</strong> (Intrusion Detection/Prevention Systems): These tools help detect and prevent malicious traffic. When <strong>SSL/TLS interception</strong> is used, these systems can analyze traffic content directly, improving detection accuracy.</p>
+        <p><strong>Device Control</strong>: Implement solutions like <strong>802.1x</strong> or <strong>Conditional Access</strong> to ensure only approved devices can access the network.</p>
+
+        <p><strong>Privilege Identity Management, MFA, and Strong Passwords</strong></p>
+        <p><strong>Privilege Identity Management</strong>: Protect administrative accounts by reducing exposure to attacks that steal privileged credentials.</p>
+        <p><strong>MFA (Multi-factor Authentication)</strong>: Implement MFA, particularly for administrative access to sensitive systems and applications.</p>
+        <p><strong>Password Management</strong>: Encourage employees to use <strong>strong passphrases</strong> rather than weak passwords. Passphrases are longer and more difficult to guess, e.g., “i LIK3 my coffeE warm.” A combination of languages can enhance security further.</p>
+
+        <p><strong>Vulnerability Scanning</strong></p>
+        <p>Conduct continuous scans of your environment to identify vulnerabilities. Critical or high-risk vulnerabilities should be prioritized for patching. Systems that can’t be patched should be segmented to limit potential exposure.</p>
+
+        <p><strong>User Awareness Training</strong></p>
+        <p><strong>Security Awareness</strong>: Regularly train users to recognize and report suspicious activity. Conduct surprise tests like <strong>phishing</strong> simulations to gauge employee vigilance.</p>
+
+        <p><strong>Active Directory Security Assessment</strong></p>
+        <p><strong>Active Directory</strong> (AD) is often targeted for privilege escalation attacks. Conduct regular assessments of AD configurations and security controls to ensure that attackers can’t easily escalate their privileges.</p>
+        <p><strong>Third-Party Audits</strong>: If the in-house team lacks expertise, hire third-party auditors to help identify vulnerabilities.</p>
+
+        <p><strong>Purple Team Exercises</strong></p>
+        <p><strong>Purple Teaming</strong> combines the efforts of both red teams (attackers) and blue teams (defenders). These exercises help test the organization's security posture by simulating real-world attacks, identifying gaps in detection, and improving incident handling procedures.</p>
+        <ul>
+          <li><strong>Red Team</strong>: Simulates the attacks.</li>
+          <li><strong>Blue Team</strong>: Works to detect, respond, and defend against the attacks.</li>
+          <li><strong>Goal</strong>: Improve collaboration and effectiveness of both teams, enhance detection capabilities, and refine incident response playbooks.</li>
+        </ul>
+
       </div>
 
       <!-- Toggle Button for Solution -->
