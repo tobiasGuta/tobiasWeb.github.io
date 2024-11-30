@@ -1380,6 +1380,52 @@
         <p>Incident-related information is highly confidential. All information should be kept on a need-to-know basis unless instructed otherwise. The appointed person will handle communication according to legal requirements.</p>
         <p>When an investigation begins, set expectations and goals, which may include the incident type, sources of evidence, and rough time estimates. As the investigation evolves, expectations and findings may change.</p>
 
+
+          <p>In the <strong>Detection & Analysis</strong> stage, the focus is on understanding what happened during an incident and how it unfolded. It’s not enough to simply rebuild affected systems and move on. If we don't know how the attacker gained access or what was impacted, any remediation steps we take might not prevent them from regaining access. The goal is to figure out exactly how the adversary entered, what tools were used, and which systems were compromised. This detailed knowledge allows the response team to plan more effective remediation strategies that prevent the attack from recurring.</p>
+
+          <h3>Investigation Process</h3>
+
+          <p>The investigation starts with limited, initial information about the incident. Using this data, the incident handling team embarks on a <strong>cyclic process</strong> of investigation that iterates as new information is discovered. The three main steps in this process are:</p>
+
+          <ol>
+              <li><strong>Creation and usage of Indicators of Compromise (IOCs)</strong></li>
+              <li><strong>Identification of new leads and impacted systems</strong></li>
+              <li><strong>Data collection and analysis from the new leads and impacted systems</strong></li>
+          </ol>
+
+          <p>These steps are continuously repeated as more evidence comes in, refining the understanding of the attack.</p>
+
+          <h3>Initial Investigation Data</h3>
+
+          <p>The investigation must be based on reliable leads that are identified throughout the entire process. The initial phase is just the beginning. Investigators shouldn’t solely focus on one specific finding, such as a known malicious tool. Narrowing the investigation too early leads to incomplete conclusions and can miss important parts of the attack, resulting in a lack of full understanding of the incident’s impact.</p>
+
+          <h3>Creation & Usage of IOCs</h3>
+
+          <p><strong>Indicators of Compromise (IOCs)</strong> are evidence that an incident has taken place. These include things like IP addresses, file hashes, and file names. IOCs are used to track and document signs of compromise. OpenIOC and Yara are common standards used to create and share IOCs. Special tools, like Mandiant's IOC Editor, allow for creating and editing these indicators in a standardized format.</p>
+
+          <p>Once IOCs are created, investigators use them with tools (native or third-party) to search for signs of compromise in systems. It's crucial to ensure that no privileged credentials are cached during this search process, as this can create new vulnerabilities. Using the correct tools that don't cache credentials (like WinRM or certain PowerShell commands) is essential during an investigation to avoid leaving traces on compromised systems.</p>
+
+          <h3>Identification of New Leads & Impacted Systems</h3>
+
+          <p>Once IOCs are applied to systems, hits (matches) can reveal additional compromised systems. However, not all hits will be directly related to the incident. Some may be false positives, or IOCs could be too broad. In such cases, investigators need to prioritize which systems to focus on, ideally starting with those that offer new leads that might be valuable in the investigation.</p>
+
+          <h3>Data Collection & Analysis from New Leads & Impacted Systems</h3>
+
+          <p>After identifying potentially impacted systems, data needs to be collected to understand the extent of the compromise. There are two main approaches to this:</p>
+
+          <ul>
+              <li><strong>Live Response</strong>: In this approach, the system is analyzed while it’s still running, collecting real-time data. This method is most commonly used, as it preserves running memory and other volatile data that might provide crucial evidence.</li>
+              <li><strong>Shutting Down the System</strong>: In some cases, it may be necessary to shut down the system to prevent further harm. However, this risks losing valuable information stored in the system's volatile memory (RAM). Therefore, decisions on whether to shut down a system must be carefully considered.</li>
+          </ul>
+
+          <p>Regardless of the method, it’s vital to minimize interaction with the system to avoid altering or corrupting any evidence.</p>
+
+          <p>Once the data is collected, it’s analyzed, which often involves tasks like malware analysis and disk forensics. The process can be time-consuming, but it’s crucial for identifying how the attack unfolded. Memory forensics has also become an increasingly important capability, especially in more sophisticated attacks.</p>
+
+          <h3>Chain of Custody</h3>
+
+          <p>During the entire investigation, maintaining a <strong>chain of custody</strong> is essential. This ensures that any evidence collected can be legally used in court, if necessary. Proper documentation of each step in the collection process helps maintain the integrity of the evidence.</p>
+
       </div>
 
       <!-- Toggle Button for Solution -->
