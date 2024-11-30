@@ -1099,6 +1099,93 @@
     </div>
 </div>
 
+<!-- Room 6 -->
+<div class="room-section">
+  <h2 onclick="toggleContent('room6')">Undertanding Cyber Kill Chain ⛓️ </h2>
+  <div id="room6" class="collapsible-content">
+      <img src="cyberkillchain.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+      <p><strong>Description:</strong> The Cyber Kill Chain is a systematic model developed by Lockheed Martin that outlines the stages of a cyberattack, providing organizations with a framework to understand, detect, and disrupt adversary activities. This chain highlights the steps attackers take, from initial reconnaissance to achieving their final objectives, such as data theft or operational disruption. By breaking the attack into stages, defenders can develop strategies to protect systems and stop adversaries before significant damage occurs.</p>
+      <p><strong>Challenge Approach:</strong> Understanding and leveraging the Cyber Kill Chain requires knowledge of the Tactics, Techniques, and Procedures (TTPs) used by attackers. Tools like OpenCTI and the MITRE ATT&CK Navigator help security professionals map these TTPs to each stage of the chain, enabling precise identification of vulnerabilities and appropriate countermeasures. These platforms also allow analysts to cross-reference threat intelligence reports and gain insights into threat actor motives and methods, ultimately enhancing an organization's defensive posture.</p>
+
+      <div class="solution-section" id="solution-room6" style="display: none;">
+        <p><strong>Question:</strong> What is the Cyber Kill Chain?</p>
+        <p>The Cyber Kill Chain is a framework that describes the steps attackers take to execute a cyberattack. It helps organizations understand the attacker’s workflow and identify opportunities to disrupt the attack. The chain includes seven stages: Recon, Weaponization, Delivery, Exploitation, Installation, Command and Control (C2), and Actions on Objectives. Understanding and intervening at each stage can prevent attacks from succeeding.</p>
+        <p><strong>Question:</strong> What is the first stage of the Cyber Kill Chain?</p>
+        <p><strong>1. Recon:</strong> During the reconnaissance stage, attackers gather information about their target. This could involve:
+        <ul>
+          <li>Passive Recon: Searching public sources (e.g., LinkedIn, Shodan, social media, company websites).</li>
+          <li>Active Recon: Scanning for vulnerabilities, open ports, or exposed services using tools like Nmap or Nessus.</li>
+        </ul>
+        To protect against this stage:
+        <ul>
+          <li>Limit the information available publicly (e.g., remove unnecessary metadata from documents).</li>
+          <li>Implement network monitoring to detect scanning activities.</li>
+          <li>Use deception technologies, such as honeypots, to mislead attackers.</li>
+        </ul>
+        </p>
+        <p><strong>Question:</strong> What happens in the weaponization stage?</p>
+        <p><strong>2. Weaponize:</strong> Attackers create a payload (e.g., malware, exploit) based on the information gathered. The payload is designed to exploit a vulnerability and deliver a foothold in the target system. For example, an attacker may create a malicious document with embedded macros.
+        To protect against weaponization:
+        <ul>
+          <li>Maintain up-to-date patching to reduce exploitable vulnerabilities.</li>
+          <li>Conduct threat intelligence to anticipate and block known malware types.</li>
+        </ul>
+        </p>
+        <p><strong>Question:</strong> How does the payload reach the target?</p>
+        <p><strong>3. Delivery:</strong> In this stage, attackers deliver the payload to the victim. Common methods include phishing emails with malicious attachments, drive-by downloads from compromised websites, or physical methods like USB drives.
+        To disrupt delivery:
+        <ul>
+          <li>Implement email filtering to detect and block phishing attempts.</li>
+          <li>Educate employees about recognizing phishing and suspicious links.</li>
+          <li>Limit access to unnecessary USB ports or external devices.</li>
+        </ul>
+        </p>
+        <p><strong>Question:</strong> What marks the transition from delivery to exploitation?</p>
+        <p><strong>4. Exploitation:</strong> The delivered payload is executed on the victim’s machine, exploiting a vulnerability to gain access. For example, this could be a zero-day exploit or a macro-enabled document triggering malicious code.
+        To mitigate exploitation:
+        <ul>
+          <li>Use application whitelisting to block unauthorized programs.</li>
+          <li>Enforce strong user permissions and minimize admin rights.</li>
+          <li>Deploy endpoint protection tools to detect suspicious activity.</li>
+        </ul>
+        </p>
+        <p><strong>Question:</strong> How does the attacker maintain their presence?</p>
+        <p><strong>5. Installation:</strong> Malware is installed on the system, creating persistence. This could involve backdoors, droppers, or rootkits to maintain control of the compromised system.
+        To disrupt installation:
+        <ul>
+          <li>Use application monitoring to detect unauthorized installations.</li>
+          <li>Deploy anti-malware tools to identify and block malicious files.</li>
+          <li>Conduct regular scans for anomalies in file integrity.</li>
+        </ul>
+        </p>
+        <p><strong>Question:</strong> What is the purpose of command and control (C2)?</p>
+        <p><strong>6. Command and Control:</strong> Attackers establish a communication channel with the compromised machine. This allows them to issue commands, exfiltrate data, or download additional tools. They may use encrypted channels or legitimate protocols to avoid detection.
+        To disrupt C2:
+        <ul>
+          <li>Monitor for unusual outbound connections or traffic patterns.</li>
+          <li>Block access to known malicious IP addresses or domains.</li>
+          <li>Use DNS filtering to prevent connections to malicious sites.</li>
+        </ul>
+        </p>
+        <p><strong>Question:</strong> What is the final stage of the Cyber Kill Chain?</p>
+        <p><strong>7. Actions on Objectives:</strong> This is the attacker’s end goal, which may involve data exfiltration, deploying ransomware, or further lateral movement within the network.
+        To protect against this stage:
+        <ul>
+          <li>Implement robust data encryption to protect sensitive information.</li>
+          <li>Use monitoring tools to detect and respond to unusual data access or transfer.</li>
+          <li>Conduct regular incident response drills to prepare for potential attacks.</li>
+        </ul>
+        </p>
+        <p><strong>Question:</strong> Can the stages of the Cyber Kill Chain repeat?</p>
+        <p>Yes, attackers may revisit earlier stages, such as recon or exploitation, to expand their foothold. For example, once inside the network, they might perform internal reconnaissance to find additional targets. 
+        Proactively disrupting the attack early in the chain minimizes damage and reduces the attacker’s chances of success.</p>
+      </div>
+
+      <!-- Toggle Button for Solution -->
+      <button class="solution-button" onclick="toggleSolution('room6', event)">Show Solution</button>
+  </div>
+</div>
+
 <script>
     function toggleContent(room) {
         var content = document.getElementById(room);
