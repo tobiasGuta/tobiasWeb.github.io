@@ -1510,6 +1510,104 @@ table {
 
           <p>During the entire investigation, maintaining a <strong>chain of custody</strong> is essential. This ensures that any evidence collected can be legally used in court, if necessary. Proper documentation of each step in the collection process helps maintain the integrity of the evidence.</p>
 
+          <h2>1. Containment</h2>
+          <p><strong>Containment</strong> refers to actions taken to prevent the incident from spreading and causing further damage. It is divided into <strong>short-term</strong> and <strong>long-term</strong> containment:</p>
+
+          <h3>Short-term Containment</h3>
+          <p>The goal here is to quickly stop the attack's spread while keeping the system as intact as possible to preserve evidence for investigation. Examples of short-term containment include:</p>
+          <ul>
+            <li><strong>Isolating affected systems</strong>: This could involve placing compromised systems in a separate network segment (VLAN) to prevent further communication with other systems.</li>
+            <li><strong>Disconnecting from the network</strong>: Physically disconnecting systems from the network, such as pulling the network cables, can stop further exploitation.</li>
+            <li><strong>Blocking Command and Control (C2) communication</strong>: If the attacker is using a specific domain or IP address for communication with compromised systems, redirecting or blocking that address can cut off the attacker's access.</li>
+          </ul>
+
+          <h3>Long-term Containment</h3>
+          <p>This involves more permanent actions to ensure that the attacker cannot continue their activities in the system. Examples include:</p>
+          <ul>
+            <li><strong>Changing passwords</strong>: Especially for administrative accounts that may have been compromised.</li>
+            <li><strong>Applying security patches</strong>: Fixing any vulnerabilities that were exploited during the attack.</li>
+            <li><strong>Adding security monitoring</strong>: Implementing host intrusion detection systems (HIDS) and more comprehensive firewall rules to detect any new malicious activity.</li>
+          </ul>
+          <p>It's important that both short-term and long-term containment are coordinated across all impacted systems. Otherwise, the attacker might become aware of the response and change their tactics, evading detection.</p>
+
+          <h2>2. Eradication</h2>
+          <p><strong>Eradication</strong> focuses on completely removing the threat from the environment and fixing the root cause of the incident. The goal is to make sure the adversary is no longer present and that any remaining traces of the attack are eliminated.</p>
+          <ul>
+            <li><strong>Removing malware</strong>: Any malware discovered during the investigation phase should be completely removed from all affected systems.</li>
+            <li><strong>Rebuilding systems</strong>: In some cases, it may be necessary to rebuild compromised systems from scratch to ensure that no hidden threats remain.</li>
+            <li><strong>Restoring from backups</strong>: Systems that were heavily affected might need to be restored from known good backups.</li>
+            <li><strong>Applying additional patches</strong>: If certain patches were not immediately applied during containment, they should be implemented now to further secure the system.</li>
+            <li><strong>Hardening systems</strong>: Additional hardening measures (like improving system security configurations) should be taken to prevent similar attacks in the future.</li>
+          </ul>
+
+          <h2>3. Recovery</h2>
+          <p><strong>Recovery</strong> involves bringing the affected systems back to normal operation. This stage focuses on ensuring that the systems are functional, secure, and able to support business operations once again. It's a careful and gradual process:</p>
+          <ul>
+            <li><strong>System verification</strong>: The business or the relevant stakeholders need to verify that the systems are functioning correctly and that they contain all necessary data. This ensures the systems are not only operational but also safe from compromise.</li>
+            <li><strong>Reintroducing systems into the production environment</strong>: Once verified, the systems are returned to normal operations and connected back to the production environment.</li>
+            <li><strong>Ongoing monitoring</strong>: After recovery, systems need to be monitored closely, as they are often prime targets for attackers looking to re-enter the environment. Suspicious events to look out for include:
+              <ul>
+                <li>Unusual login attempts (e.g., unfamiliar user accounts or service accounts).</li>
+                <li>Unexpected or suspicious processes running on systems.</li>
+                <li>Unauthorized changes to system settings, particularly in areas commonly altered by malware (e.g., system registries).</li>
+              </ul>
+            </li>
+          </ul>
+
+          <h3>Phased Recovery</h3>
+          <p>In large-scale incidents, recovery may take a long time and can happen in phases. Early stages may focus on quick fixes like applying basic security measures (e.g., updating software, implementing firewalls), while later phases may focus on more permanent changes like improving overall security and performing system-wide hardening.</p>
+
+          <h3>Post-Incident Activities</h3>
+          <p>The recovery stage may also involve reviewing lessons learned and updating the organization’s incident response plan to better handle future attacks. During this time, the team will identify weaknesses in the existing defenses and work on improving security posture to prevent future incidents.</p>
+
+          <h2>Key Takeaways</h2>
+          <ul>
+            <li><strong>Containment</strong> stops the spread of the incident and limits damage by isolating affected systems and applying immediate fixes.</li>
+            <li><strong>Eradication</strong> removes the root cause of the issue, such as malware, vulnerabilities, and compromised data.</li>
+            <li><strong>Recovery</strong> brings systems back online in a secure state while closely monitoring for any signs of the attacker trying to regain access.</li>
+          </ul>
+          <p>The main idea of these stages is to ensure that once the incident is contained, the organization works toward fully eradicating the threat and bringing systems back online securely, without leaving vulnerabilities that could be exploited again.</p>
+
+          <h2>Post-Incident Activity Stage</h2>
+          <p>The <strong>Post-Incident Activity Stage</strong> is the final phase of an incident response process, where the focus shifts from dealing with the immediate threat to learning from the experience and improving the organization’s response capabilities. The key objectives during this stage are to analyze what happened, document the incident, and reflect on how the response can be improved for future incidents. This stage also offers an opportunity to involve all the stakeholders who were part of the incident handling process to share insights and lessons learned. Here's a breakdown of the main components:</p>
+
+          <h3>1. Objective of the Post-Incident Activity Stage</h3>
+          <p>The primary goal here is to <strong>reflect and learn</strong> from the incident. By understanding the details of what happened, the actions taken, and their outcomes, the organization can strengthen its ability to respond to future incidents. This stage is typically conducted through a meeting where key team members and stakeholders (such as incident responders, security team, IT staff, legal team, etc.) gather to analyze the incident's impact and response effectiveness. The meeting usually takes place <strong>days after the incident</strong> once the incident report is complete.</p>
+
+          <h3>2. Reporting</h3>
+          <p>A <strong>final incident report</strong> is created at the end of this stage. This report provides a comprehensive overview of the incident and answers several important questions:</p>
+          <ul>
+            <li><strong>What happened and when?</strong>: Details about the incident timeline, the nature of the attack, and how it unfolded.</li>
+            <li><strong>Team performance</strong>: How well did the team respond based on existing plans, playbooks, policies, and procedures? Were the responses effective, or were there any gaps?</li>
+            <li><strong>Business involvement</strong>: Did the business respond quickly and provide necessary information? Were there any delays or obstacles that impacted the response?</li>
+            <li><strong>Containment and eradication actions</strong>: What specific actions were taken to stop the incident and eliminate the threat?</li>
+            <li><strong>Preventive measures</strong>: What steps can be taken to prevent a similar incident from happening in the future?</li>
+            <li><strong>Detection and analysis improvements</strong>: What tools or resources are needed to better detect and analyze future incidents?</li>
+          </ul>
+
+          <h3>3. Measurable Results</h3>
+          <p>By documenting the entire incident response, the report provides valuable metrics that help evaluate the effectiveness of the team and the incident response process. For example, it may provide:</p>
+          <ul>
+            <li>The number of incidents handled</li>
+            <li>Time spent per incident</li>
+            <li>The actions performed during each incident</li>
+          </ul>
+          <p>This data can also help identify trends, such as recurring issues or areas that require improvement in the response process.</p>
+
+          <h3>4. Training and Knowledge Sharing</h3>
+          <p>The post-incident phase is also an important time to <strong>train new team members</strong>. New hires can learn how experienced team members handled the incident, and what strategies were successful or needed improvement. This knowledge-sharing can help <strong>accelerate their learning</strong> and prepare them for future incidents.</p>
+
+          <h3>5. Reevaluating Plans, Procedures, and Tools</h3>
+          <p>During this stage, the organization should <strong>evaluate its internal processes</strong>. This includes:</p>
+          <ul>
+            <li>Whether the existing plans, playbooks, and procedures need to be updated based on the lessons learned.</li>
+            <li>Reviewing the tools and resources used during the incident to identify gaps and assess whether better tools are needed in the future.</li>
+            <li>Reassessing the <strong>team’s training</strong>, readiness, and structure. Are there areas where the team could improve its skill set? Are there gaps in knowledge or processes that need to be addressed?</li>
+          </ul>
+
+          <h3>6. Legal Considerations</h3>
+          <p>In cases where legal action is needed, the incident report will be crucial. It can be used as a reference in legal proceedings and may help assess the <strong>financial and operational impact</strong> of the incident. For example, the report might be used to calculate damages or to determine whether a breach has violated laws or regulations.</p>
+
       </div>
 
       <!-- Toggle Button for Solution -->
