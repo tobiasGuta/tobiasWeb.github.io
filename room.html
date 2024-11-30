@@ -271,6 +271,75 @@
     .prompt {
       color: #00ff00; /* Green color for the terminal prompt */
     }
+
+/* General table styling */
+table {
+      width: 100%; /* Full-width table */
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Table header styling */
+    th {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px;
+      text-align: left;
+      font-size: 16px;
+    }
+
+    /* Table cell styling */
+    td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: 14px;
+    }
+
+    /* Hover effect for rows */
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* Styling for the first row */
+    tr:first-child {
+      border-top: 2px solid #4CAF50;
+    }
+
+    /* Responsive design for small screens */
+    @media (max-width: 600px) {
+      table {
+        width: 100%; /* Full width */
+        font-size: 12px; /* Smaller text */
+        margin: 10px; /* Smaller margin */
+      }
+
+      th, td {
+        padding: 8px; /* Less padding */
+      }
+
+      th {
+        font-size: 14px;
+      }
+
+      td {
+        font-size: 12px;
+      }
+
+      /* Add horizontal scrolling for small screens */
+      .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on mobile */
+      }
+
+      table {
+        min-width: 600px; /* Prevent table from getting too small */
+      }
+    }
     </style>
 </head>
 <body>
@@ -1343,27 +1412,28 @@
         <h3>Incident Timeline</h3>
         <p>With the gathered information, start building an <strong>incident timeline</strong>. This timeline keeps you organized and provides a clear picture of what happened. The events are time-sorted based on when they occurred, but later investigation might reveal evidence in an unordered sequence.</p>
 
-        <table border="1" style="width: 80%;">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Time of the event</th>
-              <th>Hostname</th>
-              <th>Event Description</th>
-              <th>Data Source</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>09/09/2021</td>
-              <td>13:31 CET</td>
-              <td>SQLServer01</td>
-              <td>Hacker tool 'Mimikatz' detected</td>
-              <td>Antivirus Software</td>
-            </tr>
-          </tbody>
-        </table>
-
+        <div class="table-container">
+          <table border="1" style="width: 30%;">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time of the event</th>
+                <th>Hostname</th>
+                <th>Event Description</th>
+                <th>Data Source</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>09/09/2021</td>
+                <td>13:31 CET</td>
+                <td>SQLServer01</td>
+                <td>Hacker tool 'Mimikatz' detected</td>
+                <td>Antivirus Software</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <h3>Incident Severity & Extent Questions</h3>
         <p>When handling a security incident, answer the following questions to assess the severity and extent:</p>
         <ul>
