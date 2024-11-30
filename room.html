@@ -807,6 +807,7 @@ table {
             <p><strong>Important:</strong> Snort is not just for monitoring network traffic, logging data, or identifying and blocking threats. It also has a feature called "PCAP read/investigate mode," which allows you to analyze PCAP files. When you load a PCAP file into Snort, it processes the data and provides you with traffic statistics by default, along with any alerts based on the rules you've set up. This means you can investigate network traffic that has already been captured in a PCAP file, not just live traffic.</p>
             <p><strong>Info:</strong> When you read a PCAP file without using any specific settings or parameters, Snort will just give you a basic overview of the packets and provide general statistics about the file. This is usually not very helpful. The real advantage of using Snort to analyze a PCAP file comes when you apply Snort's rules, which allow you to identify known threat patterns. This makes the investigation process faster and more efficient by automatically detecting potential threats based on these predefined patterns.</p>
             <p><strong>Snort Mode:</strong> PCAP mode parameters</p>
+            <div class="table-container">
             <table>
                 <thead>
                     <tr>
@@ -829,6 +830,7 @@ table {
                     </tr>
                 </tbody>
             </table>
+            </div>
             <p><strong>Info:</strong> Investigating single PCAP with parameter "-r"</p>
             <div class="terminal">
                 <span class="prompt">$</span> sudo snort -c /etc/snort/snort.conf -q -r icmp-test.pcap -A console -n 10
@@ -869,6 +871,7 @@ table {
             <p><strong>Important:</strong> By default, Snort operates in passive mode, meaning it only monitors network traffic and alerts you about suspicious activity, functioning as an Intrusion Detection System (IDS). To enable Intrusion Prevention System (IPS) functionality, where Snort can actively block malicious traffic, you need to switch it to "inline mode."</p>
             <p><strong>Info:</strong> The Snort rule structure is easy to understand but difficult to produce. You should be familiar with rule options and related details to create efficient rules. </p>
             <p><strong>Info:</strong> Rules cannot be processed without a header, which is mandatory, while rule options are optional. However, without using rule options, it becomes nearly impossible to detect complex or advanced attacks.</p>
+            <div class="table-container">
             <table border="1">
                 <tr>
                   <th>Component</th>
@@ -899,55 +902,59 @@ table {
                   <td>This defines the type of protocol that the rule is designed to filter. Snort supports four protocols in the rules: IP, TCP, UDP, and ICMP. While specific protocols like FTP aren't directly available, you can filter traffic based on port numbers, such as TCP traffic on port 21 to detect FTP traffic.</td>
                 </tr>
               </table>
+            </div>
             <p><strong>Info:</strong> IP and Port Numbers</p>
             <p><strong>Note:</strong> These parameters identify the source and destination IP addresses and associated port numbers filtered for the rule.</p>
-            <table border="1" style="width: 100%;">
-                <tr>
-                  <th>Rule Type</th>
-                  <th>Description</th>
-                </tr>
-                <tr>
-                  <td><b>IP Filtering</b></td>
-                  <td>This rule creates an alert for each ICMP packet originating from the 192.168.1.56 IP address.</td>
-                </tr>
-                <tr>
-                  <td><b>Filter an IP Range</b></td>
-                  <td>This rule creates an alert for each ICMP packet from the 192.168.1.0/24 subnet.</td>
-                </tr>
-                <tr>
-                  <td><b>Filter Multiple IP Ranges</b></td>
-                  <td>This rule creates an alert for each ICMP packet from either the 192.168.1.0/24 or 10.1.1.0/24 subnets.</td>
-                </tr>
-                <tr>
-                  <td><b>Exclude IP Addresses/Ranges</b></td>
-                  <td>This rule creates an alert for each ICMP packet not originating from the 192.168.1.0/24 subnet.</td>
-                </tr>
-                <tr>
-                  <td><b>Port Filtering</b></td>
-                  <td>This rule creates an alert for each TCP packet sent to port 21.</td>
-                </tr>
-                <tr>
-                  <td><b>Exclude a Specific Port</b></td>
-                  <td>This rule creates an alert for each TCP packet not sent to port 21.</td>
-                </tr>
-                <tr>
-                  <td><b>Filter a Port Range (Type 1)</b></td>
-                  <td>This rule creates an alert for each TCP packet sent to ports between 1-1024.</td>
-                </tr>
-                <tr>
-                  <td><b>Filter a Port Range (Type 2)</b></td>
-                  <td>This rule creates an alert for each TCP packet sent to ports less than or equal to 1024.</td>
-                </tr>
-                <tr>
-                  <td><b>Filter a Port Range (Type 3)</b></td>
-                  <td>This rule creates an alert for each TCP packet sent to source ports higher than or equal to 1025.</td>
-                </tr>
-                <tr>
-                  <td><b>Filter a Port Range (Type 4)</b></td>
-                  <td>This rule creates an alert for each TCP packet sent to port 21 or 23.</td>
-                </tr>
-              </table>
+            <div class="table-container">
+              <table border="1" style="width: 100%;">
+                  <tr>
+                    <th>Rule Type</th>
+                    <th>Description</th>
+                  </tr>
+                  <tr>
+                    <td><b>IP Filtering</b></td>
+                    <td>This rule creates an alert for each ICMP packet originating from the 192.168.1.56 IP address.</td>
+                  </tr>
+                  <tr>
+                    <td><b>Filter an IP Range</b></td>
+                    <td>This rule creates an alert for each ICMP packet from the 192.168.1.0/24 subnet.</td>
+                  </tr>
+                  <tr>
+                    <td><b>Filter Multiple IP Ranges</b></td>
+                    <td>This rule creates an alert for each ICMP packet from either the 192.168.1.0/24 or 10.1.1.0/24 subnets.</td>
+                  </tr>
+                  <tr>
+                    <td><b>Exclude IP Addresses/Ranges</b></td>
+                    <td>This rule creates an alert for each ICMP packet not originating from the 192.168.1.0/24 subnet.</td>
+                  </tr>
+                  <tr>
+                    <td><b>Port Filtering</b></td>
+                    <td>This rule creates an alert for each TCP packet sent to port 21.</td>
+                  </tr>
+                  <tr>
+                    <td><b>Exclude a Specific Port</b></td>
+                    <td>This rule creates an alert for each TCP packet not sent to port 21.</td>
+                  </tr>
+                  <tr>
+                    <td><b>Filter a Port Range (Type 1)</b></td>
+                    <td>This rule creates an alert for each TCP packet sent to ports between 1-1024.</td>
+                  </tr>
+                  <tr>
+                    <td><b>Filter a Port Range (Type 2)</b></td>
+                    <td>This rule creates an alert for each TCP packet sent to ports less than or equal to 1024.</td>
+                  </tr>
+                  <tr>
+                    <td><b>Filter a Port Range (Type 3)</b></td>
+                    <td>This rule creates an alert for each TCP packet sent to source ports higher than or equal to 1025.</td>
+                  </tr>
+                  <tr>
+                    <td><b>Filter a Port Range (Type 4)</b></td>
+                    <td>This rule creates an alert for each TCP packet sent to port 21 or 23.</td>
+                  </tr>
+                </table>
+              </div>
               <p><strong>Info:</strong> The direction operator indicates the traffic flow to be filtered by Snort. The left side of the rule shows the source, and the right side shows the destination. see the picture above</p>
+              <div class="table-container">
               <table border="1" style="width: 30%;">
                 <tr>
                   <th>Flow Type</th>
@@ -982,7 +989,9 @@ table {
                   <td>Rule options that focus on non-payload data to create specific patterns and identify network issues.</td>
                 </tr>
               </table>
+              </div>
               <p><strong>Info:</strong> General Rule Options</p>
+              <div class="table-container">
               <table border="1" style="width: 100%;">
                 <tr>
                   <th>Rule Field</th>
@@ -1014,8 +1023,10 @@ table {
                   <td><b>Example Rule</b></td>
                   <td>alert icmp any any &lt;&gt; any any (msg: "ICMP Packet Found"; sid: 100001; reference: cve, CVE-XXXX; rev: 1;)</td>
                 </tr>
-              </table>              
+              </table>    
+              </div>          
               <p><strong>Info:</strong> Payload Detection Rule Options</p>
+              <div class="table-container">
               <table border="1" style="width: 100%;">
                 <tr>
                   <th>Rule Field</th>
@@ -1057,9 +1068,11 @@ table {
                   <td><b>Example Rule (Fast_pattern)</b></td>
                   <td>alert tcp any any &lt;&gt; any 80 (msg: "GET Request Found"; content:"GET"; fast_pattern; content:"www"; sid: 100001; rev:1;)</td>
                 </tr>
-              </table>              
+              </table>    
+              </div>           
               <p><strong>Info:</strong> Non-Payload Detection Rule Options</p>
               <p><strong>Note:</strong> There are rule options that focus on non-payload data. These options will help create specific patterns and identify network issues.</p>
+              <div class="table-container">
               <table border="1" style="width: 100%;">
                 <tr>
                   <th>Rule Field</th>
@@ -1106,7 +1119,8 @@ table {
                   <td><b>Example Rule (Sameip)</b></td>
                   <td>alert ip any any &lt;&gt; any any (msg: "SAME-IP TEST"; sameip; sid: 100001; rev:1;)</td>
                 </tr>
-              </table>              
+              </table>
+              </div>              
               <p><strong>Important:</strong>  once you create a rule, it is a local rule and should be in your "local.rules" file. This file is located under "/etc/snort/rules/local.rules". </p>
               <div class="terminal">
                 <span class="prompt">$</span> sudo nano /etc/snort/rules/local.rules 
