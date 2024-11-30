@@ -1208,7 +1208,7 @@
         <p><strong>2. Recovery:</strong> After the investigation, organizations create and execute a recovery plan to remove threats and restore systems. Normal business operations should resume as quickly as possible.</p>
         <p><strong>Question:</strong> What happens after the incident is resolved?</p>
         <p>Once an incident is fully handled, a detailed report is created to document the cause, impact, and response actions. Additionally, "lessons learned" activities are conducted to identify weaknesses in current defenses and implement measures to prevent future incidents of the same nature.</p>
-        <p><strong>In the Preparation Stage </strong> of incident handling, there are two key objectives:</p>
+        <h1>the Preparation Stage</h1>
 
         <ol>
           <li><strong>Establishing Incident Handling Capability:</strong> This involves setting up a team and processes to effectively manage incidents when they occur. The team needs to be ready to identify, respond to, and mitigate security incidents in an organized way.</li>
@@ -1306,6 +1306,79 @@
           <li><strong>Blue Team</strong>: Works to detect, respond, and defend against the attacks.</li>
           <li><strong>Goal</strong>: Improve collaboration and effectiveness of both teams, enhance detection capabilities, and refine incident response playbooks.</li>
         </ul>
+        <h1>Detection & Analysis Stage</h1>
+        <p>At this point, we have created processes, procedures, and guidelines on how to act upon security incidents.</p>
+        <p>The <strong>Detection & Analysis</strong> phase involves detecting an incident using various sources, such as sensors, logs, and trained personnel. It also includes information and knowledge sharing, as well as utilizing context-based threat intelligence. Additionally, segmentation of the architecture and having clear visibility within the network are critical factors for effective detection.</p>
+
+        <h3>Threat Detection Sources</h3>
+        <p>Threats can be introduced to the organization via an infinite number of attack vectors, and detection can come from several sources:</p>
+        <ul>
+          <li><strong>Employee Reports</strong>: An employee noticing abnormal behavior.</li>
+          <li><strong>Alerts from Tools</strong>: Alerts from tools like EDR, IDS, firewalls, SIEM, etc.</li>
+          <li><strong>Threat Hunting</strong>: Proactively looking for threats.</li>
+          <li><strong>Third-Party Notifications</strong>: A third-party organization notifying you that your systems may be compromised.</li>
+        </ul>
+
+        <h3>Levels of Detection</h3>
+        <p>It’s crucial to create layers of detection across the network:</p>
+        <ol>
+          <li><strong>Network Perimeter Detection</strong>: Using firewalls, IDS/IPS systems at the perimeter, and demilitarized zones (DMZs).</li>
+          <li><strong>Internal Network Detection</strong>: Using local firewalls, host intrusion detection/prevention systems (HIDS/HIPS), etc.</li>
+          <li><strong>Endpoint Detection</strong>: Using antivirus software, endpoint detection & response (EDR) systems, etc.</li>
+          <li><strong>Application Detection</strong>: Using application logs, service logs, etc.</li>
+        </ol>
+
+        <h3>Initial Investigation</h3>
+        <p>When a security incident is detected, it’s essential to conduct some initial investigation to establish context before assembling the incident response team. Information must be gathered about:</p>
+        <ul>
+          <li>Date/Time of the incident and who reported it.</li>
+          <li>How the incident was detected.</li>
+          <li>What the incident is (e.g., phishing, system unavailability).</li>
+          <li>Impacted systems (if relevant).</li>
+          <li>Who accessed impacted systems and what actions were taken.</li>
+          <li>Physical location, OS, IP addresses, hostnames, and system owner information.</li>
+          <li>If malware is involved, include relevant information such as IP addresses, date/time of detection, malware type, and forensic data (e.g., file hashes, copies of the files).</li>
+        </ul>
+
+        <h3>Incident Timeline</h3>
+        <p>With the gathered information, start building an <strong>incident timeline</strong>. This timeline keeps you organized and provides a clear picture of what happened. The events are time-sorted based on when they occurred, but later investigation might reveal evidence in an unordered sequence.</p>
+
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time of the event</th>
+              <th>Hostname</th>
+              <th>Event Description</th>
+              <th>Data Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>09/09/2021</td>
+              <td>13:31 CET</td>
+              <td>SQLServer01</td>
+              <td>Hacker tool 'Mimikatz' detected</td>
+              <td>Antivirus Software</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Incident Severity & Extent Questions</h3>
+        <p>When handling a security incident, answer the following questions to assess the severity and extent:</p>
+        <ul>
+          <li>What is the exploitation impact?</li>
+          <li>What are the exploitation requirements?</li>
+          <li>Can any business-critical systems be affected?</li>
+          <li>Are there suggested remediation steps?</li>
+          <li>How many systems have been impacted?</li>
+          <li>Is the exploit being used in the wild?</li>
+          <li>Does the exploit have worm-like capabilities?</li>
+        </ul>
+
+        <h3>Incident Confidentiality & Communication</h3>
+        <p>Incident-related information is highly confidential. All information should be kept on a need-to-know basis unless instructed otherwise. The appointed person will handle communication according to legal requirements.</p>
+        <p>When an investigation begins, set expectations and goals, which may include the incident type, sources of evidence, and rough time estimates. As the investigation evolves, expectations and findings may change.</p>
 
       </div>
 
