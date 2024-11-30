@@ -1182,7 +1182,36 @@
       </div>
 
       <!-- Toggle Button for Solution -->
-      <button class="solution-button" onclick="toggleSolution('room6', event)">Show Solution</button>
+      <button class="solution-button" onclick="toggleSolution('room6', event)">More</button>
+  </div>
+</div>
+
+<div class="room-section">
+  <h2 onclick="toggleContent('room7')">Incident Handling Process 👲 </h2>
+  <div id="room7" class="collapsible-content">
+      <img src="incidenthan.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+      <p><strong>Description:</strong> The Incident Handling Process is a systematic approach designed to help organizations respond to and recover from security incidents. The process consists of four stages: Preparation, Detection and Analysis, Containment/Eradication/Recovery, and Post-Incident Activities. It enables incident handlers to proactively prepare for potential threats, detect malicious events early, contain and recover from incidents effectively, and learn from past incidents to improve future responses. By following this cyclical process, organizations can ensure a swift and coordinated response to security breaches and minimize the impact of cyberattacks.</p>
+      <p><strong>Challenge Approach:</strong> The Incident Handling Process requires a strong understanding of the tools, techniques, and procedures (TTPs) used during an incident. By utilizing frameworks like NIST’s guidelines and leveraging technologies for monitoring, detection, and recovery, organizations can stay ahead of potential threats. Incident response teams use these resources to identify compromised systems, mitigate ongoing attacks, and restore normal operations. After an incident, post-incident activities, such as lessons learned and root cause analysis, ensure that organizations can improve their preparedness for future attacks.</p>
+
+      <div class="solution-section" id="solution-room7" style="display: none;">
+        <p><strong>Question:</strong> What is the Incident Handling Process?</p>
+        <p>The Incident Handling Process is a structured framework used by organizations to prepare for, detect, respond to, and learn from security incidents. It enables organizations to minimize damage, recover efficiently, and prevent similar incidents in the future. The process, as defined by NIST, has four key stages: Preparation, Detection and Analysis, Containment/Eradication/Recovery, and Post-Incident Activities. It is dynamic and cyclic, meaning steps may need to be revisited as new evidence arises.</p>
+        <p><strong>Question:</strong> What are the stages of the Incident Handling Process?</p>
+        <p><strong>1. Preparation:</strong> This stage focuses on equipping the organization with the tools, plans, and skills needed to respond to incidents. Examples include creating an incident response plan, conducting regular training, and ensuring the availability of key tools like firewalls, intrusion detection systems, and logging mechanisms.</p>
+        <p><strong>2. Detection and Analysis:</strong> The focus here is identifying potential incidents and determining their scope and impact. Organizations monitor systems for unusual activities using tools like SIEMs, analyze logs, and use threat intelligence to identify malicious events. Quick and accurate detection is critical to minimize damage.</p>
+        <p><strong>3. Containment, Eradication, and Recovery:</strong> After an incident is identified, this stage focuses on stopping the threat (containment), removing it (eradication), and restoring systems to normal operations (recovery). For example, isolating infected machines, removing malware, and restoring clean backups.</p>
+        <p><strong>4. Post-Incident Activities:</strong> Once the incident is resolved, the organization documents the cause, impact, and response actions in an incident report. A "lessons learned" session is conducted to identify improvements in processes and defenses to prevent similar incidents in the future.</p>
+        <p><strong>Question:</strong> Why is the process considered cyclic?</p>
+        <p>The Incident Handling Process is cyclic because, as new evidence is uncovered, teams may need to revisit earlier stages. For example, during recovery, additional infected machines might be discovered, requiring further containment and analysis. This ensures no gaps are left in the response process.</p>
+        <p><strong>Question:</strong> What are the two main activities in incident handling?</p>
+        <p><strong>1. Investigation:</strong> This involves determining the "patient zero" (the first system compromised), understanding the attacker’s tools and techniques, and documenting affected systems and actions.</p>
+        <p><strong>2. Recovery:</strong> After the investigation, organizations create and execute a recovery plan to remove threats and restore systems. Normal business operations should resume as quickly as possible.</p>
+        <p><strong>Question:</strong> What happens after the incident is resolved?</p>
+        <p>Once an incident is fully handled, a detailed report is created to document the cause, impact, and response actions. Additionally, "lessons learned" activities are conducted to identify weaknesses in current defenses and implement measures to prevent future incidents of the same nature.</p>
+      </div>
+
+      <!-- Toggle Button for Solution -->
+      <button class="solution-button" onclick="toggleSolution('room7', event)">More</button>
   </div>
 </div>
 
