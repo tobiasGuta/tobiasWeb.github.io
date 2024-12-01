@@ -1615,6 +1615,184 @@ table {
   </div>
 </div>
 
+<!-- Room 8 -->
+
+<div class="room-section">
+  <h2 onclick="toggleContent('room8')">Security Monitoring & SIEM 📝</h2>
+  <div id="room8" class="collapsible-content">
+      <img src="siemm.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+      <p><strong>Description:</strong> Gain insight into how SIEM solutions adopt a tactical approach to detect and alert on threats. This includes understanding the fundamentals of Indicators of Compromise (IOCs), Indicators of Attack (IOAs), and how to analyze them effectively to enhance security monitoring.</p>
+      <p><strong>Challenge Approach:</strong> Explore the most efficient methods to strengthen an organization's security posture using SIEM’s detection mechanisms. This guide walks the user through setting up and fine-tuning these systems tactically. By understanding these processes, users will establish a foundational knowledge base, learn to implement detection strategies, and adapt them to suit their unique security requirements.</p>
+
+      <div class="solution-section" id="solution-room8" style="display: none;">
+        <p><strong>What Is SIEM?</strong></p>
+        <p>SIEM is a system used to keep computers, networks, and digital data safe by monitoring, managing, and analyzing security events and data. It combines software tools that collect and process security data from different devices like servers, firewalls, and applications. These tools help security teams spot threats quickly, sometimes even before they happen, allowing for faster responses to security incidents. SIEM systems are essential for protecting a company’s digital environment and are a key part of an organization's overall security strategy.</p>
+        
+        <p><strong>The Evolution of SIEM Technology</strong></p>
+        <p>SIEM technology started as two separate concepts—SIM (Security Information Management) and SEM (Security Event Management)—both of which had their own specialized ways of collecting and analyzing security data. In 2005, two analysts combined these technologies to create SIEM, a more comprehensive solution that handles both data collection and event monitoring. SIEM systems today help organizations keep track of and analyze logs and security events from various sources to detect and manage threats more effectively.</p>
+        
+        <p><strong>How Does SIEM Work?</strong></p>
+        <p>SIEM systems gather security data from different sources like computers, network devices, and servers. This data is then standardized and organized so that it’s easy to analyze. Security experts use SIEM to look for patterns that could indicate a security issue. When a potential threat is detected, the system sends an alert to the IT security team, who investigate further. SIEM systems are designed to reduce the overwhelming number of alerts that could happen by filtering out less critical issues and focusing on the most urgent threats. Unlike other tools like Intrusion Detection Systems (IDS), SIEM collects and processes data from many sources to give a complete view of security events.</p>
+        
+        <p><strong>Key Functions of SIEM</strong></p>
+        <div class="table-container">
+        <table border="1" style="width: 100%;">
+            <tr>
+                <th><strong>Function</strong></th>
+                <th><strong>Description</strong></th>
+            </tr>
+            <tr>
+                <td><strong>Log Aggregation and Normalization</strong></td>
+                <td>SIEM systems collect logs from various sources and convert them into a common format. This helps the security team easily analyze and track potential security incidents.</td>
+            </tr>
+            <tr>
+                <td><strong>Threat Alerting</strong></td>
+                <td>When a threat is identified, SIEM notifies security teams with alerts, making it easier for them to act quickly and prevent or limit damage.</td>
+            </tr>
+            <tr>
+                <td><strong>Contextualization & Response</strong></td>
+                <td>Instead of overwhelming security teams with too many alerts, SIEM systems provide context for the threats, helping teams understand the importance of each alert and prioritize responses.</td>
+            </tr>
+            <tr>
+                <td><strong>Compliance</strong></td>
+                <td>SIEM also helps organizations comply with regulations like HIPAA and GDPR by ensuring proper monitoring, analysis, and reporting of security data.</td>
+            </tr>
+        </table>
+        </div>
+        
+        <p><strong>Benefits of Using a SIEM</strong></p>
+        <p>Using SIEM offers several important advantages. It gives security teams a centralized view of all security-related data, allowing them to spot potential threats that may have been missed otherwise. It can also help detect threats before they become full-blown attacks, saving the organization from financial losses and reputational damage. Additionally, SIEM helps businesses comply with legal and regulatory standards, ensuring that logs and security events are properly recorded and monitored.</p>
+        
+        <h1>What is the Elastic Stack?</h1>
+    <p>The Elastic Stack, created by Elastic, is an open-source collection of tools primarily comprising three key components: Elasticsearch, Logstash, and Kibana. These tools work together to provide a comprehensive solution for real-time data search, analysis, and visualization from log files and other data sources.</p>
+
+    <p>In larger, resource-intensive environments, the Elastic Stack can integrate with tools like Kafka, RabbitMQ, Redis (for buffering and resiliency), and nginx (for enhanced security).</p>
+
+    <h2>Components of the Elastic Stack</h2>
+
+    <h3>1. Elasticsearch</h3>
+    <p><strong>Elasticsearch</strong> is a distributed, JSON-based search engine with RESTful APIs. It serves as the core of the Elastic Stack and is responsible for:</p>
+    <ul>
+        <li>Indexing, storing, and querying data.</li>
+        <li>Enabling advanced search and analytics capabilities on the data processed by Logstash.</li>
+    </ul>
+
+    <h3>2. Logstash</h3>
+    <p><strong>Logstash</strong> is a data collection and processing tool designed to:</p>
+    <ul>
+        <li><strong>Collect:</strong> Gather log data from various sources (e.g., files, TCP sockets, syslogs).</li>
+        <li><strong>Transform:</strong> Normalize and enrich log data using filters and predefined conditions.</li>
+        <li><strong>Transport:</strong> Send processed data to Elasticsearch for storage and analysis.</li>
+    </ul>
+
+    <h3>3. Kibana</h3>
+    <p><strong>Kibana</strong> is a visualization tool used to explore and analyze data stored in Elasticsearch. It offers:</p>
+    <ul>
+        <li>Custom dashboards, charts, and tables for better insights.</li>
+        <li>An intuitive interface to run queries and interact with data visually.</li>
+    </ul>
+
+    <h3>4. Beats</h3>
+    <p><strong>Beats</strong> are lightweight data shippers designed to forward logs and metrics from remote machines to Logstash or Elasticsearch.</p>
+
+    <p><strong>Data flow examples:</strong></p>
+    <div>
+        <ul>
+            <li>Beats -> Logstash -> Elasticsearch -> Kibana</li>
+            <li>Beats -> Elasticsearch -> Kibana</li>
+        </ul>
+    </div>
+
+    <h2>Using Elastic Stack as a SIEM Solution</h2>
+    <p>The Elastic Stack is often implemented as a Security Information and Event Management (SIEM) solution. It allows for:</p>
+    <ul>
+        <li>Ingestion of security-related data from sources like firewalls, IDS/IPS, and endpoints using Logstash.</li>
+        <li>Storing and indexing security data in Elasticsearch.</li>
+        <li>Creating dashboards in Kibana for analyzing and visualizing security events.</li>
+    </ul>
+    <p><strong>Example command:</strong></p>
+    <div class="terminal">
+        <span class="prompt"></span> event.code:4625 AND winlog.event_data.SubStatus:0xC0000072
+    </div>
+
+    <h2>Kibana Query Language (KQL)</h2>
+    <p><strong>What is KQL?</strong> It is a user-friendly query language for running searches in Kibana. Here’s how it works:</p>
+    <ul>
+        <li><strong>Basic Structure:</strong> Queries are written in <code>field:value</code> format. Example:
+            <div class="terminal">
+                <span class="prompt"></span> event.code:4625
+            </div>
+        </li>
+        <li><strong>Free Text Search:</strong> Search for terms across fields without specifying a field name. Example:
+            <div class="terminal">
+                <span class="prompt"></span> "svc-sql1"
+            </div>
+        </li>
+        <li><strong>Logical Operators:</strong> Combine conditions using AND, OR, and NOT. Example:
+            <div class="terminal">
+                <span class="prompt"></span> event.code:4625 AND winlog.event_data.SubStatus:0xC0000072
+            </div>
+        </li>
+        <li><strong>Comparison Operators:</strong> Match conditions precisely using <code>:>, :>=, :<, :<=, :!</code>. Example:
+            <div class="terminal">
+                <span class="prompt"></span> @timestamp >= "2023-03-03T00:00:00.000Z"
+            </div>
+        </li>
+        <li><strong>Wildcards:</strong> Search using patterns. Example:
+            <div class="terminal">
+                <span class="prompt"></span> user.name: admin*
+            </div>
+        </li>
+    </ul>
+
+    <h2>How to Identify Available Data</h2>
+    <p>There are two main approaches:</p>
+    <ol>
+        <li><strong>Using KQL’s Free Text Search:</strong> Explore fields and values using the "Discover" feature in Kibana. For example, searching for <code>"4625"</code> reveals event codes and timestamps.</li>
+        <li><strong>Leveraging Elastic Documentation:</strong> Refer to Elastic’s documentation to understand field structures, including:</li>
+        <ul>
+            <li>Elastic Common Schema (ECS)</li>
+            <li>Winlogbeat fields</li>
+            <li>Filebeat fields</li>
+        </ul>
+    </ol>
+
+    <h2>Elastic Common Schema (ECS)</h2>
+    <p>The Elastic Common Schema standardizes field names across data sources, offering:</p>
+    <div class="table-container">
+    <table border="1" style="width: 100%;">
+        <tr>
+            <th>Feature</th>
+            <th>Benefit</th>
+        </tr>
+        <tr>
+            <td>Unified Data View</td>
+            <td>Allows correlation across multiple sources with consistent field names.</td>
+        </tr>
+        <tr>
+            <td>Improved Query Efficiency</td>
+            <td>Simplifies query writing in KQL.</td>
+        </tr>
+        <tr>
+            <td>Better Visualizations</td>
+            <td>Enables seamless dashboard creation.</td>
+        </tr>
+        <tr>
+            <td>Advanced Elastic Features</td>
+            <td>Integrates well with Elastic’s Security and Observability tools.</td>
+        </tr>
+    </table>
+    </div>
+
+    <p>Using ECS fields ensures consistency, future-proofing, and efficient investigation of cybersecurity incidents.</p>
+        
+      </div>
+
+      <!-- Toggle Button for Solution -->
+      <button class="solution-button" onclick="toggleSolution('room8', event)">Show Solution</button>
+  </div>
+</div>
+
 <script>
     function toggleContent(room) {
         var content = document.getElementById(room);
