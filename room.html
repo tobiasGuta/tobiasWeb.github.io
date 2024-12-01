@@ -1699,7 +1699,9 @@ table {
     <div>
         <ul>
             <li>Beats -> Logstash -> Elasticsearch -> Kibana</li>
+            <img src="https://academy.hackthebox.com/storage/modules/211/beats1.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
             <li>Beats -> Elasticsearch -> Kibana</li>
+            <img src="https://academy.hackthebox.com/storage/modules/211/beats2.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
         </ul>
     </div>
 
@@ -1735,12 +1737,12 @@ table {
         </li>
         <li><strong>Comparison Operators:</strong> Match conditions precisely using <code>:>, :>=, :<, :<=, :!</code>. Example:
             <div class="terminal">
-                <span class="prompt"></span> @timestamp >= "2023-03-03T00:00:00.000Z"
+                <span class="prompt"></span> event.code:4625 AND winlog.event_data.SubStatus:0xC0000072 AND @timestamp >= "2023-03-03T00:00:00.000Z" AND @timestamp <= "2023-03-06T23:59:59.999Z"
             </div>
         </li>
         <li><strong>Wildcards:</strong> Search using patterns. Example:
             <div class="terminal">
-                <span class="prompt"></span> user.name: admin*
+                <span class="prompt"></span> event.code:4625 AND user.name: admin*
             </div>
         </li>
     </ul>
