@@ -1794,6 +1794,81 @@ table {
   </div>
 </div>
 
+<!-- Room9 -->
+<div class="room-section">
+  <h2 onclick="toggleContent('room9')"> Azure Fundamental
+    <img src="azureicon.png" alt="azure icon" width="25" height="20">
+</h2>
+  <div id="room9" class="collapsible-content">
+      <img src="azurewall.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+      <p><strong>Description:</strong> Cloud computing refers to accessing and using computing resources over the internet rather than relying on local servers or physical hardware. These resources include things like virtual machines, storage, databases, and networking. The cloud also offers advanced services such as Internet of Things (IoT), machine learning (ML), and artificial intelligence (AI), which go beyond the traditional IT setup. Since cloud computing operates over the internet, it’s not limited by physical infrastructure like a traditional data center. This means that businesses can quickly scale up their IT resources without the need to build new data centers. They can just tap into the cloud to expand their operations on demand.</p>
+
+      <div class="solution-section" id="solution-room9" style="display: none;">
+          <img src="cloudcomputer.jpg" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p><strong>1: What is cloud computing?</strong> Cloud computing is like having a computer, but instead of buying one and storing it yourself, you access it over the internet. It offers more advanced features compared to owning a physical computer. It's similar to owning a computer at home, but with cloud computing, you can access it from anywhere, For example, if you're running a commercial website from your own computer, you'll likely have databases and resources running on that computer. As your website grows, you may run into problems like running out of storage or overloading your computer. This can cause issues like downtime or slow performance, That's where cloud computing comes in. With cloud computing, you don't need to worry about these limitations. The cloud provides more storage and resources when you need them, and the maintenance, backups, and updates are handled by other people. This makes it easier for businesses to scale and focus on their work without worrying about technical problems.</p>
+          <img src="sharerescloud.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p><strong>2: shared responsibility model </strong> In a traditional corporate data center, the company handles everything—maintaining the physical space, ensuring security, and taking care of the servers. The IT team is in charge of keeping all systems updated, patched, and running smoothly, With the shared responsibility model in cloud computing, the duties are split between the cloud provider and the customer. The provider manages the physical aspects, such as security, power, cooling, and network connectivity, since the customer isn't on-site with the data center, The customer, however, is responsible for the data stored in the cloud. They must ensure that their information is secure and accessible only to authorized users. For example, while the cloud provider may handle a cloud SQL database, the customer still owns the data in it and must manage who has access, Some responsibilities are dependent on the specific service. For instance, if you’re using a cloud database service (PaaS), the provider handles the maintenance of the database, but the customer remains responsible for managing the data. However, if the customer sets up their own virtual machine and installs a database (IaaS), they’re responsible for both the database and the data within it, In a physical data center, the company owns all responsibilities, but with cloud computing, the shared responsibility model varies depending on the type of service—whether it's Infrastructure as a Service (IaaS), Platform as a Service (PaaS), or Software as a Service (SaaS). IaaS places more responsibility on the consumer, while SaaS puts most of the burden on the provider. PaaS is a middle ground, where the responsibilities are more evenly distributed.</p>
+          <p><strong>Info:</strong> This diagram highlights how the Shared Responsibility Model informs who is responsible for what.</p>
+          <img src="diagramshareres.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <ul>
+            <li><strong>You’ll always be responsible for:</strong>
+              <ul>
+                <li>The information and data stored in the cloud</li>
+                <li>Devices that are allowed to connect to your cloud (cell phones, computers, and so on)</li>
+                <li>The accounts and identities of the people, services, and devices within your organization</li>
+              </ul>
+            </li>
+            <li><strong>The cloud provider is always responsible for:</strong>
+              <ul>
+                <li>The physical datacenter</li>
+                <li>The physical network</li>
+                <li>The physical hosts</li>
+              </ul>
+            </li>
+            <li><strong>Your service model will determine responsibility for things like:</strong>
+              <ul>
+                <li>Operating systems</li>
+                <li>Network controls</li>
+                <li>Applications</li>
+                <li>Identity and infrastructure</li>
+              </ul>
+            </li>
+          </ul>        
+          <h3>cloud models</h3>
+          <img src="pubicprivatebriate.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">  
+          <p> Private Cloud: A private cloud is similar to a corporate datacenter but with the added benefit of cloud technologies. It's a cloud service dedicated to a single organization, offering more control for the company's IT team. However, private clouds are often more expensive and do not offer the same scalability or flexibility as public clouds. A private cloud can be hosted within your own data center or in a dedicated offsite facility, potentially managed by a third-party.</p>
+          <p> Public Cloud: A public cloud is owned and operated by a third-party provider, making cloud services available to anyone who wants to use them. These clouds are accessible to the general public, which sets them apart from private clouds. Public clouds are typically more cost-effective and offer greater scalability, but users have less control over the infrastructure.</p>
+          <p> Hybrid Cloud: A hybrid cloud combines both private and public clouds, enabling seamless integration between the two. This setup allows businesses to scale their private cloud with public cloud resources during peak demand. It also provides flexibility, letting organizations choose which workloads should stay in the private cloud for added security and which can move to the public cloud for cost efficiency.</p>
+          <img src="multi-cloudand more.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>Multi-cloud: In a multi-cloud setup, a company utilizes multiple cloud providers, often combining different services from each one. This can happen if the company uses features from several providers or is transitioning from one to another. The main idea is managing resources and security across two or more public cloud environments, giving businesses more flexibility and options for their cloud services.</p>
+          <p>Azure Arc: Azure Arc is a set of tools that help you manage and oversee your cloud resources, whether they are in a public cloud (like Azure), a private cloud in your own data center, a hybrid setup, or a multi-cloud environment with resources spread across different providers. It simplifies managing various cloud configurations from a single interface.</p>
+          <p>Azure VMware Solution: If you're already using VMware in a private cloud but want to take advantage of the scalability and flexibility of public or hybrid clouds, Azure VMware Solution allows you to run your VMware-based workloads in Azure. It integrates VMware seamlessly with Azure, making it easier to scale and manage workloads in the cloud.</p>
+          <h3>consumption-based model</h3>
+          <img src="datacomu.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>When comparing IT infrastructure models, there are two main types of costs to consider: CapEx and OpEx. CapEx is a one-time investment made to acquire or establish physical assets, such as purchasing land, constructing buildings, or setting up a data center. It's a large, upfront expenditure that results in ownership of the resources. In contrast, OpEx involves ongoing, recurring expenses for services or products. This includes costs like renting space, leasing equipment, or subscribing to cloud services. With OpEx, you pay for the use of something over time rather than owning it outright. Cloud computing follows the OpEx model because it’s based on how much you use. Instead of investing in physical infrastructure and managing it, you only pay for the cloud resources you consume, which can vary month to month depending on your needs. If you don’t use any services, there’s no cost for that period.</p>
+          <p>This consumption-based model has many benefits, including:</p>
+          <ul>
+            <li>No upfront costs.</li>
+            <li>No need to purchase and manage costly infrastructure that users might not use to its fullest potential.</li>
+            <li>The ability to pay for more resources when they're needed.</li>
+            <li>The ability to stop paying for resources that are no longer needed.</li>
+          </ul>
+          <p>In a traditional data center, you have to estimate how much resources you'll need in the future. If you overestimate, you'll end up spending more money than necessary on hardware that isn't fully used. If you underestimate, your data center may quickly run out of capacity, causing performance issues for your applications and services. Fixing this usually involves ordering and installing new hardware, along with adding power, cooling, and networking, which can be time-consuming.</p>
+          <p>With cloud computing, you don’t need to worry about getting your resource needs exactly right. If you need more virtual machines, you can add them easily. If the demand drops, you can remove them just as easily. You only pay for the virtual machines you use, so there's no need to worry about paying for unused "extra capacity" that cloud providers keep available.</p>
+          <p>Cloud computing involves accessing computing resources, like storage, processing power, and software, over the internet, rather than relying on local infrastructure. It uses a pay-as-you-go model, meaning you only pay for the services you actually use. This approach helps you:</p>
+          <ul>
+            <li>Plan and manage your operating costs.</li>
+            <li>Run your infrastructure more efficiently.</li>
+            <li>Scale as your business needs change.</li>
+          </ul>
+          
+          </div>
+
+      <!-- Toggle Button for Solution -->
+      <button class="solution-button" onclick="toggleSolution('room9', event)">Show Solution</button>
+  </div>
+</div>
+
 <script>
     function toggleContent(room) {
         var content = document.getElementById(room);
