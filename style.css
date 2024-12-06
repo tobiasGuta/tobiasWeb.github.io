@@ -121,6 +121,14 @@ section {
     text-decoration: underline; /* Underline on hover for better visibility */
 }
 
+.profile-picture {
+    width: 150px; /* Adjust size as needed */
+    height: 150px; /* Adjust size as needed */
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; /* Ensures the image covers the circle */
+    margin-right: 0.5px; /* Adds space between the image and text */
+}
+
 /* Keyframe for pulse animation */
 @keyframes pulse {
     0% {
