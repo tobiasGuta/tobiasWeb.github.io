@@ -351,59 +351,61 @@ body {
         ];
 
         async function fetchFeeds() {
-    feedContainer.innerHTML = ''; // Clear the container before loading new items
-    const seenTitles = new Set(); // Track seen titles
+  feedContainer.innerHTML = '';
 
-    for (const feed of rssFeeds) {
-        try {
-            const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
-            const data = await response.json();
+  const allItems = [];
+  const seenTitles = new Set();
 
-            if (data.status === 'ok') {
-                data.items.forEach(item => {
-                    if (!seenTitles.has(item.title)) { // Check for duplicates
-                        seenTitles.add(item.title); // Mark title as seen
+  const fetchPromises = rssFeeds.map(async (feed) => {
+    try {
+      const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
+      const data = await response.json();
 
-                        // Create a temporary element to parse the description and remove images
-                        const tempDiv = document.createElement('div');
-                        tempDiv.innerHTML = item.description;
-
-                        // Remove all image tags from the description
-                        const images = tempDiv.getElementsByTagName('img');
-                        while (images.length > 0) {
-                            images[0].parentNode.removeChild(images[0]);
-                        }
-
-                        // Get the cleaned description
-                        const cleanedDescription = tempDiv.innerHTML;
-
-                        // Truncate the description if it's too long
-                        const snippet = cleanedDescription.length > 400 ? cleanedDescription.substring(0, 400) + '...' : cleanedDescription;
-
-                        const feedItem = document.createElement('div');
-                        feedItem.className = 'feed-item';
-                        feedItem.innerHTML = `
-                            <div class="header">
-                                <h2>${item.title}</h2>
-                                <span class="badge">${item.pubDate}</span>
-                            </div>
-                            <p>${snippet}</p>
-                            <a href="${item.link}" target="_blank">Read more</a>
-                        `;
-                        feedContainer.appendChild(feedItem);
-                    }
-                });
-            }
-        } catch (error) {
-            console.error('Error fetching feeds:', error);
-        }
+      if (data.status === 'ok') {
+        data.items.forEach(item => {
+          if (!seenTitles.has(item.title)) {
+            seenTitles.add(item.title);
+            allItems.push(item);
+          }
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching feed:', feed, error);
     }
+  });
+
+  await Promise.all(fetchPromises);
+
+  // Sort all items by publication date (newest first)
+  allItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
+  allItems.forEach(item => {
+    const feedItem = document.createElement('div');
+    feedItem.className = 'feed-item';
+    feedItem.innerHTML = `
+      <div class="header">
+        <h2>${item.title}</h2>
+        <span class="badge">${item.pubDate}</span>
+      </div>
+      <p>${item.description.substring(0, 500)}...</p> <a href="${item.link}" target="_blank">Read more</a>
+    `;
+
+    feedContainer.appendChild(feedItem);
+  });
 }
 
-        // Fetch feeds on initial load
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchFeeds();
-        });
+// Set interval for automatic refresh (every 10 minutes)
+const refreshInterval = setInterval(fetchFeeds, 600000);
+
+// Fetch feeds on initial load and on every refresh interval
+document.addEventListener('DOMContentLoaded', () => {
+  fetchFeeds();
+});
+
+// Clear the interval on unload (e.g., when the user leaves the page)
+window.addEventListener('unload', () => {
+  clearInterval(refreshInterval);
+});
     </script>
 </body>
 
