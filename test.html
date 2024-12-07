@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon-16x16.png" type="image/x-icon">
+    <title>CTF Rooms</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Background container for animated GIF */
+        .background-container {
+    position: fixed; /* Cover the entire viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color:  #14161E; /* Dracula dark background */
+    color: #f8f8f2; /* Light text color for contrast */
+    font-family: 'Courier New', Courier, monospace; /* Monospace font for hacker aesthetic */
+    z-index: -1; /* Ensure it stays behind other content */
+}
+
+        /* Main page styling */
+        body {
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            background: rgba(0, 0, 0, 0.85);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow-x: hidden; /* Hide horizontal overflow */
+            overflow-y: auto; /* Allow vertical scrolling */
+        }
+
+        /* Content styling */
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 120px;
+            width: 100%;
+        }
+
+        /* Glitch Text Effect */
+        .glitch-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            padding-top: 20px;
+        }
+
+        .glitch {
+            font-size: 2.5em;
+            color: #00ff00;
+            animation: glitch 1s infinite;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #ff00ff;
+            opacity: 0.8;
+            clip: rect(0, 900px, 0, 0);
+            animation: glitch 1s infinite;
+        }
+
+        .glitch::after {
+            color: #00ffff;
+            left: 2px;
+            animation: glitch 1.2s infinite;
+        }
+
+        @keyframes glitch {
+            0% { clip: rect(42px, 9999px, 44px, 0); transform: translate(0px, 0px); }
+            20% { clip: rect(0px, 9999px, 44px, 0); transform: translate(2px, -2px); }
+            40% { clip: rect(10px, 9999px, 38px, 0); transform: translate(-2px, 0px); }
+            60% { clip: rect(15px, 9999px, 44px, 0); transform: translate(0px, 2px); }
+            80% { clip: rect(30px, 9999px, 40px, 0); transform: translate(-1px, -1px); }
+            100% { clip: rect(20px, 9999px, 40px, 0); transform: translate(1px, 1px); }
+        }
+
+        /* Room Section Styling */
+        .room-section {
+            border: 1px solid #00ff00;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.7);
+            text-align: left;
+            transition: transform 0.3s ease-in-out, margin 0.3s ease;
+            width: 100%;
+            max-width: 800px; /* Constrain width for larger screens */
+        }
+
+        /* When room section is expanded */
+        .room-section.open {
+            transform: scale(1.05);
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        h2:hover {
+            color: #ffff00;
+        }
+
+        /* Collapsible content */
+        .collapsible-content {
+            display: none;
+            padding-top: 10px;
+            position: relative;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Hacking themed Back Button */
+.back-button {
+    background-color: transparent; /* Transparent background */
+    color: white; /* White text by default */
+    border: none; /* No border initially */
+    padding: 12px 24px;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    outline: none; /* Remove the default outline (browser specific) */
+    transition: color 0.3s, box-shadow 0.3s; /* Smooth transition for color and shadow */
+}
+
+/* Normal link hover (for back button) */
+.back-button:hover {
+    color: #2AF7A5; /* Change text color to #2AF7A5 */
+    animation: pulse 1s infinite; /* Apply pulse effect */
+    box-shadow: 0 0 10px #2AF7A5, 0 0 20px #2AF7A5, 0 0 30px #2AF7A5; /* Glowing effect */
+    border: 2px solid #2AF7A5; /* Border appears only when hovering */
+}
+
+/* Pulse animation for hacker vibes */
+@keyframes pulse {
+    0% { 
+        transform: scale(1);
+        opacity: 1; 
+    }
+    50% { 
+        transform: scale(1.1); 
+        opacity: 0.8; 
+    }
+    100% { 
+        transform: scale(1); 
+        opacity: 1; 
+    }
+}
+
+/* Back Button Container */
+.back-button-container {
+    position: relative;
+    text-align: center;
+    margin-top: 130px; /* Keep the position as it was */
+}
+
+        /* Navigation links styling */
+        nav {
+            display: inline-block;
+            position: relative;
+        }
+
+        nav a {
+            margin: 5px;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: #00ff00;
+            color: #1c1c1c;
+        }
+
+        /* Responsive styling for small screens (iPhone) */
+        @media only screen and (max-width: 600px) {
+            .glitch {
+                font-size: 2em;
+            }
+
+            .glitch-container {
+                padding-top: 10px;
+            }
+
+            h2 {
+                font-size: 1.2em;
+            }
+
+            .room-section {
+                padding: 10px;
+                width: 90%;
+                margin: 10px;
+            }
+
+            .back-button {
+                font-size: 1em;
+                margin-top: 70px;
+                padding: 8px 16px;
+            }
+
+            .back-button-container {
+                margin-top: 20px;
+            }
+
+            /* Ensure the back button stays centered */
+            .content {
+                margin-top: 70px;
+            }
+
+            .room-section h2 {
+                font-size: 1.2em;
+            }
+
+            .collapsible-content {
+                font-size: 0.9em;
+                padding: 8px;
+            }
+        }
+        .solution-button {
+            background-color: transparent;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            padding: 10px 20px;
+            margin-top: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: color 0.4s, background-color 0.4s;
+            box-shadow: 0 0 5px #00ff00;
+        }
+
+        .solution-button:hover {
+            color: #1c1c1c;
+            background-color: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+        }
+        .terminal {
+      background-color: #1e1e1e; /* Dark terminal background */
+      color: #d4d4d4; /* Light text for contrast */
+      padding: 15px;
+      border-radius: 8px;
+      font-family: 'Courier New', Courier, monospace; /* Monospace font for terminal look */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+      overflow-x: auto; /* Handles long commands gracefully */
+    }
+    .prompt {
+      color: #00ff00; /* Green color for the terminal prompt */
+    }
+
+/* General table styling */
+table {
+      width: 100%; /* Full-width table */
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: black;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Table header styling */
+    th {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px;
+      text-align: left;
+      font-size: 16px;
+    }
+
+    /* Table cell styling */
+    td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: 14px;
+    }
+
+    /* Hover effect for rows */
+    tr:hover {
+      background-color: black;
+    }
+
+    /* Styling for the first row */
+    tr:first-child {
+      border-top: 2px solid #4CAF50;
+    }
+
+    /* Responsive design for small screens */
+    @media (max-width: 600px) {
+      table {
+        width: 100%; /* Full width */
+        font-size: 12px; /* Smaller text */
+        margin: 10px; /* Smaller margin */
+      }
+
+      th, td {
+        padding: 8px; /* Less padding */
+      }
+
+      th {
+        font-size: 14px;
+      }
+
+      td {
+        font-size: 12px;
+      }
+
+      /* Add horizontal scrolling for small screens */
+      .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on mobile */
+      }
+
+      table {
+        min-width: 600px; /* Prevent table from getting too small */
+      }
+    }
+
+    /* Base button styling */
+#toggle-read-aloud {
+  padding: 6px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #f44336; /* Red by default for 'off' */
+  border: 2px solid #f44336; /* Red border by default */
+  border-radius: 50%;
+  font-family: 'Courier New', Courier, monospace; /* Hacker font */
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+  text-transform: uppercase;
+  overflow: hidden;
+  
+  /* Positioning the button at the bottom-right corner */
+  position: fixed;
+  bottom: 20px;  /* Distance from the bottom */
+  right: 20px;  /* Distance from the right */
+}
+
+/* Icon styling */
+#toggle-read-aloud i {
+  font-size: 20px; /* Make sure the icon size is appropriate */
+}
+
+/* Hover effect */
+#toggle-read-aloud:hover {
+  background-color: #333;
+  border-color: #00FF00;
+}
+
+/* Active state (button clicked) */
+#toggle-read-aloud:active {
+  transform: scale(0.95);
+}
+
+/* When the button is in 'on' state (green) */
+#toggle-read-aloud.on {
+  background-color: #4CAF50; /* Green */
+  border-color: #4CAF50;
+}
+
+/* When the button is in 'off' state (red) */
+#toggle-read-aloud.off {
+  background-color: #f44336; /* Red */
+  border-color: #f44336;
+}
+
+/* Adding icon change when button is 'on' */
+#toggle-read-aloud.on i {
+  color: white; /* Ensure icon color is white in the 'on' state */
+}
+
+/* Adding icon change when button is 'off' */
+#toggle-read-aloud.off i {
+  color: white; /* Ensure icon color is white in the 'off' state */
+}
+
+
+
+    </style>
+</head>
+<body>
+    <!-- Background Container -->
+    <div class="background-container"></div>
+
+    <!-- Glitch Heading -->
+    <div class="glitch-container">
+        <h1 class="glitch" data-text="CTF Rooms & Sec Tips">CTF Rooms & Sec Tips</h1>
+    </div>
+
+    <div class="back-button-container">
+        <button class="back-button" onclick="window.location.href='index.html'">
+            <i class="fas fa-users"></i> Intro
+        </button>
+    </div>
+    
+    <button id="toggle-read-aloud" onclick="toggleReadAloud()">
+        <i class="fas fa-power-off"></i>
+      </button>
+    
+      
+      
+
+    <!-- Content with Room Sections -->
+    <div class="content">
+
+        <!-- Room 2 -->
+<div class="room-section">
+    <h2 onclick="toggleContent('room2')">Tactical Detection 🛡️</h2>
+    <div id="room2" class="collapsible-content">
+        <img src="tacticaldetection.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p><strong>Description:</strong> understand the mindset behind choosing a tactical approach in alerting and detecting threats, IOAs, IOCs, etc.</p>
+        <p><strong>Challenge Approach:</strong> the most efficient ways to bolster an organization's security posture by leveraging detection mechanisms and walking the user through setting them up tactically. This should serve as a baseline where the user will be able to learn the basics, implement them in their functions, and make them truly their own.</p>
+        <div class="question-section">
+            <p><strong>Setting up a Basic Tripwire</strong></p>
+        </div>
+
+        <div class="solution-section" id="solution-room2" style="display: none;">
+            <p><strong>Info:</strong> Open The local security policy application, then navigate to Security Settings → Local Policies → Audit Policy and Open the Audit object access policy.</p>
+            <img src="localapplication.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Info:</strong> Check the boxes next to Success and Failure, then click Apply and OK to ensure that all access attempts—whether successful or not—will be logged. Once you're done, you can close the Local Security Policy application.</p>
+            <img src="succandfai.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Info:</strong> After configuring the Local Security Policy, monitoring won’t start automatically. We need to specify which files or folders to track. To set this up, right-click on the desktop, choose New → Text Document, and name the file Secret Document.</p>
+            <img src="note.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Infor:</strong>  Then, right-click the file, select Properties → Security → Advanced → Auditing to set up monitoring for this document in our tripwire configuration</p>
+            <img src="properties.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Info:</strong> This is where we will create and specify an audit entry for our Secret Document. Click on Add → Select a principal.</p>
+            <img src="propertiesname.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Info:</strong> This pop-up allows us to specify which users or groups we want to be notified about when they access the Secret Document. While you can be very specific, for this example, we’ll keep it simple. In the text box, type "Everyone" and press Enter to monitor all users.</p>
+            <img src="propn.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <img src="donevery.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Info:</strong> The Principal should now show "Everyone," and the permissions will allow you to specify which actions to audit on the Secret Document. For a broader selection, click Show advanced permissions in the top-right corner. Once you're done, click OK, then Apply and OK on the Audit entry page, and finally, click OK on the Secret Document properties. If you're tracking multiple files, it’s recommended to organize them into folders for easier auditing. The setup is now complete, and auditing is active for the Secret Document. Any access attempts will be logged in the Security event log with Event ID 4663, which can be filtered and used to generate alerts, allowing analysts to quickly detect when a tripwire is triggered, thereby enhancing the organization's security.</p>
+            <img src="done.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Detecting:</strong> Now it's time to detect it.</p>
+            <p><strong>Info:</strong> Let's open this file using CMD.</p>
+            <img src="notcm.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Info:</strong> Now, let's use the FullEventLogView application to view the logs.</p>
+            <img src="loappl.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Lessons Learned:</strong> Applying tactical detection is important because it enables proactive monitoring of system activities and potential security threats in real-time. By auditing access to sensitive files, such as the Secret Document, and logging every interaction with them, you can quickly identify suspicious or unauthorized behavior. This helps in detecting potential security breaches early, enabling swift response and mitigation.</p>
+        </div>
+
+        <!-- Toggle Button for Solution -->
+      <button class="solution-button" onclick="toggleSolution('room2', event)">Show Solution</button>
+    </div>
+</div>
+
+<!-- Room 3 -->
+<div class="room-section">
+    <h2 onclick="toggleContent('room3')">Tryhackme: Friday Overtime 🐼</h2>
+    <div id="room3" class="collapsible-content">
+        <img src="evilpanda.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p><strong>Description:</strong> It's a Friday evening at PandaProbe Intelligence when a notification appears on your CTI platform. While most are already looking forward to the weekend, you realise you must pull overtime because SwiftSpend Finance has opened a new ticket, raising concerns about potential malware threats. The finance company, known for its meticulous security measures, stumbled upon something suspicious and wanted immediate expert analysis.</p>
+        <p><strong>Challenge Approach:</strong> As the only remaining CTI Analyst on shift at PandaProbe Intelligence, you quickly took charge of the situation, realising the gravity of a potential breach at a financial institution. The ticket contained multiple file attachments, presumed to be malware samples. With a deep breath, a focused mind, and the longing desire to go home, you began the process of:</p>
+        <div class="question-section">
+            <p><strong>Let's do it</strong></p>
+        </div>
+
+        <div class="solution-section" id="solution-room3" style="display: none;">
+            <p><strong>Question:</strong> Who shared the malware samples?</p>
+            <img src="emailpanda1.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Question:</strong> What is the SHA1 hash of the file "pRsm.dll" inside samples.zip?</p>
+            <img src="unzisam.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <img src="shh1.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Question:</strong>Which MITRE ATT&CK Technique is linked to using pRsm.dll in this malware framework?</p>
+            <img src="techniq.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <img src="techni2.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Question:</strong>What is the CyberChef defanged URL of the malicious download location first seen on 2020-11-02? let's visit this site: hxxps[://]tinyurl[.]com/AptGroup for more information</p>
+            <img src="url.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <img src="urllin.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Question:</strong> What is the CyberChef defanged IP address of the C&C server first detected on 2020-09-14 using these modules?</p>
+            <img src="ippand.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Question:</strong> What is the SHA1 hash of the spyagent family spyware hosted on the same IP targeting Android devices on November 16, 2022?</p>
+            <img src="checckip.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <img src="androtar.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <img src="andrhas.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        </div>
+
+        <!-- Toggle Button for Solution -->
+      <button class="solution-button" onclick="toggleSolution('room3', event)">Show Solution</button>
+    </div>
+</div>
+
+<script>
+    function toggleContent(room) {
+        var content = document.getElementById(room);
+        content.style.display = (content.style.display === 'none' || content.style.display === '') ? 'block' : 'none';
+    }
+
+    function toggleSolution(room, event) {
+        var solution = document.getElementById("solution-" + room);
+        var button = event.target;
+
+        if (solution.style.display === 'none' || solution.style.display === '') {
+            solution.style.display = 'block';
+            button.textContent = "Hide Solution";
+        } else {
+            solution.style.display = 'none';
+            button.textContent = "Show Solution";
+        }
+    }
+
+    let readAloudEnabled = false; // Flag to track if Read Aloud is on
+let toggleButton = document.getElementById('toggle-read-aloud');
+
+// Function to toggle Read Aloud feature
+function toggleReadAloud() {
+    readAloudEnabled = !readAloudEnabled;
+
+    if (readAloudEnabled) {
+        toggleButton.classList.add('on');  // Add the 'on' class for green and power-on icon
+        toggleButton.classList.remove('off'); // Remove 'off' class
+    } else {
+        toggleButton.classList.remove('on');  // Remove 'on' class for default appearance
+        toggleButton.classList.add('off'); // Add 'off' class for red and power-off icon
+    }
+}
+
+
+// Function to read selected text
+function readSelectedText() {
+    const selectedText = window.getSelection().toString().trim();
+    if (selectedText) {
+        const speech = new SpeechSynthesisUtterance(selectedText);
+        window.speechSynthesis.speak(speech);
+    }
+}
+
+// Automatically read text when selected if Read Aloud is enabled
+document.addEventListener('mouseup', function() {
+    if (readAloudEnabled) {
+        readSelectedText();
+    }
+});
+
+// Optional: Allow keyboard selection trigger (e.g., Ctrl + C) to also trigger read aloud
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'c' && e.ctrlKey && readAloudEnabled) {
+        setTimeout(readSelectedText, 100); // Wait a bit before reading to allow selection
+    }
+});
+
+
+</script>
+</body>
+</html>
