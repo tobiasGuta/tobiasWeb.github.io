@@ -340,6 +340,69 @@ table {
         min-width: 600px; /* Prevent table from getting too small */
       }
     }
+
+    /* Base button styling */
+#toggle-read-aloud {
+  padding: 6px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #f44336; /* Red by default for 'off' */
+  border: 2px solid #f44336; /* Red border by default */
+  border-radius: 50%;
+  font-family: 'Courier New', Courier, monospace; /* Hacker font */
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+  text-transform: uppercase;
+  overflow: hidden;
+  
+  /* Positioning the button at the bottom-right corner */
+  position: fixed;
+  bottom: 20px;  /* Distance from the bottom */
+  right: 20px;  /* Distance from the right */
+}
+
+/* Icon styling */
+#toggle-read-aloud i {
+  font-size: 20px; /* Make sure the icon size is appropriate */
+}
+
+/* Hover effect */
+#toggle-read-aloud:hover {
+  background-color: #333;
+  border-color: #00FF00;
+}
+
+/* Active state (button clicked) */
+#toggle-read-aloud:active {
+  transform: scale(0.95);
+}
+
+/* When the button is in 'on' state (green) */
+#toggle-read-aloud.on {
+  background-color: #4CAF50; /* Green */
+  border-color: #4CAF50;
+}
+
+/* When the button is in 'off' state (red) */
+#toggle-read-aloud.off {
+  background-color: #f44336; /* Red */
+  border-color: #f44336;
+}
+
+/* Adding icon change when button is 'on' */
+#toggle-read-aloud.on i {
+  color: white; /* Ensure icon color is white in the 'on' state */
+}
+
+/* Adding icon change when button is 'off' */
+#toggle-read-aloud.off i {
+  color: white; /* Ensure icon color is white in the 'off' state */
+}
     </style>
 </head>
 <body>
@@ -356,6 +419,11 @@ table {
             <i class="fas fa-users"></i> Intro
         </button>
     </div>
+
+    <!-- read aloud -->
+    <button id="toggle-read-aloud" onclick="toggleReadAloud()">
+      <i class="fas fa-power-off"></i>
+    </button>
     
 
     <!-- Content with Room Sections -->
@@ -2015,8 +2083,6 @@ table {
 
         <!-- Toggle Button for Solution -->
         <button class="solution-button" onclick="toggleSolution('room10', event)">Show Solution</button>
-                <!-- Read Aloud Button -->
-        <button class="solution-button" onclick="readAloud()">Read Aloud</button>
   </div>
 </div>
 
@@ -2040,17 +2106,45 @@ table {
     }
 
     // Read Aloud function
-function readAloud() {
-    let selectedText = window.getSelection().toString(); // Get the highlighted text
-    
-    if (selectedText) {
-        // If text is highlighted, read it aloud
-        let speech = new SpeechSynthesisUtterance(selectedText);
-        window.speechSynthesis.speak(speech);
+    let readAloudEnabled = false; // Flag to track if Read Aloud is on
+let toggleButton = document.getElementById('toggle-read-aloud');
+
+// Function to toggle Read Aloud feature
+function toggleReadAloud() {
+    readAloudEnabled = !readAloudEnabled;
+
+    if (readAloudEnabled) {
+        toggleButton.classList.add('on');  // Add the 'on' class for green and power-on icon
+        toggleButton.classList.remove('off'); // Remove 'off' class
     } else {
-        alert("Please highlight some text to read aloud.");
+        toggleButton.classList.remove('on');  // Remove 'on' class for default appearance
+        toggleButton.classList.add('off'); // Add 'off' class for red and power-off icon
     }
 }
+
+
+// Function to read selected text
+function readSelectedText() {
+    const selectedText = window.getSelection().toString().trim();
+    if (selectedText) {
+        const speech = new SpeechSynthesisUtterance(selectedText);
+        window.speechSynthesis.speak(speech);
+    }
+}
+
+// Automatically read text when selected if Read Aloud is enabled
+document.addEventListener('mouseup', function() {
+    if (readAloudEnabled) {
+        readSelectedText();
+    }
+});
+
+// Optional: Allow keyboard selection trigger (e.g., Ctrl + C) to also trigger read aloud
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'c' && e.ctrlKey && readAloudEnabled) {
+        setTimeout(readSelectedText, 100); // Wait a bit before reading to allow selection
+    }
+});
 
 </script>
 </body>

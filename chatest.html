@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon-16x16.png" type="image/x-icon">
+    <title>CTF Rooms</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Main page styling */
+        body {
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            background: rgba(0, 0, 0, 0.85);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* Button to toggle Read Aloud */
+        #toggle-read-aloud {
+            background-color: #00ff00;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 20px;
+            transition: background-color 0.3s;
+        }
+
+        #toggle-read-aloud:hover {
+            background-color: #ff00ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div>
+            <h1>Highlight some text to read aloud!</h1>
+            <p id="text-content">This is an example text. Highlight any part of this text to make it read aloud if the Read Aloud feature is turned on.</p>
+        </div>
+    </div>
+
+    <!-- Button to toggle Read Aloud -->
+    <button id="toggle-read-aloud" onclick="toggleReadAloud()">Turn Read Aloud On</button>
+
+    <!-- JavaScript for Read Aloud -->
+    <script>
+        let readAloudEnabled = false; // Flag to track if Read Aloud is on
+        let toggleButton = document.getElementById('toggle-read-aloud');
+
+        // Function to toggle Read Aloud feature
+        function toggleReadAloud() {
+            readAloudEnabled = !readAloudEnabled;
+
+            if (readAloudEnabled) {
+                toggleButton.textContent = "Turn Read Aloud Off";
+            } else {
+                toggleButton.textContent = "Turn Read Aloud On";
+            }
+        }
+
+        // Function to read selected text
+        function readSelectedText() {
+            const selectedText = window.getSelection().toString().trim();
+            if (selectedText) {
+                const speech = new SpeechSynthesisUtterance(selectedText);
+                window.speechSynthesis.speak(speech);
+            }
+        }
+
+        // Automatically read text when selected if Read Aloud is enabled
+        document.addEventListener('mouseup', function() {
+            if (readAloudEnabled) {
+                readSelectedText();
+            }
+        });
+
+        // Optional: Allow keyboard selection trigger (e.g., Ctrl + C) to also trigger read aloud
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'c' && e.ctrlKey && readAloudEnabled) {
+                setTimeout(readSelectedText, 100); // Wait a bit before reading to allow selection
+            }
+        });
+    </script>
+</body>
+</html>
