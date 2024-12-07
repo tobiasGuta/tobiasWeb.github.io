@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Read Aloud Highlighted Text</title>
+  <style>
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #readAloudButton {
+      background-color: #28a745;
+    }
+    #readAloudButton:hover {
+      background-color: #218838;
+    }
+    #cancelButton {
+      background-color: #dc3545;
+    }
+    #cancelButton:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>Highlight and Read</h1>
+    <p>
+      Highlight any part of this text and click the "Read Aloud" button to hear it.
+      If you want to stop, click "Cancel".
+    </p>
+  </div>
+  <button id="readAloudButton">Read Aloud</button>
+  <button id="cancelButton">Cancel</button>
+
+  <script>
+    const readButton = document.getElementById('readAloudButton');
+    const cancelButton = document.getElementById('cancelButton');
+
+    readButton.addEventListener('click', () => {
+      const selectedText = window.getSelection().toString(); // Get highlighted text
+      if (selectedText) {
+        const utterance = new SpeechSynthesisUtterance(selectedText);
+        utterance.lang = 'en-US'; // Customize language
+        utterance.rate = 1; // Adjust speed
+        speechSynthesis.speak(utterance);
+      } else {
+        alert('Please highlight some text first!');
+      }
+    });
+
+    cancelButton.addEventListener('click', () => {
+      speechSynthesis.cancel(); // Stop the speech
+    });
+  </script>
+</body>
+</html>

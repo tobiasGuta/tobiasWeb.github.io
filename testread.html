@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon-16x16.png" type="image/x-icon">
+    <title>CTF Rooms</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Background container for animated GIF */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color:  #14161E;
+            color: #f8f8f2;
+            font-family: 'Courier New', Courier, monospace;
+            z-index: -1;
+        }
+
+        /* Main page styling */
+        body {
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            background: rgba(0, 0, 0, 0.85);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* Content styling */
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 120px;
+            width: 100%;
+        }
+
+        /* Glitch Text Effect */
+        .glitch-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            padding-top: 20px;
+        }
+
+        .glitch {
+            font-size: 2.5em;
+            color: #00ff00;
+            animation: glitch 1s infinite;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #ff00ff;
+            opacity: 0.8;
+            clip: rect(0, 900px, 0, 0);
+            animation: glitch 1s infinite;
+        }
+
+        .glitch::after {
+            color: #00ffff;
+            left: 2px;
+            animation: glitch 1.2s infinite;
+        }
+
+        @keyframes glitch {
+            0% { clip: rect(42px, 9999px, 44px, 0); transform: translate(0px, 0px); }
+            20% { clip: rect(0px, 9999px, 44px, 0); transform: translate(2px, -2px); }
+            40% { clip: rect(10px, 9999px, 38px, 0); transform: translate(-2px, 0px); }
+            60% { clip: rect(15px, 9999px, 44px, 0); transform: translate(0px, 2px); }
+            80% { clip: rect(30px, 9999px, 40px, 0); transform: translate(-1px, -1px); }
+            100% { clip: rect(20px, 9999px, 40px, 0); transform: translate(1px, 1px); }
+        }
+
+        /* Room Section Styling */
+        .room-section {
+            border: 1px solid #00ff00;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.7);
+            text-align: left;
+            transition: transform 0.3s ease-in-out, margin 0.3s ease;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        /* Collapsible content */
+        .collapsible-content {
+            display: none;
+            padding-top: 10px;
+            position: relative;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Hacking themed Back Button */
+        .back-button {
+            background-color: transparent;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            outline: none;
+            transition: color 0.3s, box-shadow 0.3s;
+        }
+
+        /* Back Button Container */
+        .back-button-container {
+            position: relative;
+            text-align: center;
+            margin-top: 130px;
+        }
+
+        /* Read Aloud Button */
+        .read-aloud-button {
+            background-color: transparent;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            padding: 10px 20px;
+            margin-top: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: color 0.4s, background-color 0.4s;
+            box-shadow: 0 0 5px #00ff00;
+        }
+
+        .read-aloud-button:hover {
+            color: #1c1c1c;
+            background-color: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: black;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Background Container -->
+    <div class="background-container"></div>
+
+    <!-- Glitch Heading -->
+    <div class="glitch-container">
+        <h1 class="glitch" data-text="CTF Rooms & Sec Tips">CTF Rooms & Sec Tips</h1>
+    </div>
+
+    <div class="back-button-container">
+        <button class="back-button" onclick="window.location.href='index.html'">
+            <i class="fas fa-users"></i> Intro
+        </button>
+    </div>
+    
+    <div class="content">
+        <!-- Room 2 -->
+        <div class="room-section">
+            <h2 onclick="toggleContent('room2')">Tactical Detection 🛡️</h2>
+            <div id="room2" class="collapsible-content">
+                <img src="tacticaldetection.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+                <p><strong>Description:</strong> Understand the mindset behind choosing a tactical approach in alerting and detecting threats, IOAs, IOCs, etc.</p>
+                <p><strong>Challenge Approach:</strong> The most efficient ways to bolster an organization's security posture by leveraging detection mechanisms and walking the user through setting them up tactically.</p>
+                <div class="solution-section" id="solution-room2" style="display: none;">
+                    <p><strong>Info:</strong> Open the local security policy application, then navigate to Security Settings → Local Policies → Audit Policy and open the Audit object access policy.</p>
+                    <img src="localapplication.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+                </div>
+                <button class="read-aloud-button" onclick="toggleSolution('room2', event)">Show Solution</button>
+                <!-- Read Aloud Button -->
+                <button class="read-aloud-button" onclick="readAloud()">Read Aloud</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle collapsible content
+        function toggleContent(room) {
+            var content = document.getElementById(room);
+            content.style.display = (content.style.display === 'none' || content.style.display === '') ? 'block' : 'none';
+        }
+
+        // Toggle solution content
+        function toggleSolution(room, event) {
+            var solution = document.getElementById("solution-" + room);
+            var button = event.target;
+
+            if (solution.style.display === 'none' || solution.style.display === '') {
+                solution.style.display = 'block';
+                button.textContent = "Hide Solution";
+            } else {
+                solution.style.display = 'none';
+                button.textContent = "Show Solution";
+            }
+        }
+
+        // Read Aloud function
+        function readAloud() {
+            let text = document.querySelector('.collapsible-content').innerText;
+            let speech = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(speech);
+        }
+    </script>
+</body>
+</html>
