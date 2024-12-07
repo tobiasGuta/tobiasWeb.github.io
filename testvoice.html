@@ -1,0 +1,90 @@
+Your code looks great! It effectively toggles the Read Aloud feature and reads selected text when enabled. Here are a few suggestions to enhance it:
+
+1. **Voice Selection**: Allow users to choose a voice from the available options.
+2. **Pitch and Rate Control**: Add controls for adjusting the pitch and rate of the speech.
+3. **Error Handling**: Handle cases where the Web Speech API is not supported.
+
+Here's an updated version of your code with these enhancements:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Reader</title>
+</head>
+<body>
+    <button id="toggle-read-aloud" class="off" onclick="toggleReadAloud()">Toggle Read Aloud</button>
+    <select id="voiceSelect"></select>
+    <label for="pitch">Pitch: </label>
+    <input type="range" id="pitch" min="0" max="2" step="0.1" value="1">
+    <label for="rate">Rate: </label>
+    <input type="range" id="rate" min="0.5" max="2" step="0.1" value="1">
+
+    <script>
+        let readAloudEnabled = false; // Flag to track if Read Aloud is on
+        let toggleButton = document.getElementById('toggle-read-aloud');
+        let voiceSelect = document.getElementById('voiceSelect');
+        let pitch = document.getElementById('pitch');
+        let rate = document.getElementById('rate');
+        let voices = [];
+
+        // Populate voice options
+        function populateVoiceList() {
+            voices = speechSynthesis.getVoices();
+            voiceSelect.innerHTML = '';
+            voices.forEach((voice, index) => {
+                let option = document.createElement('option');
+                option.value = index;
+                option.textContent = `${voice.name} (${voice.lang})`;
+                voiceSelect.appendChild(option);
+            });
+        }
+
+        populateVoiceList();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = populateVoiceList;
+        }
+
+        // Function to toggle Read Aloud feature
+        function toggleReadAloud() {
+            readAloudEnabled = !readAloudEnabled;
+
+            if (readAloudEnabled) {
+                toggleButton.classList.add('on');  // Add the 'on' class for green and power-on icon
+                toggleButton.classList.remove('off'); // Remove 'off' class
+            } else {
+                toggleButton.classList.remove('on');  // Remove 'on' class for default appearance
+                toggleButton.classList.add('off'); // Add 'off' class for red and power-off icon
+            }
+        }
+
+        // Function to read selected text
+        function readSelectedText() {
+            const selectedText = window.getSelection().toString().trim();
+            if (selectedText) {
+                const speech = new SpeechSynthesisUtterance(selectedText);
+                speech.voice = voices[voiceSelect.value];
+                speech.pitch = pitch.value;
+                speech.rate = rate.value;
+                window.speechSynthesis.speak(speech);
+            }
+        }
+
+        // Automatically read text when selected if Read Aloud is enabled
+        document.addEventListener('mouseup', function() {
+            if (readAloudEnabled) {
+                readSelectedText();
+            }
+        });
+
+        // Optional: Allow keyboard selection trigger (e.g., Ctrl + C) to also trigger read aloud
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'c' && e.ctrlKey && readAloudEnabled) {
+                setTimeout(readSelectedText, 100); // Wait a bit before reading to allow selection
+            }
+        });
+    </script>
+</body>
+</html>
