@@ -2229,6 +2229,27 @@ select:focus, input[type="range"]:focus {
   </div>
 </div>
 
+<!-- Room 11 -->
+<div class="room-section">
+  <h2 onclick="toggleContent('room11')">
+    MITRE ATT&CK <i class="fa fa-shield-alt"></i>
+  </h2>
+  
+  
+  <div id="room11" class="collapsible-content">
+      <img src="mitreattack.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+      <p><strong>Description:</strong> The MITRE ATT&CK framework is a comprehensive and continuously updated tool that details the various strategies, methods, and actions used by cyber attackers. It provides cybersecurity professionals with a clear and organized approach to understanding how threats work, helping them detect, analyze, and respond to attacks more effectively and with greater insight.</p>
+
+      <div class="solution-section" id="solution-room11" style="display: none;">
+          <p> The ATT&CK framework organizes different attack strategies into matrices designed for specific environments, like enterprise networks, mobile devices, or cloud platforms. Each matrix connects the attacker's goals (the tactics) with the methods (the techniques) they use to reach those goals, all tied to specific actions and behaviors (TTPs). This structure helps security teams better understand and anticipate potential attacks, enabling them to respond more effectively.</p>
+          <img src="mitre.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+      </div>
+
+      <!-- Toggle Button for Solution -->
+      <button class="solution-button" onclick="toggleSolution('room11', event)">Show Solution</button>
+  </div>
+</div>
+
 <script>
     function toggleContent(room) {
         var content = document.getElementById(room);
