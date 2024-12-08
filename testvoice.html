@@ -24,67 +24,74 @@ Here's an updated version of your code with these enhancements:
 
     <script>
         let readAloudEnabled = false; // Flag to track if Read Aloud is on
-        let toggleButton = document.getElementById('toggle-read-aloud');
-        let voiceSelect = document.getElementById('voiceSelect');
-        let pitch = document.getElementById('pitch');
-        let rate = document.getElementById('rate');
-        let voices = [];
+let toggleButton = document.getElementById('toggle-read-aloud');
+let voiceSelect = document.getElementById('voiceSelect');
+let pitch = document.getElementById('pitch');
+let rate = document.getElementById('rate');
+let voices = [];
 
-        // Populate voice options
-        function populateVoiceList() {
-            voices = speechSynthesis.getVoices();
-            voiceSelect.innerHTML = '';
-            voices.forEach((voice, index) => {
-                let option = document.createElement('option');
-                option.value = index;
-                option.textContent = `${voice.name} (${voice.lang})`;
-                voiceSelect.appendChild(option);
-            });
-        }
+// Populate voice options
+function populateVoiceList() {
+    voices = speechSynthesis.getVoices();
+    voiceSelect.innerHTML = '';  // Clear existing options
 
-        populateVoiceList();
-        if (speechSynthesis.onvoiceschanged !== undefined) {
-            speechSynthesis.onvoiceschanged = populateVoiceList;
-        }
+    voices.forEach((voice, index) => {
+        let option = document.createElement('option');
+        option.value = index;
+        option.textContent = `${voice.name} (${voice.lang})`;
+        voiceSelect.appendChild(option);
+    });
 
-        // Function to toggle Read Aloud feature
-        function toggleReadAloud() {
-            readAloudEnabled = !readAloudEnabled;
+    // Set the default voice to the first one in the list (if available)
+    if (voices.length > 0) {
+        voiceSelect.selectedIndex = 82;  // Set the default selection to the first voice
+    }
+}
 
-            if (readAloudEnabled) {
-                toggleButton.classList.add('on');  // Add the 'on' class for green and power-on icon
-                toggleButton.classList.remove('off'); // Remove 'off' class
-            } else {
-                toggleButton.classList.remove('on');  // Remove 'on' class for default appearance
-                toggleButton.classList.add('off'); // Add 'off' class for red and power-off icon
-            }
-        }
+populateVoiceList();
+if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = populateVoiceList;
+}
 
-        // Function to read selected text
-        function readSelectedText() {
-            const selectedText = window.getSelection().toString().trim();
-            if (selectedText) {
-                const speech = new SpeechSynthesisUtterance(selectedText);
-                speech.voice = voices[voiceSelect.value];
-                speech.pitch = pitch.value;
-                speech.rate = rate.value;
-                window.speechSynthesis.speak(speech);
-            }
-        }
+// Function to toggle Read Aloud feature
+function toggleReadAloud() {
+    readAloudEnabled = !readAloudEnabled;
 
-        // Automatically read text when selected if Read Aloud is enabled
-        document.addEventListener('mouseup', function() {
-            if (readAloudEnabled) {
-                readSelectedText();
-            }
-        });
+    if (readAloudEnabled) {
+        toggleButton.classList.add('on');  // Add the 'on' class for green and power-on icon
+        toggleButton.classList.remove('off'); // Remove 'off' class
+    } else {
+        toggleButton.classList.remove('on');  // Remove 'on' class for default appearance
+        toggleButton.classList.add('off'); // Add 'off' class for red and power-off icon
+    }
+}
 
-        // Optional: Allow keyboard selection trigger (e.g., Ctrl + C) to also trigger read aloud
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'c' && e.ctrlKey && readAloudEnabled) {
-                setTimeout(readSelectedText, 100); // Wait a bit before reading to allow selection
-            }
-        });
+// Function to read selected text
+function readSelectedText() {
+    const selectedText = window.getSelection().toString().trim();
+    if (selectedText) {
+        const speech = new SpeechSynthesisUtterance(selectedText);
+        speech.voice = voices[voiceSelect.value];  // Use selected voice
+        speech.pitch = pitch.value;
+        speech.rate = rate.value;
+        window.speechSynthesis.speak(speech);
+    }
+}
+
+// Automatically read text when selected if Read Aloud is enabled
+document.addEventListener('mouseup', function() {
+    if (readAloudEnabled) {
+        readSelectedText();
+    }
+});
+
+// Optional: Allow keyboard selection trigger (e.g., Ctrl + C) to also trigger read aloud
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'c' && e.ctrlKey && readAloudEnabled) {
+        setTimeout(readSelectedText, 100); // Wait a bit before reading to allow selection
+    }
+});
+
     </script>
 </body>
 </html>
