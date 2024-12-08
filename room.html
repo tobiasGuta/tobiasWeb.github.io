@@ -2077,6 +2077,150 @@ select:focus, input[type="range"]:focus {
             </li>
           </ul>
 
+          <h3>Explore Microsoft Defender XDR's Role in a Security Operations Center (SOC)</h3>
+          <img src="modernsecurityoperations.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <div>
+            <h2>Broad Enterprise View:</h2>
+            <p>Correlated/Unified Incident View: This refers to having a consolidated view of security incidents across different systems and tools. This helps analysts see the bigger picture and respond more effectively.</p>
+            
+            <h2>Case Management:</h2>
+            <p>Ensures consistent workflow and measurement of success. This involves managing incidents from detection to resolution, tracking progress, and analyzing outcomes to improve future responses.</p>
+            
+            <h2>Analysts and Hunters:</h2>
+            <ul>
+              <li><strong>Analysts:</strong> These individuals are responsible for monitoring security systems, responding to alerts, and investigating incidents.</li>
+              <li><strong>Hunters:</strong> These are more proactive security professionals who actively search for threats within the environment.</li>
+            </ul>
+            
+            <h2>Security Information and Event Management (SIEM):</h2>
+            <p>This platform collects, analyzes, and correlates security data from various sources. It provides valuable insights for threat detection and incident response.</p>
+            
+            <h2>Hunting, Investigation Platform with Automation and Orchestration:</h2>
+            <p>This includes technologies like machine learning (ML), User/Entity Behavior Analytics (UEBA), and a security data lake. These tools help automate tasks, identify anomalies, and accelerate investigations.</p>
+            
+            <h2>Threat Intelligence (TI):</h2>
+            <p>This provides critical security context by gathering information on threats and vulnerabilities. It helps organizations stay informed and proactively defend against attacks.</p>
+            
+            <h2>Automation (SOAR):</h2>
+            <p>This reduces analyst effort and time per incident, increasing the overall capacity of the security operations center (SOC). Automation streamlines repetitive tasks and frees up analysts to focus on more complex issues.</p>
+            
+            <h2>Extended Detection and Response (XDR):</h2>
+            <p>Provides high-quality detection and investigation capabilities for each asset. XDR combines multiple security technologies to deliver a more comprehensive and integrated approach to threat detection and response.</p>
+            
+            <h2>Enterprise Assets:</h2>
+            <p>This encompasses a wide range of assets, including various technologies, devices, operating systems, applications, data formats, and more. Modern security operations need to consider the diverse landscape of assets to protect them effectively.</p>
+          </div>
+          
+          <div>
+            <h2>Raw Data and Deep Insights:</h2>
+            
+            <h3>Raw Data:</h3>
+            <p>This is the foundation of security operations, encompassing security activity logs, network traffic, and various other data sources.</p>
+            
+            <h3>Deep Insights:</h3>
+            <p>Advanced analytics techniques like machine learning and AI are applied to this raw data to extract valuable insights. These insights can include identifying anomalies, detecting threats, and understanding the overall security posture.</p>
+          </div>
+          
+          <div>
+            <h2>Automation and Orchestration (SOAR):</h2>
+            <p>SOAR automates routine security tasks, such as incident response, threat hunting, and vulnerability management.</p>
+            <p>By automating these tasks, SOAR frees up security analysts to focus on more strategic and complex activities.</p>
+          </div>
+
+          <h3>Security Operations Model - Functions and Tools</h3>
+          <p>In security operations, responsibilities are typically divided among various individuals and teams, depending on factors like the organization's size and structure. Each team or function focuses on a specific area of security while working closely with others and external groups to ensure efficiency. In an ideal scenario, these roles are filled by dedicated, fully staffed teams. However, in smaller organizations, these roles are often merged into a single team or individual, with technical tasks handled by IT operations and leadership taking on roles like incident management temporarily.</p>
+          <img src="security-operations-model-functions-and-tools.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <div>
+            <h2>1. Threat Intelligence</h2>
+            <ul>
+              <li><strong>Strategic and Business Threat Insights/Trends:</strong> This level focuses on high-level threat information, such as emerging trends, industry-specific threats, and strategic insights.</li>
+              <li><strong>Tactical Threat Trends and Indicators of Compromise (IOCs):</strong> This level deals with more specific and actionable threat information, such as IOCs, TTPs, and alerts related to known attacks.</li>
+            </ul>
+          
+            <h2>2. Hunt and Incident Management (Tier 3)</h2>
+            <ul>
+              <li><strong>Proactive Hunting, Advanced Forensics, and Detection Tuning:</strong> This tier involves proactive threat hunting, advanced forensic analysis, and fine-tuning detection mechanisms.</li>
+              <li><strong>Any/All Tools, Data, Intelligence Sources:</strong> This tier leverages a wide range of tools, data sources, and intelligence to identify and investigate potential threats.</li>
+              <li><strong>Multi-Disciplinary Focus:</strong> This team is composed of various specialists, all working together to identify attackers who may have bypassed traditional detection methods and respond to significant incidents that could impact the business.</li>
+              <li><strong>Hunt:</strong> The team takes a proactive approach, searching for threats that have not been detected through standard methods. They also assist with more complex investigations, providing advanced forensic analysis for cases that have been escalated. Additionally, they continuously improve the detection and automation processes. Unlike reactive teams, the Hunt team works with hypotheses to guide their search for threats, and they are the bridge between red/purple teams and security operations.</li>
+            </ul>
+          
+            <h2>3. Investigation and Incident Management (Tier 2)</h2>
+            <ul>
+              <li><strong>Advanced Analysis and Remediation:</strong> This tier focuses on in-depth analysis of identified threats, determining their impact, and implementing remediation measures.</li>
+              <li><strong>Primary Tools:</strong> XDR (Microsoft 365 Defender & Microsoft Defender for Cloud) are used for advanced threat detection and response capabilities.</li>
+              <li><strong>Role of the Team:</strong> This team acts as the next step for issues that need further attention from the Triage (Tier 1) team. They focus on more advanced alerts, such as those indicating sophisticated attackers. These include behavioral anomalies, alerts related to critical business assets, and tracking ongoing attack campaigns. In addition to responding to alerts, this team also reviews the Triage team’s queue and actively hunts for threats using XDR tools when they have extra capacity.</li>
+              <li><strong>Investigation Focus:</strong> Their role is to conduct in-depth investigations into a smaller number of more intricate attacks, which are often multi-stage operations carried out by skilled attackers. They also pilot new alert types and document procedures for the Triage team and automation tools. This often involves working with alerts from Microsoft Defender for Cloud, covering areas like cloud-hosted applications, virtual machines, containers, Kubernetes, and SQL databases.</li>
+              <li><strong>Incident Management:</strong> The Incident Management team is responsible for the administrative side of incident handling. They coordinate efforts with other departments such as communications, legal, leadership, and relevant business stakeholders to ensure proper incident resolution.</li>
+            </ul>
+          
+            <h2>4. Triage and Automation (Tier 1)</h2>
+            <ul>
+              <li><strong>Rapid Remediation or Escalation:</strong> This tier handles high-volume incidents and determines whether they require immediate remediation or escalation to higher-level teams.</li>
+              <li><strong>Primary Tools:</strong> XDR (Microsoft 365 Defender & Microsoft Defender for Cloud) are used for rapid incident response and triage.</li>
+              <li><strong>True Positive Rate:</strong> Aiming for a 90% true positive rate ensures that security analysts are not overwhelmed by false alarms. This allows them to focus on genuine threats rather than wasting time on irrelevant alerts.</li>
+              <li><strong>Alert Sources:</strong> Based on Microsoft's experience in their Cyber Defense Operations Center, the majority of high-quality alerts come from XDR tools, with the rest originating from user-reported issues, traditional log-based alerts, and other data sources.</li>
+              <li><strong>Tool Integration:</strong> A key factor in improving response times at Microsoft’s Cyber Defense Operations Center is the integration of various XDR tools into a unified platform. Microsoft Defender XDR combines endpoint, email, identity, and other tools into a single interface, allowing analysts to quickly identify and neutralize threats such as phishing emails, malware, and compromised accounts before they escalate.</li>
+              <li><strong>Team Focus:</strong> Security teams concentrate their efforts on a limited set of technical areas and scenarios to maintain quick response times. This often involves prioritizing tasks related to user productivity, such as addressing email threats, antivirus alerts, and handling initial responses to user reports.</li>
+</ul>
+            </ul>
+          
+            <h2>5. Automation</h2>
+            <ul>
+              <li><strong>Automated Investigation & Remediation:</strong> Automation is used to streamline routine tasks, such as incident response and remediation, freeing up security analysts to focus on more strategic activities.</li>
+              <li><strong>XDR Alerts:</strong> Automation leverages alerts from Microsoft 365 Defender and Microsoft Defender for Cloud to trigger automated responses.</li>
+            </ul>
+          
+            <h2>6. Incident Management</h2>
+            <ul>
+              <li><strong>Business Coordination:</strong> This involves coordinating with business stakeholders to assess the impact of incidents, communicate updates, and manage expectations.</li>
+              <li><strong>Major Incident:</strong> This tier handles high-complexity incidents that require significant resources and coordination.</li>
+            </ul>
+          
+            <h2>7. Partner Teams</h2>
+            <ul>
+              <li><strong>IT Operations, DevOps, Insider Threat, and More:</strong> Collaboration between security teams and other relevant teams within the organization is crucial.</li>
+              <li><strong>External Intelligence Sources:</strong> Leveraging external threat intelligence sources helps stay informed about emerging threats.</li>
+            </ul>
+          
+            <h3>the model emphasizes:</h3>
+            <ul>
+              <li><strong>A Tiered Approach:</strong> Prioritizing incidents based on their severity and complexity.</li>
+              <li><strong>Proactive Threat Hunting:</strong> Actively seeking out threats rather than just reacting to alerts.</li>
+              <li><strong>Automation:</strong> Streamlining routine tasks to improve efficiency.</li>
+              <li><strong>Collaboration:</strong> Effective communication and coordination between security teams and other stakeholders.</li>
+              <li><strong>Leveraging Advanced Tools:</strong> Utilizing XDR tools for advanced threat detection and response.</li>
+            </ul>
+          </div>
+          
+
+          <h3>How It Comes Together</h3>
+          <img src="tierssoc.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <ul>
+              <li><strong>Triage (Tier 1):</strong> An analyst picks up a malware alert from the queue and starts investigating, typically using tools like Microsoft Defender XDR. Most cases are quickly handled and closed, but in this instance, the analyst identifies that the malware requires a more thorough response, such as isolating the device and performing a detailed cleanup. Recognizing this need, the Triage analyst escalates the case to the <strong>Investigation (Tier 2)</strong> team, who takes over the lead role in resolving the incident. The Triage team may continue to be involved and learn more during this phase, with the Investigation team possibly utilizing a broader tool like Microsoft Sentinel or another SIEM for a more comprehensive view of the situation.</li>
+              
+              <li><strong>Investigation (Tier 2):</strong> The Investigation team verifies the initial findings and digs deeper if necessary. Once they confirm the cause and resolve the issue, they proceed with remediation and close the case.</li>
+              
+              <li><strong>Hunt (Tier 3):</strong> At a later stage, the <strong>Hunt team</strong> might review closed incidents to look for patterns or unusual activity that could warrant further investigation. They may identify trends like detections eligible for automatic remediation, clusters of similar incidents suggesting a shared cause, or areas where processes, tools, or alerts can be improved. For instance, after reviewing the closed case, the Hunt team discovered that the user had fallen for a tech scam, allowing scammers to gain administrative access to the endpoint. This finding prompted the Hunt team to elevate the case to a higher priority, given the increased risk exposure.</li>
+            </ul>
+            <h3>Threat intelligence</h3>
+            <img src="Threat-Intelligence.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <h3>Threat Intelligence</h3>
+            <p>The <strong>Threat Intelligence</strong> team plays a critical role by offering valuable context and insights to enhance various other security functions within an organization. This team often utilizes a Threat Intelligence Platform (TIP) in larger setups, and their responsibilities typically encompass the following:</p>
+            <ul>
+              <li><strong>Reactive Research:</strong> They conduct technical investigations to support ongoing incidents, helping to understand the nature and scope of active threats.</li>
+              <li><strong>Proactive Research:</strong> They track and analyze trends related to attacker groups, emerging attack techniques, and high-profile incidents, preparing for potential future threats.</li>
+              <li><strong>Strategic Insights:</strong> The team provides high-level analysis and research to guide both business and technical decision-making, ensuring that security priorities align with organizational goals.</li>
+              <li><strong>Other Support:</strong> They also contribute to various other activities related to threat identification, reporting, and prevention across the organization.</li>
+            </ul>
+
+            <p>The <strong>Threat Intelligence</strong> team is instrumental in gathering and providing insights that inform various other cybersecurity operations. By using platforms like TIPs, they deliver essential intelligence in both reactive and proactive contexts, including:</p>
+            <ul>
+              <li><strong>Incident Support:</strong> Reacting to live incidents with technical research to better understand the current attack and mitigate its impact.</li>
+              <li><strong>Threat Monitoring:</strong> Continuously tracking evolving attack strategies, known threat actors, and trending security challenges.</li>
+              <li><strong>Strategic Research:</strong> Offering long-term, business-relevant insights to guide decision-making and help prioritize security initiatives.</li>
+              <li><strong>Additional Roles:</strong> They also perform a variety of other functions to keep the security landscape well-informed and prepared for emerging threats.</li>
+            </ul>
 
       </div>
 
