@@ -1854,6 +1854,57 @@ select:focus, input[type="range"]:focus {
 
     <p>Using ECS fields ensures consistency, future-proofing, and efficient investigation of cybersecurity incidents.</p>
         
+            <h3>What is a SIEM Use Case?</h3>
+
+        <p>A SIEM use case defines specific scenarios or patterns that assist in identifying potential security threats within an organization. These use cases act as practical guidelines, demonstrating how a SIEM system can monitor and respond to different incidents.</p>
+        <p>They can range from simple examples, such as monitoring failed login attempts, to more complex cases, like detecting the initial signs of a ransomware attack. By incorporating these use cases into a cybersecurity strategy, organizations can improve their ability to recognize and address security risks effectively.</p>
+        <img src="https://academy.hackthebox.com/storage/modules/211/usecase1.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <h3>SIEM Use Case Development Lifecycle</h3>
+        <p>Developing SIEM use cases involves following essential stages to ensure they are effective and align with the organization’s security objectives. These stages provide a structured approach to designing and implementing use cases.</p>
+        <img src="https://academy.hackthebox.com/storage/modules/211/usecase2.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <h3>Requirements</h3>
+        <p>Understand the purpose of the use case and identify the specific scenario where an alert or notification is necessary. These requirements can come from stakeholders like customers, analysts, or employees. For instance, the objective might be to detect a brute force attack by triggering an alert after 10 failed login attempts within 4 minutes.</p>
+
+        <h3>Data Points</h3>
+        <p>Determine all points in the network where a user can log in and identify the data sources generating logs for failed login attempts or unauthorized access. Examples of such sources include Windows systems, Linux servers, applications, and endpoints. Ensure the logs capture key details like user, timestamp, source, and destination.</p>
+
+        <h3>Log Validation</h3>
+        <p>Check the logs to ensure they provide all essential information, such as user, timestamp, source, destination, machine name, and application name. Validate that logs are consistently received for various authentication methods, including local, web-based, application, VPN, and OWA (Outlook Web Access).</p>
+
+        <h3>Design and Implementation</h3>
+        <p>Once logs are validated, design the use case by specifying the conditions for triggering alerts. Define criteria such as condition, aggregation, and priority. For example, in a brute force scenario, create an alert for 10 login failures in 4 minutes, set aggregation to reduce false positives, and assign a priority based on the importance of the user account.</p>
+
+        <h3>Documentation</h3>
+        <p>Create Standard Operating Procedures (SOPs) outlining the steps analysts must follow when responding to alerts. Include details about conditions, aggregation rules, priorities, and the teams involved in reporting or escalation. Also, specify the escalation matrix for effective response management.</p>
+
+        <h3>Onboarding</h3>
+        <p>Begin testing the alert in a controlled environment before deploying it to production. Identify and address any issues, such as false positives, during the development phase. Once optimized, move the alert into production.</p>
+
+        <h3>Periodic Update and Fine-tuning</h3>
+        <p>Regularly gather feedback from analysts and adjust correlation rules as needed. Update and optimize the use case to maintain its accuracy, including steps like whitelisting non-threatening activities to reduce unnecessary alerts.</p>
+
+        <h3>How to Build SIEM Use Cases</h3>
+
+        <p>Understand the organization's specific needs and risks, then configure alerts to monitor critical systems effectively.</p>
+
+        <p>Prioritize alerts based on their potential impact and link them to frameworks like the MITRE ATT&CK or the kill chain to align with adversarial tactics.</p>
+
+        <p>Define the Time to Detection (TTD) and Time to Response (TTR) metrics to evaluate the efficiency of the SIEM system and the performance of security analysts.</p>
+
+        <p>Develop a Standard Operating Procedure (SOP) to guide analysts in managing and responding to alerts.</p>
+
+        <p>Establish a method for continually improving alerts through insights gained from SIEM monitoring and analysis.</p>
+
+        <p>Create an Incident Response Plan (IRP) to ensure a structured approach for addressing verified threats.</p>
+
+        <p>Set clear Service Level Agreements (SLAs) and Operational Level Agreements (OLAs) between teams to handle alerts and execute the IRP effectively.</p>
+
+        <p>Implement regular audits to track alert management and incident reporting, ensuring compliance and reliability.</p>
+
+        <p>Document the logging setup for systems, the rationale behind alert configurations, and the frequency of triggered alerts for review and refinement.</p>
+
+        <p>Maintain a knowledge base with essential details and updates to case management tools, supporting efficient case handling and collaboration.</p>
+
       </div>
 
       <!-- Toggle Button for Solution -->
@@ -2220,8 +2271,9 @@ select:focus, input[type="range"]:focus {
               <li><strong>Threat Monitoring:</strong> Continuously tracking evolving attack strategies, known threat actors, and trending security challenges.</li>
               <li><strong>Strategic Research:</strong> Offering long-term, business-relevant insights to guide decision-making and help prioritize security initiatives.</li>
               <li><strong>Additional Roles:</strong> They also perform a variety of other functions to keep the security landscape well-informed and prepared for emerging threats.</li>
+            
             </ul>
-
+            
       </div>
 
         <!-- Toggle Button for Solution -->
@@ -2243,6 +2295,34 @@ select:focus, input[type="range"]:focus {
       <div class="solution-section" id="solution-room11" style="display: none;">
           <p> The ATT&CK framework organizes different attack strategies into matrices designed for specific environments, like enterprise networks, mobile devices, or cloud platforms. Each matrix connects the attacker's goals (the tactics) with the methods (the techniques) they use to reach those goals, all tied to specific actions and behaviors (TTPs). This structure helps security teams better understand and anticipate potential attacks, enabling them to respond more effectively.</p>
           <img src="mitre.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <h3>MITRE ATT&CK Use Cases for Security Operations</h3>
+
+          <p>The MITRE ATT&CK framework is a valuable tool for understanding how attackers operate. It supports security operations in several key areas:</p>
+          
+          <h3>Detection and Response</h3>
+          <p>The framework helps security teams identify attacker tactics and techniques, enabling them to create effective detection strategies and respond swiftly to threats.</p>
+          
+          <h3>Security Gap Analysis</h3>
+          <p>Organizations can use the framework to evaluate their defenses, uncover weaknesses, and focus on improving critical areas to better protect against attacks.</p>
+          
+          <h3>SOC Maturity Assessment</h3>
+          <p>The framework provides a method to measure the effectiveness of a Security Operations Center (SOC), highlighting areas where improvements are needed for enhanced threat detection and response.</p>
+          
+          <h3>Threat Intelligence Enhancement</h3>
+          <p>By standardizing the way adversary behaviors are described, the framework improves threat intelligence sharing within teams and with external partners, leading to better collaboration.</p>
+          
+          <h3>Cyber Threat Context</h3>
+          <p>ATT&CK enriches cyber threat intelligence by providing context on attacker methods, targets, and indicators of compromise, allowing for more informed decisions.</p>
+          
+          <h3>Behavioral Analytics</h3>
+          <p>Mapping attacker techniques to observed behaviors enables organizations to create analytics models that detect unusual activities indicative of threats.</p>
+          
+          <h3>Red Teaming</h3>
+          <p>Security teams can use the framework to simulate real-world attacks during red team exercises, helping to assess and strengthen defensive capabilities.</p>
+          
+          <h3>Training and Development</h3>
+          <p>The framework serves as a comprehensive training resource for security professionals, keeping them up-to-date with the latest adversarial tactics and methods.</p>
+          
       </div>
 
       <!-- Toggle Button for Solution -->
