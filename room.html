@@ -2385,12 +2385,131 @@ select:focus, input[type="range"]:focus {
       <p><strong>Description:</strong> Dashboards in SIEM systems act as frameworks that hold various visualizations, enabling us to structure and present data in an insightful and organized manner.</p>
 
       <div class="solution-section" id="solution-room12" style="display: none;">
-        <h3>Creating a New Dashboard</h3>
+        <h3>1. Create a new Dashboard</h3>
         <img src="newdashboardsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-        <h3>let's create a new visualization.</h3>
+        <h3>2. Create a new visualization.</h3>
         <img src="newvisualization.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
         <p>When we begin creating our first visualization, a new window will open, offering various options and settings to choose from.</p>
         <p><strong>Important:</strong>Before configuring anything, we should first click the calendar icon to access the time picker. Next, we need to set the date range to "last 15 years." Once that's done, we can click the "Apply" button to apply the selected date range to the data.</p>
+        <img src="befosiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <img src="https://academy.hackthebox.com/storage/modules/211/visualization1.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>This window offers <strong>four key elements</strong> to explore. One of the most important features is the <strong>filtering option</strong>, which allows us to refine the data before creating a graph.</p>
+
+        <ul>
+          <img src="filsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>For example, if we want to focus on failed login attempts, we can set a filter to include only events with the specific ID <strong>4625</strong>, which represents failed logon attempts on a Windows system. The image below demonstrates how such a filter can be applied.</p>
+          <li><strong>1. Filtering option:</strong> Customize the data to match specific criteria before visualization.</li>
+          <li>Focus on event ID <strong>4625</strong> for failed logon attempts.</li>
+        </ul>
+        
+
+        <img src="windotab2siemp.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+
+        <p>This field represents the <strong>data set (index)</strong> that will be used. Typically, data from various infrastructure sources is organized into separate indices, such as <strong>network</strong>, <strong>Windows</strong>, or <strong>Linux</strong>.</p>
+
+        <p>In this example, we will define <strong>windows*</strong> as the value for the "Index pattern" to focus specifically on Windows-related data.</p>
+
+        <ul>
+          <li><strong>Purpose:</strong> Select the appropriate data set to analyze.</li>
+          <li><strong>Example:</strong> Use <code>windows*</code> to capture data from Windows systems.</li>
+        </ul>
+
+        <img src="usesiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>The <strong>search bar</strong> enables us to verify the presence of a specific field within our data set, acting as a helpful tool to ensure we're analyzing the correct data.</p>
+
+        <p>For instance, if we are interested in the <code>user.name.keyword</code> field, we can use the search bar to check if this field exists and has been detected in the selected data set. This process confirms that we are accessing the right field and working with precise data.</p>
+
+        <ul>
+          <li><strong>Function:</strong> Double-check the availability of specific fields.</li>
+          <li><strong>Example:</strong> Search for <code>user.name.keyword</code> to verify its existence.</li>
+        </ul>
+        <p>Why use </p>
+        <div class="terminal">
+          <span class="prompt"></span> user.name.keyword
+        </div>
+        <p>instead of</p> 
+        <div class="terminal">
+          <span class="prompt">$</span> user.name
+        </div>
+          <p>You might wonder. The answer lies in how <strong>aggregations</strong> work. When performing aggregations, it is recommended to use the <code>.keyword</code> version of the field.</p>
+
+          <p>For a more detailed explanation, you can check out this related discussion on Stack Overflow. https://tinyurl.com/aggregationssiem</p>
+
+          <p>The Stack Overflow discussion explores the difference between <strong>fields</strong> and the <span class="keyword">Field</span> class in Java. Here's a brief explanation:</p>
+
+          <ul>
+            <li><strong>Fields:</strong> These are variables declared within a class, used to store data. They can be primitive types (e.g., <span class="keyword">int</span>, <span class="keyword">boolean</span>) or reference types (e.g., objects of other classes).</li>
+            <li><strong><span class="keyword">Field</span> class:</strong> Java doesn't have a "Field" keyword, but it includes a <span class="keyword">Field</span> class in the <span class="keyword">java.lang.reflect</span> package. This class is part of Java's reflection API and allows dynamic inspection and modification of class fields at runtime.</li>
+          </ul>
+
+          <p>The key distinction is that <strong>fields</strong> are fundamental components of a class, while the <span class="keyword">Field</span> class is a specialized tool for performing runtime operations like accessing or altering fields dynamically.</p>
+          <p><strong>For Example:</strong></p>
+          <div class="terminal">
+            <span class="prompt">$</span> some_field
+          </div>
+          <p>and</p>
+          <div class="terminal">
+            <span class="prompt">$</span> some_field.keyword
+          </div>
+          <p>Another interesting read would be this link: https://tinyurl.com/Textvskeyword</p>
+          <p>Finally, this <strong>drop-down menu</strong> lets us choose the type of visualization we want to create. The default option shown in the previous image is <span class="keyword">"Bar vertical stacked"</span>.</p>
+
+          <p>Clicking on this button will reveal additional options (the image has been redacted as not all options are visible on the screen). From this expanded list, we can select the visualization type that best suits our needs and data presentation goals.</p>
+          <img src="bar4.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>For this visualization, we will pick the <span class="keyword">"Table"</span> option. Once we've selected <span class="keyword">"Table"</span>, the next step is to click on the <span class="keyword">"Rows"</span> option.</p>
+
+          <p>This allows us to specify which data elements we want to display within the table format.</p>
+          <img src="tablsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>Let's configure the "Rows" settings as follows.</p>
+          <img src="rowinsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p><strong>Note:</strong> You might see "Rank by Alphabetical" instead of "Rank by Count of records" as shown in the earlier screenshot. This is completely fine. Once you proceed with the next configuration, the option to rank by "Count of records" will become available.</p>
+          <p>in the "Metrics" window, let's select "count" as the desired metric.</p>
+          <img src="countmetrisiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>Once we choose "Count" as the metric, we will see the table fill with data, provided there are events available in the selected data set.</p>
+          <img src="visualizationsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>The last step in customizing the table is to add another "Rows" setting to display the machine where the failed logon attempt took place. To achieve this, we will choose the <span class="keyword">host.hostname.keyword</span> field, which indicates the computer that logged the failed attempt. This will enable us to show the hostname or machine name alongside the count of failed logon attempts, as demonstrated in the image.</p>
+          <img src="newrowsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>Now, the table displays three columns with the following details:</p>
+          <ul>
+            <li>The usernames of individuals attempting to log in (Note: Currently, both user and computer accounts are shown. Ideally, a filter should be applied to exclude computers and display only users).</li>
+            <li>The machine where the logon attempt took place.</li>
+            <li>The count of how many times the event occurred, based on the selected time frame or the entire data set, depending on the configuration.</li>
+          </ul>
+
+          <p>Finally, click on <span class="keyword">"Save and return"</span>, and you’ll see the new visualization added to the dashboard, as illustrated in the next image.</p>
+          <img src="savenadreturnsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>Let's not forget to save the dashboard as well. We can do so by simply clicking on the "Save" button.</p>
+          <img src="myfirstdashboardsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <img src="dashbaordsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <h3>let's refine the visualization</h3>
+          <img src="refininigsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>Let's now click on the "gear" button at the upper-right corner of our visualization, and then click on "Edit lens".</p>
+          <img src="editeamssiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>Top values of user.name.keyword" should be changed as follows</p>
+          <img src="valueunersiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <img src="chaningsiemrow.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>Top values of host.hostname.keyword" should be changed as follows</p>
+          <img src="chanignseconrow.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>The "Logon Type" can be added as follows (we will use the winlog.logon.type.keyword field)</p>
+          <img src="newrowlog.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>Count of records" should be changed as follows.</p>
+          <img src="chngingmetrixsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>We can introduce result sorting as follows</p>
+          <img src="sortsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>All we have to do now is click on "Save and return"</p>
+          <p><strong>The DESKTOP-DPOESND, WIN-OK9BH1BCKSD, and WIN-RMMGJA7T9TC</strong> usernames can be excluded by specifying additional filters as follows.</p>
+          <img src="filterout.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <img src="filteroutcomplete.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>Computer accounts can be excluded by specifying the following KQL query and clicking on the "Update" button</p>
+          <div class="terminal">
+            <span class="prompt">$</span> NOT user.name: *$ AND winlog.channel.keyword: Security
+          </div>
+          <p>The AND <strong>winlog.channel.keyword: Security</strong> part is to ensure that no unrelated logs are accounted for.</p>
+          <img src="rulefilterinsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>This is our visualization after all the refinements we performed.</p>
+          <p>Finally, let's give our visualization a title by clicking on "No Title"</p>
+          <img src="titleforsiem.pngt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>Don't forget to click on the "Save" button (the one on the upper-right hand side of the window)</p>
       </div>
 
       <!-- Toggle Button for Solution -->
