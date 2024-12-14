@@ -20,9 +20,17 @@
     z-index: -1; /* Ensure it stays behind other content */
 }
 
+h3 {
+  color: #50FA7B; /* Replace with your desired color */
+}
+
+strong {
+  color: red; /* Replace with your desired color */
+}
+
         /* Main page styling */
         body {
-            color: #00ff00;
+            color: #F8F8F2;
             font-family: 'Courier New', Courier, monospace;
             margin: 0;
             padding: 0;
@@ -113,7 +121,7 @@
         }
 
         h2:hover {
-            color: #ffff00;
+            color: #F1FA8C;
         }
 
         /* Collapsible content */
@@ -1577,7 +1585,7 @@ select:focus, input[type="range"]:focus {
 
           <p>During the entire investigation, maintaining a <strong>chain of custody</strong> is essential. This ensures that any evidence collected can be legally used in court, if necessary. Proper documentation of each step in the collection process helps maintain the integrity of the evidence.</p>
 
-          <h2>1. Containment</h2>
+          <h3>1. Containment</h3>
           <p><strong>Containment</strong> refers to actions taken to prevent the incident from spreading and causing further damage. It is divided into <strong>short-term</strong> and <strong>long-term</strong> containment:</p>
 
           <h3>Short-term Containment</h3>
@@ -1597,7 +1605,7 @@ select:focus, input[type="range"]:focus {
           </ul>
           <p>It's important that both short-term and long-term containment are coordinated across all impacted systems. Otherwise, the attacker might become aware of the response and change their tactics, evading detection.</p>
 
-          <h2>2. Eradication</h2>
+          <h3>2. Eradication</h3>
           <p><strong>Eradication</strong> focuses on completely removing the threat from the environment and fixing the root cause of the incident. The goal is to make sure the adversary is no longer present and that any remaining traces of the attack are eliminated.</p>
           <ul>
             <li><strong>Removing malware</strong>: Any malware discovered during the investigation phase should be completely removed from all affected systems.</li>
@@ -1607,7 +1615,7 @@ select:focus, input[type="range"]:focus {
             <li><strong>Hardening systems</strong>: Additional hardening measures (like improving system security configurations) should be taken to prevent similar attacks in the future.</li>
           </ul>
 
-          <h2>3. Recovery</h2>
+          <h3>3. Recovery</h3>
           <p><strong>Recovery</strong> involves bringing the affected systems back to normal operation. This stage focuses on ensuring that the systems are functional, secure, and able to support business operations once again. It's a careful and gradual process:</p>
           <ul>
             <li><strong>System verification</strong>: The business or the relevant stakeholders need to verify that the systems are functioning correctly and that they contain all necessary data. This ensures the systems are not only operational but also safe from compromise.</li>
@@ -1627,7 +1635,7 @@ select:focus, input[type="range"]:focus {
           <h3>Post-Incident Activities</h3>
           <p>The recovery stage may also involve reviewing lessons learned and updating the organization’s incident response plan to better handle future attacks. During this time, the team will identify weaknesses in the existing defenses and work on improving security posture to prevent future incidents.</p>
 
-          <h2>Key Takeaways</h2>
+          <h3>Key Takeaways</h3>
           <ul>
             <li><strong>Containment</strong> stops the spread of the incident and limits damage by isolating affected systems and applying immediate fixes.</li>
             <li><strong>Eradication</strong> removes the root cause of the issue, such as malware, vulnerabilities, and compromised data.</li>
@@ -1635,7 +1643,7 @@ select:focus, input[type="range"]:focus {
           </ul>
           <p>The main idea of these stages is to ensure that once the incident is contained, the organization works toward fully eradicating the threat and bringing systems back online securely, without leaving vulnerabilities that could be exploited again.</p>
 
-          <h2>Post-Incident Activity Stage</h2>
+          <h3>Post-Incident Activity Stage</h3>
           <p>The <strong>Post-Incident Activity Stage</strong> is the final phase of an incident response process, where the focus shifts from dealing with the immediate threat to learning from the experience and improving the organization’s response capabilities. The key objectives during this stage are to analyze what happened, document the incident, and reflect on how the response can be improved for future incidents. This stage also offers an opportunity to involve all the stakeholders who were part of the incident handling process to share insights and lessons learned. Here's a breakdown of the main components:</p>
 
           <h3>1. Objective of the Post-Incident Activity Stage</h3>
@@ -1692,18 +1700,18 @@ select:focus, input[type="range"]:focus {
       <p><strong>Challenge Approach:</strong> Explore the most efficient methods to strengthen an organization's security posture using SIEM’s detection mechanisms. This guide walks the user through setting up and fine-tuning these systems tactically. By understanding these processes, users will establish a foundational knowledge base, learn to implement detection strategies, and adapt them to suit their unique security requirements.</p>
 
       <div class="solution-section" id="solution-room8" style="display: none;">
-        <p><strong>What Is SIEM?</strong></p>
+        <h3>What Is SIEM?</h3>
         <p>SIEM is a system used to keep computers, networks, and digital data safe by monitoring, managing, and analyzing security events and data. It combines software tools that collect and process security data from different devices like servers, firewalls, and applications. These tools help security teams spot threats quickly, sometimes even before they happen, allowing for faster responses to security incidents. SIEM systems are essential for protecting a company’s digital environment and are a key part of an organization's overall security strategy.</p>
         <img src="https://academy.hackthebox.com/storage/modules/211/elastic.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
         <img src="https://academy.hackthebox.com/storage/modules/211/elastic1.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
 
-        <p><strong>The Evolution of SIEM Technology</strong></p>
+        <h3>The Evolution of SIEM Technology</h3>
         <p>SIEM technology started as two separate concepts—SIM (Security Information Management) and SEM (Security Event Management)—both of which had their own specialized ways of collecting and analyzing security data. In 2005, two analysts combined these technologies to create SIEM, a more comprehensive solution that handles both data collection and event monitoring. SIEM systems today help organizations keep track of and analyze logs and security events from various sources to detect and manage threats more effectively.</p>
         
-        <p><strong>How Does SIEM Work?</strong></p>
+        <h3>How Does SIEM Work?</h3>
         <p>SIEM systems gather security data from different sources like computers, network devices, and servers. This data is then standardized and organized so that it’s easy to analyze. Security experts use SIEM to look for patterns that could indicate a security issue. When a potential threat is detected, the system sends an alert to the IT security team, who investigate further. SIEM systems are designed to reduce the overwhelming number of alerts that could happen by filtering out less critical issues and focusing on the most urgent threats. Unlike other tools like Intrusion Detection Systems (IDS), SIEM collects and processes data from many sources to give a complete view of security events.</p>
         
-        <p><strong>Key Functions of SIEM</strong></p>
+        <h3>Key Functions of SIEM</h3>
         <div class="table-container">
         <table border="1" style="width: 100%;">
             <tr>
@@ -1729,15 +1737,15 @@ select:focus, input[type="range"]:focus {
         </table>
         </div>
         
-        <p><strong>Benefits of Using a SIEM</strong></p>
+        <h3>>Benefits of Using a SIEM</h3>
         <p>Using SIEM offers several important advantages. It gives security teams a centralized view of all security-related data, allowing them to spot potential threats that may have been missed otherwise. It can also help detect threats before they become full-blown attacks, saving the organization from financial losses and reputational damage. Additionally, SIEM helps businesses comply with legal and regulatory standards, ensuring that logs and security events are properly recorded and monitored.</p>
         
-        <h1>What is the Elastic Stack?</h1>
+        <h3>What is the Elastic Stack?</h3>
     <p>The Elastic Stack, created by Elastic, is an open-source collection of tools primarily comprising three key components: Elasticsearch, Logstash, and Kibana. These tools work together to provide a comprehensive solution for real-time data search, analysis, and visualization from log files and other data sources.</p>
 
     <p>In larger, resource-intensive environments, the Elastic Stack can integrate with tools like Kafka, RabbitMQ, Redis (for buffering and resiliency), and nginx (for enhanced security).</p>
 
-    <h2>Components of the Elastic Stack</h2>
+    <h3>Components of the Elastic Stack</h3>
 
     <h3>1. Elasticsearch</h3>
     <p><strong>Elasticsearch</strong> is a distributed, JSON-based search engine with RESTful APIs. It serves as the core of the Elastic Stack and is responsible for:</p>
@@ -1774,7 +1782,7 @@ select:focus, input[type="range"]:focus {
         </ul>
     </div>
 
-    <h2>Using Elastic Stack as a SIEM Solution</h2>
+    <h3>Using Elastic Stack as a SIEM Solution</h3>
     <p>The Elastic Stack is often implemented as a Security Information and Event Management (SIEM) solution. It allows for:</p>
     <ul>
         <li>Ingestion of security-related data from sources like firewalls, IDS/IPS, and endpoints using Logstash.</li>
@@ -1783,7 +1791,7 @@ select:focus, input[type="range"]:focus {
     </ul>
     <img src="https://academy.hackthebox.com/storage/modules/211/discover.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
 
-    <h2>Kibana Query Language (KQL)</h2>
+    <h3>Kibana Query Language (KQL)</h3>
     <p><strong>What is KQL?</strong> It is a user-friendly query language for running searches in Kibana. Here’s how it works:</p>
     <ul>
         <li><strong>Basic Structure:</strong> Queries are written in <code>field:value</code> format. Example:
@@ -1813,7 +1821,7 @@ select:focus, input[type="range"]:focus {
         </li>
     </ul>
 
-    <h2>How to Identify Available Data</h2>
+    <h3>How to Identify Available Data</h3>
     <p>There are two main approaches:</p>
     <ol>
         <li><strong>Using KQL’s Free Text Search:</strong> Explore fields and values using the "Discover" feature in Kibana. For example, searching for <code>"4625"</code> reveals event codes and timestamps.</li>
@@ -1825,7 +1833,7 @@ select:focus, input[type="range"]:focus {
         </ul>
     </ol>
 
-    <h2>Elastic Common Schema (ECS)</h2>
+    <h3>Elastic Common Schema (ECS)</h3>
     <p>The Elastic Common Schema standardizes field names across data sources, offering:</p>
     <div class="table-container">
     <table border="1" style="width: 100%;">
@@ -1904,6 +1912,39 @@ select:focus, input[type="range"]:focus {
         <p>Document the logging setup for systems, the rationale behind alert configurations, and the frequency of triggered alerts for review and refinement.</p>
 
         <p>Maintain a knowledge base with essential details and updates to case management tools, supporting efficient case handling and collaboration.</p>
+
+
+        <h3> Case scenario: Attackers Exploit MSBuild</h3>
+        <p>I would recommend that you read this first: https://tinyurl.com/bypassmsbuild</p>
+        <p>To mitigate this risk, we implement a detection rule within our SIEM system to track cases where MSBuild is launched by applications like Excel or Word. This unusual activity might signal the execution of a malicious script payload.</p>
+        <p>To mitigate this risk, we design a detection rule in our SIEM system that keeps track of instances where MSBuild is launched by Excel or Word. This activity is unusual and might suggest the execution of a malicious script payload.</p>
+        <p>Based on the identified risk and threat intelligence, the technique referred to as Living-off-the-land binaries (LoLBins) presents a significant security concern if detected. This makes it a high global risk, and we assign it a HIGH severity rating. However, this severity may vary depending on your organization's specific context and environment.</p>
+
+        <p>Regarding MITRE mapping, this use case involves bypassing detection mechanisms using LoLBins, which can be broken down as follows:</p>
+
+        <ul>
+          <li><strong>Tactic:</strong> Defense Evasion (TA0005)</li>
+          <li><strong>Technique:</strong> Trusted Developer Utilities Proxy Execution (T1127)</li>
+          <li><strong>Sub-technique:</strong> Trusted Developer Utilities Proxy Execution: MSBuild (T1127.001)</li>
+          <li><strong>Tactic:</strong> Execution (TA0002) – when MSBuild is executed on the endpoint</li>
+        </ul>
+        <p>To establish TTD (Time to Detect) and TTR (Time to Respond), we need to consider the execution frequency of the rule and the process for ingesting data, as previously mentioned. In this case, the rule is set to run every five minutes, continuously monitoring all incoming log data.</p>
+
+        <p>When creating a Standard Operating Procedure (SOP) and outlining how to handle alerts, it’s important to focus on these key elements:</p>
+
+        <ul>
+          <li><strong>process.name</strong></li>
+          <li><strong>process.parent.name</strong></li>
+          <li><strong>event.action</strong></li>
+          <li><strong>machine</strong> where the alert was triggered</li>
+          <li><strong>user</strong> associated with the machine</li>
+          <li><strong>user activity</strong> within a two-day window before or after the alert</li>
+        </ul>
+
+        <p>After collecting this information, the next step is to engage with the user and investigate their machine. This includes reviewing system logs, antivirus logs, and proxy logs from the SIEM to ensure full visibility of the situation. The SOC team should carefully document all these details, including the Incident Response Plan, so that Incident Handlers can easily refer to them during the analysis process.</p>
+
+        <p>When refining detection rules, it's crucial to understand scenarios that may result in false positives. For example, while the Build Engine is frequently used by Windows developers, it is less common for non-developers to use it. Therefore, excluding known legitimate parent process names from the rule can help minimize false alerts.</p>
+
 
       </div>
 
@@ -2131,39 +2172,39 @@ select:focus, input[type="range"]:focus {
           <h3>Explore Microsoft Defender XDR's Role in a Security Operations Center (SOC)</h3>
           <img src="modernsecurityoperations.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
           <div>
-            <h2>Broad Enterprise View:</h2>
+            <h3>Broad Enterprise View:</h3>
             <p>Correlated/Unified Incident View: This refers to having a consolidated view of security incidents across different systems and tools. This helps analysts see the bigger picture and respond more effectively.</p>
             
-            <h2>Case Management:</h2>
+            <h3>Case Management:</h3>
             <p>Ensures consistent workflow and measurement of success. This involves managing incidents from detection to resolution, tracking progress, and analyzing outcomes to improve future responses.</p>
             
-            <h2>Analysts and Hunters:</h2>
+            <h3>Analysts and Hunters:</h3>
             <ul>
               <li><strong>Analysts:</strong> These individuals are responsible for monitoring security systems, responding to alerts, and investigating incidents.</li>
               <li><strong>Hunters:</strong> These are more proactive security professionals who actively search for threats within the environment.</li>
             </ul>
             
-            <h2>Security Information and Event Management (SIEM):</h2>
+            <h3>Security Information and Event Management (SIEM):</h3>
             <p>This platform collects, analyzes, and correlates security data from various sources. It provides valuable insights for threat detection and incident response.</p>
             
-            <h2>Hunting, Investigation Platform with Automation and Orchestration:</h2>
+            <h3>Hunting, Investigation Platform with Automation and Orchestration:</h3>
             <p>This includes technologies like machine learning (ML), User/Entity Behavior Analytics (UEBA), and a security data lake. These tools help automate tasks, identify anomalies, and accelerate investigations.</p>
             
-            <h2>Threat Intelligence (TI):</h2>
+            <h3>Threat Intelligence (TI):</h3>
             <p>This provides critical security context by gathering information on threats and vulnerabilities. It helps organizations stay informed and proactively defend against attacks.</p>
             
-            <h2>Automation (SOAR):</h2>
+            <h3>Automation (SOAR):</h3>
             <p>This reduces analyst effort and time per incident, increasing the overall capacity of the security operations center (SOC). Automation streamlines repetitive tasks and frees up analysts to focus on more complex issues.</p>
             
-            <h2>Extended Detection and Response (XDR):</h2>
+            <h3>Extended Detection and Response (XDR):</h3>
             <p>Provides high-quality detection and investigation capabilities for each asset. XDR combines multiple security technologies to deliver a more comprehensive and integrated approach to threat detection and response.</p>
             
-            <h2>Enterprise Assets:</h2>
+            <h3>Enterprise Assets:</h3>
             <p>This encompasses a wide range of assets, including various technologies, devices, operating systems, applications, data formats, and more. Modern security operations need to consider the diverse landscape of assets to protect them effectively.</p>
           </div>
           
           <div>
-            <h2>Raw Data and Deep Insights:</h2>
+            <h3>Raw Data and Deep Insights:</h3>
             
             <h3>Raw Data:</h3>
             <p>This is the foundation of security operations, encompassing security activity logs, network traffic, and various other data sources.</p>
@@ -2173,7 +2214,7 @@ select:focus, input[type="range"]:focus {
           </div>
           
           <div>
-            <h2>Automation and Orchestration (SOAR):</h2>
+            <h3>Automation and Orchestration (SOAR):</h3>
             <p>SOAR automates routine security tasks, such as incident response, threat hunting, and vulnerability management.</p>
             <p>By automating these tasks, SOAR frees up security analysts to focus on more strategic and complex activities.</p>
           </div>
@@ -2182,13 +2223,13 @@ select:focus, input[type="range"]:focus {
           <p>In security operations, responsibilities are typically divided among various individuals and teams, depending on factors like the organization's size and structure. Each team or function focuses on a specific area of security while working closely with others and external groups to ensure efficiency. In an ideal scenario, these roles are filled by dedicated, fully staffed teams. However, in smaller organizations, these roles are often merged into a single team or individual, with technical tasks handled by IT operations and leadership taking on roles like incident management temporarily.</p>
           <img src="security-operations-model-functions-and-tools.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
           <div>
-            <h2>1. Threat Intelligence</h2>
+            <h3>1. Threat Intelligence</h3>
             <ul>
               <li><strong>Strategic and Business Threat Insights/Trends:</strong> This level focuses on high-level threat information, such as emerging trends, industry-specific threats, and strategic insights.</li>
               <li><strong>Tactical Threat Trends and Indicators of Compromise (IOCs):</strong> This level deals with more specific and actionable threat information, such as IOCs, TTPs, and alerts related to known attacks.</li>
             </ul>
           
-            <h2>2. Hunt and Incident Management (Tier 3)</h2>
+            <h3>2. Hunt and Incident Management (Tier 3)</h3>
             <ul>
               <li><strong>Proactive Hunting, Advanced Forensics, and Detection Tuning:</strong> This tier involves proactive threat hunting, advanced forensic analysis, and fine-tuning detection mechanisms.</li>
               <li><strong>Any/All Tools, Data, Intelligence Sources:</strong> This tier leverages a wide range of tools, data sources, and intelligence to identify and investigate potential threats.</li>
@@ -2196,7 +2237,7 @@ select:focus, input[type="range"]:focus {
               <li><strong>Hunt:</strong> The team takes a proactive approach, searching for threats that have not been detected through standard methods. They also assist with more complex investigations, providing advanced forensic analysis for cases that have been escalated. Additionally, they continuously improve the detection and automation processes. Unlike reactive teams, the Hunt team works with hypotheses to guide their search for threats, and they are the bridge between red/purple teams and security operations.</li>
             </ul>
           
-            <h2>3. Investigation and Incident Management (Tier 2)</h2>
+            <h3>3. Investigation and Incident Management (Tier 2)</h3>
             <ul>
               <li><strong>Advanced Analysis and Remediation:</strong> This tier focuses on in-depth analysis of identified threats, determining their impact, and implementing remediation measures.</li>
               <li><strong>Primary Tools:</strong> XDR (Microsoft 365 Defender & Microsoft Defender for Cloud) are used for advanced threat detection and response capabilities.</li>
@@ -2205,7 +2246,7 @@ select:focus, input[type="range"]:focus {
               <li><strong>Incident Management:</strong> The Incident Management team is responsible for the administrative side of incident handling. They coordinate efforts with other departments such as communications, legal, leadership, and relevant business stakeholders to ensure proper incident resolution.</li>
             </ul>
           
-            <h2>4. Triage and Automation (Tier 1)</h2>
+            <h3>4. Triage and Automation (Tier 1)</h3>
             <ul>
               <li><strong>Rapid Remediation or Escalation:</strong> This tier handles high-volume incidents and determines whether they require immediate remediation or escalation to higher-level teams.</li>
               <li><strong>Primary Tools:</strong> XDR (Microsoft 365 Defender & Microsoft Defender for Cloud) are used for rapid incident response and triage.</li>
@@ -2216,19 +2257,19 @@ select:focus, input[type="range"]:focus {
 </ul>
             </ul>
           
-            <h2>5. Automation</h2>
+            <h3>5. Automation</h3>
             <ul>
               <li><strong>Automated Investigation & Remediation:</strong> Automation is used to streamline routine tasks, such as incident response and remediation, freeing up security analysts to focus on more strategic activities.</li>
               <li><strong>XDR Alerts:</strong> Automation leverages alerts from Microsoft 365 Defender and Microsoft Defender for Cloud to trigger automated responses.</li>
             </ul>
           
-            <h2>6. Incident Management</h2>
+            <h3>6. Incident Management</h3>
             <ul>
               <li><strong>Business Coordination:</strong> This involves coordinating with business stakeholders to assess the impact of incidents, communicate updates, and manage expectations.</li>
               <li><strong>Major Incident:</strong> This tier handles high-complexity incidents that require significant resources and coordination.</li>
             </ul>
           
-            <h2>7. Partner Teams</h2>
+            <h3>7. Partner Teams</h3>
             <ul>
               <li><strong>IT Operations, DevOps, Insider Threat, and More:</strong> Collaboration between security teams and other relevant teams within the organization is crucial.</li>
               <li><strong>External Intelligence Sources:</strong> Leveraging external threat intelligence sources helps stay informed about emerging threats.</li>
@@ -2322,11 +2363,34 @@ select:focus, input[type="range"]:focus {
           
           <h3>Training and Development</h3>
           <p>The framework serves as a comprehensive training resource for security professionals, keeping them up-to-date with the latest adversarial tactics and methods.</p>
+
           
       </div>
 
       <!-- Toggle Button for Solution -->
       <button class="solution-button" onclick="toggleSolution('room11', event)">Show Solution</button>
+  </div>
+</div>
+
+<!-- Room 12 -->
+<div class="room-section">
+  <h2 onclick="toggleContent('room12')"> Our First Dashboard & Visualization</h2>
+
+  <div id="room12" class="collapsible-content">
+      <img src="firstsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+      <p><strong>Description:</strong> Dashboards in SIEM systems act as frameworks that hold various visualizations, enabling us to structure and present data in an insightful and organized manner.</p>
+
+      <div class="solution-section" id="solution-room12" style="display: none;">
+        <h3>Creating a New Dashboard</h3>
+        <img src="newdashboardsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <h3>let's create a new visualization.</h3>
+        <img src="newvisualization.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>When we begin creating our first visualization, a new window will open, offering various options and settings to choose from.</p>
+        <p><strong>Important:</strong>Before configuring anything, we should first click the calendar icon to access the time picker. Next, we need to set the date range to "last 15 years." Once that's done, we can click the "Apply" button to apply the selected date range to the data.</p>
+      </div>
+
+      <!-- Toggle Button for Solution -->
+      <button class="solution-button" onclick="toggleSolution('room12', event)">Show Solution</button>
   </div>
 </div>
 
