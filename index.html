@@ -438,15 +438,40 @@ nav a:hover::after {
 </head>
 <body>
     <!-- Profile Header -->
-    <header class="profile-header">
-        <img src="walppaper.webp" alt="Cover Photo" class="cover-photo">
-        <div class="profile-info">
-            <img src="ya.webp" alt="Profile Picture" class="profile-picture">
-            <div>
-                <h1>Tobias A</h1>
-            </div>
+<header class="profile-header">
+    <!-- Cover Photo with Responsive Sizing -->
+    <img 
+        src="walppaper.webp" 
+        srcset="
+            480.webp 480w
+            768.webp 768w,
+            1280.webp 1280w,
+            walppaper.webp 1920w" 
+        sizes="(max-width: 480px) 480px,
+               (max-width: 768px) 768px,
+               (max-width: 1280px) 1280px,
+               1920px" 
+        alt="Cover Photo" 
+        class="cover-photo" 
+        loading="lazy">
+
+    <div class="profile-info">
+        <!-- Profile Picture with Responsive Sizing -->
+        <img 
+            src="ya.webp" 
+            srcset="
+                80-80.webp 80w,
+                ya.webp 120w" 
+            sizes="(max-width: 768px) 80px, 120px" 
+            alt="Profile Picture" 
+            class="profile-picture" 
+            loading="lazy">
+        
+        <div>
+            <h1>Tobias A</h1>
         </div>
-    </header>
+    </div>
+</header>
 
     <!-- Navigation -->
     <nav>
