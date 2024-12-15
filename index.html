@@ -10,7 +10,7 @@
     <style>
         /* Global Styles */
         body {
-            font-family: 'Press Start 2P', cursive;
+            font-family: 'Press Start 2P', sans-serif !important; /* Force the custom font */
             margin: 0;
             padding: 0;
             background-color: #1c1c1c; /* Dark gray-blue */
@@ -291,7 +291,7 @@ nav a:hover::after {
         }
 
         /* Media Query for responsive design */
-@media (max-width: 768px) {
+        @media (max-width: 768px) {
     html, body {
         width: 100%;
         overflow-x: hidden; /* Prevent horizontal scrolling */
