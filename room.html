@@ -2666,7 +2666,30 @@ select:focus, input[type="range"]:focus {
               }<br>
             </div>
           </div>
-          
+          <p>Each format specifier in replaced by the corresponding value, provided to printf() separated by commas</p>
+          <h3>add a new line after the output</h3>
+          <p>the special character <strong>\n</strong> is used to create a new line in the output.</p>
+          <div class="ide-terminal">
+            <div class="ide-prompt">$</div>
+            <div class="ide-code">
+              <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
+              <span class="keyword">int</span> main() {<br>
+                  <span class="keyword">printf</span>(<span class="string">"Name: %s\n"</span>, <span class="number">"Tobias"</span>);<br>
+                  <span class="keyword">printf</span>(<span class="string">"Age: %d"</span>, <span class="number">51</span>);<br>
+                  <span class="keyword">return</span> <span class="number">0</span>;<br>
+              }<br>
+            </div>
+          </div>
+          <p><strong>Note:</strong> You can use as many \n characters as you need</p>
+          <p><strong>key points:</strong></p>
+          <ul>
+            <li>%d is for whole numbers</li>
+            <li>%f is for floating point numbers</li>
+            <li>%c is for single characters</li>
+            <li>%s is for strings</li>
+          </ul>
+          <p>Remember to provide the corresponding values for each specifier, separated by commas, \n is a special character used to insert a new line into the output</p>
+
                  
           
       </div>
