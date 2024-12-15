@@ -7,6 +7,8 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" as="style">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" href="favicon-16x16.png" type="image/x-icon">
+    <link rel="preload" href="walppaper.webp" as="image" type="image/webp">
+    <link rel="preload" href="ya.webp" as="image" type="image/webp">
     <style>
         /* Global Styles */
         body {
@@ -440,13 +442,13 @@ nav a:hover::after {
     </style>
 </head>
 <body>
-    <!-- Profile Header -->
+   <!-- Profile Header -->
 <header class="profile-header">
     <!-- Cover Photo with Responsive Sizing -->
     <img 
         src="walppaper.webp" 
         srcset="
-            480.webp 480w
+            480.webp 480w,
             768.webp 768w,
             1280.webp 1280w,
             walppaper.webp 1920w" 
@@ -455,8 +457,7 @@ nav a:hover::after {
                (max-width: 1280px) 1280px,
                1920px" 
         alt="Cover Photo" 
-        class="cover-photo" 
-        loading="lazy">
+        class="cover-photo">
 
     <div class="profile-info">
         <!-- Profile Picture with Responsive Sizing -->
@@ -467,14 +468,14 @@ nav a:hover::after {
                 ya.webp 120w" 
             sizes="(max-width: 768px) 80px, 120px" 
             alt="Profile Picture" 
-            class="profile-picture" 
-            loading="lazy">
+            class="profile-picture">
         
         <div>
             <h1>Tobias A</h1>
         </div>
     </div>
 </header>
+
 
     <!-- Navigation -->
     <nav>
