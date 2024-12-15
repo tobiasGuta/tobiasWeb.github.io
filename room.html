@@ -349,6 +349,23 @@ table {
       }
     }
 
+    /* Media Query for very small screens */
+@media (max-width: 480px) {
+  .ide-terminal {
+    width: 100%; /* Take up full width on very small screens */
+    padding: 6px; /* Adjust padding further */
+  }
+
+  .ide-prompt {
+    font-size: 10px; /* Even smaller font size for very small screens */
+  }
+
+  .ide-code {
+    font-size: 10px; /* Even smaller font size for very small screens */
+    padding: 6px; /* Smaller padding */
+  }
+}
+
     /* Base button styling */
     .controls-wrapper {
   display: flex;
@@ -405,6 +422,81 @@ select, input[type="range"] {
 select:focus, input[type="range"]:focus {
   box-shadow: 0 0 5px 1px #2AF7A5;
 }
+
+/* IDE Terminal container */
+.ide-terminal {
+  background-color: #2d2d2d; /* Dark gray background */
+  color: #f8f8f2; /* Light text color */
+  font-family: 'Courier New', Courier, monospace;
+  padding: 10px;
+  border-radius: 8px; /* Smaller rounded corners */
+  width: 60%;
+  margin: 20px auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid #444; /* Border for the container */
+}
+
+/* Prompt styling */
+.ide-prompt {
+  color: #32cd32; /* Terminal-like green */
+  font-weight: bold;
+  font-size: 14px; /* Smaller font size */
+}
+
+/* Code block styling */
+.ide-code {
+  font-size: 14px; /* Smaller font size for code */
+  line-height: 1.4; /* Adjusted line height */
+  white-space: pre-wrap; /* Preserve line breaks */
+  word-wrap: break-word; /* Wrap long lines */
+  background-color: #282828; /* Darker background for code */
+  padding: 10px; /* Smaller padding */
+  border-radius: 6px; /* Smaller rounded corners for code block */
+  border: 1px solid #444; /* Border for the code block */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  overflow-x: auto; /* Allow horizontal scrolling if the code overflows */
+}
+
+/* Simple color coding for syntax */
+.ide-code .keyword {
+  color: #ff79c6; /* Pinkish color for keywords */
+  font-weight: bold;
+}
+
+.ide-code .string {
+  color: #50fa7b; /* Light green color for strings */
+}
+
+.ide-code .number {
+  color: #f1fa8c; /* Light yellow color for numbers */
+}
+
+.ide-code .comment {
+  color: #6272a4; /* Light blue color for comments */
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 768px) {
+  .ide-terminal {
+    width: 90%; /* Make the terminal container take up more width on smaller screens */
+    padding: 8px; /* Adjust padding to fit the smaller screen */
+  }
+
+  .ide-prompt {
+    font-size: 12px; /* Slightly smaller font size for prompt */
+  }
+
+  .ide-code {
+    font-size: 12px; /* Smaller font size for code */
+    padding: 8px; /* Smaller padding */
+  }
+}
+
+
     </style>
 </head>
 <body>
@@ -2515,6 +2607,49 @@ select:focus, input[type="range"]:focus {
 
       <!-- Toggle Button for Solution -->
       <button class="solution-button" onclick="toggleSolution('room12', event)">Show Solution</button>
+  </div>
+</div>
+
+<!-- Room 13 -->
+<div class="room-section">
+  <h2 onclick="toggleContent('room13')">Learning C </h2>
+  <div id="room13" class="collapsible-content">
+      <img src="cprogr.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+      <p><strong>Description:</strong> I’m about to start learning C to enhance my ability to reverse engineer malware and analyze threats at a system level. This knowledge will be essential for my SOC career, allowing me to better understand how malware operates, detect IOCs and IOAs, and build more effective detection and response strategies. By mastering C, I aim to sharpen my skills in identifying vulnerabilities and dissecting malicious code to improve security operations.</p>
+
+      <div class="solution-section" id="solution-room13" style="display: none;">
+          <p>The <strong>printf</strong> function supports special format specifiers, which allow to output numbers and  output formatting</p>
+          <div class="ide-terminal">
+            <div class="ide-prompt">$</div>
+            <div class="ide-code">
+              <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
+              <span class="keyword">int</span> main() {<br>
+                  <span class="keyword">printf</span>(<span class="string">"%d"</span>, <span class="number">256</span>);<br>
+                  <span class="keyword">return</span> <span class="number">0</span>;<br>
+              }<br>
+            </div>
+          </div>
+          <p><strong>%d</strong> is the format specifier, which denotes that a whole number is expected</p>
+          <h3>floating point numbers</h3>
+          <p><strong>%f</strong> is used to output floating point numbers</p>
+          <div class="ide-terminal">
+            <div class="ide-prompt">$</div>
+            <div class="ide-code">
+              <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
+              <span class="keyword">int</span> main() {<br>
+                  <span class="keyword">printf</span>(<span class="string">"%f"</span>, <span class="number">256</span>);<br>
+                  <span class="keyword">return</span> <span class="number">0</span>;<br>
+              }<br>
+            </div>
+          </div>
+          
+          
+                 
+          
+      </div>
+
+      <!-- Toggle Button for Solution -->
+      <button class="solution-button" onclick="toggleSolution('room13', event)">Show Solution</button>
   </div>
 </div>
 
