@@ -2622,7 +2622,7 @@ select:focus, input[type="range"]:focus {
       <div class="solution-section" id="solution-room13" style="display: none;">
           <p>The <strong>printf</strong> function supports special format specifiers, which allow to output numbers and  output formatting</p>
           <div class="ide-terminal">
-            <div class="ide-prompt">$</div>
+            <div class="ide-prompt">C</div>
             <div class="ide-code">
               <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
               <span class="keyword">int</span> main() {<br>
@@ -2635,7 +2635,7 @@ select:focus, input[type="range"]:focus {
           <h3>floating point numbers</h3>
           <p><strong>%f</strong> is used to output floating point numbers</p>
           <div class="ide-terminal">
-            <div class="ide-prompt">$</div>
+            <div class="ide-prompt">C</div>
             <div class="ide-code">
               <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
               <span class="keyword">int</span> main() {<br>
@@ -2646,7 +2646,7 @@ select:focus, input[type="range"]:focus {
           </div>
           <p><strong>%c</strong> denotes a single character, while <strong>%s</strong> is used for strings</p>
           <div class="ide-terminal">
-            <div class="ide-prompt">$</div>
+            <div class="ide-prompt">C</div>
             <div class="ide-code">
               <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
               <span class="keyword">int</span> main() {<br>
@@ -2659,7 +2659,7 @@ select:focus, input[type="range"]:focus {
 
           <p>you can use a combination of multiple specifiers and text in the printf() function</p>
           <div class="ide-terminal">
-            <div class="ide-prompt">$</div>
+            <div class="ide-prompt">C</div>
             <div class="ide-code">
               <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
               <span class="keyword">int</span> main() {<br>
@@ -2672,7 +2672,7 @@ select:focus, input[type="range"]:focus {
           <h3>add a new line after the output</h3>
           <p>the special character <strong>\n</strong> is used to create a new line in the output.</p>
           <div class="ide-terminal">
-            <div class="ide-prompt">$</div>
+            <div class="ide-prompt">C</div>
             <div class="ide-code">
               <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
               <span class="keyword">int</span> main() {<br>
@@ -2691,10 +2691,65 @@ select:focus, input[type="range"]:focus {
             <li>%s is for strings</li>
           </ul>
           <p>Remember to provide the corresponding values for each specifier, separated by commas, \n is a special character used to insert a new line into the output</p>
-
-                 
-          
-      </div>
+          <h3>Variables</h3>
+          <p><strong>Description:</strong>A variable lets you store a value by assigning it to a name.</p>
+          <p>Each variable has a specific category, called its type, that determines what kind of data it can store. For example, a variable might store words or text, whole numbers, decimal values, or other kinds of information.</p>
+          <p>For Example</p>
+          <div class="ide-terminal">
+            <div class="ide-prompt">C</div>
+            <div class="ide-code">
+              <span class="keyword">int</span> level; 
+            </div>
+          </div>
+          <p>The <strong>int</strong> type is used to store whole numbers, which are numbers without any fractional or decimal parts. In programming, these are commonly referred to as integers.</p>
+          <p>Once we declare a variable, we can give it a value by using the = symbol, which is called the assignment operator.</p>
+          <div class="ide-terminal">
+            <div class="ide-prompt">C</div>
+            <div class="ide-code">
+              <span class="keyword">int</span> level; 
+              <span class="keyword">level = </span>204;
+            </div>
+          </div>
+          <p>We can display or print the value stored in our variable.</p>
+          <div class="ide-terminal">
+            <div class="ide-prompt">C</div>
+            <div class="ide-code">
+              <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
+              <span class="keyword">int</span> main() {
+                  <span class="string">int </span>= level
+                  <span class="keyword">level = </span>, <span class="number">204</span><br>
+                  <span class="keyword">printf</span>(<span class="string">"%d"</span>, <span class="keyword">level</span>);<br>
+                  <span class="keyword">return</span> <span class="number">0</span>;<br>
+              }<br>
+            </div>
+          </div>
+          <p>We used the <strong>%d</strong> format specifier because score is an integer. The <strong>printf</strong> function then replaces <strong>%d</strong> with the value of score when displaying the output.</p>
+          <p>We can declare a variable and assign it a value at the same time, like this:</p>
+          <div class="ide-terminal">
+            <div class="ide-prompt">C</div>
+            <div class="ide-code">
+              <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
+              <span class="keyword">int</span> main() {
+                  <span class="string">int </span>level = <span class="number">204</span><br>
+                  <span class="keyword">printf</span>(<span class="string">"%d"</span>, <span class="keyword">level</span>);<br>
+                  <span class="keyword">return</span> <span class="number">0</span>;<br>
+              }<br>
+            </div>
+          </div>
+          <p>The value of a variable can be updated or changed multiple times while the program is running.</p>
+          <div class="ide-terminal">
+            <div class="ide-prompt">C</div>
+            <div class="ide-code">
+              <span class="keyword">#include</span> &lt;stdio.h&gt;<br>
+              <span class="keyword">int</span> main() {
+                  <span class="string">int </span>level = <span class="number">204</span>
+                  <span class="keyword">level =</span> <span class="number">404</span>
+                  <span class="keyword">printf</span>(<span class="string">"%d"</span>, <span class="keyword">level</span>);<br>
+                  <span class="keyword">return</span> <span class="number">0</span>;<br>
+              }<br>
+            </div>
+          </div>
+        </div>
 
       <!-- Toggle Button for Solution -->
       <button class="solution-button" onclick="toggleSolution('room13', event)">Show Solution</button>
