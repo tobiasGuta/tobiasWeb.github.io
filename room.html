@@ -2036,8 +2036,41 @@ select:focus, input[type="range"]:focus {
         <p>After collecting this information, the next step is to engage with the user and investigate their machine. This includes reviewing system logs, antivirus logs, and proxy logs from the SIEM to ensure full visibility of the situation. The SOC team should carefully document all these details, including the Incident Response Plan, so that Incident Handlers can easily refer to them during the analysis process.</p>
 
         <p>When refining detection rules, it's crucial to understand scenarios that may result in false positives. For example, while the Build Engine is frequently used by Windows developers, it is less common for non-developers to use it. Therefore, excluding known legitimate parent process names from the rule can help minimize false alerts.</p>
-
-
+        <h3>Failed Logon Attempts (Disabled Users)</h3>
+        <p>A prebaked dashboard should be visible. Let's click on the "pencil"/edit icon.</p>
+        <img src="editdasiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>To start building our first visualization, just click the "Create visualization" button.</p>
+        <img src="createnewvisualizasiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>When you begin creating your first visualization, a new window will open, presenting a range of options and settings for customization.</p>
+        <img src="newvisusiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>In this window, there are four key elements to focus on:</p>
+        <ul>
+          <img src="disabledusers.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <li><strong>1:</strong> A filter option that lets us narrow down the data before generating a graph. For instance, our goal here is to showcase failed logon attempts specifically targeting disabled users. To achieve this, we can set up a filter that includes event IDs corresponding to 4625—representing failed logon attempts on Windows systems, similar to what we did in the previous visualization. However, in this scenario, we also need to factor in the SubStatus field (winlog.event_data.SubStatus), which should be set to 0xC0000072 to indicate that the logon failure is due to a disabled user. The image below illustrates how to configure this filter.</li>
+          <img src="windowsbarsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <li><Strong>2:</Strong> This field determines the dataset, or index, that will be utilized. Data from different infrastructure components is often organized into distinct indices, such as those for network activity, Windows systems, Linux systems, and so on. For this example, we’ll define windows* in the "Index pattern" to focus on Windows-related data.</li> 
+          <img src="searchbar.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <li><Strong>3:</Strong> The search bar allows us to verify whether a specific field exists within our dataset. It serves as a useful tool to ensure we're examining the right data. For instance, similar to the previous visualization, we are focused on the user.name.keyword field. By using the search bar, we can quickly check if this field is available and identified within the chosen dataset. This step helps confirm that we're accessing the correct field and working with reliable data.</li>
+          <img src="barverticalsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <li><strong>4:</strong> Finally, this drop-down menu allows us to choose the type of visualization we wish to create. The default setting, as shown earlier, is "Bar vertical stacked." By clicking on this menu, a list of additional visualization options will appear (not fully shown in the image due to screen size). From this list, we can select the visualization style that best matches our data and presentation goals.</li>
+        </ul>
+        <p>We’ll begin by choosing the "Table" option. Once it’s selected, we can move on to click the "Rows" option. This step enables us to specify the particular data elements we want to display in the table view.</p>
+        <p>Let's configure the "Rows" settings as follows.</p>
+        <img src="editingrowinsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <img src="chaningcount.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>To enhance the table further, we can add another "Rows" setting to display the machine where the failed logon attempt took place. For this, we’ll select the host.hostname.keyword field, which identifies the computer that reported the failed logon. This addition will let us show the hostname or machine name alongside the number of failed logon attempts.</p>
+        <img src="nerowsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>The table now displays three columns, each providing the following details:</p>
+        <ul>
+          <li>The disabled user whose credentials triggered the failed logon attempt.</li>
+          <li>The machine where the logon attempt was made.</li>
+          <li>The frequency of these events, calculated based on the selected time frame or the entire dataset, depending on the configuration.</li>
+        </ul>
+        <p>To finish, click on "Save and return," and you’ll see the newly created visualization added to the dashboard.</p>
+        <p><Strong>1:</Strong> What is the logon type indicated in the returned document for failed logon attempts involving disabled users?</p>
+        <p>I would add the search field name to the row: <Strong>winlog.logon.type.keyword</Strong></p>
+        <p><Strong>2:</Strong> What should you specify after user.name: in the KQL query to include failed logon attempt data where the username field contains the keyword "admin" anywhere within it?</p>
+        <p>I would add this KQL query: <strong>user.name: *admin*</strong></p>
       </div>
 
       <!-- Toggle Button for Solution -->
