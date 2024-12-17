@@ -2789,6 +2789,35 @@ select:focus, input[type="range"]:focus {
   </div>
 </div>
 
+<!-- Room 3 -->
+<div class="room-section">
+  <h2 onclick="toggleContent('room14')">
+    </i> Fundamentals of Generative AI <i class="fas fa-robot"></i>
+</h2>
+  <div id="room14" class="collapsible-content">
+      <img src="generativeai.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+      <p><strong>Description:</strong> Generative AI is a fascinating branch of artificial intelligence that focuses on creating content, such as text, images, music, or even videos. Understanding its fundamentals involves delving into concepts like machine learning, neural networks, and probability models.</p>
+
+      <div class="solution-section" id="solution-room14" style="display: none;">
+          <h3>language models</h3>
+          <p>Generative AI runs on the magic of language models—specialized machine learning systems designed to understand and create human-like language. These models are the backbone of many tasks in natural language processing (NLP), such as:</p>
+
+          <ul>
+            <li><strong>Analyzing Sentiment:</strong> Figuring out the tone or mood behind a piece of text.</li>
+            <li><strong>Summarizing Content:</strong> Boiling down lengthy text into its most important points.</li>
+            <li><strong>Comparing Meaning:</strong> Checking how similar the ideas in different texts are.</li>
+            <li><strong>Creating New Text:</strong> Writing original content that feels natural and human.</li>
+          </ul>
+
+          <p>Even though the math behind these models can get pretty intense, you don’t need to dive deep into equations to grasp the basics. By learning about their structure and how they work, you can start to see how these systems process and generate language in such an intelligent way.</p>
+
+      </div>
+
+      <!-- Toggle Button for Solution -->
+      <button class="solution-button" onclick="toggleSolution('room14', event)">Show Solution</button>
+  </div>
+</div>
+
 <script>
     function toggleContent(room) {
         var content = document.getElementById(room);
