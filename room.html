@@ -2835,6 +2835,32 @@ select:focus, input[type="range"]:focus {
           </ol>
 
           <p>In essence, the encoder processes the input and creates a representation of its meaning, while the decoder uses that representation to generate new text that logically follows from the input. This is how transformer models are able to handle tasks like translation, text generation, and more.</p>
+          <p>In real-world applications, different versions of the transformer architecture are tailored to meet specific needs. For instance, Google's <strong>Bidirectional Encoder Representations from Transformers (BERT)</strong> model, designed to enhance search engine performance, relies solely on the encoder block. BERT is optimized for understanding context from both directions—left and right—of a given word in a sentence, which makes it excellent for tasks like question answering and sentence classification.</p>
+          <p>On the other hand, OpenAI's <strong>Generative Pretrained Transformer (GPT)</strong> model focuses on generating human-like text and uses only the decoder block. This setup allows GPT to generate text sequentially, predicting the next word based on the context provided by the previous words. While both models are based on transformers, their different architectures reflect their specialized purposes: BERT for understanding text and GPT for generating text.</p>
+          <p>This flexibility in transformer architectures enables them to be adapted for various tasks, whether it's analyzing text for deeper meaning or producing coherent and creative outputs.</p>
+          
+          <h3>Tokenization</h3>
+          <p>Tokenization is the initial process when training a transformer model. It involves breaking down the input text into smaller units known as tokens. Essentially, this step identifies each distinct value or component within the text. For simplicity's sake, you can think of a token as being a unique word in the text. However, in practice, tokens can also represent parts of words, whole phrases, or even combinations of words and punctuation marks.</p>
+          <p>This step is crucial because it converts raw text into manageable units that the model can process. By splitting the text into tokens, the model can understand and analyze individual pieces of information, enabling it to learn patterns and relationships between words, parts of words, and other language features.</p>
+          <p>Let's take a different example to explain tokenization. Consider the sentence:</p>
+
+          <p><em>She enjoys reading books in the library every afternoon.</em></p>
+
+          <p>To tokenize this sentence, we break it down into smaller, meaningful units (tokens). Each distinct word or component is assigned a unique identifier. For instance:</p>
+
+          <ul>
+            <li>She (1)</li>
+            <li>enjoys (2)</li>
+            <li>reading (3)</li>
+            <li>books (4)</li>
+            <li>in (5)</li>
+            <li>the (6)</li>
+            <li>library (7)</li>
+            <li>every (8)</li>
+            <li>afternoon (9)</li>
+          </ul>
+
+          <p>In this example, we assign a unique token ID to each word. This allows the transformer model to process the text step by step, learning the relationships between these words. While tokenization here involves straightforward words, in more advanced cases, it might include subword units, punctuation marks, or even whole phrases to better capture language nuances.</p>
 
 
 
