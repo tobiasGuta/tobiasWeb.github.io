@@ -2808,8 +2808,33 @@ select:focus, input[type="range"]:focus {
             <li><strong>Comparing Meaning:</strong> Checking how similar the ideas in different texts are, which is useful for tasks like plagiarism detection or matching user queries with relevant documents.</li>
             <li><strong>Creating New Text:</strong> Writing original content that feels natural and human, such as generating articles, emails, or even dialogue for chatbots.</li>
           </ul>
-
           <p>What makes these models so powerful is their ability to learn patterns and structures in language from vast amounts of data. They can understand context, adapt to various tasks, and even get better with fine-tuning for specific applications. While the underlying mathematics can be complex, you can build a strong understanding by focusing on their architecture and how they use training data to generate outputs.</p>
+          
+          <h3>Transformer models</h3>
+          <p>Modern large language models leverage the transformer architecture, a revolutionary design that has reshaped how machines process and generate human language. Transformers enhance earlier methods by focusing on the relationships between words, enabling them to excel in tasks like generating meaningful, context-aware text. By training on massive datasets, these models learn to identify patterns, semantics, and the flow of natural language, allowing them to produce outputs that are often indistinguishable from human writing.</p>
+
+          <p>The architecture of transformers is built on two core components:</p>
+
+          <ul>
+            <li><strong>Encoder Block:</strong> This component processes the input text and converts it into a detailed semantic representation. It captures the context and meaning of the text, making it easier for the model to understand complex language structures.</li>
+            <li><strong>Decoder Block:</strong> Using the encoded information, this component generates new text sequences by predicting the next word or phrase, ensuring the output aligns with the input's context and style.</li>
+          </ul>
+
+          <p>What makes transformers particularly powerful is their ability to handle large-scale parallel computations. Unlike earlier models, they use a mechanism called <strong>self-attention</strong>, which allows them to focus on relevant parts of the input while generating responses. This capability not only boosts their efficiency but also makes them highly adaptable to a wide range of NLP tasks, from summarization and question-answering to translation and creative writing.</p>
+
+          <p>As these models continue to evolve, they are becoming even better at understanding nuanced language, cultural references, and user intent, further blurring the lines between human and machine communication.</p>
+          <img src="enocder_decoderai.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>This diagram illustrates the process of how a transformer-based model processes and generates text. Let me explain the steps shown in the image:</p>
+
+          <ol>
+            <li><strong>Input Documents (Step 1):</strong> The process starts with input documents or text data. This could be a sentence or a collection of text, which the model will process to generate a meaningful output.</li>
+            <li><strong>Encoder (Step 2):</strong> The encoder block takes the input data (text) and converts it into a semantic representation. It breaks down the text and captures the relationships between words, creating a vector representation for each word or token (e.g., "dog", "cat", "puppy"). These representations help the model understand the meaning and context of the words in the input.</li>
+            <li><strong>Semantic Representation (Step 3):</strong> The encoder outputs a set of vectors representing the words and their relationships in the text. In the diagram, these vectors are associated with words like "dog", "cat", and "puppy", each having a vector representation (e.g., [10, 3, 2] for "dog").</li>
+            <li><strong>Decoder (Step 4):</strong> The decoder block takes the semantic representations from the encoder and generates the output text. The decoder uses the encoded information to predict the next word or token in the sequence, generating text step by step.</li>
+            <li><strong>Output Text (Step 5):</strong> Finally, the decoder produces the output text, which is a continuation or transformation of the original input. In this case, the output is "… a puppy", which is the model's generated text based on the input "When my dog was…".</li>
+          </ol>
+
+          <p>In essence, the encoder processes the input and creates a representation of its meaning, while the decoder uses that representation to generate new text that logically follows from the input. This is how transformer models are able to handle tasks like translation, text generation, and more.</p>
 
 
 
