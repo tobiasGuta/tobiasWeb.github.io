@@ -260,8 +260,11 @@ footer {
     }
 
     nav {
-        flex-direction: column;
-        margin: 20px 0;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 40px 0;
+        margin-left: 20px; /* Add this to move it to the right */
     }
 
     nav a {
