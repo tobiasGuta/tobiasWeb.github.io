@@ -423,34 +423,60 @@
         ];
 
         async function fetchFeeds() {
-            feedContainer.innerHTML = '';
+  feedContainer.innerHTML = '';
 
-            const promises = rssFeeds.map(async (feedUrl) => {
-                const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`);
-                const data = await response.json();
-                data.items.forEach(item => {
-                    const feedItem = document.createElement('div');
-                    feedItem.className = 'feed-item';
-                    feedItem.innerHTML = `
-                        <div class="header">
-                            <h2>${item.title}</h2>
-                            <span class="badge">New</span>
-                        </div>
-                        <p>${item.description.length > 150 ? item.description.substring(0, 150) + '...' : item.description}</p>
-                        ${item.enclosure && item.enclosure.link ? `<img src="${item.enclosure.link}" alt="Feed Image">` : ''}
-                        <div class="footer">
-                            <span>${new Date(item.pubDate).toLocaleDateString()}</span> | 
-                            <a href="${item.link}" target="_blank"> Read More </a>
-                        </div>
-                    `;
-                    feedContainer.appendChild(feedItem);
-                });
-            });
+  const promises = rssFeeds.map(async (feedUrl) => {
+    try {
+      const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch feed: ${response.status}`);
+      }
 
-            await Promise.all(promises);
-        }
+      const data = await response.json();
 
-        fetchFeeds();
+      data.items.forEach(item => {
+        const feedItem = document.createElement('div');
+        feedItem.className = 'feed-item';
+
+        const shortDescription = item.description.length > 150
+          ? item.description.substring(0, 150) + '...'
+          : item.description;
+
+        feedItem.innerHTML = `
+          <div class="header">
+            <h2>${item.title}</h2>
+            <span class="badge">New</span>
+          </div>
+          <div class="content">
+            <p>${shortDescription}</p>
+            ${item.enclosure && item.enclosure.link ? `<img src="${item.enclosure.link}" alt="Feed Image">` : ''}
+          </div>
+          <div class="footer">
+            <span>${new Date(item.pubDate).toLocaleDateString()}</span> | 
+            <a href="${item.link}" target="_blank">Read More</a>
+          </div>
+        `;
+
+        // Highlight the title and first sentence
+        feedItem.classList.add('highlight');
+        const firstSentence = shortDescription.split('.')[0];
+        feedItem.querySelector('p').innerHTML = `<b>${firstSentence}</b>...`;
+
+        feedContainer.appendChild(feedItem);
+      });
+    } catch (error) {
+      console.error('Error fetching feed:', error);
+      // Handle errors gracefully, e.g., display an error message to the user
+    }
+  });
+
+  await Promise.all(promises);
+
+  // Schedule the next fetch in 10 minutes
+  setInterval(fetchFeeds, 600000);
+}
+
+fetchFeeds();
     </script>
 </body>
 
