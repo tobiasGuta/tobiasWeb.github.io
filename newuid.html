@@ -47,17 +47,61 @@
             text-shadow: 0 0 5px #ff3e3e, 0 0 10px #ff3e3e;
         }
 
+        /* Hacking themed Back Button */
+.back-button {
+    background-color: transparent; /* Transparent background */
+    color: white; /* White text by default */
+    border: none; /* No border initially */
+    padding: 12px 24px;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    outline: none; /* Remove the default outline (browser specific) */
+    transition: color 0.3s, box-shadow 0.3s; /* Smooth transition for color and shadow */
+}
+
+/* Normal link hover (for back button) */
+.back-button:hover {
+    color: #2AF7A5; /* Change text color to #2AF7A5 */
+    animation: pulse 1s infinite; /* Apply pulse effect */
+    box-shadow: 0 0 10px #2AF7A5, 0 0 20px #2AF7A5, 0 0 30px #2AF7A5; /* Glowing effect */
+    border: 2px solid #2AF7A5; /* Border appears only when hovering */
+}
+
+/* Pulse animation for hacker vibes */
+@keyframes pulse {
+    0% { 
+        transform: scale(1);
+        opacity: 1; 
+    }
+    50% { 
+        transform: scale(1.1); 
+        opacity: 0.8; 
+    }
+    100% { 
+        transform: scale(1); 
+        opacity: 1; 
+    }
+}
+
+/* Back Button Container */
+.back-button-container {
+    position: relative;
+    text-align: center;
+    margin-top: 50px; /* Keep the position as it was */
+}
+
+        /* Navigation links styling */
         nav {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            font-family: 'Press Start 2P', sans-serif !important; /* Force the custom font */
-            width: 100%;
-            padding: 10px 0;
+            display: inline-block;
+            position: relative;
         }
 
         nav a {
-            margin: 35px;
+            margin: 50px;
             color: white;
             text-decoration: none;
             padding: 10px 15px;
@@ -72,7 +116,7 @@
         }
 
         .feed-container {
-    margin-top: 10px;
+    margin-top: 50px;
     width: 100%;
     background-color: transparent;
     padding: 0;
@@ -209,9 +253,11 @@
         </h1>
     </header>
 
-    <nav>
-        <a href="index.html"><i class="fas fa-home"></i> Back</a>
-    </nav>
+    <div class="back-button-container">
+      <button class="back-button" onclick="window.location.href='index.html'">
+          <i class="fas fa-users"></i> Intro
+      </button>
+  </div>
 
     <div class="feed-container" id="feedContainer">
         <!-- RSS feed content will be dynamically loaded here -->
