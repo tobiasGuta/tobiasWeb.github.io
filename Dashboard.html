@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -180,17 +181,18 @@
     width: 100%; /* Ensure the feed items take full width */
     box-sizing: border-box; /* Include padding in width */
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation transition for hover */
+    
 }
+
+.feed-item img {
+                width: 500px;
+                height: 300px;
+            }
 
 .feed-item:hover {
     transform: translateY(-5px); /* Move the item slightly upwards */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7); /* Slightly more intense shadow on hover */
 }
-
-    .feed-item img {
-        max-width: 15%; /* Limit image width */
-        height: auto; /* Maintain aspect ratio */
-    }
 
         .feed-item .header {
             display: flex;
@@ -271,8 +273,8 @@
             }
 
             .feed-item img {
-                width: 40px;
-                height: 40px;
+                width: 290px;
+                height: 140px;
             }
 
             .feed-item .header h2 {
