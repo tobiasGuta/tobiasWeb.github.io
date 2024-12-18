@@ -216,13 +216,6 @@ footer {
         width: 50px;
     }
 
-    nav {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin: 40px 0;
-        margin-left: 20px; /* Add this to move it to the right */
-    }
     nav a {
         margin: 0 10px;
         padding: 8px;
@@ -267,11 +260,8 @@ footer {
     }
 
     nav {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin: 40px 0;
-        margin-left: 20px; /* Add this to move it to the right */
+        flex-direction: column;
+        margin: 20px 0;
     }
 
     nav a {
