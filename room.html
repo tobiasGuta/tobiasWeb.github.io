@@ -2953,18 +2953,11 @@ select:focus, input[type="range"]:focus {
       }
   });
 
-  // Optional: Allow keyboard selection trigger (e.g., Ctrl + C) to also trigger read aloud
-  document.addEventListener('keydown', function(e) {
-      if (e.key === 'c' && e.ctrlKey && readAloudEnabled) {
-          setTimeout(readSelectedText, 100); // Wait a bit before reading to allow selection
-      }
-  });
-
   // Function to show content based on the URL hash (e.g., #room2)
   function checkRoomInUrl() {
       const hash = window.location.hash; // Get the current hash from the URL
 
-      // Check if the URL hash matches a room (e.g., "#room2")
+      // Check if the URL hash matches a room (e.g., "#room1, #room2, etc.")
       const roomMatch = hash.substring(1); // Remove the '#' from the hash
       if (roomMatch && document.getElementById(roomMatch)) {
           toggleContent(roomMatch);  // Automatically show the room content if it matches
