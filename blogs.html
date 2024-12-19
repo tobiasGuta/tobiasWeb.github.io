@@ -17,8 +17,9 @@
     </header>
     
     <nav>
-        <a href="index.html"><i class="fas fa-home"></i> Intro</a>>
+        <a href="index.html"><i class="fas fa-home"></i> Intro</a>
     </nav>
+    
     
     <section class="projects-container">
         <h2>Latest Posts from StationX</h2>
@@ -26,6 +27,9 @@
 
         <h2>Latest Posts from EFF</h2>
         <div id="effPosts"></div>
+
+        <h2>Latest Posts from Tor</h2>
+        <div id="torPosts"></div>
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/rss-parser@3.0.0/dist/rss-parser.min.js"></script>
@@ -85,14 +89,38 @@
             }
         }
 
+        // Fetch and display the RSS feed from Tor
+        async function fetchTorFeed() {
+            try {
+                const feed = await parser.parseURL('https://blog.torproject.org/feed');
+                const blogContainer = document.getElementById('torPosts');
+                
+                let output = '<ul class="blog-list">';
+                feed.items.forEach(item => {
+                    output += `<li class="blog-item">
+                        <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
+                        <small class="blog-date">${item.pubDate}</small>
+                        <p class="blog-snippet">${truncateContent(item.contentSnippet, 200)}</p>
+                        <a href="${item.link}" target="_blank" class="read-more">Read More</a>
+                    </li>`;
+                });
+                output += '</ul>';
+                blogContainer.innerHTML = output;
+            } catch (error) {
+                console.error('Error fetching Tor RSS feed:', error);
+            }
+        }
+
         // Call the functions to fetch and display the feeds
         fetchStationXFeed();
         fetchEFFFeed();
+        fetchTorFeed();
 
         // Update every 10 minutes (600000 ms)
         setInterval(() => {
             fetchStationXFeed();
             fetchEFFFeed();
+            fetchTorFeed();
         }, 600000);
     </script>
 </body>
