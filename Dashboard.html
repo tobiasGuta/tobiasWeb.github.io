@@ -195,10 +195,15 @@
         }
 
         .feed-item .header h2 {
-            margin: 0;
-            font-size: 1.2em;
-            color: #ff6f61;
-        }
+    margin: 0;
+    font-size: 1.2em;
+    color: #ff6f61;
+}
+
+.feed-item .header h2 a {
+    color: inherit;           /* Inherit the color from the h2 */
+    text-decoration: none;    /* Remove the underline from the link */
+}
 
         .badge {
             background-color: #6b42f4;
@@ -498,8 +503,9 @@
             const feedItem = document.createElement('div');
             feedItem.className = 'feed-item';
             feedItem.innerHTML = `
+                
                 <div class="header">
-                    <h2>${item.title}</h2>
+                    <h2><a href="${item.link}" target="_blank" class="blog-title">${item.title}</a></h2>
                     <span class="badge">${item.pubDate}</span>
                 </div>
                 <p>${item.description.substring(0, 550)}...</p>
@@ -509,6 +515,7 @@
             feedContainer.appendChild(feedItem);
         });
     }
+
 
     // Set interval for automatic refresh (every 10 minutes)
     const refreshInterval = setInterval(fetchFeeds, 600000);
