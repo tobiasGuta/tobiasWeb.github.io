@@ -89,27 +89,37 @@
             }
         }
 
-        // Fetch and display the RSS feed from Tor
         async function fetchTorFeed() {
-            try {
-                const feed = await parser.parseURL('https://blog.torproject.org/feed');
-                const blogContainer = document.getElementById('torPosts');
-                
-                let output = '<ul class="blog-list">';
-                feed.items.forEach(item => {
-                    output += `<li class="blog-item">
-                        <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                        <small class="blog-date">${item.pubDate}</small>
-                        <p class="blog-snippet">${truncateContent(item.contentSnippet, 200)}</p>
-                        <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-                    </li>`;
-                });
-                output += '</ul>';
-                blogContainer.innerHTML = output;
-            } catch (error) {
-                console.error('Error fetching Tor RSS feed:', error);
-            }
-        }
+    try {
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://blog.torproject.org/feed`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        const blogContainer = document.getElementById('torPosts');
+        let output = '<ul class="blog-list">';
+
+        // Itera sobre los items del feed
+        data.items.forEach(item => {
+            // Verifica si 'contentSnippet' está presente
+            const contentSnippet = item.contentSnippet || ''; // Si no está presente, usa una cadena vacía
+            
+            output += `<li class="blog-item">
+                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
+                <small class="blog-date">${item.pubDate}</small>
+                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
+                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
+            </li>`;
+        });
+
+        output += '</ul>';
+        blogContainer.innerHTML = output;
+    } catch (error) {
+        console.error('Error fetching Tor RSS feed:', error);
+    }
+}
+
+
+
 
         // Call the functions to fetch and display the feeds
         fetchStationXFeed();
