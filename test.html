@@ -279,7 +279,7 @@
 
             .feed-item img {
                 width: 325px;
-                height: 140px;
+                height: 110px;
             }
 
             .feed-item .header h2 {
@@ -502,28 +502,12 @@
                     <h2>${item.title}</h2>
                     <span class="badge">${item.pubDate}</span>
                 </div>
-                <p>${item.description.substring(0, 500)}...</p> 
-                <a href="${item.link}" target="_blank">Read more</a>
+                <p>${item.description.substring(0, 550)}...</p>
+                <a href="${item.link}" target="_blank"><br>Read more</a>
             `;
 
             feedContainer.appendChild(feedItem);
         });
-    }
-
-    function showNotification(newTitle) {
-        // Create a pop-up element
-        const notification = document.createElement('div');
-        notification.className = 'notification';
-        notification.innerHTML = `
-            <p>New Update: ${newTitle}</p>
-            <button onclick="this.parentElement.remove()">Dismiss</button>
-        `;
-        document.body.appendChild(notification);
-
-        // Auto-remove after 10 seconds
-        setTimeout(() => {
-            notification.remove();
-        }, 10000);
     }
 
     // Set interval for automatic refresh (every 10 minutes)
