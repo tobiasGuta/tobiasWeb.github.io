@@ -2872,94 +2872,114 @@ select:focus, input[type="range"]:focus {
 </div>
 
 <script>
-    function toggleContent(room) {
-        var content = document.getElementById(room);
-        content.style.display = (content.style.display === 'none' || content.style.display === '') ? 'block' : 'none';
-    }
+  function toggleContent(room) {
+      var content = document.getElementById(room);
+      content.style.display = (content.style.display === 'none' || content.style.display === '') ? 'block' : 'none';
+  }
 
-    function toggleSolution(room, event) {
-        var solution = document.getElementById("solution-" + room);
-        var button = event.target;
+  function toggleSolution(room, event) {
+      var solution = document.getElementById("solution-" + room);
+      var button = event.target;
 
-        if (solution.style.display === 'none' || solution.style.display === '') {
-            solution.style.display = 'block';
-            button.textContent = "Hide Solution";
-        } else {
-            solution.style.display = 'none';
-            button.textContent = "Show Solution";
-        }
-    }
+      if (solution.style.display === 'none' || solution.style.display === '') {
+          solution.style.display = 'block';
+          button.textContent = "Hide Solution";
+      } else {
+          solution.style.display = 'none';
+          button.textContent = "Show Solution";
+      }
+  }
 
-    // Read Aloud function
-    let readAloudEnabled = false; // Flag to track if Read Aloud is on
-let toggleButton = document.getElementById('toggle-read-aloud');
-let voiceSelect = document.getElementById('voiceSelect');
-let pitch = document.getElementById('pitch');
-let rate = document.getElementById('rate');
-let voices = [];
+  // Read Aloud function
+  let readAloudEnabled = false; // Flag to track if Read Aloud is on
+  let toggleButton = document.getElementById('toggle-read-aloud');
+  let voiceSelect = document.getElementById('voiceSelect');
+  let pitch = document.getElementById('pitch');
+  let rate = document.getElementById('rate');
+  let voices = [];
 
-// Populate voice options
-function populateVoiceList() {
-    voices = speechSynthesis.getVoices();
-    voiceSelect.innerHTML = '';  // Clear existing options
+  // Populate voice options
+  function populateVoiceList() {
+      voices = speechSynthesis.getVoices();
+      voiceSelect.innerHTML = '';  // Clear existing options
 
-    voices.forEach((voice, index) => {
-        let option = document.createElement('option');
-        option.value = index;
-        option.textContent = `${voice.name} (${voice.lang})`;
-        voiceSelect.appendChild(option);
-    });
+      voices.forEach((voice, index) => {
+          let option = document.createElement('option');
+          option.value = index;
+          option.textContent = `${voice.name} (${voice.lang})`;
+          voiceSelect.appendChild(option);
+      });
 
-    // Set the default voice to the first one in the list (if available)
-    if (voices.length > 0) {
-        voiceSelect.selectedIndex = 82;  // Set the default selection to the first voice
-    }
-}
+      // Set the default voice to the first one in the list (if available)
+      if (voices.length > 0) {
+          voiceSelect.selectedIndex = 82;  // Set the default selection to the first voice
+      }
+  }
 
-populateVoiceList();
-if (speechSynthesis.onvoiceschanged !== undefined) {
-    speechSynthesis.onvoiceschanged = populateVoiceList;
-}
+  populateVoiceList();
+  if (speechSynthesis.onvoiceschanged !== undefined) {
+      speechSynthesis.onvoiceschanged = populateVoiceList;
+  }
 
-// Function to toggle Read Aloud feature
-function toggleReadAloud() {
-    readAloudEnabled = !readAloudEnabled;
+  // Function to toggle Read Aloud feature
+  function toggleReadAloud() {
+      readAloudEnabled = !readAloudEnabled;
 
-    if (readAloudEnabled) {
-        toggleButton.classList.add('on');  // Add the 'on' class for green and power-on icon
-        toggleButton.classList.remove('off'); // Remove 'off' class
-    } else {
-        toggleButton.classList.remove('on');  // Remove 'on' class for default appearance
-        toggleButton.classList.add('off'); // Add 'off' class for red and power-off icon
-    }
-}
+      if (readAloudEnabled) {
+          toggleButton.classList.add('on');  // Add the 'on' class for green and power-on icon
+          toggleButton.classList.remove('off'); // Remove 'off' class
+      } else {
+          toggleButton.classList.remove('on');  // Remove 'on' class for default appearance
+          toggleButton.classList.add('off'); // Add 'off' class for red and power-off icon
+      }
+  }
 
-// Function to read selected text
-function readSelectedText() {
-    const selectedText = window.getSelection().toString().trim();
-    if (selectedText) {
-        const speech = new SpeechSynthesisUtterance(selectedText);
-        speech.voice = voices[voiceSelect.value];  // Use selected voice
-        speech.pitch = pitch.value;
-        speech.rate = rate.value;
-        window.speechSynthesis.speak(speech);
-    }
-}
+  // Function to read selected text
+  function readSelectedText() {
+      const selectedText = window.getSelection().toString().trim();
+      if (selectedText) {
+          const speech = new SpeechSynthesisUtterance(selectedText);
+          speech.voice = voices[voiceSelect.value];  // Use selected voice
+          speech.pitch = pitch.value;
+          speech.rate = rate.value;
+          window.speechSynthesis.speak(speech);
+      }
+  }
 
-// Automatically read text when selected if Read Aloud is enabled
-document.addEventListener('mouseup', function() {
-    if (readAloudEnabled) {
-        readSelectedText();
-    }
-});
+  // Automatically read text when selected if Read Aloud is enabled
+  document.addEventListener('mouseup', function() {
+      if (readAloudEnabled) {
+          readSelectedText();
+      }
+  });
 
-// Optional: Allow keyboard selection trigger (e.g., Ctrl + C) to also trigger read aloud
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'c' && e.ctrlKey && readAloudEnabled) {
-        setTimeout(readSelectedText, 100); // Wait a bit before reading to allow selection
-    }
-});
+  // Optional: Allow keyboard selection trigger (e.g., Ctrl + C) to also trigger read aloud
+  document.addEventListener('keydown', function(e) {
+      if (e.key === 'c' && e.ctrlKey && readAloudEnabled) {
+          setTimeout(readSelectedText, 100); // Wait a bit before reading to allow selection
+      }
+  });
 
+  // Function to show content based on the URL hash (e.g., #room2)
+  function checkRoomInUrl() {
+      const hash = window.location.hash; // Get the current hash from the URL
+
+      // Check if the URL hash matches a room (e.g., "#room2")
+      const roomMatch = hash.substring(1); // Remove the '#' from the hash
+      if (roomMatch && document.getElementById(roomMatch)) {
+          toggleContent(roomMatch);  // Automatically show the room content if it matches
+      }
+  }
+
+  // Call this function when the page loads or when the hash changes
+  window.onload = function() {
+      checkRoomInUrl(); // Check the URL hash when the page loads
+  };
+
+  // Listen for changes in the URL hash (when the user navigates through hash fragments)
+  window.onhashchange = function() {
+      checkRoomInUrl();
+  };
 </script>
 </body>
 </html>
