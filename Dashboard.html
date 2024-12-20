@@ -344,76 +344,112 @@
         ];
 
         let latestTitle = ''; // To store the latest feed title
+let feedItems = []; // Array to store feed items
+let itemsPerPage = 10; // Number of items to load initially
 
-    async function fetchFeeds() {
-        const allItems = [];
-        const seenTitles = new Set();
-
-        const fetchPromises = rssFeeds.map(async (feed) => {
-            try {
-                const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
-                const data = await response.json();
-
-                if (data.status === 'ok') {
-                    data.items.forEach(item => {
-                        if (!seenTitles.has(item.title)) {
-                            seenTitles.add(item.title);
-                            allItems.push(item);
-                        }
-                    });
-                }
-            } catch (error) {
-                console.error('Error fetching feed:', feed, error);
+// Function to show notifications in the browser
+function showNotification(title) {
+    if (Notification.permission === 'granted') {
+        new Notification("New feed item", { body: title });
+    } else {
+        Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+                new Notification("New feed item", { body: title });
             }
-        });
-
-        await Promise.all(fetchPromises);
-
-        // Sort all items by publication date (newest first)
-        allItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-
-        // Check for updates
-        if (allItems.length > 0 && allItems[0].title !== latestTitle) {
-            if (latestTitle) { // Avoid pop-up on the first load
-                showNotification(allItems[0].title);
-            }
-            latestTitle = allItems[0].title; // Update the latest title
-        }
-
-        // Clear existing feed content
-        feedContainer.innerHTML = '';
-
-        // Add feed items to the container
-        allItems.forEach(item => {
-            const feedItem = document.createElement('div');
-            feedItem.className = 'feed-item';
-            feedItem.innerHTML = `
-                
-                <div class="header">
-                    <h2><a href="${item.link}" target="_blank" class="blog-title">${item.title}</a></h2>
-                    <span class="badge">${item.pubDate}</span>
-                </div>
-                <p>${item.description.substring(0, 550)}...</p>
-                <a href="${item.link}" target="_blank"><br>Read more</a>
-            `;
-
-            feedContainer.appendChild(feedItem);
         });
     }
+}
 
+async function fetchFeeds() {
+    const allItems = [];
+    const seenTitles = new Set();
 
-    // Set interval for automatic refresh (every 10 minutes)
-    const refreshInterval = setInterval(fetchFeeds, 600000);
+    const fetchPromises = rssFeeds.map(async (feed) => {
+        try {
+            const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
+            const data = await response.json();
 
-    // Fetch feeds on initial load and on every refresh interval
-    document.addEventListener('DOMContentLoaded', () => {
-        fetchFeeds();
+            if (data.status === 'ok') {
+                data.items.forEach(item => {
+                    if (!seenTitles.has(item.title)) {
+                        seenTitles.add(item.title);
+                        allItems.push(item);
+                    }
+                });
+            }
+        } catch (error) {
+            console.error('Error fetching feed:', feed, error);
+        }
     });
 
-    // Clear the interval on unload (e.g., when the user leaves the page)
-    window.addEventListener('unload', () => {
-        clearInterval(refreshInterval);
+    await Promise.all(fetchPromises);
+
+    // Sort all items by publication date (newest first)
+    allItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
+    // Check for updates
+    if (allItems.length > 0 && allItems[0].title !== latestTitle) {
+        if (latestTitle) { // Avoid pop-up on the first load
+            showNotification(allItems[0].title);
+        }
+        latestTitle = allItems[0].title; // Update the latest title
+    }
+
+    // Store all fetched feed items
+    feedItems = allItems;
+
+    // Display the first set of feed items
+    renderFeedItems(0, itemsPerPage);
+}
+
+// Render a set of feed items (lazy load)
+function renderFeedItems(startIndex, count) {
+    // Clear existing feed content
+    feedContainer.innerHTML = '';
+
+    const itemsToDisplay = feedItems.slice(startIndex, startIndex + count);
+
+    itemsToDisplay.forEach(item => {
+        const feedItem = document.createElement('div');
+        feedItem.className = 'feed-item';
+        feedItem.innerHTML = `
+            <div class="header">
+                <h2><a href="${item.link}" target="_blank" class="blog-title">${item.title}</a></h2>
+                <span class="badge">${item.pubDate}</span>
+            </div>
+            <p>${item.description.substring(0, 550)}...</p>
+            <a href="${item.link}" target="_blank"><br>Read more</a>
+        `;
+        feedContainer.appendChild(feedItem);
     });
+}
+
+// Set interval for automatic refresh (every hour)
+const refreshInterval = setInterval(fetchFeeds, 3600000);
+
+// Fetch feeds on initial load and on every refresh interval
+document.addEventListener('DOMContentLoaded', () => {
+    fetchFeeds();
+});
+
+// Lazy loading on scroll
+window.addEventListener('scroll', () => {
+    const scrollPosition = window.scrollY + window.innerHeight;
+    const pageHeight = document.documentElement.scrollHeight;
+
+    // Trigger loading more items when user reaches the bottom
+    if (scrollPosition >= pageHeight - 200) {
+        // Load the next batch of feed items
+        const nextStartIndex = feedContainer.childElementCount;
+        renderFeedItems(nextStartIndex, itemsPerPage);
+    }
+});
+
+// Clear the interval on unload (e.g., when the user leaves the page)
+window.addEventListener('unload', () => {
+    clearInterval(refreshInterval);
+});
+
 </script>
 </body>
 
