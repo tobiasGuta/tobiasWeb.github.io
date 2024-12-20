@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,8 +24,6 @@
     
     
     <section class="projects-container">
-        <h2>Latest Posts from StationX</h2>
-        <div id="stationXPosts"></div>
 
         <h2>Latest Posts from EFF</h2>
         <div id="effPosts"></div>
@@ -35,25 +34,12 @@
         <h2>Latest Posts from privacyguidesPosts</h2>
         <div id="privacyguidesPosts"></div>
 
-        <h2>Latest Posts from tuta</h2>
-        <div id="tutaPosts"></div>
 
         <h2>Latest Posts from proton</h2>
         <div id="protonPosts"></div>
 
         <h2>Latest Posts from restoreprivacy</h2>
         <div id="restoreprivacyPosts"></div>
-
-        <h2>Latest Posts from theguardian</h2>
-        <div id="theguardianPosts"></div>
-
-        <h2>Latest Posts from techcrunch</h2>
-        <div id="techcrunchPosts"></div>
-        
-        <h2>Latest Posts from epic</h2>
-        <div id="epicPosts"></div>
-
-
         
     </section>
 
@@ -70,31 +56,10 @@
             return content;
         }
 
-        // Fetch and display the RSS feed from StationX
-        async function fetchStationXFeed() {
-            try {
-                const feed = await parser.parseURL('https://www.stationx.net/feed/');
-                const blogContainer = document.getElementById('stationXPosts');
-                
-                let output = '<ul class="blog-list">';
-                feed.items.forEach(item => {
-                    output += `<li class="blog-item">
-                        <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                        <p class="blog-snippet">${truncateContent(item.contentSnippet, 200)}</p>
-                        <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-                    </li>`;
-                });
-                output += '</ul>';
-                blogContainer.innerHTML = output;
-            } catch (error) {
-                console.error('Error fetching StationX RSS feed:', error);
-            }
-        }
-
         // Fetch and display the RSS feed from EFF
         async function fetchEFFFeed() {
             try {
-                const feed = await parser.parseURL('https://www.eff.org/rss/updates.xml');
+                const feed = await parser.parseURL('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.eff.org%2Frss%2Fupdates.xml&api_key=efngde8qbt0vx9rzitqmahve9bxz7izkrzeorzt3');
                 const blogContainer = document.getElementById('effPosts');
                 
                 let output = '<ul class="blog-list">';
@@ -115,24 +80,29 @@
         // Fetch and display the RSS feed from Tor
         async function fetchTorFeed() {
     try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://blog.torproject.org/feed`;
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fblog.torproject.org%2Ffeed&api_key=efngde8qbt0vx9rzitqmahve9bxz7izkrzeorzt3`;
         const response = await fetch(apiUrl);
         const data = await response.json();
+
+        console.log(data); // Log the entire response to check its structure
 
         const blogContainer = document.getElementById('torPosts');
         let output = '<ul class="blog-list">';
 
-       
-        data.items.forEach(item => {
-            
-            const contentSnippet = item.contentSnippet || ''; 
-            
-            output += `<li class="blog-item">
-                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
-                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-            </li>`;
-        });
+        if (data.items && Array.isArray(data.items)) {
+            data.items.forEach(item => {
+                const contentSnippet = item.contentSnippet || ''; 
+                
+                output += `<li class="blog-item">
+                    <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
+                    <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
+                    <a href="${item.link}" target="_blank" class="read-more">Read More</a>
+                </li>`;
+            });
+        } else {
+            console.error('Error: Data items not found or malformed');
+            output = '<p>No posts available at the moment.</p>';
+        }
 
         output += '</ul>';
         blogContainer.innerHTML = output;
@@ -141,10 +111,11 @@
     }
 }
 
+
 // Fetch and display the RSS feed from PrivacyGuides
 async function fetchprivacyguidesFeed() {
     try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://www.privacyguides.org/articles/feed_rss_created.xml`;
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.privacyguides.org%2Farticles%2Ffeed_rss_created.xml&api_key=efngde8qbt0vx9rzitqmahve9bxz7izkrzeorzt3`;
         const response = await fetch(apiUrl);
         const data = await response.json();
 
@@ -179,48 +150,10 @@ function truncateContent(content, maxLength) {
     return content;
 }
 
-// Fetch and display the RSS feed from tuta
-async function fetchtutaFeed() {
-    try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://tuta.com/blog/feed.xml`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        const blogContainer = document.getElementById('tutaPosts');
-        let output = '<ul class="blog-list">';
-
-        data.items.forEach(item => {
-            console.log(item); // Log the whole item to see the structure and content
-            
-            // Fallback if contentSnippet is not available
-            const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
-
-            output += `<li class="blog-item">
-                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
-                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-            </li>`;
-        });
-
-        output += '</ul>';
-        blogContainer.innerHTML = output;
-    } catch (error) {
-        console.error('Error fetching tuta RSS feed:', error);
-    }
-}
-
-// Simple truncation function to limit the length of the content
-function truncateContent(content, maxLength) {
-    if (content.length > maxLength) {
-        return content.substring(0, maxLength) + '...';
-    }
-    return content;
-}
-
 // Fetch and display the RSS feed from proton
 async function fetchprotonFeed() {
     try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://proton.me/blog/feed`;
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fproton.me%2Fblog%2Ffeed&api_key=efngde8qbt0vx9rzitqmahve9bxz7izkrzeorzt3`;
         const response = await fetch(apiUrl);
         const data = await response.json();
 
@@ -258,7 +191,7 @@ function truncateContent(content, maxLength) {
 // Fetch and display the RSS feed from restoreprivacy
 async function fetchrestoreprivacyFeed() {
     try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://restoreprivacy.com/feed/`;
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Frestoreprivacy.com%2Ffeed%2F&api_key=efngde8qbt0vx9rzitqmahve9bxz7izkrzeorzt3`;
         const response = await fetch(apiUrl);
         const data = await response.json();
 
@@ -281,7 +214,7 @@ async function fetchrestoreprivacyFeed() {
         output += '</ul>';
         blogContainer.innerHTML = output;
     } catch (error) {
-        console.error('Error fetching proton restoreprivacy feed:', error);
+        console.error('Error fetching restoreprivacy feed:', error);
     }
 }
 
@@ -292,147 +225,21 @@ function truncateContent(content, maxLength) {
     }
     return content;
 }
-
-// Fetch and display the RSS feed from techcrunch
-async function fetchtechcrunchFeed() {
-    try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://techcrunch.com/category/privacy/feed/`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        const blogContainer = document.getElementById('techcrunchPosts');
-        let output = '<ul class="blog-list">';
-
-        data.items.forEach(item => {
-            console.log(item); // Log the whole item to see the structure and content
-            
-            // Fallback if contentSnippet is not available
-            const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
-
-            output += `<li class="blog-item">
-                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
-                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-            </li>`;
-        });
-
-        output += '</ul>';
-        blogContainer.innerHTML = output;
-    } catch (error) {
-        console.error('Error fetching proton techcrunch feed:', error);
-    }
-}
-
-// Simple truncation function to limit the length of the content
-function truncateContent(content, maxLength) {
-    if (content.length > maxLength) {
-        return content.substring(0, maxLength) + '...';
-    }
-    return content;
-}
-
-// Fetch and display the RSS feed from epic
-async function fetchepicFeed() {
-    try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://epic.org/feed/`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        const blogContainer = document.getElementById('epicPosts');
-        let output = '<ul class="blog-list">';
-
-        data.items.forEach(item => {
-            console.log(item); // Log the whole item to see the structure and content
-            
-            // Fallback if contentSnippet is not available
-            const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
-
-            output += `<li class="blog-item">
-                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
-                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-            </li>`;
-        });
-
-        output += '</ul>';
-        blogContainer.innerHTML = output;
-    } catch (error) {
-        console.error('Error fetching proton epic feed:', error);
-    }
-}
-
-// Simple truncation function to limit the length of the content
-function truncateContent(content, maxLength) {
-    if (content.length > maxLength) {
-        return content.substring(0, maxLength) + '...';
-    }
-    return content;
-}
-
-// Fetch and display the RSS feed from theguardian
-async function fetchtheguardianFeed() {
-    try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://www.theguardian.com/technology/data-protection/rss`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        const blogContainer = document.getElementById('theguardianPosts');
-        let output = '<ul class="blog-list">';
-
-        if (data.items.length === 0) {
-            output = '<p>No articles available at the moment.</p>';
-        } else {
-            data.items.forEach(item => {
-                const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
-                output += `<li class="blog-item">
-                    <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                    <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
-                    <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-                </li>`;
-            });
-        }
-
-        output += '</ul>';
-        blogContainer.innerHTML = output;
-    } catch (error) {
-        console.error('Error fetching proton epic feed:', error);
-    }
-}
-
-function truncateContent(content, maxLength) {
-    const textContent = content.replace(/<\/?[^>]+(>|$)/g, ""); // Remove HTML tags
-    if (textContent.length > maxLength) {
-        return textContent.substring(0, maxLength) + '...';
-    }
-    return textContent;
-}
-
-
 
         // Call the functions to fetch and display the feeds
-        fetchStationXFeed();
         fetchEFFFeed();
         fetchTorFeed();
         fetchprivacyguidesFeed();
-        fetchtutaFeed();
         fetchprotonFeed();
         fetchrestoreprivacyFeed();
-        fetchtheguardianFeed();
-        fetchtechcrunchFeed();
-        fetchepicFeed();
 
         // Update every hour (3600000 h)
         setInterval(() => {
-            fetchStationXFeed();
             fetchEFFFeed();
             fetchTorFeed();
             fetchprivacyguidesFeed();
-            fetchtutaFeed();
             fetchprotonFeed();
             fetchrestoreprivacyFeed();
-            fetchtheguardianFeed();
-            fetchtechcrunchFeed();
-            fetchepicFeed();
         }, 3600000);
     </script>
 </body>
