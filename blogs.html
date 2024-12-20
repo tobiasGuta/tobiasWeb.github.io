@@ -30,6 +30,9 @@
 
         <h2>Latest Posts from Tor</h2>
         <div id="torPosts"></div>
+
+        <h2>Latest Posts from privacyguidesPosts</h2>
+        <div id="privacyguidesPosts"></div>
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/rss-parser@3.0.0/dist/rss-parser.min.js"></script>
@@ -55,7 +58,6 @@
                 feed.items.forEach(item => {
                     output += `<li class="blog-item">
                         <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                        <small class="blog-date">${item.pubDate}</small>
                         <p class="blog-snippet">${truncateContent(item.contentSnippet, 200)}</p>
                         <a href="${item.link}" target="_blank" class="read-more">Read More</a>
                     </li>`;
@@ -77,7 +79,6 @@
                 feed.items.forEach(item => {
                     output += `<li class="blog-item">
                         <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                        <small class="blog-date">${item.pubDate}</small>
                         <p class="blog-snippet">${truncateContent(item.contentSnippet, 200)}</p>
                         <a href="${item.link}" target="_blank" class="read-more">Read More</a>
                     </li>`;
@@ -89,6 +90,7 @@
             }
         }
 
+        // Fetch and display the RSS feed from Tor
         async function fetchTorFeed() {
     try {
         const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://blog.torproject.org/feed`;
@@ -98,14 +100,13 @@
         const blogContainer = document.getElementById('torPosts');
         let output = '<ul class="blog-list">';
 
-        // Itera sobre los items del feed
+       
         data.items.forEach(item => {
-            // Verifica si 'contentSnippet' está presente
-            const contentSnippet = item.contentSnippet || ''; // Si no está presente, usa una cadena vacía
+            
+            const contentSnippet = item.contentSnippet || ''; 
             
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <small class="blog-date">${item.pubDate}</small>
                 <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
                 <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
@@ -118,19 +119,57 @@
     }
 }
 
+// Fetch and display the RSS feed from PrivacyGuides
+async function fetchprivacyguidesFeed() {
+    try {
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://www.privacyguides.org/articles/feed_rss_created.xml`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
 
+        const blogContainer = document.getElementById('privacyguidesPosts');
+        let output = '<ul class="blog-list">';
+
+        data.items.forEach(item => {
+            console.log(item); // Log the whole item to see the structure and content
+            
+            // Fallback if contentSnippet is not available
+            const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
+
+            output += `<li class="blog-item">
+                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
+                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
+                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
+            </li>`;
+        });
+
+        output += '</ul>';
+        blogContainer.innerHTML = output;
+    } catch (error) {
+        console.error('Error fetching privacyguides RSS feed:', error);
+    }
+}
+
+// Simple truncation function to limit the length of the content
+function truncateContent(content, maxLength) {
+    if (content.length > maxLength) {
+        return content.substring(0, maxLength) + '...';
+    }
+    return content;
+}
 
 
         // Call the functions to fetch and display the feeds
         fetchStationXFeed();
         fetchEFFFeed();
         fetchTorFeed();
+        fetchprivacyguidesFeed();
 
         // Update every 10 minutes (600000 ms)
         setInterval(() => {
             fetchStationXFeed();
             fetchEFFFeed();
             fetchTorFeed();
+            fetchprivacyguidesFeed();
         }, 600000);
     </script>
 </body>
