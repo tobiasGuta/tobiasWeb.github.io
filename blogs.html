@@ -377,10 +377,6 @@ async function fetchtheguardianFeed() {
         const data = await response.json();
 
         const blogContainer = document.getElementById('theguardianPosts');
-        
-        // Show loading message
-        blogContainer.innerHTML = '<p>Loading...</p>';
-
         let output = '<ul class="blog-list">';
 
         if (data.items.length === 0) {
