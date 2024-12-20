@@ -33,6 +33,9 @@
 
         <h2>Latest Posts from privacyguidesPosts</h2>
         <div id="privacyguidesPosts"></div>
+
+        <h2>Latest Posts from tuta</h2>
+        <div id="tutaPosts"></div>
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/rss-parser@3.0.0/dist/rss-parser.min.js"></script>
@@ -157,12 +160,51 @@ function truncateContent(content, maxLength) {
     return content;
 }
 
+// Fetch and display the RSS feed from PrivacyGuides
+async function fetchtutaFeed() {
+    try {
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://tuta.com/blog/feed.xml`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        const blogContainer = document.getElementById('tutaPosts');
+        let output = '<ul class="blog-list">';
+
+        data.items.forEach(item => {
+            console.log(item); // Log the whole item to see the structure and content
+            
+            // Fallback if contentSnippet is not available
+            const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
+
+            output += `<li class="blog-item">
+                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
+                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
+                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
+            </li>`;
+        });
+
+        output += '</ul>';
+        blogContainer.innerHTML = output;
+    } catch (error) {
+        console.error('Error fetching tuta RSS feed:', error);
+    }
+}
+
+// Simple truncation function to limit the length of the content
+function truncateContent(content, maxLength) {
+    if (content.length > maxLength) {
+        return content.substring(0, maxLength) + '...';
+    }
+    return content;
+}
+
 
         // Call the functions to fetch and display the feeds
         fetchStationXFeed();
         fetchEFFFeed();
         fetchTorFeed();
         fetchprivacyguidesFeed();
+        fetchtutaFeed();
 
         // Update every 10 minutes (600000 ms)
         setInterval(() => {
@@ -170,6 +212,7 @@ function truncateContent(content, maxLength) {
             fetchEFFFeed();
             fetchTorFeed();
             fetchprivacyguidesFeed();
+            fetchtutaFeed();
         }, 600000);
     </script>
 </body>
