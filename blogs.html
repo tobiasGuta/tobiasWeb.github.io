@@ -7,6 +7,107 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" href="favicon-16x16.png" type="image/x-icon">
+    <style>
+        /* General container styling */
+.projects-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #44475A; /* Dark Slate Gray for the container */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow to make the container stand out */
+    color: #2AF7A5; /* Bright Teal for text inside the container */
+    display: flex;
+    flex-wrap: wrap; /* Allow the cards to wrap into rows */
+    justify-content: space-between; /* Distribute space evenly */
+    gap: 20px; /* Add gap between the cards */
+}
+
+/* Card styling for each post */
+.feed-item {
+    background-color: #44475A; /* Dark Slate Gray for the card */
+    border: 2px solid #000; /* Black border to define the card */
+    border-radius: 8px;
+    width: 300px; /* Fixed width for the card */
+    padding: 20px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+    color: #2AF7A5; /* Bright Teal for text inside each card */
+    box-sizing: border-box; /* Ensure padding and border don't affect the width */
+}
+
+.feed-item:hover {
+    transform: translateY(-10px); /* Slightly lift the card on hover */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+}
+
+/* Header styling inside each card */
+.feed-item .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.feed-item h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2AF7A5; /* Bright Teal color for the title */
+    margin: 0;
+}
+
+.feed-item .badge {
+    font-size: 14px;
+    color: #44475A; /* Dark Slate Gray for the badge text */
+    padding: 5px;
+    background-color: #2AF7A5; /* Bright Teal background for the badge */
+    border-radius: 5px;
+}
+
+/* Description styling inside each card */
+.feed-item p {
+    font-size: 16px;
+    color: #2AF7A5; /* Bright Teal color for the description */
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+/* Link to "Read more" */
+.feed-item a {
+    text-decoration: none;
+    color: #2AF7A5; /* Bright Teal color for the link */
+    font-weight: 500;
+    font-size: 16px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+/* Optional: Title for each section */
+h2 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2AF7A5; /* Bright Teal color for the section title */
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Adjust the feed container for specific sections */
+#stationXPosts,
+#effPosts,
+#torPosts,
+#privacyguidesPosts,
+#tutaPosts,
+#protonPosts,
+#restoreprivacyPosts,
+#theguardianPosts,
+#techcrunchPosts,
+#epicPosts {
+    display: flex;
+    flex-wrap: wrap; /* Allow posts to wrap */
+    gap: 20px; /* Space between posts */
+    justify-content: space-between; /* Distribute space evenly */
+}
+
+    </style>
 </head>
 <body>
     <div class="background-container">
@@ -56,388 +157,102 @@
         
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/rss-parser@3.0.0/dist/rss-parser.min.js"></script>
     <script>
-        // Initialize RSS parser
-        const parser = new RSSParser();
-
-        // Function to truncate content for snippets (e.g., show only 200 characters)
-        function truncateContent(content, maxLength = 200) {
-            if (content.length > maxLength) {
-                return content.substring(0, maxLength) + '...';
-            }
-            return content;
-        }
-
-        // Fetch and display the RSS feed from StationX
-        async function fetchStationXFeed() {
+        // Define feed URLs for each section
+        const feedUrls = {
+            "stationXPosts": "https://www.stationx.net/feed/",
+            "effPosts": "https://epic.org/feed/",
+            "torPosts": "https://blog.torproject.org/feed",
+            "privacyguidesPosts": "https://www.privacyguides.org/articles/feed_rss_created.xml",
+            "tutaPosts": "https://tuta.com/blog/feed.xml",
+            "protonPosts": "https://proton.me/blog/feed",
+            "restoreprivacyPosts": "https://restoreprivacy.com/feed/",
+            "theguardianPosts": "https://www.theguardian.com/technology/data-protection/rss",
+            "techcrunchPosts": "https://techcrunch.com/category/privacy/feed/",
+            "epicPosts": "https://epic.org/feed/",
+        };
+    
+        // Store latest feed title for each section to avoid duplicate notifications
+        let latestTitles = {};
+    
+        // Fetch and display RSS feeds for a specific section
+        async function fetchFeeds(sectionId, feedUrl) {
+            const feedContainer = document.getElementById(sectionId);
+            let latestTitle = latestTitles[sectionId] || ''; // Get the latest title for the section
+    
+            const allItems = [];
+            const seenTitles = new Set();
+    
             try {
-                const feed = await parser.parseURL('https://www.stationx.net/feed/');
-                const blogContainer = document.getElementById('stationXPosts');
-                
-                let output = '<ul class="blog-list">';
-                feed.items.forEach(item => {
-                    output += `<li class="blog-item">
-                        <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                        <p class="blog-snippet">${truncateContent(item.contentSnippet, 200)}</p>
-                        <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-                    </li>`;
-                });
-                output += '</ul>';
-                blogContainer.innerHTML = output;
+                const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`);
+                const data = await response.json();
+    
+                if (data.status === 'ok') {
+                    data.items.forEach(item => {
+                        if (!seenTitles.has(item.title)) {
+                            seenTitles.add(item.title);
+                            allItems.push(item);
+                        }
+                    });
+                }
             } catch (error) {
-                console.error('Error fetching StationX RSS feed:', error);
+                console.error('Error fetching feed:', feedUrl, error);
             }
-        }
-
-        // Fetch and display the RSS feed from EFF
-        async function fetchEFFFeed() {
-            try {
-                const feed = await parser.parseURL('https://www.eff.org/rss/updates.xml');
-                const blogContainer = document.getElementById('effPosts');
-                
-                let output = '<ul class="blog-list">';
-                feed.items.forEach(item => {
-                    output += `<li class="blog-item">
-                        <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                        <p class="blog-snippet">${truncateContent(item.contentSnippet, 200)}</p>
-                        <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-                    </li>`;
-                });
-                output += '</ul>';
-                blogContainer.innerHTML = output;
-            } catch (error) {
-                console.error('Error fetching EFF RSS feed:', error);
+    
+            // Sort all items by publication date (newest first)
+            allItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+    
+            // Check for new posts and show a notification if necessary
+            if (allItems.length > 0 && allItems[0].title !== latestTitle) {
+                if (latestTitle) {
+                    showNotification(allItems[0].title); // Show notification if a new post is found
+                }
+                latestTitles[sectionId] = allItems[0].title; // Update the latest post title for this section
             }
-        }
-
-        // Fetch and display the RSS feed from Tor
-        async function fetchTorFeed() {
-    try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://blog.torproject.org/feed`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        const blogContainer = document.getElementById('torPosts');
-        let output = '<ul class="blog-list">';
-
-       
-        data.items.forEach(item => {
-            
-            const contentSnippet = item.contentSnippet || ''; 
-            
-            output += `<li class="blog-item">
-                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
-                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-            </li>`;
-        });
-
-        output += '</ul>';
-        blogContainer.innerHTML = output;
-    } catch (error) {
-        console.error('Error fetching Tor RSS feed:', error);
-    }
-}
-
-// Fetch and display the RSS feed from PrivacyGuides
-async function fetchprivacyguidesFeed() {
-    try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://www.privacyguides.org/articles/feed_rss_created.xml`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        const blogContainer = document.getElementById('privacyguidesPosts');
-        let output = '<ul class="blog-list">';
-
-        data.items.forEach(item => {
-            console.log(item); // Log the whole item to see the structure and content
-            
-            // Fallback if contentSnippet is not available
-            const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
-
-            output += `<li class="blog-item">
-                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
-                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-            </li>`;
-        });
-
-        output += '</ul>';
-        blogContainer.innerHTML = output;
-    } catch (error) {
-        console.error('Error fetching privacyguides RSS feed:', error);
-    }
-}
-
-// Simple truncation function to limit the length of the content
-function truncateContent(content, maxLength) {
-    if (content.length > maxLength) {
-        return content.substring(0, maxLength) + '...';
-    }
-    return content;
-}
-
-// Fetch and display the RSS feed from tuta
-async function fetchtutaFeed() {
-    try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://tuta.com/blog/feed.xml`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        const blogContainer = document.getElementById('tutaPosts');
-        let output = '<ul class="blog-list">';
-
-        data.items.forEach(item => {
-            console.log(item); // Log the whole item to see the structure and content
-            
-            // Fallback if contentSnippet is not available
-            const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
-
-            output += `<li class="blog-item">
-                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
-                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-            </li>`;
-        });
-
-        output += '</ul>';
-        blogContainer.innerHTML = output;
-    } catch (error) {
-        console.error('Error fetching tuta RSS feed:', error);
-    }
-}
-
-// Simple truncation function to limit the length of the content
-function truncateContent(content, maxLength) {
-    if (content.length > maxLength) {
-        return content.substring(0, maxLength) + '...';
-    }
-    return content;
-}
-
-// Fetch and display the RSS feed from proton
-async function fetchprotonFeed() {
-    try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://proton.me/blog/feed`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        const blogContainer = document.getElementById('protonPosts');
-        let output = '<ul class="blog-list">';
-
-        data.items.forEach(item => {
-            console.log(item); // Log the whole item to see the structure and content
-            
-            // Fallback if contentSnippet is not available
-            const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
-
-            output += `<li class="blog-item">
-                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
-                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-            </li>`;
-        });
-
-        output += '</ul>';
-        blogContainer.innerHTML = output;
-    } catch (error) {
-        console.error('Error fetching proton RSS feed:', error);
-    }
-}
-
-// Simple truncation function to limit the length of the content
-function truncateContent(content, maxLength) {
-    if (content.length > maxLength) {
-        return content.substring(0, maxLength) + '...';
-    }
-    return content;
-}
-
-// Fetch and display the RSS feed from restoreprivacy
-async function fetchrestoreprivacyFeed() {
-    try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://restoreprivacy.com/feed/`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        const blogContainer = document.getElementById('restoreprivacyPosts');
-        let output = '<ul class="blog-list">';
-
-        data.items.forEach(item => {
-            console.log(item); // Log the whole item to see the structure and content
-            
-            // Fallback if contentSnippet is not available
-            const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
-
-            output += `<li class="blog-item">
-                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
-                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-            </li>`;
-        });
-
-        output += '</ul>';
-        blogContainer.innerHTML = output;
-    } catch (error) {
-        console.error('Error fetching proton restoreprivacy feed:', error);
-    }
-}
-
-// Simple truncation function to limit the length of the content
-function truncateContent(content, maxLength) {
-    if (content.length > maxLength) {
-        return content.substring(0, maxLength) + '...';
-    }
-    return content;
-}
-
-// Fetch and display the RSS feed from techcrunch
-async function fetchtechcrunchFeed() {
-    try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://techcrunch.com/category/privacy/feed/`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        const blogContainer = document.getElementById('techcrunchPosts');
-        let output = '<ul class="blog-list">';
-
-        data.items.forEach(item => {
-            console.log(item); // Log the whole item to see the structure and content
-            
-            // Fallback if contentSnippet is not available
-            const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
-
-            output += `<li class="blog-item">
-                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
-                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-            </li>`;
-        });
-
-        output += '</ul>';
-        blogContainer.innerHTML = output;
-    } catch (error) {
-        console.error('Error fetching proton techcrunch feed:', error);
-    }
-}
-
-// Simple truncation function to limit the length of the content
-function truncateContent(content, maxLength) {
-    if (content.length > maxLength) {
-        return content.substring(0, maxLength) + '...';
-    }
-    return content;
-}
-
-// Fetch and display the RSS feed from epic
-async function fetchepicFeed() {
-    try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://epic.org/feed/`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        const blogContainer = document.getElementById('epicPosts');
-        let output = '<ul class="blog-list">';
-
-        data.items.forEach(item => {
-            console.log(item); // Log the whole item to see the structure and content
-            
-            // Fallback if contentSnippet is not available
-            const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
-
-            output += `<li class="blog-item">
-                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
-                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-            </li>`;
-        });
-
-        output += '</ul>';
-        blogContainer.innerHTML = output;
-    } catch (error) {
-        console.error('Error fetching proton epic feed:', error);
-    }
-}
-
-// Simple truncation function to limit the length of the content
-function truncateContent(content, maxLength) {
-    if (content.length > maxLength) {
-        return content.substring(0, maxLength) + '...';
-    }
-    return content;
-}
-
-// Fetch and display the RSS feed from theguardian
-async function fetchtheguardianFeed() {
-    try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://www.theguardian.com/technology/data-protection/rss`;
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        const blogContainer = document.getElementById('theguardianPosts');
-        
-        // Show loading message
-        blogContainer.innerHTML = '<p>Loading...</p>';
-
-        let output = '<ul class="blog-list">';
-
-        if (data.items.length === 0) {
-            output = '<p>No articles available at the moment.</p>';
-        } else {
-            data.items.forEach(item => {
-                const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
-                output += `<li class="blog-item">
-                    <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                    <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
-                    <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-                </li>`;
+    
+            // Clear existing feed content
+            feedContainer.innerHTML = '';
+    
+            // Add feed items to the container
+            allItems.forEach(item => {
+                const feedItem = document.createElement('div');
+                feedItem.className = 'feed-item';
+                feedItem.innerHTML = `
+                    <div class="header">
+                        <h2><a href="${item.link}" target="_blank" class="blog-title">${item.title}</a></h2>
+                        <span class="badge">${item.pubDate}</span>
+                    </div>
+                    <p>${item.description.substring(0, 550)}...</p>
+                    <a href="${item.link}" target="_blank"><br>Read more</a>
+                `;
+                feedContainer.appendChild(feedItem);
             });
         }
-
-        output += '</ul>';
-        blogContainer.innerHTML = output;
-    } catch (error) {
-        console.error('Error fetching The Guardian feed:', error);
-        document.getElementById('theguardianPosts').innerHTML = '<p>Sorry, we could not load the feed. Please try again later.</p>';
-    }
-}
-
-function truncateContent(content, maxLength) {
-    const textContent = content.replace(/<\/?[^>]+(>|$)/g, ""); // Remove HTML tags
-    if (textContent.length > maxLength) {
-        return textContent.substring(0, maxLength) + '...';
-    }
-    return textContent;
-}
-
-
-
-        // Call the functions to fetch and display the feeds
-        fetchStationXFeed();
-        fetchEFFFeed();
-        fetchTorFeed();
-        fetchprivacyguidesFeed();
-        fetchtutaFeed();
-        fetchprotonFeed();
-        fetchrestoreprivacyFeed();
-        fetchtheguardianFeed();
-        fetchtechcrunchFeed();
-        fetchepicFeed();
-
-        // Update every 10 minutes (600000 ms)
-        setInterval(() => {
-            fetchStationXFeed();
-            fetchEFFFeed();
-            fetchTorFeed();
-            fetchprivacyguidesFeed();
-            fetchtutaFeed();
-            fetchprotonFeed();
-            fetchrestoreprivacyFeed();
-            fetchtheguardianFeed();
-            fetchtechcrunchFeed();
-            fetchepicFeed();
-        }, 600000);
+    
+        // Function to show a notification for new posts
+        function showNotification(postTitle) {
+            alert(`New post: ${postTitle}`);
+        }
+    
+        // Fetch feeds for all sections on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            for (let [sectionId, feedUrl] of Object.entries(feedUrls)) {
+                fetchFeeds(sectionId, feedUrl); // Fetch feeds for each section
+            }
+        });
+    
+        // Set interval for automatic refresh (every 10 minutes)
+        const refreshInterval = setInterval(() => {
+            for (let [sectionId, feedUrl] of Object.entries(feedUrls)) {
+                fetchFeeds(sectionId, feedUrl); // Re-fetch feeds periodically
+            }
+        }, 600000); // 10 minutes in milliseconds
+    
+        // Clear the interval when the page is unloaded (e.g., when the user leaves the page)
+        window.addEventListener('unload', () => {
+            clearInterval(refreshInterval);
+        });
     </script>
+    
 </body>
 </html>
