@@ -399,8 +399,7 @@ async function fetchtheguardianFeed() {
         output += '</ul>';
         blogContainer.innerHTML = output;
     } catch (error) {
-        console.error('Error fetching The Guardian feed:', error);
-        document.getElementById('theguardianPosts').innerHTML = '<p>Sorry, we could not load the feed. Please try again later.</p>';
+        console.error('Error fetching proton epic feed:', error);
     }
 }
 
