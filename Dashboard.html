@@ -360,6 +360,19 @@ function showNotification(title) {
     }
 }
 
+// Function to show notifications in the browser
+function showNotification(title) {
+    if (Notification.permission === 'granted') {
+        new Notification("New feed item", { body: title });
+    } else {
+        Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+                new Notification("New feed item", { body: title });
+            }
+        });
+    }
+}
+
 async function fetchFeeds() {
     const allItems = [];
     const seenTitles = new Set();
