@@ -1,799 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="favicon-16x16.png" type="image/x-icon">
-    <title>CTF Rooms</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>🛡️ Threat Intelligence Dashboard 🛡️</title>
+    <meta name="author" content="Gerard King">
+    <meta name="description" content="Cybersecurity Threat Intelligence Dashboard aggregating feeds from 108 sources, built for real-time monitoring and analysis.">
+    <meta name="keywords" content="Cybersecurity, Threat Intelligence, RSS Feeds, Execution Policy, PowerShell, Gerard King, Red Team, Security">
+    <meta name="theme-color" content="#1c1c1c">
+    <meta name="website" content="www.gerardking.dev">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        /* Background container for animated GIF */
-        .background-container {
-    position: fixed; /* Cover the entire viewport */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color:  #14161E; /* Dracula dark background */
-    color: #f8f8f2; /* Light text color for contrast */
-    font-family: 'Courier New', Courier, monospace; /* Monospace font for hacker aesthetic */
-    z-index: -1; /* Ensure it stays behind other content */
-}
+    <link rel="icon" href="favicon-16x16.png" type="image/x-icon"></link>
 
-h3 {
-  color: #50FA7B; /* Replace with your desired color */
-}
-
-strong {
-  color: red; /* Replace with your desired color */
-}
-
-        /* Main page styling */
-        body {
-            color: #F8F8F2;
-            font-family: 'Courier New', Courier, monospace;
-            margin: 0;
-            padding: 0;
-            background: rgba(0, 0, 0, 0.85);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            overflow-x: hidden; /* Hide horizontal overflow */
-            overflow-y: auto; /* Allow vertical scrolling */
-        }
-
-        /* Content styling */
-        .content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            margin-top: 60px;
-            width: 100%;
-        }
-
-        /* Glitch Text Effect */
-        .glitch-container {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            padding-top: 20px;
-        }
-
-        .glitch {
-            font-size: 2.5em;
-            color: #00ff00;
-            animation: glitch 1s infinite;
-            white-space: nowrap;
-            position: relative;
-        }
-
-        .glitch::before, .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            color: #ff00ff;
-            opacity: 0.8;
-            clip: rect(0, 900px, 0, 0);
-            animation: glitch 1s infinite;
-        }
-
-        .glitch::after {
-            color: #00ffff;
-            left: 2px;
-            animation: glitch 1.2s infinite;
-        }
-
-        @keyframes glitch {
-            0% { clip: rect(42px, 9999px, 44px, 0); transform: translate(0px, 0px); }
-            20% { clip: rect(0px, 9999px, 44px, 0); transform: translate(2px, -2px); }
-            40% { clip: rect(10px, 9999px, 38px, 0); transform: translate(-2px, 0px); }
-            60% { clip: rect(15px, 9999px, 44px, 0); transform: translate(0px, 2px); }
-            80% { clip: rect(30px, 9999px, 40px, 0); transform: translate(-1px, -1px); }
-            100% { clip: rect(20px, 9999px, 40px, 0); transform: translate(1px, 1px); }
-        }
-
-        /* Room Section Styling */
-        .room-section {
-            border: 1px solid #00ff00;
-            margin: 20px 0;
-            padding: 15px;
-            border-radius: 5px;
-            background-color: rgba(0, 0, 0, 0.7);
-            text-align: left;
-            transition: transform 0.3s ease-in-out, margin 0.3s ease;
-            width: 100%;
-            max-width: 800px; /* Constrain width for larger screens */
-        }
-
-        /* When room section is expanded */
-        .room-section.open {
-            transform: scale(1.05);
-            margin-bottom: 40px;
-        }
-
-        h2 {
-            font-size: 1.5em;
-            cursor: pointer;
-        }
-
-        h2:hover {
-            color: #F1FA8C;
-        }
-
-        /* Collapsible content */
-        .collapsible-content {
-            display: none;
-            padding-top: 10px;
-            position: relative;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        /* Fade-in animation */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Hacking themed Back Button */
-.back-button {
-    background-color: transparent; /* Transparent background */
-    color: white; /* White text by default */
-    border: none; /* No border initially */
-    padding: 12px 24px;
-    border-radius: 5px;
-    font-size: 1.2em;
-    cursor: pointer;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    outline: none; /* Remove the default outline (browser specific) */
-    transition: color 0.3s, box-shadow 0.3s; /* Smooth transition for color and shadow */
-}
-
-/* Normal link hover (for back button) */
-.back-button:hover {
-    color: #2AF7A5; /* Change text color to #2AF7A5 */
-    animation: pulse 1s infinite; /* Apply pulse effect */
-    box-shadow: 0 0 10px #2AF7A5, 0 0 20px #2AF7A5, 0 0 30px #2AF7A5; /* Glowing effect */
-    border: 2px solid #2AF7A5; /* Border appears only when hovering */
-}
-
-/* Pulse animation for hacker vibes */
-@keyframes pulse {
-    0% { 
-        transform: scale(1);
-        opacity: 1; 
-    }
-    50% { 
-        transform: scale(1.1); 
-        opacity: 0.8; 
-    }
-    100% { 
-        transform: scale(1); 
-        opacity: 1; 
-    }
-}
-
-/* Back Button Container */
-.back-button-container {
-    position: relative;
-    text-align: center;
-    margin-top: 130px; /* Keep the position as it was */
-}
-
-        /* Navigation links styling */
-        nav {
-            display: inline-block;
-            position: relative;
-        }
-
-        nav a {
-            margin: 5px;
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            border: 1px solid #00ff00;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-
-        nav a:hover {
-            background: #00ff00;
-            color: #1c1c1c;
-        }
-
-        /* Responsive styling for small screens (iPhone) */
-        @media only screen and (max-width: 600px) {
-            .glitch {
-                font-size: 2em;
-            }
-
-            .glitch-container {
-                padding-top: 10px;
-            }
-
-            h2 {
-                font-size: 1.2em;
-            }
-
-            .room-section {
-                padding: 10px;
-                width: 90%;
-                margin: 10px;
-            }
-
-            .back-button {
-                font-size: 1em;
-                margin-top: 70px;
-                padding: 8px 16px;
-            }
-
-            .back-button-container {
-                margin-top: 20px;
-            }
-
-            /* Ensure the back button stays centered */
-            .content {
-                margin-top: 70px;
-            }
-
-            .room-section h2 {
-                font-size: 1.2em;
-            }
-
-            .collapsible-content {
-                font-size: 0.9em;
-                padding: 8px;
-            }
-        }
-        .solution-button {
-            background-color: transparent;
-            color: #00ff00;
-            border: 2px solid #00ff00;
-            padding: 10px 20px;
-            margin-top: 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: color 0.4s, background-color 0.4s;
-            box-shadow: 0 0 5px #00ff00;
-        }
-
-        .solution-button:hover {
-            color: #1c1c1c;
-            background-color: #00ff00;
-            box-shadow: 0 0 10px #00ff00;
-        }
-        .terminal {
-      background-color: #1e1e1e; /* Dark terminal background */
-      color: #d4d4d4; /* Light text for contrast */
-      padding: 15px;
-      border-radius: 8px;
-      font-family: 'Courier New', Courier, monospace; /* Monospace font for terminal look */
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
-      overflow-x: auto; /* Handles long commands gracefully */
-    }
-    .prompt {
-      color: #00ff00; /* Green color for the terminal prompt */
-    }
-
-/* General table styling */
-table {
-      width: 100%; /* Full-width table */
-      margin: 20px auto;
-      border-collapse: collapse;
-      background-color: black;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Table header styling */
-    th {
-      background-color: #4CAF50;
-      color: white;
-      padding: 12px;
-      text-align: left;
-      font-size: 16px;
-    }
-
-    /* Table cell styling */
-    td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-      font-size: 14px;
-    }
-
-    /* Hover effect for rows */
-    tr:hover {
-      background-color: black;
-    }
-
-    /* Styling for the first row */
-    tr:first-child {
-      border-top: 2px solid #4CAF50;
-    }
-
-    /* Responsive design for small screens */
-    @media (max-width: 600px) {
-      table {
-        width: 100%; /* Full width */
-        font-size: 12px; /* Smaller text */
-        margin: 10px; /* Smaller margin */
-      }
-
-      th, td {
-        padding: 8px; /* Less padding */
-      }
-
-      th {
-        font-size: 14px;
-      }
-
-      td {
-        font-size: 12px;
-      }
-
-      /* Add horizontal scrolling for small screens */
-      .table-container {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on mobile */
-      }
-
-      table {
-        min-width: 600px; /* Prevent table from getting too small */
-      }
-    }
-
-    /* Media Query for very small screens */
-@media (max-width: 480px) {
-  .ide-terminal {
-    width: 100%; /* Take up full width on very small screens */
-    padding: 6px; /* Adjust padding further */
-  }
-
-  .ide-prompt {
-    font-size: 10px; /* Even smaller font size for very small screens */
-  }
-
-  .ide-code {
-    font-size: 10px; /* Even smaller font size for very small screens */
-    padding: 6px; /* Smaller padding */
-  }
-}
-
-    /* Base button styling */
-    .controls-wrapper {
-  display: flex;
-  flex-direction: column; /* Stack items vertically */
-  justify-content: center; /* Center the items horizontally */
-  align-items: center; /* Center the items vertically */
-  gap: 10px; /* Adds space between the items */
-  margin-top: 30px; /* Adjust this value to add gap from the top */
-  margin-bottom: 0px;
-}
-
-#toggle-read-aloud {
-  background-color: #111;
-  color: white;
-  font-family: 'Courier New', Courier, monospace;
-  border: 2px solid #2AF7A5;
-  padding: 3px 8px;
-  text-transform: uppercase;
-  font-size: 10px;
-  cursor: pointer;
-  outline: none;
-  position: relative;
-  transition: all 0.3s ease;
-  display: inline-block;
-  white-space: nowrap;
-  width: auto;
-  max-width: 150px;
-  flex-shrink: 0;
-}
-
-#toggle-read-aloud:hover {
-  background-color: #2AF7A5;
-  color: #111;
-  box-shadow: 0 0 8px 2px #2AF7A5;
-}
-
-#toggle-read-aloud:active {
-  transform: scale(0.95);
-}
-
-select, input[type="range"] {
-  background-color: #222;
-  color: white;
-  border: 2px solid #2AF7A5;
-  padding: 8px 15px;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 15px;
-  outline: none;
-  width: auto;
-  max-width: 150px;
-  display: inline-block;
-}
-
-select:focus, input[type="range"]:focus {
-  box-shadow: 0 0 5px 1px #2AF7A5;
-}
-
-/* IDE Terminal container */
-.ide-terminal {
-  background-color: #2d2d2d; /* Dark gray background */
-  color: #f8f8f2; /* Light text color */
-  font-family: 'Courier New', Courier, monospace;
-  padding: 10px;
-  border-radius: 8px; /* Smaller rounded corners */
-  width: 60%;
-  margin: 20px auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  overflow-x: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  border: 1px solid #444; /* Border for the container */
-}
-
-/* Prompt styling */
-.ide-prompt {
-  color: #32cd32; /* Terminal-like green */
-  font-weight: bold;
-  font-size: 14px; /* Smaller font size */
-}
-
-/* Code block styling */
-.ide-code {
-  font-size: 14px; /* Smaller font size for code */
-  line-height: 1.4; /* Adjusted line height */
-  white-space: pre-wrap; /* Preserve line breaks */
-  word-wrap: break-word; /* Wrap long lines */
-  background-color: #282828; /* Darker background for code */
-  padding: 10px; /* Smaller padding */
-  border-radius: 6px; /* Smaller rounded corners for code block */
-  border: 1px solid #444; /* Border for the code block */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  overflow-x: auto; /* Allow horizontal scrolling if the code overflows */
-}
-
-/* Simple color coding for syntax */
-.ide-code .keyword {
-  color: #ff79c6; /* Pinkish color for keywords */
-  font-weight: bold;
-}
-
-.ide-code .string {
-  color: #50fa7b; /* Light green color for strings */
-}
-
-.ide-code .number {
-  color: #f1fa8c; /* Light yellow color for numbers */
-}
-
-.ide-code .comment {
-  color: #6272a4; /* Light blue color for comments */
-}
-
-/* Media Query for smaller screens */
-@media (max-width: 768px) {
-  .ide-terminal {
-    width: 90%; /* Make the terminal container take up more width on smaller screens */
-    padding: 8px; /* Adjust padding to fit the smaller screen */
-  }
-
-  .ide-prompt {
-    font-size: 12px; /* Slightly smaller font size for prompt */
-  }
-
-  .ide-code {
-    font-size: 12px; /* Smaller font size for code */
-    padding: 8px; /* Smaller padding */
-  }
-}
-
-
-    </style>
-</head>
-<body>
-    <!-- Background Container -->
-    <div class="background-container"></div>
-
-    <!-- Glitch Heading -->
-    <div class="glitch-container">
-        <h1 class="glitch" data-text="CTF Rooms & Sec Tips">CTF Rooms & Sec Tips</h1>
+    <div class="feed-container" id="feedContainer">
+        <!-- RSS feed content will be dynamically loaded here -->
     </div>
 
-    <div class="back-button-container">
-        <button class="back-button" onclick="window.location.href='index.html'">
-            <i class="fas fa-home"></i> Intro
-        </button>
-    </div>
+        <script>
+        const feedContainer = document.getElementById('feedContainer');
+        const rssFeeds = [
+                "https://www.theguardian.com/technology/data-protection/rss",
+                "https://epic.org/feed/",
+                "https://techcrunch.com/category/privacy/feed/",
+                "https://restoreprivacy.com/feed/",
+                "https://proton.me/blog/feed",
+                "https://tuta.com/blog/feed.xml",
+                "https://www.privacyguides.org/articles/feed_rss_created.xml",
+                "https://blog.torproject.org/feed",
+                "https://www.stationx.net/feed/",
 
-    <!-- read aloud -->
-    <div class="controls-wrapper">
-      <button id="toggle-read-aloud" class="off" onclick="toggleReadAloud()">Toggle Read Aloud</button>
-      <select id="voiceSelect"></select>
-      <label for="pitch">Pitch: </label>
-      <input type="range" id="pitch" min="0" max="2" step="0.1" value="1">
-      <label for="rate">Rate: </label>
-      <input type="range" id="rate" min="0.5" max="2" step="0.1" value="1">
-    </div>
+        ];                
+
+        let latestTitle = ''; // To store the latest feed title
+
+        async function fetchFeeds() {
+            const allItems = [];
+            const seenTitles = new Set();
     
-
-    <!-- Content with Room Sections -->
-    <div class="content">
-
-<!-- Room 1 -->
-<div class="room-section">
-    <h2 onclick="toggleContent('room1')">Tryhackme: Summit 🚀</h2>
-    <div id="room1" class="collapsible-content">
-        <img src="summit.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-        <p><strong>Description:</strong> Can you chase a simulated adversary up the Pyramid of Pain until they finally back down?</p>
-        <p><strong>Challenge Approach:</strong> The tester will be attempting to execute malware samples on a simulated internal user workstation. At the same time, you will need to configure PicoSecure's security tools to detect and prevent the malware from executing.</p>
-        
-        <!-- Question 1 -->
-        <div class="question-section" style="margin-top: 60px;">
-            <p><strong>Question:</strong> What is the first flag you receive after successfully detecting sample1.exe?</p>
-        </div>
-
-        <div class="solution-section" id="solution-room1-q1" style="display: none;">
-            <p><strong>Info:</strong> We got this email from Sphinx. </p>
-            <img src="mail.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> First, we need to run a scan on the virus sample sampl1[.]exe to see what we can find.</p>
-            <img src="sample1.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> This virus doesn't do much damage, so we can block it by using its hash: MD5 cbda8ae000aa9cbe7c8b982bae006c2a</p>
-            <img src="hasblock.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-        </div>
-
-        <button class="solution-button" onclick="toggleSolution('room1-q1', event)">Show Solution</button>
-
-        <!-- New Question 2 -->
-        <div class="question-section" style="margin-top: 60px;">
-            <p><strong>Question:</strong> What is the second flag you receive after successfully detecting sample2.exe?</p>
-        </div>
-
-        <div class="solution-section" id="solution-room1-q2" style="display: none;">
-            <p><strong>Info:</strong> We got this email from Sphinx. </p>
-            <img src="sample2.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> First, we need to run a scan on the virus sample sampl2[.]exe to see what we can find.</p>
-            <img src="sample22.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> This virus does more things, such as networking activity like making GET requests to an IP and establishing connections.</p>
-            <img src="firewal.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> Let's set up a firewall rule to block any connection to a specific IP.</p>
-        </div>
-
-        <button class="solution-button" onclick="toggleSolution('room1-q2', event)">Show Solution</button>
-
-        <!-- New Question 3 -->
-        <div class="question-section" style="margin-top: 60px;">
-            <p><strong>Question:</strong> What is the third flag you receive after successfully detecting sample3.exe?</p>
-        </div>
-
-        <div class="solution-section" id="solution-room1-q3" style="display: none;">
-            <p><strong>Info:</strong> We got this email from Sphinx. </p>
-            <img src="mail3.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> First, we need to run a scan on the virus sample sampl3[.]exe to see what we can find.</p>
-            <img src="dnns.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> This virus also makes requests, but this time to specific domains instead of direct IP addresses. This method is advantageous for hackers because it helps them hide their true IP address, making it harder for security systems to trace the origin of the attack. By using domain names, attackers can also leverage techniques like Dynamic DNS or cloud-based services to further obscure their location.</p>
-            <img src="dnsrule.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> Let's set up a DNS rule to block any connection to this Domain, Creating a DNS rule to block a domain involves configuring your network or firewall to prevent any device on your network from resolving a specific domain to its associated IP address. When a device tries to access a domain, the DNS server translates the domain name into an IP address. By creating a DNS block rule, you're essentially telling the DNS server to deny the request to resolve that domain, making it impossible for the malware or malicious activity to reach its destination.</p>
-        </div>
-
-        <button class="solution-button" onclick="toggleSolution('room1-q3', event)">Show Solution</button>
-
-        <!-- New Question 4 -->
-        <div class="question-section" style="margin-top: 60px;">
-            <p><strong>Question:</strong> What is the fourth flag you receive after successfully detecting sample4.exe?</p>
-        </div>
-
-        <div class="solution-section" id="solution-room1-q4" style="display: none;">
-            <p><strong>Info:</strong> We got this email from Sphinx. </p>
-            <img src="email4.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> First, we need to run a scan on the virus sample sampl4[.]exe to see what we can find.</p>
-            <img src="registrac.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> This virus does even worse things, such as modifying the registry at Microsoft\Windows Defender\Real-Time Protection. This is the key for Windows Defender's Real-Time Protection. By tampering with it, the virus disables Windows Defender, preventing it from alerting the user to any malicious activity.</p>
-            <img src="sigmarule.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> Let's create a Sigma rule to detect this type of event, Sigma rules are a standardized, flexible way to define detection logic for various security events across different security platforms. They are designed to be platform-agnostic, meaning they can be used with any SIEM (Security Information and Event Management) system to identify suspicious activities.</p>
-        </div>
-
-        <button class="solution-button" onclick="toggleSolution('room1-q4', event)">Show Solution</button>
-        
-        <!-- New Question 5 -->
-        <div class="question-section" style="margin-top: 60px;">
-            <p><strong>Question:</strong> What is the fifth flag you receive after successfully detecting sample5.exe?</p>
-        </div>
-
-        <div class="solution-section" id="solution-room1-q5" style="display: none;">
-            <p><strong>Info:</strong> We got this email from Sphinx. He also provided a log file</p>
-            <img src="mail5.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <img src="logfile.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> First, we need to run a scan on the virus sample sampl5[.]exe to see what we can find.</p>
-            <img src="sample5.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> This virus is even worse because it makes a lot of POST requests to a specific IP. To avoid detection, it establishes a connection every 30 minutes and sends a request of size 97 bytes. It's like it's communicating with a C2 (Command and Control) server</p>
-            <img src="c2.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> Let's create a Sigma rule to detect and block any attempts to connect to this specific Command and Control (C2) server. Sigma rules allow us to define detection patterns for suspicious activities across different security platforms. In this case, the rule would be designed to identify any network traffic trying to establish a connection with the identified C2 server, and then block it to prevent the malware from communicating with its attacker. By implementing this rule, we can strengthen our defenses and prevent the malware from receiving further commands or exfiltrating data</p>
-        </div>
-
-        <button class="solution-button" onclick="toggleSolution('room1-q5', event)">Show Solution</button>
-
-        <!-- New Question 6 -->
-        <div class="question-section" style="margin-top: 60px;">
-            <p><strong>Question:</strong> What is the final flag you receive from Sphinx?</p>
-        </div>
-
-        <div class="solution-section" id="solution-room1-q6" style="display: none;">
-            <p><strong>Info:</strong> We got this email from Sphinx. He also provided a  Commands log file </p>
-            <img src="sample6.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <img src="commandlog.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> First, we need to run a scan on the virus sample sampl2[.]exe to see what we can find.</p>
-            <img src="comvir.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> This virus is running a series of commands on the infected system to gather important information. It collects system details and network configuration data, likely to be used for reconnaissance or further exploitation.</p>
-            <img src="sigmareco.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Solution:</strong> Let's create a Sigma rule to detect a specific string being run, in this case: %temp%\exfiltr8[.]log.</p>
-        </div>
-
-        <button class="solution-button" onclick="toggleSolution('room1-q6', event)">Show Solution</button>
-    </div>
-</div>      
-
-<!-- Room 2 -->
-<div class="room-section">
-    <h2 onclick="toggleContent('room2')">Tactical Detection 🛡️</h2>
-    <div id="room2" class="collapsible-content">
-        <img src="tacticaldetection.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-        <p><strong>Description:</strong> understand the mindset behind choosing a tactical approach in alerting and detecting threats, IOAs, IOCs, etc.</p>
-        <p><strong>Challenge Approach:</strong> the most efficient ways to bolster an organization's security posture by leveraging detection mechanisms and walking the user through setting them up tactically. This should serve as a baseline where the user will be able to learn the basics, implement them in their functions, and make them truly their own.</p>
-        <div class="question-section">
-            <p><strong>Setting up a Basic Tripwire</strong></p>
-        </div>
-
-        <div class="solution-section" id="solution-room2" style="display: none;">
-            <p><strong>Info:</strong> Open The local security policy application, then navigate to Security Settings → Local Policies → Audit Policy and Open the Audit object access policy.</p>
-            <img src="localapplication.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Info:</strong> Check the boxes next to Success and Failure, then click Apply and OK to ensure that all access attempts—whether successful or not—will be logged. Once you're done, you can close the Local Security Policy application.</p>
-            <img src="succandfai.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Info:</strong> After configuring the Local Security Policy, monitoring won’t start automatically. We need to specify which files or folders to track. To set this up, right-click on the desktop, choose New → Text Document, and name the file Secret Document.</p>
-            <img src="note.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Infor:</strong>  Then, right-click the file, select Properties → Security → Advanced → Auditing to set up monitoring for this document in our tripwire configuration</p>
-            <img src="properties.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Info:</strong> This is where we will create and specify an audit entry for our Secret Document. Click on Add → Select a principal.</p>
-            <img src="propertiesname.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Info:</strong> This pop-up allows us to specify which users or groups we want to be notified about when they access the Secret Document. While you can be very specific, for this example, we’ll keep it simple. In the text box, type "Everyone" and press Enter to monitor all users.</p>
-            <img src="propn.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <img src="donevery.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Info:</strong> The Principal should now show "Everyone," and the permissions will allow you to specify which actions to audit on the Secret Document. For a broader selection, click Show advanced permissions in the top-right corner. Once you're done, click OK, then Apply and OK on the Audit entry page, and finally, click OK on the Secret Document properties. If you're tracking multiple files, it’s recommended to organize them into folders for easier auditing. The setup is now complete, and auditing is active for the Secret Document. Any access attempts will be logged in the Security event log with Event ID 4663, which can be filtered and used to generate alerts, allowing analysts to quickly detect when a tripwire is triggered, thereby enhancing the organization's security.</p>
-            <img src="done.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Detecting:</strong> Now it's time to detect it.</p>
-            <p><strong>Info:</strong> Let's open this file using CMD.</p>
-            <img src="notcm.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Info:</strong> Now, let's use the FullEventLogView application to view the logs.</p>
-            <img src="loappl.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-            <p><strong>Lessons Learned:</strong> Applying tactical detection is important because it enables proactive monitoring of system activities and potential security threats in real-time. By auditing access to sensitive files, such as the Secret Document, and logging every interaction with them, you can quickly identify suspicious or unauthorized behavior. This helps in detecting potential security breaches early, enabling swift response and mitigation.</p>
-        </div>
-
-        <!-- Toggle Button for Solution -->
-        <button class="solution-button" onclick="toggleSolution('room2', event)">Show Solution</button>
-    </div>
-</div>
-
-<!-- Room from here to the botoom -->
-
-
-<script>
-    function toggleContent(room) {
-        var content = document.getElementById(room);
-        content.style.display = (content.style.display === 'none' || content.style.display === '') ? 'block' : 'none';
-    }
-
-    function toggleSolution(room, event) {
-        var solution = document.getElementById("solution-" + room);
-        var button = event.target;
-
-        if (solution.style.display === 'none' || solution.style.display === '') {
-            solution.style.display = 'block';
-            button.textContent = "Hide Solution";
-        } else {
-            solution.style.display = 'none';
-            button.textContent = "Show Solution";
+            const fetchPromises = rssFeeds.map(async (feed) => {
+                try {
+                    const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
+                    const data = await response.json();
+    
+                    if (data.status === 'ok') {
+                        data.items.forEach(item => {
+                            if (!seenTitles.has(item.title)) {
+                                seenTitles.add(item.title);
+                                allItems.push(item);
+                            }
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error fetching feed:', feed, error);
+                }
+            });
+    
+            await Promise.all(fetchPromises);
+    
+            // Sort all items by publication date (newest first)
+            allItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+    
+            // Check for updates
+            if (allItems.length > 0 && allItems[0].title !== latestTitle) {
+                if (latestTitle) { // Avoid pop-up on the first load
+                    showNotification(allItems[0].title);
+                }
+                latestTitle = allItems[0].title; // Update the latest title
+            }
+    
+            // Clear existing feed content
+            feedContainer.innerHTML = '';
+    
+            // Add feed items to the container
+            allItems.forEach(item => {
+                const feedItem = document.createElement('div');
+                feedItem.className = 'feed-item';
+                feedItem.innerHTML = `
+                    
+                    <div class="header">
+                        <h2><a href="${item.link}" target="_blank" class="blog-title">${item.title}</a></h2>
+                        <span class="badge">${item.pubDate}</span>
+                    </div>
+                    <p>${item.description.substring(0, 550)}...</p>
+                    <a href="${item.link}" target="_blank"><br>Read more</a>
+                `;
+    
+                feedContainer.appendChild(feedItem);
+            });
         }
-    }
-
-    // Read Aloud function
-    let readAloudEnabled = false; // Flag to track if Read Aloud is on
-    let toggleButton = document.getElementById('toggle-read-aloud');
-    let voiceSelect = document.getElementById('voiceSelect');
-    let pitch = document.getElementById('pitch');
-    let rate = document.getElementById('rate');
-    let voices = [];
-
-    // Populate voice options
-    function populateVoiceList() {
-        voices = speechSynthesis.getVoices();
-        voiceSelect.innerHTML = '';  // Clear existing options
-
-        voices.forEach((voice, index) => {
-            let option = document.createElement('option');
-            option.value = index;
-            option.textContent = `${voice.name} (${voice.lang})`;
-            voiceSelect.appendChild(option);
+    
+    
+        // Set interval for automatic refresh (every 10 minutes)
+        const refreshInterval = setInterval(fetchFeeds, 600000);
+    
+        // Fetch feeds on initial load and on every refresh interval
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchFeeds();
+        });
+    
+        // Clear the interval on unload (e.g., when the user leaves the page)
+        window.addEventListener('unload', () => {
+            clearInterval(refreshInterval);
         });
 
-        // Set the default voice to the first one in the list (if available)
-        if (voices.length > 0) {
-            voiceSelect.selectedIndex = 82;  // Set the default selection to the first voice
-        }
-    }
-
-    populateVoiceList();
-    if (speechSynthesis.onvoiceschanged !== undefined) {
-        speechSynthesis.onvoiceschanged = populateVoiceList;
-    }
-
-    // Function to toggle Read Aloud feature
-    function toggleReadAloud() {
-        readAloudEnabled = !readAloudEnabled;
-
-        if (readAloudEnabled) {
-            toggleButton.classList.add('on');  // Add the 'on' class for green and power-on icon
-            toggleButton.classList.remove('off'); // Remove 'off' class
-        } else {
-            toggleButton.classList.remove('on');  // Remove 'on' class for default appearance
-            toggleButton.classList.add('off'); // Add 'off' class for red and power-off icon
-        }
-    }
-
-    // Function to read selected text
-    function readSelectedText() {
-        const selectedText = window.getSelection().toString().trim();
-        if (selectedText) {
-            const speech = new SpeechSynthesisUtterance(selectedText);
-            speech.voice = voices[voiceSelect.value];  // Use selected voice
-            speech.pitch = pitch.value;
-            speech.rate = rate.value;
-            window.speechSynthesis.speak(speech);
-        }
-    }
-
-    // Automatically read text when selected if Read Aloud is enabled
-    document.addEventListener('mouseup', function() {
-        if (readAloudEnabled) {
-            readSelectedText();
-        }
-    });
-
-    // Optional: Allow keyboard selection trigger (e.g., Ctrl + C) to also trigger read aloud
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'c' && e.ctrlKey && readAloudEnabled) {
-            setTimeout(readSelectedText, 100); // Wait a bit before reading to allow selection
-        }
-    });
-
-    // Function to show content based on the URL hash (e.g., #room2)
-    function checkRoomInUrl() {
-        const hash = window.location.hash; // Get the current hash from the URL
-
-        // Check if the URL hash matches a room (e.g., "#room2")
-        const roomMatch = hash.substring(1); // Remove the '#' from the hash
-        if (roomMatch && document.getElementById(roomMatch)) {
-            toggleContent(roomMatch);  // Automatically show the room content if it matches
-        }
-    }
-
-    // Call this function when the page loads or when the hash changes
-    window.onload = function() {
-        checkRoomInUrl(); // Check the URL hash when the page loads
-    };
-
-    // Listen for changes in the URL hash (when the user navigates through hash fragments)
-    window.onhashchange = function() {
-        checkRoomInUrl();
-    };
-</script>
+    </script>
 
 </body>
+
 </html>
