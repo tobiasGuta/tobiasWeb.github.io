@@ -45,6 +45,14 @@
 
         <h2>Latest Posts from theguardian</h2>
         <div id="theguardianPosts"></div>
+
+        <h2>Latest Posts from techcrunch</h2>
+        <div id="techcrunchPosts"></div>
+        
+        <h2>Latest Posts from epic</h2>
+        <div id="epicPosts"></div>
+
+
         
     </section>
 
@@ -284,6 +292,83 @@ function truncateContent(content, maxLength) {
     return content;
 }
 
+// Fetch and display the RSS feed from techcrunch
+async function fetchtechcrunchFeed() {
+    try {
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://techcrunch.com/category/privacy/feed/`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        const blogContainer = document.getElementById('techcrunchPosts');
+        let output = '<ul class="blog-list">';
+
+        data.items.forEach(item => {
+            console.log(item); // Log the whole item to see the structure and content
+            
+            // Fallback if contentSnippet is not available
+            const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
+
+            output += `<li class="blog-item">
+                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
+                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
+                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
+            </li>`;
+        });
+
+        output += '</ul>';
+        blogContainer.innerHTML = output;
+    } catch (error) {
+        console.error('Error fetching proton techcrunch feed:', error);
+    }
+}
+
+// Simple truncation function to limit the length of the content
+function truncateContent(content, maxLength) {
+    if (content.length > maxLength) {
+        return content.substring(0, maxLength) + '...';
+    }
+    return content;
+}
+
+// Fetch and display the RSS feed from epic
+async function fetchepicFeed() {
+    try {
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://epic.org/feed/`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        const blogContainer = document.getElementById('epicPosts');
+        let output = '<ul class="blog-list">';
+
+        data.items.forEach(item => {
+            console.log(item); // Log the whole item to see the structure and content
+            
+            // Fallback if contentSnippet is not available
+            const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
+
+            output += `<li class="blog-item">
+                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
+                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
+                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
+            </li>`;
+        });
+
+        output += '</ul>';
+        blogContainer.innerHTML = output;
+    } catch (error) {
+        console.error('Error fetching proton epic feed:', error);
+    }
+}
+
+// Simple truncation function to limit the length of the content
+function truncateContent(content, maxLength) {
+    if (content.length > maxLength) {
+        return content.substring(0, maxLength) + '...';
+    }
+    return content;
+}
+
+// Fetch and display the RSS feed from theguardian
 async function fetchtheguardianFeed() {
     try {
         const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://www.theguardian.com/technology/data-protection/rss`;
@@ -328,7 +413,6 @@ function truncateContent(content, maxLength) {
 
 
 
-
         // Call the functions to fetch and display the feeds
         fetchStationXFeed();
         fetchEFFFeed();
@@ -338,6 +422,8 @@ function truncateContent(content, maxLength) {
         fetchprotonFeed();
         fetchrestoreprivacyFeed();
         fetchtheguardianFeed();
+        fetchtechcrunchFeed();
+        fetchepicFeed();
 
         // Update every 10 minutes (600000 ms)
         setInterval(() => {
@@ -349,6 +435,8 @@ function truncateContent(content, maxLength) {
             fetchprotonFeed();
             fetchrestoreprivacyFeed();
             fetchtheguardianFeed();
+            fetchtechcrunchFeed();
+            fetchepicFeed();
         }, 600000);
     </script>
 </body>
