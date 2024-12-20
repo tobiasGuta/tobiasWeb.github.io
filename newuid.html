@@ -342,84 +342,84 @@
             "https://www.volexity.com/blog/?feed=rss2",
 
         ];
-        
         let latestTitle = ''; // To store the latest feed title
 let feedItems = []; // Array to store feed items
 let itemsPerPage = 10; // Number of items to load initially
+let loading = false; // Prevent multiple triggers when scrolling
 
 // Function to show notifications in the browser
 function showNotification(title) {
-    if (Notification.permission === 'granted') {
+  if (Notification.permission === 'granted') {
+    new Notification("New feed item", { body: title });
+  } else {
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
         new Notification("New feed item", { body: title });
-    } else {
-        Notification.requestPermission().then(permission => {
-            if (permission === 'granted') {
-                new Notification("New feed item", { body: title });
-            }
-        });
-    }
+      }
+    });
+  }
 }
 
 async function fetchFeeds() {
-    const allItems = [];
-    const seenTitles = new Set();
+  const allItems = [];
+  const seenTitles = new Set();
 
-    const fetchPromises = rssFeeds.map(async (feed) => {
-        try {
-            const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
-            const data = await response.json();
+  const fetchPromises = rssFeeds.map(async (feed) => {
+    try {
+      const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`);
+      const data = await response.json();
 
-            if (data.status === 'ok') {
-                data.items.forEach(item => {
-                    if (!seenTitles.has(item.title)) {
-                        seenTitles.add(item.title);
-                        allItems.push(item);
-                    }
-                });
-            }
-        } catch (error) {
-            console.error('Error fetching feed:', feed, error);
-        }
-    });
-
-    await Promise.all(fetchPromises);
-
-    // Sort all items by publication date (newest first)
-    allItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-
-    // Check for updates
-    if (allItems.length > 0 && allItems[0].title !== latestTitle) {
-        if (latestTitle) { // Avoid pop-up on the first load
-            showNotification(allItems[0].title);
-        }
-        latestTitle = allItems[0].title; // Update the latest title
+      if (data.status === 'ok') {
+        data.items.forEach(item => {
+          if (!seenTitles.has(item.title)) {
+            seenTitles.add(item.title);
+            allItems.push(item);
+          }
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching feed:', feed, error);
     }
+  });
 
-    // Store all fetched feed items
-    feedItems = allItems;
+  await Promise.all(fetchPromises);
 
-    // Display the first set of feed items
-    renderFeedItems(0, itemsPerPage);
+  // Sort all items by publication date (newest first)
+  allItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
+  // Check for updates
+  if (allItems.length > 0 && allItems[0].title !== latestTitle) {
+    if (latestTitle) { // Avoid pop-up on the first load
+      showNotification(allItems[0].title);
+    }
+    latestTitle = allItems[0].title; // Update the latest title
+  }
+
+  // Store all fetched feed items
+  feedItems = allItems;
+
+  // Display the first set of feed items
+  renderFeedItems(0, itemsPerPage);
 }
 
 // Render a set of feed items (lazy load)
 function renderFeedItems(startIndex, count) {
-    const itemsToDisplay = feedItems.slice(startIndex, startIndex + count);
-    
-    // Append each item to the feed container
-    itemsToDisplay.forEach(item => {
-        const feedItem = document.createElement('div');
-        feedItem.className = 'feed-item';
-        feedItem.innerHTML = `            
-            <div class="header">
-                <h2><a href="${item.link}" target="_blank" class="blog-title">${item.title}</a></h2>
-                <span class="badge">${item.pubDate}</span>
-            </div>
-            <p>${item.description.substring(0, 550)}...</p>
-            <a href="${item.link}" target="_blank"><br>Read more</a>
-        `;
-        feedContainer.appendChild(feedItem);
-    });
+  const itemsToDisplay = feedItems.slice(startIndex, startIndex + count);
+
+  // Append each item to the feed container
+  itemsToDisplay.forEach(item => {
+    const feedItem = document.createElement('div');
+    feedItem.className = 'feed-item';
+    feedItem.innerHTML = `
+      <div class="header">
+        <h2><a href="${item.link}" target="_blank" class="blog-title">${item.title}</a></h2>
+        <span class="badge">${item.pubDate}</span>
+      </div>
+      <p>${item.description.substring(0, 550)}...</p>
+      <a href="${item.link}" target="_blank"><br>Read more</a>
+    `;
+    feedContainer.appendChild(feedItem);
+  });
 }
 
 // Set interval for automatic refresh (every hour)
@@ -427,45 +427,38 @@ const refreshInterval = setInterval(fetchFeeds, 3600000);
 
 // Fetch feeds on initial load and on every refresh interval
 document.addEventListener('DOMContentLoaded', () => {
-    fetchFeeds();
+  fetchFeeds();
 });
 
-// Lazy loading on scroll or touchmove (for mobile)
-let loading = false; // Prevent multiple triggers when scrolling
+// Lazy loading on scroll
+function checkIfLoadMore() {
+  // Calculate scroll position and viewport height
+  const scrollPosition = window.scrollY + window.innerHeight; // Current scroll position
+  const pageHeight = window.innerHeight; // Viewport height
 
-function onScrollOrTouchMove() {
+  // Trigger loading more items when user reaches the bottom (with a buffer)
+  if (scrollPosition >= pageHeight - 300) {
     if (loading) return; // Prevent multiple fetches if one is already in progress
 
-    const scrollPosition = window.scrollY + window.innerHeight; // Current scroll position
-    const pageHeight = document.documentElement.scrollHeight; // Total height of the page
-
-    // Trigger loading more items when user reaches the bottom (with a 200px buffer)
-    if (scrollPosition >= pageHeight - 200) {
-        loading = true; // Set loading to true to prevent duplicate fetches
-
-        // Load the next batch of feed items
-        const nextStartIndex = feedContainer.childElementCount;
-        
-        if (nextStartIndex < feedItems.length) {
-            renderFeedItems(nextStartIndex, itemsPerPage); // Render next set of items
-        }
-
-        // Allow fetching more items once the current batch is rendered
-        setTimeout(() => {
-            loading = false; // Reset loading state after a short delay
-        }, 500);
-    }
+    loading = true;
+    requestAnimationFrame(() => {
+      // Load the next batch of feed items
+      const nextStartIndex = feedContainer.childElementCount;
+      if (nextStartIndex < feedItems.length) {
+        renderFeedItems(nextStartIndex, itemsPerPage);
+      }
+      loading = false; // Reset loading state after rendering
+    });
+  }
 }
 
-// Listen for both scroll and touchmove events for better mobile support
-window.addEventListener('scroll', onScrollOrTouchMove);
-window.addEventListener('touchmove', onScrollOrTouchMove);
+// Listen for scroll events
+window.addEventListener('scroll', checkIfLoadMore);
 
 // Clear the interval on unload (e.g., when the user leaves the page)
 window.addEventListener('unload', () => {
-    clearInterval(refreshInterval);
+  clearInterval(refreshInterval);
 });
-
 
 </script>
 </body>
