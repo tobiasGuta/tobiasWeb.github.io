@@ -343,7 +343,7 @@
 
         ];
 
-        let latestTitle = ''; // To store the latest feed title
+let latestTitle = ''; // To store the latest feed title
 let feedItems = []; // Array to store feed items
 let itemsPerPage = 10; // Number of items to load initially
 
@@ -404,11 +404,9 @@ async function fetchFeeds() {
 
 // Render a set of feed items (lazy load)
 function renderFeedItems(startIndex, count) {
-    // Clear existing feed content
-    feedContainer.innerHTML = '';
-
     const itemsToDisplay = feedItems.slice(startIndex, startIndex + count);
-
+    
+    // Append each item to the feed container
     itemsToDisplay.forEach(item => {
         const feedItem = document.createElement('div');
         feedItem.className = 'feed-item';
@@ -433,15 +431,29 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Lazy loading on scroll
-window.addEventListener('scroll', () => {
-    const scrollPosition = window.scrollY + window.innerHeight;
-    const pageHeight = document.documentElement.scrollHeight;
+let loading = false; // Prevent multiple triggers when scrolling
 
-    // Trigger loading more items when user reaches the bottom
+window.addEventListener('scroll', () => {
+    if (loading) return; // Prevent multiple fetches if one is already in progress
+
+    const scrollPosition = window.scrollY + window.innerHeight; // Current scroll position
+    const pageHeight = document.documentElement.scrollHeight; // Total height of the page
+
+    // Trigger loading more items when user reaches the bottom (with a 200px buffer)
     if (scrollPosition >= pageHeight - 200) {
+        loading = true; // Set loading to true to prevent duplicate fetches
+
         // Load the next batch of feed items
         const nextStartIndex = feedContainer.childElementCount;
-        renderFeedItems(nextStartIndex, itemsPerPage);
+        
+        if (nextStartIndex < feedItems.length) {
+            renderFeedItems(nextStartIndex, itemsPerPage); // Render next set of items
+        }
+
+        // Allow fetching more items once the current batch is rendered
+        setTimeout(() => {
+            loading = false; // Reset loading state after a short delay
+        }, 500);
     }
 });
 
@@ -449,6 +461,7 @@ window.addEventListener('scroll', () => {
 window.addEventListener('unload', () => {
     clearInterval(refreshInterval);
 });
+
 
 </script>
 </body>
