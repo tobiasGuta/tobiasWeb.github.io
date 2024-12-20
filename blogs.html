@@ -421,7 +421,7 @@ function truncateContent(content, maxLength) {
         fetchtechcrunchFeed();
         fetchepicFeed();
 
-        // Update every 10 minutes (600000 ms)
+        // Update every hour (3600000 h)
         setInterval(() => {
             fetchStationXFeed();
             fetchEFFFeed();
@@ -433,7 +433,7 @@ function truncateContent(content, maxLength) {
             fetchtheguardianFeed();
             fetchtechcrunchFeed();
             fetchepicFeed();
-        }, 600000);
+        }, 3600000);
     </script>
 </body>
 </html>
