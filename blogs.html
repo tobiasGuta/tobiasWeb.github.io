@@ -176,26 +176,6 @@
             justify-content: center; /* Center the items */
         }
 
-        .blog-image {
-            width: 100%;                /* Make the image responsive */
-            height: auto;               /* Maintain the aspect ratio */
-            max-width: 200px;           /* Set a maximum width for the small image */
-            display: block;             /* Makes the image block level (no inline space) */
-            margin: 0 auto;             /* Center the image in the container */
-            border-radius: 8px;         /* Optional: Rounded corners */
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
-        }
-
-        .blog-post .blog-image {
-            width: 100%;                /* Image will take full width of its container */
-            height: auto;               /* Keep the aspect ratio intact */
-            max-width: 100%;            /* Allow the image to stretch to the full width */
-            display: block;             /* Block-level element */
-            margin: 20px 0;             /* Adds spacing above and below the image */
-            border-radius: 8px;         /* Optional: Rounded corners */
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Adds shadow for depth */
-        }
-
         .blog-list a {
             text-decoration: none;
         }
@@ -272,8 +252,8 @@
         <h2>Latest Posts from EFF</h2>
         <div id="effPosts"></div>
 
-        <h2>Latest Posts from Tor</h2>
-        <div id="torPosts"></div>
+        <h2>Latest Posts from theguardian</h2>
+        <div id="theguardianPosts"></div>
 
         <h2>Latest Posts from privacyguidesPosts</h2>
         <div id="privacyguidesPosts"></div>
@@ -334,15 +314,16 @@
     }
 }
 
-async function fetchTorFeed() {
+        // Fetch and display the RSS feed from theguardian
+async function fetchtheguardianFeed() {
     try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fblog.torproject.org%2Ffeed&api_key=efngde8qbt0vx9rzitqmahve9bxz7izkrzeorzt3`;
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.theguardian.com%2Fus%2Ftechnology%2Frss&api_key=efngde8qbt0vx9rzitqmahve9bxz7izkrzeorzt3`;
         const response = await fetch(apiUrl);
         const data = await response.json();
 
         console.log(data); // Log the entire response to check its structure
 
-        const blogContainer = document.getElementById('torPosts');
+        const blogContainer = document.getElementById('theguardianPosts');
         let output = '<ul class="blog-list">';
 
         data.items.forEach(item => {
@@ -357,24 +338,11 @@ async function fetchTorFeed() {
             // Extract a short content snippet
             const contentSnippet = item.contentSnippet || item.description || extractSnippet(item.content, 200);
 
-            // Look for an image in the RSS feed item (enclosure or media:content)
-            let imageUrl = '';
-            if (item.enclosure && item.enclosure[0] && item.enclosure[0].url) {
-                imageUrl = item.enclosure[0].url;
-            } else if (item.content && item.content.match(/<img[^>]+src=["']([^"']+)["']/)) {
-                const match = item.content.match(/<img[^>]+src=["']([^"']+)["']/);
-                imageUrl = match ? match[1] : '';
-            }
-
-            // If there's an image URL, add it to the output as a thumbnail in the list
-            const imageHtml = imageUrl ? `<img src="${imageUrl}" alt="${item.title}" class="blog-image" />` : '';
-
             output += `<li class="blog-item">
-                ${imageHtml} <!-- Small preview image -->
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-author">by: ${author}</p>
-                <p class="blog-date">Published on: ${pubDate}</p>
-                <p class="blog-snippet">${contentSnippet}</p>
+                <p class="blog-author">by: ${author}</p>  <!-- Add the author name -->
+                <p class="blog-date">Published on: ${pubDate}</p> <!-- Add the publication date -->
+                <p class="blog-snippet">${contentSnippet}</p> <!-- Add the content snippet -->
                 <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
@@ -382,13 +350,13 @@ async function fetchTorFeed() {
         output += '</ul>';
         blogContainer.innerHTML = output;
     } catch (error) {
-        console.error('Error fetching Tor RSS feed:', error);
+        console.error('Error fetching theguardian RSS feed:', error);
     }
 }
 
 // Helper function to format the publication date
 function formatDate(pubDate) {
-    const date = new Date(pubDate);
+    const date = new Date(pubDate); // Convert the pubDate to a Date object
     const options = { 
         year: 'numeric', 
         month: 'long', 
@@ -398,12 +366,15 @@ function formatDate(pubDate) {
         minute: '2-digit', 
         hour12: true 
     };
-    return date.toLocaleString('en-US', options);
+    return date.toLocaleString('en-US', options); // Format the date
 }
 
-// Helper function to extract a snippet from the content
+// Helper function to extract a snippet from the content (only the first 200 characters)
 function extractSnippet(content, maxLength) {
+    // Strip out HTML tags
     const text = content.replace(/<\/?[^>]+(>|$)/g, "").trim();
+    
+    // Return a truncated version of the content
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
 }
 
@@ -527,15 +498,14 @@ function truncateContent(content, maxLength) {
 
         // Call the functions to fetch and display the feeds
         fetchEFFFeed();
-        fetchTorFeed();
         fetchprivacyguidesFeed();
         fetchprotonFeed();
         fetchrestoreprivacyFeed();
+        fetchtheguardianFeed();
 
         // Update every hour (3600000 h)
         setInterval(() => {
             fetchEFFFeed();
-            fetchTorFeed();
             fetchprivacyguidesFeed();
             fetchprotonFeed();
             fetchrestoreprivacyFeed();
