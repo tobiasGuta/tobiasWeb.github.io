@@ -111,14 +111,14 @@ async function fetchTorFeed() {
             // Extract publication date and format it
             const pubDate = item.pubDate ? formatDate(item.pubDate) : 'No publication date';
 
-            // Check for a content snippet or description, if not available, use the first part of the content
+            // Extract a short content snippet
             const contentSnippet = item.contentSnippet || item.description || extractSnippet(item.content, 200);
 
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
                 <p class="blog-author">By: ${author}</p>  <!-- Add the author name -->
                 <p class="blog-date">Published on: ${pubDate}</p> <!-- Add the publication date -->
-                <p class="blog-snippet">${contentSnippet}</p>
+                <p class="blog-snippet">${contentSnippet}</p> <!-- Add the content snippet -->
                 <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
@@ -145,7 +145,7 @@ function formatDate(pubDate) {
     return date.toLocaleString('en-US', options); // Format the date
 }
 
-// Helper function to extract a snippet from the content
+// Helper function to extract a snippet from the content (only the first 200 characters)
 function extractSnippet(content, maxLength) {
     // Strip out HTML tags
     const text = content.replace(/<\/?[^>]+(>|$)/g, "").trim();
@@ -153,6 +153,7 @@ function extractSnippet(content, maxLength) {
     // Return a truncated version of the content
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
 }
+
 
 
 // Fetch and display the RSS feed from PrivacyGuides
