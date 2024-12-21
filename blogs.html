@@ -116,30 +116,6 @@
             justify-content: center;
         }
 
-        .feed-item {
-            display: flex;
-            flex-direction: column;
-            background-color: #1e1e2f;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #444;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
-            color: #e0e0e0;
-            width: 100%; /* Ensure the feed items take full width */
-            box-sizing: border-box; /* Include padding in width */
-            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation transition for hover */
-            }
-
-            .feed-item img {
-                width: 325px;
-                height: 110px;
-            }
-
-            .feed-item .header h2 {
-                font-size: 1em;
-            }
-
         /* Media Queries */
         @media (max-width: 768px) {
             .header-gif {
@@ -341,34 +317,38 @@
         // Fetch and display the RSS feed from Tor
 async function fetchTorFeed() {
     try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fblog.torproject.org%2Ffeed&api_key=myapikey`;
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fblog.torproject.org%2Ffeed&api_key=efngde8qbt0vx9rzitqmahve9bxz7izkrzeorzt3`;
         const response = await fetch(apiUrl);
         const data = await response.json();
 
         console.log(data); // Log the entire response to check its structure
 
         const blogContainer = document.getElementById('torPosts');
-        
-        // Clear the existing content (if any)
-        blogContainer.innerHTML = '';
+        let output = '<ul class="blog-list">';
 
-        // Loop through each item in the feed and display it
         data.items.forEach(item => {
-            // Create a container div for each feed item
-            const feedItem = document.createElement('div');
-            feedItem.className = 'feed-item';
-            feedItem.innerHTML = `
-                <div class="header">
-                    <h2><a href="${item.link}" target="_blank" class="blog-title">${item.title}</a></h2>
-                    <span class="badge">${formatDate(item.pubDate)}</span> <!-- Formatted pubDate -->
-                </div>
-                <p>${item.description ? item.description.substring(0, 550) + '...' : 'No description available'}</p>
-                <a href="${item.link}" target="_blank"><br>Read more</a>
-            `;
-            
-            // Append the feed item to the container
-            blogContainer.appendChild(feedItem);
+            console.log(item); // Log the whole item to see the structure and content
+
+            // Extract author name
+            const author = item.author ? item.author.name : 'Unknown Author';
+
+            // Extract publication date and format it
+            const pubDate = item.pubDate ? formatDate(item.pubDate) : 'No publication date';
+
+            // Truncate the description to 550 characters
+            const descriptionSnippet = item.description ? item.description.substring(0, 600) + '...' : 'No description available';
+
+            output += `<li class="blog-item">
+                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
+                <p class="blog-author">by: ${author}</p>  <!-- Add the author name -->
+                <p class="blog-date">Published on: ${pubDate}</p> <!-- Add the publication date -->
+                <p class="blog-snippet">${descriptionSnippet}</p> <!-- The short description -->
+                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
+            </li>`;
         });
+
+        output += '</ul>';
+        blogContainer.innerHTML = output;
     } catch (error) {
         console.error('Error fetching Tor RSS feed:', error);
     }
@@ -386,6 +366,14 @@ function formatDate(pubDate) {
     return date.toLocaleString('en-US', options); // Format the date
 }
 
+// Helper function to extract a snippet from the content (only the first 200 characters)
+function extractSnippet(content, maxLength) {
+    // Strip out HTML tags
+    const text = content.replace(/<\/?[^>]+(>|$)/g, "").trim();
+    
+    // Return a truncated version of the content
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+}
 
 
 
