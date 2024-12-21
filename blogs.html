@@ -177,14 +177,23 @@
         }
 
         .blog-image {
-            width: 100%;                /* Make the image responsive and fill the container */
-            height: auto;               /* Maintain the aspect ratio of the image */
-            max-width: 600px;           /* Limit the image width to a maximum (adjust as needed) */
-            display: block;             /* Ensure the image is block-level (removes any extra space below it) */
-            margin: 0 auto;             /* Center the image horizontally within the parent container */
-            border-radius: 8px;         /* Optional: Adds rounded corners to the image */
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow for depth */
-            object-fit: cover;          /* Ensure the image covers the area of its container, if it has a set size */
+            width: 100%;                /* Make the image responsive */
+            height: auto;               /* Maintain the aspect ratio */
+            max-width: 200px;           /* Set a maximum width for the small image */
+            display: block;             /* Makes the image block level (no inline space) */
+            margin: 0 auto;             /* Center the image in the container */
+            border-radius: 8px;         /* Optional: Rounded corners */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+        }
+
+        .blog-post .blog-image {
+            width: 100%;                /* Image will take full width of its container */
+            height: auto;               /* Keep the aspect ratio intact */
+            max-width: 100%;            /* Allow the image to stretch to the full width */
+            display: block;             /* Block-level element */
+            margin: 20px 0;             /* Adds spacing above and below the image */
+            border-radius: 8px;         /* Optional: Rounded corners */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Adds shadow for depth */
         }
 
         .blog-list a {
@@ -357,15 +366,15 @@ async function fetchTorFeed() {
                 imageUrl = match ? match[1] : '';
             }
 
-            // If there's an image URL, add it to the output
+            // If there's an image URL, add it to the output as a thumbnail in the list
             const imageHtml = imageUrl ? `<img src="${imageUrl}" alt="${item.title}" class="blog-image" />` : '';
 
             output += `<li class="blog-item">
-                ${imageHtml} <!-- Add image if available -->
+                ${imageHtml} <!-- Small preview image -->
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-author">by: ${author}</p>  <!-- Add the author name -->
-                <p class="blog-date">Published on: ${pubDate}</p> <!-- Add the publication date -->
-                <p class="blog-snippet">${contentSnippet}</p> <!-- Add the content snippet -->
+                <p class="blog-author">by: ${author}</p>
+                <p class="blog-date">Published on: ${pubDate}</p>
+                <p class="blog-snippet">${contentSnippet}</p>
                 <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
@@ -379,7 +388,7 @@ async function fetchTorFeed() {
 
 // Helper function to format the publication date
 function formatDate(pubDate) {
-    const date = new Date(pubDate); // Convert the pubDate to a Date object
+    const date = new Date(pubDate);
     const options = { 
         year: 'numeric', 
         month: 'long', 
@@ -389,17 +398,15 @@ function formatDate(pubDate) {
         minute: '2-digit', 
         hour12: true 
     };
-    return date.toLocaleString('en-US', options); // Format the date
+    return date.toLocaleString('en-US', options);
 }
 
-// Helper function to extract a snippet from the content (only the first 200 characters)
+// Helper function to extract a snippet from the content
 function extractSnippet(content, maxLength) {
-    // Strip out HTML tags
     const text = content.replace(/<\/?[^>]+(>|$)/g, "").trim();
-    
-    // Return a truncated version of the content
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
 }
+
 
 
 // Fetch and display the RSS feed from PrivacyGuides
