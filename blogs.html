@@ -326,15 +326,23 @@ async function fetchtheguardianFeed() {
         const blogContainer = document.getElementById('theguardianPosts');
         let output = '<ul class="blog-list">';
 
-            data.items.forEach(item => {
+        data.items.forEach(item => {
             console.log(item); // Log the whole item to see the structure and content
-            
-            // Fallback if contentSnippet is not available
-            const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
+
+            // Extract author name
+            const author = item.author ? item.author.name : 'Unknown Author';
+
+            // Extract publication date and format it
+            const pubDate = item.pubDate ? formatDate(item.pubDate) : 'No publication date';
+
+            // Extract a short content snippet
+            const contentSnippet = item.contentSnippet || item.description || extractSnippet(item.content, 100);
 
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
+                <p class="blog-author">by: ${author}</p>  <!-- Add the author name -->
+                <p class="blog-date">Published on: ${pubDate}</p> <!-- Add the publication date -->
+                <p class="blog-snippet">${contentSnippet}</p> <!-- Add the content snippet -->
                 <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
@@ -344,6 +352,27 @@ async function fetchtheguardianFeed() {
     } catch (error) {
         console.error('Error fetching theguardian RSS feed:', error);
     }
+}
+
+// Helper function to format the publication date
+function formatDate(pubDate) {
+    const date = new Date(pubDate); // Convert the pubDate to a Date object
+    const options = { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric', 
+        weekday: 'long', 
+    };
+    return date.toLocaleString('en-US', options); // Format the date
+}
+
+// Helper function to extract a snippet from the content (only the first 200 characters)
+function extractSnippet(content, maxLength) {
+    // Strip out HTML tags
+    const text = content.replace(/<\/?[^>]+(>|$)/g, "").trim();
+    
+    // Return a truncated version of the content
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
 }
 
 
