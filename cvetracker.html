@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <title>CVE Tracker</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #14161E;
+      color: #e0e0e0;
+      padding: 20px;
+      font-family: 'Press Start 2P', sans-serif !important; /* Force the custom font */
+    }
+
+    /* Title outside of the container */
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2AF7A5;
+    }
+
+    /* Flexbox layout for CVE items */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #1e1e2f;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Flexbox layout for CVE items */
+    .cve-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px; /* Space between cards */
+      justify-content: space-between; /* Distribute items evenly */
+    }
+
+    .cve-item {
+      background-color: #1e1e2f;
+      padding: 20px;
+      width: calc(33.333% - 20px); /* 3 items per row with some gap */
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .cve-item h3 a {
+      color: #ff3e3e; /* Set the color of the link to #ff3e3e */
+      text-decoration: none; /* Remove underline */
+    }
+
+    .cve-item p {
+      margin: 5px 0;
+    }
+
+    .pagination {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      background-color: #2AF7A5;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background-color: black;
+      cursor: not-allowed;
+    }
+
+    button:hover {
+      background-color: #2AF7A5;
+    }
+
+    /* Media Queries for smaller screens */
+    @media (max-width: 768px) {
+      .cve-item {
+        width: calc(50% - 20px); /* 2 items per row on medium screens */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .cve-item {
+        width: 100%; /* 1 item per row on small screens */
+      }
+    }
+
+    /* Center the intro button below the title */
+    .intro-btn-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .intro-btn {
+      background: transparent;
+      color: #fff;
+      border: 2px solid transparent;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 20px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .intro-btn i {
+      margin-right: 8px;
+    }
+
+    /* Normal link hover */
+    .intro-btn:hover {
+      color: #2AF7A5;
+      animation: pulse 1s infinite;
+      box-shadow: 0 0 10px #2AF7A5, 0 0 20px #2AF7A5, 0 0 30px #2AF7A5; /* Glowing effect */
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <h1>CVE Tracker</h1> <!-- Title outside the container -->
+
+  <!-- Intro Button centered -->
+  <div class="intro-btn-container">
+    <a href="index.html" class="intro-btn"><i class="fas fa-home"></i> Intro</a>
+  </div>
+
+  <div class="container">
+    <div class="cve-list" id="cve-list"></div>
+    <div class="pagination">
+      <button id="prev-button" onclick="prevPage()">Previous</button>
+      <button id="next-button" onclick="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <script>
+    let startIndex = 0;
+    const resultsPerPage = 10; // Number of CVEs per page
+
+    // Function to fetch and display CVEs
+    function fetchCVEs() {
+      fetch(`https://services.nvd.nist.gov/rest/json/cves/2.0?resultsPerPage=${resultsPerPage}&startIndex=${startIndex}`)
+        .then(response => response.json())
+        .then(data => {
+          const vulnerabilities = data.vulnerabilities;
+          let cveList = '';
+          vulnerabilities.forEach(vuln => {
+            // Check if CVSS Metric V2 exists for this CVE
+            const cvss = vuln.cve.metrics.cvssMetricV2 ? vuln.cve.metrics.cvssMetricV2[0] : null;
+            const exploitabilityScore = cvss ? cvss.exploitabilityScore : 'N/A';
+            const impactScore = cvss ? cvss.impactScore : 'N/A';
+            
+            cveList += `
+              <div class="cve-item">
+                <h3><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=${vuln.cve.id}" target="_blank">${vuln.cve.id}</a></h3>
+                <p><strong>Severity:</strong> ${vuln.cve.metrics.cvssMetricV2 ? vuln.cve.metrics.cvssMetricV2[0].baseSeverity : 'N/A'}</p>
+                <p><strong>Description:</strong> ${vuln.cve.descriptions[0].value}</p>
+                <p><strong>Exploitability Score:</strong> ${exploitabilityScore}</p>
+                <p><strong>Impact Score:</strong> ${impactScore}</p>
+              </div>
+            `;
+          });
+          document.getElementById('cve-list').innerHTML = cveList;
+
+          // Enable/disable pagination buttons based on available data
+          document.getElementById('prev-button').disabled = startIndex === 0;
+          document.getElementById('next-button').disabled = vulnerabilities.length < resultsPerPage;
+        })
+        .catch(error => console.log('Error fetching CVEs:', error));
+    }
+
+    // Call this function initially to load the first page
+    fetchCVEs();
+
+    // Function for the next page
+    function nextPage() {
+      startIndex += resultsPerPage;
+      fetchCVEs();
+    }
+
+    // Function for the previous page
+    function prevPage() {
+      if (startIndex > 0) {
+        startIndex -= resultsPerPage;
+        fetchCVEs();
+      }
+    }
+  </script>
+</body>
+</html>
