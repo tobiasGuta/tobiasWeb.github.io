@@ -290,6 +290,10 @@ async function fetchTorFeed() {
         const data = await response.json();
 
         console.log(data); // Log the entire response to check its structure
+        if (!data.items || data.items.length === 0) {
+            console.log('No items found in the feed.');
+            return;
+        }
 
         const blogContainer = document.getElementById('torPosts');
         let output = '<ul class="blog-list">';
@@ -303,16 +307,18 @@ async function fetchTorFeed() {
             // Extract publication date and format it
             const pubDate = item.pubDate ? formatDate(item.pubDate) : 'No publication date';
 
-            // Truncate the description to 550 characters
+            // Truncate the description to 600 characters
             const descriptionSnippet = item.description ? item.description.substring(0, 600) + '...' : 'No description available';
 
-            output += `<li class="blog-item">
-                <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-author">by: ${author}</p>  <!-- Add the author name -->
-                <p class="blog-date">Published on: ${pubDate}</p> <!-- Add the publication date -->
-                <p class="blog-snippet">${descriptionSnippet}</p> <!-- The short description -->
-                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
-            </li>`;
+            output += `
+                <li class="blog-item">
+                    <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
+                    <p class="blog-author">by: ${author}</p>
+                    <p class="blog-date">Published on: ${pubDate}</p>
+                    <p class="blog-snippet">${descriptionSnippet}</p>
+                    <a href="${item.link}" target="_blank" class="read-more">Read More</a>
+                </li>
+            `;
         });
 
         output += '</ul>';
@@ -333,17 +339,6 @@ function formatDate(pubDate) {
     };
     return date.toLocaleString('en-US', options); // Format the date
 }
-
-// Helper function to extract a snippet from the content (only the first 200 characters)
-function extractSnippet(content, maxLength) {
-    // Strip out HTML tags
-    const text = content.replace(/<\/?[^>]+(>|$)/g, "").trim();
-    
-    // Return a truncated version of the content
-    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
-}
-
-
 
 // Fetch and display the RSS feed from PrivacyGuides
 async function fetchprivacyguidesFeed() {
