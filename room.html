@@ -2789,7 +2789,7 @@ select:focus, input[type="range"]:focus {
   </div>
 </div>
 
-<!-- Room 3 -->
+<!-- Room 14 -->
 <div class="room-section">
   <h2 onclick="toggleContent('room14')">
     </i> Fundamentals of Generative AI <i class="fas fa-robot"></i>
@@ -2868,6 +2868,45 @@ select:focus, input[type="range"]:focus {
 
       <!-- Toggle Button for Solution -->
       <button class="solution-button" onclick="toggleSolution('room14', event)">Show Solution</button>
+  </div>
+</div>
+
+<!-- Room 15 -->
+<div class="room-section">
+  <h2 onclick="toggleContent('room15')">
+     PicoCtf: Web Exploitation (NoSql) <i class="fas fa-database"></i>
+</h2>
+  <div id="room15" class="collapsible-content">
+      <img src="nosqlpicoctf.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+      <p><strong>Description:</strong> NoSQL injection is a vulnerability where an attacker is able to interfere with the queries that an application makes to a NoSQL database. NoSQL injection may enable an attacker to:
+
+        - Bypass authentication or protection mechanisms.
+        - Extract or edit data.
+        - Cause a denial of service.
+        - Execute code on the server.
+        
+        NoSQL databases store and retrieve data in a format other than traditional SQL relational tables. They use a wide range of query languages instead of a universal standard like SQL, and have fewer relational constraints.</p>
+        
+      <p><strong>Challenge Approach:</strong> Can you try to get access to this website to get the flag?</p>
+
+      <div class="solution-section" id="solution-room15" style="display: none;">
+          <img src="nosqlpicoctflogin.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p><strong>Info:</strong> We have this login interface, but we need to bypass it. They also provided us with a file named server.js. Once inside this file, we can see information that we can use. For example, there is an email that we will use. We are interacting with a mongodb-memory-server.</p>
+          <img src="possicredentialspicoctf.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <img src="possfilterpicoctf.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p><strong>Info:</strong> We can also see that there is a filter for the email input and password input, which we will look into later.</p>
+          <img src="errorcredentialspicoctf.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p><strong>Info:</strong> Let's use this email. We don't know the password yet, so we are going to get an error first.</p>
+          <p>Let's explore possible payloads we can use for the password. Once we find one that works for the password input, I'll use this: {"$ne": null}.</p>
+          <p><strong>Description:</strong> When you use {"$ne": null} in a MongoDB query, you're asking the database to return documents where the field being queried does not have a value of null.</p>
+          <img src="burpsuitefapicoctf.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <img src="bypasslogipicoctf.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <p>Let's use Burp Suite for this. When we use {"$ne": null}, we get this error: {"success": false, "error": "password.startsWith is not a function"}. This is what I was talking about—the possible filter we saw in the image above, where the email starts or ends with { or }, and the same applies to the password. We need to bypass this by using \, like this: {\"$ne\": null}. As you can see, we were able to log in without a password and bypassed the login page. Now, for this challenge, the token key is the flag, which is encoded in base64. So, we decode it and get the flag.</p>
+          <img src="flagbase6picoctf.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        </div>
+
+      <!-- Toggle Button for Solution -->
+      <button class="solution-button" onclick="toggleSolution('room15', event)">Show Solution</button>
   </div>
 </div>
 
