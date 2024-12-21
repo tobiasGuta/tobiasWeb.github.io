@@ -163,57 +163,61 @@
   </div>
 
   <script>
-    let startIndex = 0;
-    const resultsPerPage = 10; // Number of CVEs per page
+let startIndex = 0;
+const resultsPerPage = 15; // Number of CVEs per page
 
-    // Function to fetch and display CVEs
-    function fetchCVEs() {
-      fetch(`https://services.nvd.nist.gov/rest/json/cves/2.0?resultsPerPage=${resultsPerPage}&startIndex=${startIndex}`)
-        .then(response => response.json())
-        .then(data => {
-          const vulnerabilities = data.vulnerabilities;
-          let cveList = '';
-          vulnerabilities.forEach(vuln => {
-            // Check if CVSS Metric V2 exists for this CVE
-            const cvss = vuln.cve.metrics.cvssMetricV2 ? vuln.cve.metrics.cvssMetricV2[0] : null;
-            const exploitabilityScore = cvss ? cvss.exploitabilityScore : 'N/A';
-            const impactScore = cvss ? cvss.impactScore : 'N/A';
-            
-            cveList += `
-              <div class="cve-item">
-                <h3><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=${vuln.cve.id}" target="_blank">${vuln.cve.id}</a></h3>
-                <p><strong>Severity:</strong> ${vuln.cve.metrics.cvssMetricV2 ? vuln.cve.metrics.cvssMetricV2[0].baseSeverity : 'N/A'}</p>
-                <p><strong>Description:</strong> ${vuln.cve.descriptions[0].value}</p>
-                <p><strong>Exploitability Score:</strong> ${exploitabilityScore}</p>
-                <p><strong>Impact Score:</strong> ${impactScore}</p>
-              </div>
-            `;
-          });
-          document.getElementById('cve-list').innerHTML = cveList;
+// Function to fetch and display CVEs
+function fetchCVEs() {
+  fetch(`https://services.nvd.nist.gov/rest/json/cves/2.0?resultsPerPage=${resultsPerPage}&startIndex=${startIndex}`)
+    .then(response => response.json())
+    .then(data => {
+      const vulnerabilities = data.vulnerabilities;
+      let cveList = '';
+      vulnerabilities.forEach(vuln => {
+        // Check if CVSS Metric V2 exists for this CVE
+        const cvss = vuln.cve.metrics.cvssMetricV2 ? vuln.cve.metrics.cvssMetricV2[0] : null;
+        const exploitabilityScore = cvss ? cvss.exploitabilityScore : 'N/A';
+        const impactScore = cvss ? cvss.impactScore : 'N/A';
+        
+        cveList += `
+          <div class="cve-item">
+            <h3><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=${vuln.cve.id}" target="_blank">${vuln.cve.id}</a></h3>
+            <p><strong>Severity:</strong> ${vuln.cve.metrics.cvssMetricV2 ? vuln.cve.metrics.cvssMetricV2[0].baseSeverity : 'N/A'}</p>
+            <p><strong>Description:</strong> ${vuln.cve.descriptions[0].value}</p>
+            <p><strong>Exploitability Score:</strong> ${exploitabilityScore}</p>
+            <p><strong>Impact Score:</strong> ${impactScore}</p>
+          </div>
+        `;
+      });
+      document.getElementById('cve-list').innerHTML = cveList;
 
-          // Enable/disable pagination buttons based on available data
-          document.getElementById('prev-button').disabled = startIndex === 0;
-          document.getElementById('next-button').disabled = vulnerabilities.length < resultsPerPage;
-        })
-        .catch(error => console.log('Error fetching CVEs:', error));
-    }
+      // Enable/disable pagination buttons based on available data
+      document.getElementById('prev-button').disabled = startIndex === 0;
+      document.getElementById('next-button').disabled = vulnerabilities.length < resultsPerPage;
+    })
+    .catch(error => console.log('Error fetching CVEs:', error));
+}
 
-    // Call this function initially to load the first page
+// Call this function initially to load the first page
+fetchCVEs();
+
+// Function for the next page
+function nextPage() {
+  startIndex += resultsPerPage;
+  fetchCVEs();
+}
+
+// Function for the previous page
+function prevPage() {
+  if (startIndex > 0) {
+    startIndex -= resultsPerPage;
     fetchCVEs();
+  }
+}
 
-    // Function for the next page
-    function nextPage() {
-      startIndex += resultsPerPage;
-      fetchCVEs();
-    }
+// Set an interval to refresh CVEs every hour (3600000 milliseconds = 1 hour)
+setInterval(fetchCVEs, 3600000); // Refresh every hour
 
-    // Function for the previous page
-    function prevPage() {
-      if (startIndex > 0) {
-        startIndex -= resultsPerPage;
-        fetchCVEs();
-      }
-    }
   </script>
 </body>
 </html>
