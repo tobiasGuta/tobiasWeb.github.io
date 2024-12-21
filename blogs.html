@@ -176,6 +176,17 @@
             justify-content: center; /* Center the items */
         }
 
+        .blog-image {
+            width: 100%;                /* Make the image responsive and fill the container */
+            height: auto;               /* Maintain the aspect ratio of the image */
+            max-width: 600px;           /* Limit the image width to a maximum (adjust as needed) */
+            display: block;             /* Ensure the image is block-level (removes any extra space below it) */
+            margin: 0 auto;             /* Center the image horizontally within the parent container */
+            border-radius: 8px;         /* Optional: Adds rounded corners to the image */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow for depth */
+            object-fit: cover;          /* Ensure the image covers the area of its container, if it has a set size */
+        }
+
         .blog-list a {
             text-decoration: none;
         }
@@ -314,7 +325,6 @@
     }
 }
 
-        // Fetch and display the RSS feed from Tor
 async function fetchTorFeed() {
     try {
         const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fblog.torproject.org%2Ffeed&api_key=efngde8qbt0vx9rzitqmahve9bxz7izkrzeorzt3`;
@@ -338,7 +348,20 @@ async function fetchTorFeed() {
             // Extract a short content snippet
             const contentSnippet = item.contentSnippet || item.description || extractSnippet(item.content, 200);
 
+            // Look for an image in the RSS feed item (enclosure or media:content)
+            let imageUrl = '';
+            if (item.enclosure && item.enclosure[0] && item.enclosure[0].url) {
+                imageUrl = item.enclosure[0].url;
+            } else if (item.content && item.content.match(/<img[^>]+src=["']([^"']+)["']/)) {
+                const match = item.content.match(/<img[^>]+src=["']([^"']+)["']/);
+                imageUrl = match ? match[1] : '';
+            }
+
+            // If there's an image URL, add it to the output
+            const imageHtml = imageUrl ? `<img src="${imageUrl}" alt="${item.title}" class="blog-image" />` : '';
+
             output += `<li class="blog-item">
+                ${imageHtml} <!-- Add image if available -->
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
                 <p class="blog-author">by: ${author}</p>  <!-- Add the author name -->
                 <p class="blog-date">Published on: ${pubDate}</p> <!-- Add the publication date -->
@@ -377,7 +400,6 @@ function extractSnippet(content, maxLength) {
     // Return a truncated version of the content
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
 }
-
 
 
 // Fetch and display the RSS feed from PrivacyGuides
