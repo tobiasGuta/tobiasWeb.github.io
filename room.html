@@ -2636,9 +2636,143 @@ select:focus, input[type="range"]:focus {
         <p>I would add the search field name to the row: <Strong>winlog.logon.type.keyword</Strong></p>
         <p><Strong>2:</Strong> What should you specify after user.name: in the KQL query to include failed logon attempt data where the username field contains the keyword "admin" anywhere within it?</p>
         <p>I would add this KQL query: <strong>user.name: *admin*</strong></p>
+
+        <h3>Successful RDP Logon Related To Service Accounts</h3>
+        <p>Our goal is to develop a visualization that tracks successful RDP logins, specifically for service accounts. In typical corporate or real-world settings, service account credentials are not utilized for RDP logins,all service accounts on the environment start with svc-.</p>
+        <p>A prebaked dashboard should be visible. Let's click on the "pencil"/edit icon.</p>
+        <img src="editdasiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>To start building our first visualization, just click the "Create visualization" button.</p>
+        <img src="createnewvisualizasiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>When you begin creating your first visualization, a new window will open, presenting a range of options and settings for customization.</p>
+        <img src="newvisusiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>In this window, there are five key elements to focus on:</p>
+        <p><strong>1:</strong> We need a filter option to refine the data before generating a graph. Our objective is to visualize successful RDP logins that are specifically associated with service accounts. To achieve this, we can filter for event IDs corresponding to 4624 – "An account was successfully logged on." Additionally, we must consider the logon type, which should be RemoteInteractive (found in the winlog.logon.type field). The following images show how we can apply these filters.</p>
+        <img src="rdproomsiem.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <img src="Remoteinteractivesiem.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>This field specifies the data set (index) we plan to use. Typically, data from different infrastructure sources is stored in separate indices, such as network, Windows, Linux, etc. For this example, we will set the "Index pattern" to windows*.</p>
+        <p>The search bar allows us to verify the presence of a specific field in our data set, providing an additional method to ensure we are working with the correct data. In this case, we are focusing on the user.name.keyword field. By using the search bar, we can quickly check if this field is available and recognized within the chosen data set, confirming that we are accessing the right field and using accurate data.</p>
+        <img src="searchbarsiem.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>Finally, this drop-down menu lets us choose the type of visualization to create. The default option shown in the previous image is "Bar vertical stacked." Clicking on this button will display more available options (the image has been redacted as not all options fit on the screen). From this extended list, we can select the visualization type that best aligns with our needs and how we want to present the data.</p>
+        <img src="barverticalsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>We’ll begin by choosing the "Table" option. Once it’s selected, we can move on to click the "Rows" option. This step enables us to specify the particular data elements we want to display in the table view.</p>
+        <p>Let's configure the "Rows" settings as follows.</p>
+        <img src="editingrowinsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <img src="chaningcount.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>The last step is to add two additional "Rows" settings to the table: one to display the machine where the successful RDP logon took place and the other for the machine that initiated the successful logon. To achieve this, we will select the host.hostname.keyword field, which identifies the machine reporting the logon, and the related.ip.keyword field, which represents the IP address of the machine that initiated the logon attempt. This will allow us to show the relevant machines along with the count of successful logon attempts, as illustrated in the image.</p>
+        <img src="hostnamekesiem.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <img src="ipnamesiem.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>We aim to track successful RDP logins specifically associated with service accounts, with the understanding that all service account names in the environment begin with "svc-</p>
+        <img src="kqlsiem.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p><strong>Note:</strong> As you can see we don't use the .keyword field in KQL queries.</p>
+        <p>The table now displays four columns, each providing the following details:</p>
+        <ul>
+          <li>The service account responsible for the successful RDP logon event.</li>
+          <li>The machine where the logon attempt took place.</li>
+          <li>The IP address of the machine that initiated the logon attempt.</li>
+          <li>The count of occurrences of the event (based on the selected time period or the entire data set, depending on the settings).</li>
+        </ul>
+        <p>Afterward, click "Save and return," and you will see the newly created visualization added to the dashboard.</p>
+        <h3>Users Added Or Removed From A Local Group (Within A Specific Timeframe)</h3>
+        <p>Our goal is to develop a visualization that tracks changes to the local "Administrators" group, specifically focusing on user additions or removals, from March 5th, 2023, to the present.</p>
+        <p>The visualization will be based on the following Windows event logs:</p>
+        <ul>
+          <li><a href="https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=4732" target="_blank">4732: A member was added to a security-enabled local group</a></li>
+          <li><a href="https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=4733" target="_blank">4733: A member was removed from a security-enabled local group</a></li>
+        </ul>
+        <p>A prebaked dashboard should be visible. Let's click on the "pencil"/edit icon.</p>
+        <img src="editdasiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>To start building our first visualization, just click the "Create visualization" button.</p>
+        <img src="createnewvisualizasiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>When you begin creating your first visualization, a new window will open, presenting a range of options and settings for customization.</p>
+        <img src="newvisusiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>In this window, there are five key elements to focus on:</p>
+        <p>We have a filtering option that lets us refine the data before generating a graph. In this case, we aim to display changes involving user additions or removals from the local "Administrators" group. We can apply a filter to include only event IDs 4732 (member added to a security-enabled local group) and 4733 (member removed from a security-enabled local group). Additionally, we can filter the data further to focus specifically on these events where the local group in question is the "Administrators" group.</p>
+        <img src="eventcode.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <img src="eventcodeadminitartor.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>This field specifies the data set (index) we plan to use. Typically, data from different infrastructure sources is stored in separate indices, such as network, Windows, Linux, etc. For this example, we will set the "Index pattern" to windows*.</p>
+        <p>The search bar allows us to verify the presence of a specific field in our data set, providing an additional method to ensure we are working with the correct data. In this case, we are focusing on the user.name.keyword field. By using the search bar, we can quickly check if this field is available and recognized within the chosen data set, confirming that we are accessing the right field and using accurate data.</p>
+        <img src="searchbarsiem.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <img src="barverticalsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>We’ll begin by choosing the "Table" option. Once it’s selected, we can move on to click the "Rows" option. This step enables us to specify the particular data elements we want to display in the table view.</p>
+        <p>Let's configure the "Rows" settings as follows.</p>
+        <img src="editingrowinsiem.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <img src="chaningcount.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>The final step in enhancing the table is to add more "Rows" settings for a better understanding of the data:</p>
+        <ul>
+          <li>Which user was added or removed from the group? (using the winlog.event_data.MemberSid.keyword field)</li>
+          <li>To which group was the action performed? (ensuring it’s the "Administrators" group) (using the group.name.keyword field)</li>
+          <li>Was the user added or removed from the group? (using the event.action.keyword field)</li>
+          <li>On which machine did the action take place? (using the host.name.keyword field)</li>
+        </ul>
+        <img src="moremorerows.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>As mentioned earlier, our goal is to track user additions or removals from the local "Administrators" group over a defined period, from March 5th, 2023, to the present</p>
+        <p>We can refine the focus of our visualization in the following ways.</p>
+        <img src="moreoptionssiem.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <img src="customizetimerange.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <img src="cuztomizepaneltimerange.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <h2>What Is Alert Triaging?</h2>
+
+        <p>Alert triaging is a process performed by a Security Operations Center (SOC) analyst where security alerts from monitoring systems are assessed and prioritized. The objective is to determine the threat level and potential impact of these alerts on an organization’s systems and data. The analyst reviews and categorizes the alerts, enabling the organization to allocate resources efficiently and take appropriate action in response to security incidents.</p>
+
+        <p>A key part of alert triaging is escalation. This involves notifying higher-level teams or individuals, such as supervisors or incident response units, who are authorized to make decisions and lead the response efforts. The SOC analyst provides detailed insights about the alert, including its severity and impact, along with findings from the preliminary investigation. This helps decision-makers determine the best course of action, such as involving specialized teams or initiating broader incident response procedures.</p>
+
+        <p>Escalation ensures that critical alerts are promptly addressed and allows for effective coordination between teams. This enables the organization to respond efficiently and in a timely manner to potential threats, leveraging the expertise of those responsible for managing and mitigating more complex or high-level incidents.</p>
+
+        <h2>What Is The Ideal Triaging Process?</h2>
+
+        <ol>
+          <li><strong>Initial Alert Review:</strong>
+            <p>Analyze the alert’s details such as timestamps, source/destination IPs, affected systems, and the rule/signature that triggered the alert. Investigate related logs to understand the full context of the alert.</p>
+          </li>
+          
+          <li><strong>Alert Classification:</strong>
+            <p>Use the organization’s established system to classify the alert based on its severity, potential impact, and urgency.</p>
+          </li>
+          
+          <li><strong>Alert Correlation:</strong>
+            <p>Compare the alert with other similar events or incidents to identify patterns, connections, or possible indicators of compromise (IOCs). Use SIEM systems and threat intelligence to gather more relevant data and cross-check known attack methods.</p>
+          </li>
+          
+          <li><strong>Enrichment of Alert Data:</strong>
+            <p>Enhance the alert by gathering additional data such as network packet captures, memory dumps, or analyzing suspicious files. Use external tools, intelligence sources, or sandboxes for further investigation of suspicious files or IP addresses.</p>
+          </li>
+          
+          <li><strong>Risk Assessment:</strong>
+            <p>Evaluate the possible risk to the organization’s critical assets, data, or infrastructure, considering compliance requirements and the sensitivity of the affected systems. Assess how likely a successful attack could be and the chances of further escalation within the network.</p>
+          </li>
+          
+          <li><strong>Contextual Analysis:</strong>
+            <p>Take into account the context of the affected assets, their importance, and the type of data they handle. Review the security measures in place to determine if the alert indicates a failure in controls or an attempt to bypass security. Ensure compliance and regulatory standards are considered in the context of the alert.</p>
+          </li>
+          
+          <li><strong>Incident Response Planning:</strong>
+            <p>For significant alerts, begin an incident response plan by documenting key details, including systems impacted, behaviors, and any gathered intelligence. Assign roles and responsibilities within the incident response team and coordinate with other relevant departments.</p>
+          </li>
+          
+          <li><strong>Consultation with IT Operations:</strong>
+            <p>Engage with IT or other departments to gather further context or missing information. Discuss whether any ongoing activities or system changes could explain the alert, and gain insights on potential non-malicious causes.</p>
+          </li>
+          
+          <li><strong>Response Execution:</strong>
+            <p>Based on the assessment and consultation, determine the appropriate response. If the alert is found to be non-malicious, resolve the issue without escalation. If it remains a security concern, initiate the necessary response actions.</p>
+          </li>
+          
+          <li><strong>Escalation:</strong>
+            <p>Identify escalation triggers based on the organization's policies and the alert's severity. Triggers may include critical system compromise, ongoing attacks, sophisticated techniques, or insider threats. Follow the internal escalation procedure and notify the appropriate teams or management. In some situations, escalate to external entities, like CERTs or law enforcement, if required by legal or regulatory standards.</p>
+          </li>
+          
+          <li><strong>Continuous Monitoring:</strong>
+            <p>Keep monitoring the situation, ensuring there’s ongoing communication with escalated teams. Collaborate for a well-coordinated response to the ongoing incident.</p>
+          </li>
+          
+          <li><strong>De-escalation:</strong>
+            <p>Once the risk is mitigated and the incident is under control, assess whether de-escalation is necessary. Notify relevant stakeholders of the resolution, sharing a summary of actions, outcomes, and any lessons learned. Periodically review and update the triaging and escalation processes to keep them in line with emerging threats and changing organizational needs.</p>
+          </li>
+        </ol>
+
       </div>
 
-      <!-- Toggle Button for Solution -->
+      <!-- Toggle Button for Solution -->   
       <button class="solution-button" onclick="toggleSolution('room12', event)">Show Solution</button>
   </div>
 </div>
