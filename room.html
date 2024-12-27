@@ -3212,6 +3212,97 @@ select:focus, input[type="range"]:focus {
             <p><strong>8. Continuous Improvement:</strong> Threat hunting for Emotet is an ongoing process. The team reviews their methods and tools after each hunt, learning from the results to enhance future investigations. They incorporate new detection techniques, such as machine learning, or adjust hunting strategies based on lessons learned and emerging threat intelligence.</p>
 
             <p>Example: The team might improve their hunting capabilities by incorporating more advanced techniques, such as behavioral analysis or AI-driven detection tools, to identify Emotet's evolving tactics. They participate in training sessions and threat intelligence sharing communities to stay informed about the latest Emotet attack vectors and defensive measures.</p>
+            <p><strong>Cybersecurity and Threat Hunting Terminology</strong></p>
+
+            <p>Within the realm of cybersecurity and threat hunting, several important terms and concepts are foundational for understanding how threats are detected, analyzed, and mitigated. Below is an overview of some key terminology:</p>
+
+            <p><strong>Adversary:</strong> In the context of Cyber Threat Intelligence (CTI), an adversary refers to any unauthorized entity or individual targeting an organization with the intent to breach its defenses for purposes such as theft, disruption, espionage, or sabotage. These adversaries range from amateur hackers to sophisticated, state-backed operatives, each employing various tactics to achieve their objectives.</p>
+
+            <p>Adversaries can be categorized into groups like cybercriminals (motivated by financial gain), insiders (employees or contractors exploiting their access), hacktivists (motivated by ideological reasons), and nation-state actors (state-sponsored groups aiming for geopolitical advantages). The motivation, resources, and technical skill levels of each category can vary greatly.</p>
+
+            <p><strong>Advanced Persistent Threat (APT):</strong> APTs are typically attributed to organized, resource-rich adversaries, such as nation-state actors, who are capable of carrying out covert, prolonged attacks aimed at high-value targets, often for espionage or strategic advantage. These attacks can span long durations, and the threat actor remains hidden within the system for as long as necessary to accomplish their goals.</p>
+
+            <p>The term 'advanced' refers to the complex and often strategic nature of the attack, not necessarily the sophistication of the technology used. 'Persistent' highlights the prolonged, ongoing nature of the attack, wherein the adversary relentlessly pursues their objectives through a sustained campaign.</p>
+
+            <p><strong>Tactics, Techniques, and Procedures (TTPs):</strong> Borrowed from military terminology, TTPs represent the distinct patterns or "signatures" of an adversary’s operations.</p>
+
+            <ul>
+              <li><strong>Tactics:</strong> The overarching goals or strategic objectives of the adversary, describing the "why" behind their actions.</li>
+              <li><strong>Techniques:</strong> The methods used to achieve those goals. Techniques describe the "how" of the attack, offering insights into how the adversary typically exploits vulnerabilities or achieves their objectives.</li>
+              <li><strong>Procedures:</strong> The step-by-step actions taken to implement each technique. These procedures are the detailed "how-to" that guide the execution of an attack.</li>
+            </ul>
+
+            <p>Understanding the TTPs of an adversary helps in identifying patterns across different incidents, improving the ability to detect and respond to future attacks. TTPs are also critical in developing Indicators of Compromise (IoCs), which provide concrete data for identifying potential breaches.</p>
+
+            <p><strong>Indicator:</strong> In CTI, an indicator refers to any data point or pattern that signifies the presence of malicious activity. However, an indicator alone—such as an IP address or file hash—holds limited value without the context that explains its significance. Contextual information about the indicator is essential to understanding its role within the larger threat landscape and how it can be used to detect or block attacks.</p>
+
+            <p>Effective analysis of indicators allows defenders to correlate seemingly isolated data points and identify potential threats or ongoing campaigns. Indicators might include URLs, file names, registry keys, or IP addresses, but they become actionable when connected to the broader narrative of a cyberattack.</p>
+            <img src="datacontextindicator.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Threat:</strong> A threat is a multifaceted concept, consisting of three fundamental factors, intent, capability, and opportunity.</p>
+            <img src="capabilityintentopportunity.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p>Firstly, <strong>intent</strong> refers to the motivation behind an adversary's actions—why they are targeting your organization's infrastructure. The purpose could vary, such as achieving financial gain through cybercrime, engaging in corporate espionage, or disrupting business operations by targeting your key partnerships.</p>
+
+            <p>Secondly, <strong>capability</strong> pertains to the resources, skills, and tools available to adversaries, enabling them to successfully carry out their malicious activities. This includes their technical expertise and access to sufficient resources, whether in terms of finance, tools, or personnel, to maintain a sustained attack on your systems.</p>
+
+            <p>Lastly, <strong>opportunity</strong> involves the external or internal factors that create the right circumstances for an adversary to strike. This could include instances where attackers gain access to critical credentials, exploit software vulnerabilities, or take advantage of lapses in your organization's security posture.</p>
+
+            <p><strong>Campaign:</strong> A <strong>campaign</strong> refers to a series of cyber incidents that exhibit common characteristics, such as similar attack strategies or tools, and are believed to share similar objectives or target sets. These incidents are often identified through thorough investigation, and tracking these activities can provide valuable insight into the adversary’s objectives and methods.</p>
+
+            <p><strong>Indicators of Compromise (IOCs):</strong> <strong>IOCs</strong> are traces left by malicious activities or breaches that serve as clues to potential threats. These indicators can range from file hashes to IP addresses, URLs, or domain names associated with known attacks. Monitoring and analyzing IOCs allows security teams to detect threats faster and respond more effectively, ensuring timely defense measures are implemented against persistent threats.</p>
+
+            <p><strong>Pyramid of Pain:</strong> The <strong>Pyramid of Pain</strong> is a concept that illustrates the different levels of indicators in terms of how difficult they are for attackers to change and how useful they are in disrupting their activities. The idea was introduced by David Bianco to emphasize that the higher up you go in the pyramid, the more costly it becomes for adversaries to modify their tactics. The pyramid categorizes IOCs based on their impact—starting from easier-to-change indicators like file hashes to more complex indicators, such as TTPs, that force attackers to change their entire approach if detected.</p>
+            <img src="painpy.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Hash Values:</strong> Hash values are digital fingerprints of files generated by algorithms such as MD5, SHA-1, or SHA-256. These algorithms process an input (or 'message') to return a fixed-size string of bytes, which can be used to identify files like malware binaries. Even a small change, such as altering a single byte or character, results in a completely different hash value. This makes hash values easy to change, and therefore less reliable as indicators of compromise (IOCs).</p>
+
+            <p><strong>IP Addresses:</strong> IP addresses are unique identifiers for devices on a network, used to track the source of network traffic or potential attacks. However, adversaries may use IP spoofing, VPNs, proxies, or TOR networks to hide their true IP addresses, which makes IP addresses relatively easy to change and unreliable as IOCs.</p>
+
+            <p><strong>Domain Names:</strong> Domains are used to identify one or more IP addresses. For instance, the domain www.example.com may correspond to multiple IP addresses. Attackers often use domain generation algorithms (DGAs) to create numerous pseudo-random domain names to avoid detection. They may also utilize dynamic DNS services to quickly change the IP addresses associated with a domain, further complicating detection.</p>
+
+            <p><strong>Network/Host Artifacts:</strong></p>
+
+            <p><strong>Network Artifacts:</strong> These are residual traces left by an attacker's activity within the network. Examples include patterns in network traffic, unique packet headers, or unusual protocol usage, found in network logs, packet captures, netflow data, or DNS request logs. Network artifacts are harder for attackers to alter without impacting their stealth or the effectiveness of their operations.</p>
+
+            <p><strong>Host Artifacts:</strong> Host artifacts refer to remnants of malicious activity found on individual systems or endpoints. These could include entries in system logs, file systems, registry keys, running processes, or volatile memory. Examples include unusual registry entries, suspicious running processes, or unique file paths. These indicators are also challenging for adversaries to modify without revealing their presence or disrupting their attack operations.</p>
+
+            <p>Analyzing network and host artifacts provides valuable insights into an adversary's tools, techniques, and procedures (TTPs). However, due to their placement higher in the Pyramid of Pain, these indicators are harder to utilize for detection but are also more difficult for attackers to change or obfuscate.</p>
+
+            <p><strong>Tools:</strong> Tools refer to the software or utilities used by adversaries to carry out their attacks. This can include malware, exploits, scripts, or command-and-control (C2) frameworks. Identifying the tools used by adversaries can offer significant insights into their capabilities. However, sophisticated attackers often create custom tools or modify existing ones to evade detection.</p>
+
+            <p><strong>TTPs (Tactics, Techniques, and Procedures):</strong> TTPs represent the pinnacle of the Pyramid of Pain. They refer to the specific methods used by adversaries during their attacks. <strong>Tactics</strong> describe the overall objectives of an adversary, <strong>techniques</strong> detail the actions taken to achieve these objectives, and <strong>procedures</strong> outline the exact steps taken to implement the techniques. Identifying TTPs is the most valuable form of intelligence, as they offer the clearest insight into an adversary's operations. However, these are also the most difficult indicators for an adversary to alter without significant cost and effort. An example of TTPs could be the use of spear-phishing emails (tactic) to exploit a specific vulnerability (technique) and the specific steps used to exploit that vulnerability (procedure).</p>
+
+            <p><strong>Diamond Model:</strong> The Diamond Model of Intrusion Analysis is a conceptual framework created to help understand the key components of a cyber intrusion. Developed by Sergio Caltagirone, Andrew Pendergast, and Christopher Betz, this model aims to offer a structured approach to the analysis and response to cyber threats.</p>
+
+            <p>The model is centered around four crucial components, represented as the vertices of a diamond:</p>
+            <img src="diamong.PNG" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+            <p><strong>Adversary:</strong> This refers to the individual, group, or organization behind the cyber intrusion. Understanding their capabilities, motivations, and intent is key to defending against their attacks.</p>
+
+            <p><strong>Capability:</strong> This represents the tools, techniques, and procedures (TTPs) used by the adversary during the intrusion. These could include malware, exploits, and other malicious tools, along with the methods used to deploy them.</p>
+
+            <p><strong>Infrastructure:</strong> This encompasses the physical and virtual resources the adversary uses to carry out the intrusion. This includes servers, domain names, IP addresses, and network resources utilized for delivering malware, controlling compromised systems, or exfiltrating data.</p>
+
+            <p><strong>Victim:</strong> This refers to the target of the intrusion, which could be an individual, organization, or system. Understanding the victim's vulnerabilities, asset value, and potential exposure is crucial for effective defense.</p>
+
+            <p>These four components are interconnected by bidirectional arrows, symbolizing the dynamic relationships and interactions between them. For example, an adversary uses capabilities through infrastructure to target a victim. The Diamond Model helps capture these complex relationships and allows for the development of robust strategies for threat detection, mitigation, and prediction.</p>
+
+            <p>Compared to the Cyber Kill Chain model, the Diamond Model offers a more detailed perspective on the cyber intrusion ecosystem. While the Cyber Kill Chain emphasizes the stages of an attack (from reconnaissance to actions on objectives), the Diamond Model provides a broader view of the components involved in the intrusion and their interrelationships.</p>
+            <p><strong>Scenario: Ransomware Attack on a Healthcare Organization</strong></p>
+
+            <p>Consider a healthcare organization (Victim) targeted by a well-organized cybercriminal group (Adversary). The cybercriminal group uses a well-known ransomware strain (Capability) delivered via a compromised third-party software update (Infrastructure). Once the ransomware is executed, it encrypts sensitive patient data on the organization's servers, demanding a ransom for decryption keys.</p>
+
+            <p>In this scenario, the Diamond Model allows us to understand the relationships between the key components:</p>
+
+            <ul>
+                <li><strong>Adversary:</strong> The cybercriminal group behind the ransomware attack, whose goal is to extort money from the healthcare organization.</li>
+                <li><strong>Capability:</strong> The ransomware strain itself, which the adversary uses to encrypt data and demand payment.</li>
+                <li><strong>Infrastructure:</strong> The compromised third-party software update mechanism used to deliver the ransomware to the victim's network.</li>
+                <li><strong>Victim:</strong> The healthcare organization, which has sensitive patient data that is critical for its operations.</li>
+            </ul>
+
+            <p>By mapping out these components, the organization can gain insights into how the attack unfolded. They could strengthen their security posture by reviewing and securing third-party software update processes, detecting signs of the specific ransomware strain, and implementing robust data backup and recovery protocols to reduce the impact of future attacks.</p>
+
+            <p>This example highlights how each element of the Diamond Model helps an organization better understand the intrusion and create effective strategies to prevent, detect, and respond to such attacks.</p>
+
+
           </div>
 
       <!-- Toggle Button for Solution -->
