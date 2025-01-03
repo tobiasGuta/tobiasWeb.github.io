@@ -3390,6 +3390,47 @@ select:focus, input[type="range"]:focus {
   </div>
 </div>
 
+<!-- Room 17 -->
+<div class="room-section">
+  <h2 onclick="toggleContent('room17')">
+    </i> Networking <i class="fas fa-project-diagram"></i>
+  </h2>
+  <div id="room17" class="collapsible-content">
+      <img src="networking.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+      <p><strong>Description:</strong> Networking is essential because it forms the backbone of modern communication and technology. It enables devices to share data, resources, and services, allowing organizations and individuals to work efficiently. In cybersecurity, understanding networking is critical because many attacks exploit network vulnerabilities. Properly designed networks can improve performance, ensure reliability, and add layers of security to detect and prevent malicious activity. Networking skills are fundamental for diagnosing issues, maintaining systems, and defending against threats.</p>
+
+      <div class="solution-section" id="solution-room17" style="display: none;">
+        <p><strong>Understanding Networking Basics</strong></p>  
+
+        <p>A network enables computers to communicate with each other, but the way communication happens depends on several factors. These include:</p>  
+        <ul>  
+            <li><strong>Topology:</strong> The structure or layout of the network (e.g., mesh, tree, or star).</li>  
+            <li><strong>Connection type:</strong> The medium used (e.g., Ethernet, fiber optics, coaxial cable, or wireless).</li>  
+            <li><strong>Protocols:</strong> Rules for communication (e.g., TCP, UDP, or IPX).</li>  
+        </ul>  
+        
+        <p>For cybersecurity professionals, understanding networking is critical because network failures are often subtle. A "silent" failure might cause you to miss crucial security threats.</p>  
+        
+        <p>Setting up a large, flat network may be simple and operationally reliable, but it’s like locking your house door and assuming it’s secure. To improve security, networks should be divided into smaller segments, each with its own rules and protections. While attackers can move across networks ("pivoting"), segmenting makes this process slower and more detectable. Let’s break it down with a house analogy:</p>  
+        
+        <p><strong>Example 1: Fencing Off Property</strong></p>  
+        <p>Creating smaller network segments and applying Access Control Lists (ACLs) is like adding a fence around your property with designated entry and exit points. Yes, someone could climb over the fence, but this unusual behavior would stand out and raise an alert. Similarly, if a printer network suddenly starts communicating with servers over HTTP, it’s a clear sign of malicious activity.</p>  
+        
+        <p><strong>Example 2: Lighting Up the Property</strong></p>  
+        <p>Organizing and documenting your network is like installing outdoor lights on your property. This visibility makes it easier to detect suspicious activity, such as a printer network attempting to connect to the internet when it doesn’t need to.</p>  
+        
+        <p><strong>Example 3: Adding Deterrents</strong></p>  
+        <p>Adding deterrents like bushes under windows discourages people from sneaking in. In a network, tools like Intrusion Detection Systems (e.g., Suricata or Snort) serve as deterrents by identifying and flagging unauthorized activity, like a port scan originating from the printer network.</p>  
+        
+        <p>While these examples may seem like common sense, enforcing these protections on a flat network (e.g., a /24 subnet) can be difficult because devices share the same space and dynamically assigned IP addresses. Segmenting the network simplifies this process and strengthens security.</p>  
+        
+      </div>
+
+      <!-- Toggle Button for Solution -->
+      <button class="solution-button" onclick="toggleSolution('room17', event)">Show Solution</button>
+  </div>
+</div>
+
 <script>
   function toggleContent(room) {
       var content = document.getElementById(room);
