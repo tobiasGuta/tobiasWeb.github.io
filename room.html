@@ -3424,6 +3424,40 @@ select:focus, input[type="range"]:focus {
         
         <p>While these examples may seem like common sense, enforcing these protections on a flat network (e.g., a /24 subnet) can be difficult because devices share the same space and dynamically assigned IP addresses. Segmenting the network simplifies this process and strengthens security.</p>  
         
+        <p><strong>Understanding Network Types</strong></p>
+
+        <p>Networks come in various forms, and they can be categorized based on their size, structure, or purpose. To help classify them, we use specific terms and topologies. While some terms (like LAN and WAN) are commonly used, others are more academic and only appear in niche cases or exams. Let’s break down the most important ones:</p>
+
+        <p><strong>Common Network Types</strong></p>
+
+        <p><strong>Wide Area Network (WAN)</strong></p>
+        <p>A <strong>WAN</strong> connects multiple smaller networks (LANs) over large geographical areas, such as cities or countries. The Internet is the most familiar example of a WAN, but companies or governments may also use private WANs (e.g., Intranets). WANs typically use routing protocols like BGP and public IP addresses (non-RFC 1918 ranges).</p>
+
+        <p><strong>Local Area Network (LAN) and Wireless LAN (WLAN)</strong></p>
+        <p><strong>LANs</strong> are smaller networks within homes, offices, or schools that connect devices locally. A <strong>WLAN</strong> is simply a LAN that uses Wi-Fi for connectivity instead of physical cables. Both generally use private IP addresses (e.g., 10.0.0.0/8 or 192.168.0.0/16). The key difference is WLANs add wireless capabilities, which are convenient but require extra security considerations.</p>
+
+        <p><strong>Virtual Private Network (VPN)</strong></p>
+        <p>VPNs connect devices or networks securely, making it seem like they’re part of the same local network, even when physically apart. There are three main types:</p>
+        <ul>
+            <li><strong>Site-to-Site VPN:</strong> Connects entire networks (e.g., multiple offices) over the Internet.</li>
+            <li><strong>Remote Access VPN:</strong> Allows individual users to connect to a network as if they’re on-site. For example, Hack The Box uses OpenVPN to grant lab access.</li>
+            <li><strong>SSL VPN:</strong> Browser-based VPNs that allow access to apps or desktops without extra software.</li>
+        </ul>
+
+        <p><strong>Less Common (or "Book") Terms</strong></p>
+
+        <p><strong>Global Area Network (GAN)</strong></p>
+        <p>A <strong>GAN</strong> is a worldwide network that connects multiple WANs. The Internet is a well-known example, but global corporations may also create private GANs using undersea cables or satellite links.</p>
+
+        <p><strong>Metropolitan Area Network (MAN)</strong></p>
+        <p>A <strong>MAN</strong> connects multiple LANs in a city or region, often using high-speed fiber connections. Companies frequently use MANs to link nearby offices or branches.</p>
+
+        <p><strong>Personal Area Network (PAN) and Wireless PAN (WPAN)</strong></p>
+        <p><strong>PANs</strong> are small networks for connecting personal devices like phones, smartwatches, or laptops. <strong>WPANs</strong> are the wireless version, relying on technologies like Bluetooth. They’re great for short distances and are heavily used in smart homes and IoT setups.</p>
+
+        <p><strong>Why It Matters</strong></p>
+        <p>Understanding these network types is crucial for IT and cybersecurity professionals. Each type has unique uses, challenges, and vulnerabilities. Knowing the differences helps you design, secure, and troubleshoot networks effectively.</p>
+
       </div>
 
       <!-- Toggle Button for Solution -->
