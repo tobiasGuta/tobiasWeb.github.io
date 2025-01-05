@@ -425,76 +425,114 @@ select:focus, input[type="range"]:focus {
 
 /* IDE Terminal container */
 .ide-terminal {
-  background-color: #2d2d2d; /* Dark gray background */
-  color: #f8f8f2; /* Light text color */
-  font-family: 'Courier New', Courier, monospace;
-  padding: 10px;
-  border-radius: 8px; /* Smaller rounded corners */
-  width: 60%;
-  margin: 20px auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  overflow-x: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  border: 1px solid #444; /* Border for the container */
-}
+      background-color: #14161E; /* Dark background for the terminal */
+      color: #abb2bf; /* Light text */
+      border-radius: 8px;
+      padding: 20px;
+      width: 95%;
+      max-width: 800px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      font-size: 16px;
+      line-height: 1.6;
+      border: 1px solid #444c56; /* Light border for a subtle effect */
+    }
 
-/* Prompt styling */
-.ide-prompt {
-  color: #32cd32; /* Terminal-like green */
-  font-weight: bold;
-  font-size: 14px; /* Smaller font size */
-}
+    /* Style the prompt to look like an IDE */
+    .ide-prompt {
+      color: #56b6c2; /* Cyan color for prompt */
+      font-weight: bold;
+      display: inline;
+    }
 
-/* Code block styling */
-.ide-code {
-  font-size: 14px; /* Smaller font size for code */
-  line-height: 1.4; /* Adjusted line height */
-  white-space: pre-wrap; /* Preserve line breaks */
-  word-wrap: break-word; /* Wrap long lines */
-  background-color: #282828; /* Darker background for code */
-  padding: 10px; /* Smaller padding */
-  border-radius: 6px; /* Smaller rounded corners for code block */
-  border: 1px solid #444; /* Border for the code block */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  overflow-x: auto; /* Allow horizontal scrolling if the code overflows */
-}
+    /* Styling for the actual code content */
+    .ide-code {
+      display: block;
+      margin-top: 10px;
+      white-space: pre-wrap; /* Allow wrapping */
+      word-wrap: break-word;
+      font-size: 14px;
+    }
 
-/* Simple color coding for syntax */
-.ide-code .keyword {
-  color: #ff79c6; /* Pinkish color for keywords */
-  font-weight: bold;
-}
+    /* Style for keywords like 'ascii_values' and 'flag' */
+    .keyword {
+      color: #c678dd; /* Purple color for keywords */
+      font-weight: bold;
+    }
 
-.ide-code .string {
-  color: #50fa7b; /* Light green color for strings */
-}
+    /* Style for strings */
+    .string {
+      color: #98c379; /* Green color for strings */
+    }
 
-.ide-code .number {
-  color: #f1fa8c; /* Light yellow color for numbers */
-}
+    /* Style for numbers */
+    .number {
+      color: #d19a66; /* Orange color for numbers */
+    }
 
-.ide-code .comment {
-  color: #6272a4; /* Light blue color for comments */
-}
+    /* Style for comments */
+    .comment {
+      color: #7f848e; /* Gray color for comments */
+      font-style: italic;
+    }
 
-/* Media Query for smaller screens */
-@media (max-width: 768px) {
-  .ide-terminal {
-    width: 90%; /* Make the terminal container take up more width on smaller screens */
-    padding: 8px; /* Adjust padding to fit the smaller screen */
-  }
+    /* Add subtle syntax highlighting for the entire line */
+    .line {
+      margin-bottom: 8px;
+    }
 
-  .ide-prompt {
-    font-size: 12px; /* Slightly smaller font size for prompt */
-  }
+    /* Optional: Add a subtle blink effect for the cursor */
+    .ide-terminal::after {
+      content: '|';
+      display: inline-block;
+      animation: blink 1s step-end infinite;
+    }
 
-  .ide-code {
-    font-size: 12px; /* Smaller font size for code */
-    padding: 8px; /* Smaller padding */
-  }
-}
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 600px) {
+      .ide-terminal {
+        padding: 15px;
+        font-size: 14px;
+      }
+
+      .ide-code {
+        font-size: 12px; /* Smaller font size on mobile */
+      }
+
+      .ide-prompt {
+        font-size: 14px; /* Slightly smaller prompt on small screens */
+      }
+
+      /* Adjust margins and padding for smaller screens */
+      body {
+        padding: 5px;
+      }
+
+      .line {
+        margin-bottom: 5px; /* Reduce line spacing on smaller screens */
+      }
+    }
+
+    /* Larger devices (Desktop and tablets) */
+    @media screen and (min-width: 601px) {
+      .ide-terminal {
+        padding: 20px;
+        font-size: 16px;
+      }
+
+      .ide-code {
+        font-size: 14px;
+      }
+
+      .ide-prompt {
+        font-size: 16px;
+      }
+    }
 
 
     </style>
@@ -3554,6 +3592,38 @@ select:focus, input[type="range"]:focus {
 
       <!-- Toggle Button for Solution -->
       <button class="solution-button" onclick="toggleSolution('room17', event)">Show Solution</button>
+  </div>
+</div>
+
+<!-- Room 18 -->
+<div class="room-section">
+  <h2 onclick="toggleContent('room18')">CryptoHack</h2>
+  <div id="room18" class="collapsible-content">
+      <img src="cryptohack.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+      <p><strong>Description:</strong> CryptoHack is a hands on platform where you can learn cryptography by solving fun and challenging puzzles. It covers everything from simple ciphers to more complex encryption techniques, helping you understand both the basics and the more advanced concepts of cryptography. Whether you're just starting out or already have some experience, CryptoHack is a great way to build your skills, all while enjoying the process.</p>
+      <p><strong>Challenge Approach:</strong> Let's solve the Cryptohacks challenge.</p>
+
+
+      <div class="solution-section" id="solution-room18" style="display: none;">
+          <p><strong>Background: </strong> ASCII - is a 7-bit encoding standard which allows the representation of text using the integers 0-127.</p>
+          <p><strong>Challenge: </strong> Using the below integer array, convert the numbers to their corresponding ASCII characters to obtain a flag.</p>
+          <p>[99, 114, 121, 112, 116, 111, 123, 65, 83, 67, 73, 73, 95, 112, 114, 49, 110, 116, 52, 98, 108, 51, 125]</p>
+          <p><strong>Tip:</strong> In Python, the chr() function can be used to convert an ASCII ordinal number to a character (the ord() function does the opposite).</p>
+          <div class="ide-terminal">
+            <div class="ide-prompt">Python</div>
+            <div class="ide-code">
+              <span class="line"><span class="keyword">ascii_values =</span> [<span class="number">99</span>, <span class="number">114</span>, <span class="number">121</span>, <span class="number">112</span>, <span class="number">116</span>, <span class="number">111</span>, <span class="number">123</span>, <span class="number">65</span>, <span class="number">83</span>, <span class="number">67</span>, <span class="number">73</span>, <span class="number">73</span>, <span class="number">95</span>, <span class="number">112</span>, <span class="number">114</span>, <span class="number">49</span>, <span class="number">110</span>, <span class="number">116</span>, <span class="number">52</span>, <span class="number">98</span>, <span class="number">108</span>, <span class="number">51</span>, <span class="number">125</span>]</span><br>
+              <span class="comment"># This is the list of ASCII values</span><br>
+              <span class="line"><span class="keyword">flag =</span> ''.join([chr(value) for value in ascii_values])</span><br>
+              <span class="comment"># ''.join() Method, The join() method is used to combine (join) elements of an iterable (like a list or tuple) into a single string, ''.join() means we are joining the elements with an empty string as the separator, '' is the separator, meaning there will be no space or other character between the joined elements.</span><br>
+              <span class="line"><span class="keyword">print</span>(<span class="string">'This is your flag: ' + </span><span class="keyword"> flag</span>)</span><br>
+              <span class="comment"># Display the flag</span><br>
+            </div>
+          </div>
+      </div>
+
+      <!-- Toggle Button for Solution -->
+      <button class="solution-button" onclick="toggleSolution('room18', event)">Show Solution</button>
   </div>
 </div>
 
