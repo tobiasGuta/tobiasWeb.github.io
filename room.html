@@ -496,7 +496,7 @@ select:focus, input[type="range"]:focus {
     /* Responsive Design */
     @media screen and (max-width: 600px) {
       .ide-terminal {
-        padding: 15px;
+        padding: 9px;
         font-size: 14px;
       }
 
@@ -3617,6 +3617,25 @@ select:focus, input[type="range"]:focus {
               <span class="comment"># This is the list of ASCII values</span><br>
               <span class="line"><span class="keyword">flag =</span> ''.join([chr(value) for value in ascii_values])</span><br>
               <span class="comment"># ''.join() Method, The join() method is used to combine (join) elements of an iterable (like a list or tuple) into a single string, ''.join() means we are joining the elements with an empty string as the separator, '' is the separator, meaning there will be no space or other character between the joined elements.</span><br>
+              <span class="line"><span class="keyword">print</span>(<span class="string">'This is your flag: ' + </span><span class="keyword"> flag</span>)</span><br>
+              <span class="comment"># Display the flag</span><br>
+            </div>
+          </div>
+
+          <h3>Hex</h3>
+          <p><strong>Background: </strong> When we encrypt something the resulting ciphertext commonly has bytes which are not printable ASCII characters. If we want to share our encrypted data, it's common to encode it into something more user-friendly and portable across different systems.</p>
+          <p><strong>Challenge: </strong> Included below is a flag encoded as a hex string. Decode this back into bytes to get the flag.</p>
+          <p>63727970746f7b596f755f77696c6c5f62655f776f726b696e675f776974685f6865785......</p>
+          <p><strong>Tip:</strong> In Python, the bytes.fromhex() function can be used to convert hex to bytes. The .hex() instance method can be called on byte strings to get the hex representation.</p>
+          <div class="ide-terminal">
+            <div class="ide-prompt">Python</div>
+            <div class="ide-code">
+              <span class="line"><span class="keyword">hex_values =</span> "<span class="number">63727970746f7b596f755f77696c6c5f62655f776f726b696e675f776974685f6865785......</span>"<br>
+              <span class="comment"># This is hex string values</span><br>
+              <span class="line"><span class="keyword">bytes_data =</span> bytes.fromhex(hex_values)</span><br>
+              <span class="comment"># Convert the hex string to bytes, In computer systems, data is often represented as bytes (8 bits), not as characters or numbers. The hex string is just a human-readable way of writing bytes. By converting the hex string to bytes, you're turning it back into the actual data that the computer can process, bytes.fromhex(): This method does the actual conversion of each pair of hexadecimal digits</span><br>
+              <span class="line"><span class="keyword">flag =</span><span class="string"> bytes_data.decode('ascii')</span><br>
+              <span class="comment"># Convert the bytes back to an ASCII string, The bytes you get from bytes.fromhex() are the raw data, but they need to be interpreted correctly to make sense to humans. If the data represents ASCII text, you need to convert the bytes back to human-readable characters.</span><br>
               <span class="line"><span class="keyword">print</span>(<span class="string">'This is your flag: ' + </span><span class="keyword"> flag</span>)</span><br>
               <span class="comment"># Display the flag</span><br>
             </div>
