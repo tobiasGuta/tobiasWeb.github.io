@@ -3588,6 +3588,15 @@ select:focus, input[type="range"]:focus {
 
         <p>There is no central control in a bus topology, so devices operate independently without a central server or switch managing the flow of data. A common example of the transmission medium in a bus topology would be a coaxial cable, although this setup can also apply to other types of cables or wireless connections. Since it's a shared medium, bus topologies are more prone to collisions if multiple devices attempt to send data simultaneously.</p>
         <img src="bustopology.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <h3>Star</h3>
+        <p>In a star topology, the network is designed with a central component that links to every other host in the system. Each host connects to this central element, typically a router, hub, or switch, using its own dedicated link. The central device is responsible for forwarding data packets by receiving them and directing them to their intended destination. However, since all data and connections pass through this central point, it can experience heavy traffic and high demand.</p>
+        <img src="starttopology.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+
+        <h3>Ring</h3>
+        <p>In a physical ring topology, each host or node is connected to the network by two cables one carrying incoming signals and the other for outgoing signals. This means each host has one cable for receiving data and another for sending it. Typically, this setup doesn't require an active network component. Instead, a protocol governs how all stations interact with the transmission medium and access the network.</p>
+        <p>In a logical ring topology, a star topology is used as the physical layout, with a distributor at each node that creates the effect of a ring by passing data from one port to the next.</p>
+        <p>Data is transmitted in a specific direction around the network. Access to the transmission medium is managed sequentially, from station to station, either by a central station or using a token system. The token, a bit pattern that circulates through the network in one direction, is used to regulate access and ensures orderly transmission.</p>
+        <img src="ringtopology.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
       </div>
 
       <!-- Toggle Button for Solution -->
