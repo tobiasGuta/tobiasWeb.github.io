@@ -3597,6 +3597,28 @@ select:focus, input[type="range"]:focus {
         <p>In a logical ring topology, a star topology is used as the physical layout, with a distributor at each node that creates the effect of a ring by passing data from one port to the next.</p>
         <p>Data is transmitted in a specific direction around the network. Access to the transmission medium is managed sequentially, from station to station, either by a central station or using a token system. The token, a bit pattern that circulates through the network in one direction, is used to regulate access and ensures orderly transmission.</p>
         <img src="ringtopology.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+
+        <h3>Mesh</h3>
+        <p>In a mesh network, nodes make decisions about physical connections and logical routing, so there isn't a fixed topology. There are two main types: fully meshed and partially meshed.</p>
+        <p>In a fully meshed structure, every host is connected to every other host, ensuring complete interconnectivity. This type of network is commonly used in WAN or MAN environments where high reliability and bandwidth are essential. For instance, in such a setup, routers are all interconnected. If one router fails, the others can continue functioning, and the network can adapt to the failure due to the multiple connections.</p>
+        <p>Each node in a fully meshed network performs routing and knows its neighboring nodes, including which nodes are nearby, as well as information about network gateways and traffic distribution.</p>
+        <p>In a partially meshed structure, nodes are connected through a single connection. Some nodes are only linked to one other node, while others have connections to two or more nodes, forming point-to-point connections.</p>
+        <img src="Mesh-Topology-768.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+
+        <h3>Tree</h3>
+        <p>The tree topology is a variation of the star topology, typically seen in larger local networks. It's particularly beneficial when multiple network topologies are integrated. This structure is commonly employed in larger business environments, such as office buildings</p>
+        <p>Tree topologies can be divided into logical and physical structures, with the logical structure following a spanning tree protocol. Modern modular networks, which use structured cabling and a hierarchical hub system, also adopt a tree-like layout. Additionally, tree topologies are frequently used in broadband networks and metropolitan area networks (MANs)</p>
+        <img src="treetopology.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+
+        <h3>Hybrid</h3>
+        <p>Hybrid networks merge two or more different topologies, creating a network that doesn't conform to any single standard topology. For example, a hybrid topology might consist of a tree network where star networks are linked through bus networks. However, even when two tree networks are connected, the overall structure still remains a tree topology. Essentially, a hybrid topology arises whenever two distinct basic network topologies are combined or interconnected</p>
+        <img src="hybrid1.jpg" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+
+
+        <h3>Daisy Chain</h3>
+        <p>In a daisy chain topology, multiple devices are linked together by connecting one node to the next with a cable. This creates a chain-like connection, hence the name "daisy-chain configuration," where several hardware components are connected in sequence. Such networking is commonly used in fields like automation technology (CAN).</p>
+        <p>Daisy chaining relies on the physical arrangement of nodes, as opposed to token-based methods, which are structural but not tied to the physical layout. In this setup, signals are transmitted to and from each device, passing through the preceding nodes until they reach the computer system.</p>
+        <img src="daisytopology.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
       </div>
 
       <!-- Toggle Button for Solution -->
