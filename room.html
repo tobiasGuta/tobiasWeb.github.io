@@ -302,7 +302,7 @@ table {
 
     /* Table cell styling */
     td {
-      padding: 12px;
+      padding: 7px;
       text-align: left;
       border-bottom: 1px solid #ddd;
       font-size: 14px;
@@ -3815,7 +3815,229 @@ select:focus, input[type="range"]:focus {
             </tbody>
           </table>
         </div>
+        <h3>Network Layer</h3>
+        <p>
+          The <strong>Network Layer</strong> (Layer 3) of the OSI model is critical for ensuring that data packets are successfully transferred between devices across different networks. 
+          Because data packets typically cannot travel directly from the sender to the receiver, this layer handles the task of routing and forwarding packets through intermediary nodes, known as routers. 
+          Each packet is moved step-by-step from one node to the next until it reaches its final destination.
+        </p>
+        <p>
+          This layer is responsible for identifying devices on the network using logical addressing (e.g., IP addresses) and determines the best path for transmitting data through the network. 
+          It establishes and tears down connections between different devices as needed, while also handling flow control and congestion management. 
+          Importantly, the Network Layer does not alter or process the data from the layers above it—it focuses solely on the delivery and routing of packets.
+        </p>
         
+        <p><strong>Key Responsibilities of the Network Layer</strong></p>
+        <ul>
+          <li><strong>Logical Addressing:</strong> Ensures devices in different networks have unique identifiers (e.g., IPv4 and IPv6 addresses).</li>
+          <li><strong>Routing:</strong> Determines the best path for data to travel through the network, considering factors such as topology and congestion.</li>
+          <li><strong>Fragmentation and Reassembly:</strong> If the data packets are too large for a specific network, this layer fragments them into smaller units for transmission and reassembles them at the destination.</li>
+          <li><strong>Connection Management:</strong> Sets up, maintains, and terminates communication paths between devices.</li>
+          <li><strong>Error Handling and Diagnostics:</strong> Identifies and resolves issues in the network path using protocols like ICMP (Internet Control Message Protocol).</li>
+        </ul>
+
+        <p><strong>Common Protocols at the Network Layer</strong></p>
+        <p>The Network Layer uses a range of protocols to perform its tasks. Some of the most commonly used protocols include:</p>
+        <ul>
+          <li><strong>IPv4/IPv6:</strong> Handles logical addressing and routing in networks. IPv6 addresses limitations of IPv4, such as address exhaustion.</li>
+          <li><strong>IPsec (Internet Protocol Security):</strong> Ensures secure communication by encrypting and authenticating IP packets.</li>
+          <li><strong>ICMP (Internet Control Message Protocol):</strong> Provides error messages and network diagnostics (e.g., ping and traceroute).</li>
+          <li><strong>IGMP (Internet Group Management Protocol):</strong> Manages multicast group memberships in a network.</li>
+          <li><strong>RIP (Routing Information Protocol):</strong> A simple protocol for routing data within smaller networks.</li>
+          <li><strong>OSPF (Open Shortest Path First):</strong> A more advanced routing protocol used in larger networks to find the most efficient path for data transfer.</li>
+        </ul>
+
+        <p><strong>Data Transmission in the Network Layer</strong></p>
+        <p>
+          When data is sent, the Network Layer evaluates the sender and receiver's logical addresses and determines the best route. 
+          It constructs routing tables that guide the data through nodes (routers) on its journey. 
+          If the source and destination devices are in different subnets or have incompatible addressing schemes, the Network Layer ensures that packets are routed effectively.
+        </p>
+        <p>
+          Since direct communication between devices is often not possible due to subnet limitations, packets are forwarded from router to router. 
+          Each router readdresses the packet with an intermediate destination until it reaches its final target. 
+          During this process, only the Network Layer is active in the intermediary nodes, and the data remains unchanged for the higher layers.
+        </p>
+
+        <h3>IP Addresses</h3>
+        <p>
+            IP addresses play a critical role in identifying and communicating with devices across networks, ensuring that data is delivered to its intended destination. Each host (device) in a network has a unique <strong>Media Access Control (MAC) address</strong>, which identifies it on the local network. However, when communication extends beyond a single network, a MAC address becomes insufficient. For communication across networks, addressing is done using <strong>IPv4</strong> or <strong>IPv6</strong> addresses, which consist of two key components: the network address and the host address.
+        </p>
+        <p>
+            Regardless of the network's size—whether it’s a small home network or the vast Internet—an IP address uniquely identifies a device and ensures that data reaches its intended recipient. The relationship between MAC addresses and IP addresses can be compared to a postal system:
+        </p>
+        <ul>
+            <li><strong>IPv4/IPv6:</strong> Represents the building’s street address and district, identifying the general location.</li>
+            <li><strong>MAC Address:</strong> Specifies the exact floor and apartment, pinpointing the specific recipient within the building.</li>
+        </ul>
+
+        <p><strong>Characteristics of IP Addresses</strong></p>
+        <h4>Unique Assignment</h4>
+        <p>
+            Each IP address must be unique within its network to avoid conflicts and ensure proper data routing. This applies to both IPv4 and IPv6 addressing systems.
+        </p>
+
+        <h4>Broadcasting and Multicasting</h4>
+        <ul>
+            <li>
+                <strong>Broadcasting:</strong> An IP address can be used to deliver data to all devices within a network.
+            </li>
+            <li>
+                <strong>Multicasting:</strong> A single IP address can target a group of devices, enabling efficient communication for applications like video conferencing.
+            </li>
+        </ul>
+
+        <h4>Dynamic and Static IPs</h4>
+        <ul>
+            <li>
+                <strong>Dynamic IPs:</strong> Temporarily assigned by a network’s DHCP (Dynamic Host Configuration Protocol) server and can change over time. These are commonly used for end-user devices.
+            </li>
+            <li>
+                <strong>Static IPs:</strong> Manually assigned and remain constant, often used for servers and critical devices requiring consistent addressing.
+            </li>
+        </ul>
+
+        <h4>Dual-Stack Devices</h4>
+        <p>
+            Many modern devices support both IPv4 and IPv6 simultaneously. This ensures compatibility with older systems while benefiting from IPv6's larger address space and enhanced features like better routing and security.
+        </p>
+
+        <h4>Network Address Translation (NAT)</h4>
+        <p>
+            In private networks, multiple devices often share a single public IP address through NAT. Each device still has its unique private IP address within the local network.
+        </p>
+
+        <p><strong>IPv4 and IPv6 Differences</strong></p>
+        <ul>
+            <li>
+                <strong>IPv4:</strong> Uses a 32-bit address format, offering approximately 4.3 billion unique addresses. Due to the rapid expansion of the Internet, IPv4 addresses have become scarce.
+            </li>
+            <li>
+                <strong>IPv6:</strong> Uses a 128-bit address format, providing a virtually unlimited number of unique addresses. This solves the limitations of IPv4 and introduces features like simplified header formats and improved support for multicasting.
+            </li>
+        </ul>
+
+        <p><strong>Importance in Routing</strong></p>
+        <p>
+            IP addresses allow data to traverse multiple networks and reach devices that may be far apart. Routers use IP addresses to direct packets to their destination, relying on routing tables and protocols like RIP (Routing Information Protocol) and OSPF (Open Shortest Path First). Each hop moves the packet closer to its final target by referencing the destination IP address.
+        </p>
+
+        <p><strong>Handling of IP Conflicts</strong></p>
+        <p>
+            When two devices on the same network are assigned the same IP address, a conflict arises, leading to communication failures. To prevent this:
+        </p>
+        <ul>
+            <li>
+                <strong>DHCP servers:</strong> Used to dynamically assign unique IPs.
+            </li>
+            <li>
+                <strong>Manual Configuration:</strong> Ensures there are no overlaps in static IP assignments.
+            </li>
+        </ul>
+
+        <p><strong>IPv4 Structure</strong></p>
+        <p>IPv4 addresses are the most widely used method of identifying devices on a network. They are structured as 32-bit binary numbers divided into four 8-bit segments (also known as octets). Each octet represents a value between 0 and 255. For simplicity and readability, these binary numbers are typically converted into decimal form and presented in dotted-decimal notation.</p>
+
+        <div class="table-container">
+          <table border="1" style="width: 100%;">
+            <thead>
+              <tr>
+                <th>Notation</th>
+                <th>Presentation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Binary</td>
+                <td>01111111.00000000.00000000.00000001</td>
+              </tr>
+              <tr>
+                <td>Decimal</td>
+                <td>127.0.0.1</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Key Characteristics of IPv4</h4>
+        <ul>
+          <li><strong>Uniqueness:</strong> Each network interface, whether it’s a network card, printer, router, or any other networked device, is assigned a unique IPv4 address to enable proper communication.</li>
+          <li><strong>Octet Ranges:</strong> Each octet can have a value from 0 to 255, as it consists of 8 bits (2<sup>8</sup> = 256 possible values, including 0).</li>
+          <li><strong>Readability:</strong> To make the address more user-friendly, binary numbers are translated into their decimal equivalents and separated by dots (e.g., <code>192.168.1.1</code>).</li>
+        </ul>
+
+        <p>IPv4 addresses are critical for routing and delivering data across networks. However, due to the explosive growth of the Internet and limited number of available IPv4 addresses (approximately 4.3 billion unique addresses), the transition to IPv6 is underway to meet the demand for a larger address space.</p>
+
+        <p><stron>IP Address Division</stron></p>
+          <p>IP addresses are structured into two distinct parts: the host part and the network part. The host part identifies the specific device within a network, while the network part identifies the network to which the device belongs. The division of these parts is essential for routing traffic and ensuring that data reaches its correct destination.</p>
+
+          <p>The <strong>host part</strong> of the IP address is usually assigned by a router within a local network (such as in a home network) or manually by a network administrator. This part is unique to each device in that network and ensures that devices can communicate with one another effectively.</p>
+
+          <p>The <strong>network part</strong> of the IP address is assigned by the network administrator. In the case of large-scale networks like the Internet, the allocation and management of the network portion of IP addresses are handled by organizations like the <strong>Internet Assigned Numbers Authority (IANA)</strong>. IANA oversees the global distribution of IP address blocks and ensures that each network has a unique identifier.</p>
+
+          <p>By splitting IP addresses into these two parts, the network can be efficiently organized, and routing decisions can be made to direct data to the appropriate destination network before it reaches the specific device.</p>
+
+          <h3>Subnet Mask Example</h3>
+          <p>Subnetting allows a network to be further divided into smaller sub-networks, known as subnets. The subnet mask is used to determine which portion of an IP address represents the network and which portion represents the host. The subnet mask is the same length as an IPv4 address and consists of 32 bits. It uses binary digits to specify which bits in the IP address are part of the network and which are part of the host. Here's an example of how subnetting works:</p>
+
+          <div class="table-container">
+            <table border="1" style="width: 100%;">
+              <thead>
+                <tr>
+                  <th>Class</th>
+                  <th>Network Address</th>
+                  <th>First Address</th>
+                  <th>Last Address</th>
+                  <th>Subnet Mask</th>
+                  <th>CIDR</th>
+                  <th>Subnets</th>
+                  <th>IPs</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>A</td>
+                  <td>10.0.0.0</td>
+                  <td>10.0.0.1</td>
+                  <td>10.255.255.254</td>
+                  <td>255.0.0.0</td>
+                  <td>/8</td>
+                  <td>16,777,216</td>
+                  <td>16,777,214</td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>172.16.0.0</td>
+                  <td>172.16.0.1</td>
+                  <td>172.31.255.254</td>
+                  <td>255.240.0.0</td>
+                  <td>/12</td>
+                  <td>1,048,576</td>
+                  <td>1,048,574</td>
+                </tr>
+                <tr>
+                  <td>C</td>
+                  <td>192.168.0.0</td>
+                  <td>192.168.0.1</td>
+                  <td>192.168.255.254</td>
+                  <td>255.255.0.0</td>
+                  <td>/16</td>
+                  <td>256</td>
+                  <td>254</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>In this example:</p>
+          <ul>
+            <li>The <strong>IP address</strong> identifies the network or device.</li>
+            <li>The <strong>subnet mask</strong> determines how the IP address is divided into the network and host parts.</li>
+            <li>The <strong>network address</strong> identifies the specific subnet.</li>
+            <li>The <strong>host range</strong> shows the range of available IP addresses for devices in that subnet.</li>
+            <li>The <strong>broadcast address</strong> is used for sending data to all devices in the subnet.</li>
+          </ul>
+
       </div>
       <!-- Toggle Button for Solution -->
       <button class="solution-button" onclick="toggleSolution('room17', event)">Show Solution</button>
