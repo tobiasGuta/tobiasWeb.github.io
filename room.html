@@ -3619,8 +3619,124 @@ select:focus, input[type="range"]:focus {
         <p>In a daisy chain topology, multiple devices are linked together by connecting one node to the next with a cable. This creates a chain-like connection, hence the name "daisy-chain configuration," where several hardware components are connected in sequence. Such networking is commonly used in fields like automation technology (CAN).</p>
         <p>Daisy chaining relies on the physical arrangement of nodes, as opposed to token-based methods, which are structural but not tied to the physical layout. In this setup, signals are transmitted to and from each device, passing through the preceding nodes until they reach the computer system.</p>
         <img src="daisytopology.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
-      </div>
 
+        <h3>Proxies</h3>
+        <p>A proxy is a tool or service that acts as an intermediary between two devices or systems, managing the flow of communication between them. What makes it a proxy is its ability to actively inspect and process the data being exchanged. If the device in the middle lacks this ability and simply passes the traffic along without analyzing it, it’s better described as a gateway rather than a proxy.</p>
+        <img src="proxies.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>If you're finding it hard to recall, keep in mind that proxies typically function at Layer 7 of the OSI Model. There are various types of proxy services, but the most important ones include:</p>
+
+        <ul>
+          <li><p>Dedicated Proxy / Forward Proxy</p></li>
+          <li><p>Reverse Proxy</p></li>
+          <li><p>Transparent Proxy</p></li>
+        </ul>
+
+        <p><strong>A Dedicated Proxy, or Forward Proxy</strong></p>
+        <img src="forwardproxy.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>is the type of proxy most people are familiar with. It works by acting as an intermediary between a client and the server it wants to communicate with. The client sends its request to the proxy, and the proxy forwards that request on its behalf.</p>
+
+        <p>For instance, in a corporate environment, sensitive systems might not have direct access to the internet for security reasons. Instead, they route their web requests through a proxy server, often combined with a web filter. This setup acts as a strong layer of defense against malware. For malware to bypass such a system, it would need to evade the web filter (which is already challenging) and also be designed to work with proxies or utilize alternative command-and-control methods. If the organization standardizes on a specific browser, such as Firefox, it further reduces the chances of encountering proxy-aware malware.</p>
+        <p>Web browsers such as Internet Explorer, Edge, and Chrome typically rely on the "System Proxy" settings by default. This means any network requests made through these browsers will automatically use the configured proxy settings on the operating system. If malware leverages WinSock, the native Windows networking API, it will also inherit this proxy awareness without requiring additional code. However, Firefox operates differently—it uses <code>libcurl</code>, a library that allows it to work uniformly across multiple platforms. As a result, malware targeting Firefox would need to specifically detect and extract Firefox’s unique proxy settings, which is rare and adds complexity for attackers.</p>
+
+        <p>Alternatively, some malware might use DNS as a command-and-control (C2) mechanism to communicate with its operators. While this method avoids proxy-related restrictions, organizations can effectively detect and block such traffic by monitoring DNS activity. Tools like <strong>Sysmon</strong>, combined with threat detection systems, make it easier to spot suspicious DNS requests, such as those pointing to unusual or unregistered domains.</p>
+
+        <p>Another popular example of a Forward Proxy is <strong>Burp Suite</strong>. It’s a powerful tool widely used by security professionals to intercept and modify HTTP and HTTPS requests for testing web applications. While Burp Suite is often used as a Forward Proxy, it’s incredibly flexible and can also be configured as a reverse proxy or a transparent proxy. Its additional features, such as scanning, intruder attacks, and repeater tools, make it an indispensable resource for penetration testers and security researchers alike.</p>
+        
+
+        <p><strong>Reverse Proxy</strong></p>
+        <img src="reverseproxy.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>A Reverse Proxy functions in the opposite way of a Forward Proxy. Rather than managing outgoing requests, it controls incoming traffic. The key purpose of a Reverse Proxy is to accept requests made to a public-facing address and direct those requests to a more secure or isolated network.</p>
+
+        <p>One popular example is <strong>Cloudflare</strong>, which is commonly used by organizations to protect their web servers. Cloudflare acts as a reverse proxy, allowing organizations to manage traffic before it ever reaches their systems. This not only helps with performance but also offers robust protection against attacks like DDoS, as Cloudflare’s infrastructure is designed to handle large amounts of traffic and malicious requests.</p>
+
+        <p>Penetration testers often use reverse proxies when they compromise a system. By setting up a reverse proxy on an infected endpoint, they can redirect incoming connections to themselves. The infected endpoint will listen for connections on a particular port and forward them to the attacker, which can help them bypass network defenses, such as firewalls or IDS systems. This method is particularly useful when an attacker has SSH access to an internal network and wants to send traffic through an encrypted tunnel, avoiding detection mechanisms that might monitor external traffic.</p>
+
+        <p>Another reverse proxy example is <strong>ModSecurity</strong>, which acts as a Web Application Firewall (WAF). It inspects incoming HTTP requests to identify and block potentially malicious actions, such as attempts to exploit vulnerabilities in web applications. By filtering out harmful traffic before it reaches the server, ModSecurity helps safeguard websites from attacks like SQL injection, cross-site scripting (XSS), and other common web application threats.</p>
+
+        <p><strong>(Non-) Transparent Proxy</strong></p>
+        <p>Proxy services can operate in two ways: transparently or non-transparently.</p>
+
+        <p>A transparent proxy operates in a way that is invisible to the client. The client is unaware of the proxy’s presence, as it intercepts requests made to external servers and handles them on behalf of the client. The proxy acts as an intermediary, substituting itself for the client in the communication. Despite being transparent to the client, it still functions like any other proxy, managing traffic between the client and external resources.</p>
+
+        <p>In contrast, a non-transparent proxy requires the client to be aware of its existence. This typically involves configuring the client’s software to explicitly direct traffic to the proxy server. Without this configuration, the client cannot route traffic through the proxy. In most cases, when a non-transparent proxy is in use, it is the only available method for accessing external networks, so if the configuration is missing, communication with the internet would be blocked until the proxy is properly set up.</p>
+
+
+        <h3>Networking Models</h3>
+        <p>There are two primary models that describe how data is communicated and transferred between hosts: the ISO/OSI model and the TCP/IP model. These models break down the complex process of data transmission into different layers, each responsible for specific tasks. Each layer handles the transmission of bits and converts them into understandable data, enabling seamless communication across networks.</p>
+        <img src="https://academy.hackthebox.com/storage/modules/34/redesigned/net_models4.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+        <p>The OSI model, also known as the ISO/OSI model, is a conceptual framework used to describe the communication process between systems. It divides the process into seven distinct layers, each with specific functions and responsibilities. These layers help standardize networking processes and make it easier to understand how data travels from one system to another.</p>
+
+        <p>OSI stands for Open Systems Interconnection, a model developed by the International Telecommunication Union (ITU) and the International Organization for Standardization (ISO). Due to its roots in these organizations, the model is sometimes called the ISO/OSI model, and it serves as a foundational reference in networking.</p>
+
+        <p>The TCP/IP model, or Transmission Control Protocol/Internet Protocol, represents a suite of protocols that govern how data is transmitted over networks, especially the internet. Unlike the OSI model, TCP/IP encompasses a broader range of protocols that facilitate the routing, addressing, and transport of data. While the TCP/IP model is built around the two primary protocols (TCP and IP), it also includes others, like ICMP (Internet Control Message Protocol) and UDP (User Datagram Protocol), which support various aspects of communication across both private and public networks.</p>
+
+        <p>When comparing the two models, the key difference is their approach to networking. TCP/IP is more flexible and practical, focusing on real-world application of protocols that allow hosts to connect and communicate over the internet. It doesn’t impose strict rules like OSI but ensures core guidelines are followed. The OSI model, on the other hand, is a more rigid reference model designed to define and standardize the process of communication between networks and end-users. It is more theoretical and provides a clear framework, making it a valuable tool for understanding network communication at a deeper level.</p>
+
+        <p>In a network, devices exchange data in a structured manner through what’s called a Protocol Data Unit (PDU). Each layer of the network stack processes data in a specific way, with each layer responsible for certain tasks, such as addressing, routing, or encryption. For instance, when a user tries to visit a website, their computer sends a request to the remote server. This request is first passed to the application layer, where it’s prepared for transmission. The data then moves down through each layer, with each one adding its own header or performing specific functions like error checking, packet sequencing, or routing.</p>
+
+        <p>As the data is sent through the layers, it is encapsulated with additional information that helps each layer perform its job. For example, at the transport layer, it might include details about the destination port, while the network layer will add information about the routing path. The data is then passed down to the physical layer, which converts it into signals that can be transmitted over the network medium, such as Ethernet cables or wireless signals.</p>
+
+        <p>Once the data reaches its destination, the receiving device processes it in reverse order, going through each layer from physical to application. At each layer, the relevant information is extracted or processed according to the layer's role, until the application layer on the receiving end uses the data for its intended purpose. This layered approach ensures that data is correctly formatted, routed, and delivered while allowing different devices and systems to communicate effectively across diverse networks.</p>
+        <img src="https://academy.hackthebox.com/storage/modules/34/redesigned/net_models_pdu2.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+
+        <p>As data moves through the layers of a network stack, each layer adds a header to the Protocol Data Unit (PDU) coming from the layer above. These headers contain essential information that identifies and controls the packet, such as routing instructions, error checks, and source/destination addresses. This practice of adding headers is known as encapsulation. The data, along with the added header, forms the complete PDU for the next layer, ensuring the data is properly formatted for transmission.</p>
+
+        <p>The encapsulation process continues as the data moves down through each layer of the network stack, with each layer appending its own header that’s relevant to its function. Eventually, the data reaches the physical or network layer, where it is converted into signals suitable for transmission over the chosen medium (e.g., Ethernet, Wi-Fi, etc.).</p>
+
+        <p>Once the data reaches the destination, the receiving device begins the process of de-encapsulation. It starts by removing the header information at each layer, beginning at the physical layer and working its way up to the application layer. Each layer examines and processes the relevant header to retrieve the data. Finally, the application layer uses the unwrapped data for its intended purpose, such as displaying a website or handling a request. This entire process of sending and receiving data, where each layer encapsulates and later de-encapsulates the information, continues to ensure smooth communication across networks.</p>
+        <img src="https://academy.hackthebox.com/storage/modules/34/packet_transfer.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+
+        <p>For <Strong>penetration testers</Strong>, both the TCP/IP model and the OSI model offer valuable perspectives. The TCP/IP model provides a practical framework for understanding how a connection is established and how data flows through a network, helping testers quickly assess overall communication. On the other hand, the OSI model breaks down the communication process into distinct layers, allowing for a more granular analysis. By dissecting each layer, penetration testers can identify vulnerabilities or issues in specific parts of the communication chain.</p>
+
+        <p>This detailed examination is particularly useful during tasks like intercepting and analyzing network traffic. By leveraging tools like packet sniffers or man-in-the-middle attacks, testers can observe how data behaves at each layer and potentially manipulate or exploit weaknesses. Understanding both models enables penetration testers to approach security assessments from multiple angles, whether they’re looking at a network from a high-level perspective or drilling down into the specifics of data transmission.</p>
+
+
+        <h3>The OSI Model</h3>
+        <p>The purpose behind the creation of the ISO/OSI standard was to establish a universal framework for enabling communication between various devices and systems, regardless of their underlying technologies. By defining a standardized model, the OSI framework ensures that different systems can interact with one another seamlessly. The model is built around seven distinct layers, each representing a specific phase in the process of establishing and maintaining a connection. These layers are organized in a hierarchical structure, with each one performing a unique set of tasks to facilitate communication.</p>
+
+        <p>Each of the seven layers in the OSI model represents a different function in the data transmission process, from the physical transmission of bits to the application-level processes that users interact with. The data travels through these layers both when it’s being sent from a source and when it’s being received by a destination, with each layer adding or stripping away specific information necessary for its part of the communication. This hierarchical, step-by-step breakdown makes it easier to visualize how data moves through a network, and provides a structured way to analyze and troubleshoot network communications.</p>
+        <div class="table-container">
+          <table border="1" style="width: 100%;">
+            <thead>
+              <tr>
+                <th>Layer</th>
+                <th>Function</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>7. Application</td>
+                <td>Among other things, this layer controls the input and output of data and provides the application functions.</td>
+              </tr>
+              <tr>
+                <td>6. Presentation</td>
+                <td>The presentation layer's task is to transfer the system-dependent presentation of data into a form independent of the application.</td>
+              </tr>
+              <tr>
+                <td>5. Session</td>
+                <td>The session layer controls the logical connection between two systems and prevents, for example, connection breakdowns or other problems.</td>
+              </tr>
+              <tr>
+                <td>4. Transport</td>
+                <td>Layer 4 is used for end-to-end control of the transferred data. The Transport Layer can detect and avoid congestion situations and segment data streams.</td>
+              </tr>
+              <tr>
+                <td>3. Network</td>
+                <td>On the networking layer, connections are established in circuit-switched networks, and data packets are forwarded in packet-switched networks. Data is transmitted over the entire network from the sender to the receiver.</td>
+              </tr>
+              <tr>
+                <td>2. Data Link</td>
+                <td>The central task of layer 2 is to enable reliable and error-free transmissions on the respective medium. For this purpose, the bitstreams from layer 1 are divided into blocks or frames.</td>
+              </tr>
+              <tr>
+                <td>1. Physical</td>
+                <td>The transmission techniques used are, for example, electrical signals, optical signals, or electromagnetic waves. Through layer 1, the transmission takes place on wired or wireless transmission lines.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+      </div>
       <!-- Toggle Button for Solution -->
       <button class="solution-button" onclick="toggleSolution('room17', event)">Show Solution</button>
   </div>
