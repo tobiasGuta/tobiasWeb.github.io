@@ -3736,6 +3736,45 @@ select:focus, input[type="range"]:focus {
           </table>
         </div>
         
+        <p>Layers 2 through 4 are focused on transport functions, dealing with the movement of data between systems, while layers 5 through 7 are oriented towards application-level tasks, focusing on how the data is used and presented to the user or application. Each layer has its own specific set of responsibilities, and the interaction between adjacent layers is well-defined. The service provided by one layer is made available to the layer above it, while relying on the layer below it for necessary functions.</p>
+
+        <p>During communication between two systems, all seven layers of the OSI model are involved at least twice. The sender and receiver each go through the entire process—encapsulating and unpacking the data as it moves through the layers. Each layer plays a vital role in maintaining the communication's integrity, security, reliability, and overall performance by performing designated tasks and passing the data down or up through the stack.</p>
+
+        <p>When a system sends data to another, the packet starts at the application layer (layer 7) and moves down to the physical layer (layer 1). This is where it is transmitted through the network. The receiving system, on the other hand, processes the data starting at the physical layer and moves up through the layers, de-encapsulating and interpreting the packet as it goes. This ensures that the data is properly understood and handled by the receiving system.</p>
+
+        <h3>TCP/IP Model</h3>
+        <p>The TCP/IP model, also known as the Internet Protocol Suite, is another layered framework used to define network communication. While the OSI model focuses on seven distinct layers, the TCP/IP model generally operates with fewer layers and is specifically designed to guide how data travels across the internet. The name "TCP/IP" comes from the two core protocols that drive most of internet communication: Transmission Control Protocol (TCP) and Internet Protocol (IP).</p>
+
+        <p>In the TCP/IP model, IP is responsible for addressing and routing data packets within the network layer (Layer 3), similar to how the OSI network layer operates. Meanwhile, TCP resides in the transport layer (Layer 4), ensuring reliable delivery of data, managing data flow, and handling retransmissions in case of packet loss. Unlike the OSI model, which is more of a theoretical framework, the TCP/IP model is directly implemented in the protocols that run on the internet.</p>
+        <div class="table-container">
+          <table border="1" style="width: 100%;">
+            <thead>
+              <tr>
+                <th>Layer</th>
+                <th>Function</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>4. Application</td>
+                <td>The Application Layer allows applications to access the other layers' services and defines the protocols applications use to exchange data.</td>
+              </tr>
+              <tr>
+                <td>3. Transport</td>
+                <td>The Transport Layer is responsible for providing (TCP) session and (UDP) datagram services for the Application Layer.</td>
+              </tr>
+              <tr>
+                <td>2. Internet</td>
+                <td>The Internet Layer is responsible for host addressing, packaging, and routing functions.</td>
+              </tr>
+              <tr>
+                <td>1. Link</td>
+                <td>The Link Layer is responsible for placing the TCP/IP packets on the network medium and receiving corresponding packets from the network medium. TCP/IP is designed to work independently of the network access method, frame format, and medium.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
       </div>
       <!-- Toggle Button for Solution -->
       <button class="solution-button" onclick="toggleSolution('room17', event)">Show Solution</button>
