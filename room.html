@@ -3977,9 +3977,7 @@ select:focus, input[type="range"]:focus {
 
           <p>By splitting IP addresses into these two parts, the network can be efficiently organized, and routing decisions can be made to direct data to the appropriate destination network before it reaches the specific device.</p>
 
-          <h3>Subnet Mask Example</h3>
-          <p>Subnetting allows a network to be further divided into smaller sub-networks, known as subnets. The subnet mask is used to determine which portion of an IP address represents the network and which portion represents the host. The subnet mask is the same length as an IPv4 address and consists of 32 bits. It uses binary digits to specify which bits in the IP address are part of the network and which are part of the host. Here's an example of how subnetting works:</p>
-
+          <p>The IP network blocks were divided into classes A - B. The different classes differed in the host and network shares' respective lengths.</p>
           <div class="table-container">
             <table border="1" style="width: 100%;">
               <thead>
@@ -4029,14 +4027,155 @@ select:focus, input[type="range"]:focus {
             </table>
           </div>
 
-          <p>In this example:</p>
-          <ul>
-            <li>The <strong>IP address</strong> identifies the network or device.</li>
-            <li>The <strong>subnet mask</strong> determines how the IP address is divided into the network and host parts.</li>
-            <li>The <strong>network address</strong> identifies the specific subnet.</li>
-            <li>The <strong>host range</strong> shows the range of available IP addresses for devices in that subnet.</li>
-            <li>The <strong>broadcast address</strong> is used for sending data to all devices in the subnet.</li>
-          </ul>
+          <p><strong>Subnet Mask Example</strong></p>
+          <p>Subnetting allows a network to be further divided into smaller sub-networks, known as subnets. The subnet mask is used to determine which portion of an IP address represents the network and which portion represents the host. The subnet mask is the same length as an IPv4 address and consists of 32 bits. It uses binary digits to specify which bits in the IP address are part of the network and which are part of the host. Here's an example of how subnetting works:</p>
+
+          <p><strong>Network and Gateway Addresses</strong></p>
+          <p>The network address and broadcast address are special IPs within a subnet. The network address is used to identify the subnet itself, while the broadcast address is used to send data to all devices within the subnet simultaneously. These addresses cannot be assigned to individual devices, as they serve specific roles for the entire network.</p>
+          <p>The default gateway, on the other hand, is the router's IP address that allows devices within a subnet to communicate with devices outside the subnet. It connects different networks and manages the transmission of data between them. This gateway IP is typically the first or last IP in the available range of the subnet, though this is a convention rather than a technical requirement. By adopting this practice, networks of all sizes maintain consistency in their design.</p>
+
+          <p><strong>Broadcast Address</strong></p>
+          <p>The broadcast address serves as a means for sending messages to every device within a network. A broadcast message is intended for all network participants and does not require any acknowledgment or response. When a host uses this address, it sends a data packet to all devices in the network simultaneously. The packet often includes the host's own IP address, allowing other devices in the network to use it for future communication. The broadcast address is typically the highest address in the available IP range for that subnet.</p>
+
+
+          <p><strong>Binary system</strong></p>
+          <p>The binary system is a base-2 number system that uses only two digits: 0 and 1. In contrast to the decimal system, which uses ten digits (0 through 9), binary is fundamental in computing, as all data is ultimately represented in binary. Each digit in a binary number is referred to as a "bit". When it comes to an IPv4 address, it is divided into four octets, each of which contains 8 bits. The specific value of each bit position in an octet corresponds to a certain decimal value.</p>
+          
+          <p>Here is an example of how the first octet looks like:</p>
+
+          <p><strong>1st Octet - Value: 192</strong></p>
+          <p>IP Addresses</p>
+          <p>Values:         128  64  32  16  8  4  2  1</p>
+          <p>Binary:           1   1   0   0  0  0  0  0</p>
+          <p>If we calculate the sum of all these values for each octet where the bit is set to 1, we get the sum:</p>
+
+          <div class="table-container">
+            <table border="1" style="width: 100%;">
+                  <tr>
+                      <th>Octet</th>
+                      <th>Values</th>
+                      <th>Sum</th>
+                  </tr>
+                  <tr>
+                      <td>1st</td>
+                      <td>128 + 64 + 0 + 0 + 0 + 0 + 0 + 0</td>
+                      <td>= 192</td>
+                  </tr>
+                  <tr>
+                      <td>2nd</td>
+                      <td>128 + 0 + 32 + 0 + 8 + 0 + 0 + 0</td>
+                      <td>= 168</td>
+                  </tr>
+                  <tr>
+                      <td>3rd</td>
+                      <td>0 + 0 + 0 + 0 + 8 + 0 + 2 + 0</td>
+                      <td>= 10</td>
+                  </tr>
+                  <tr>
+                      <td>4th</td>
+                      <td>0 + 0 + 32 + 0 + 0 + 4 + 2 + 1</td>
+                      <td>= 39</td>
+                  </tr>
+              </table>
+          </div>
+
+          <p>The entire representation from binary to decimal would look like this:</p>
+
+          <p><strong>IPv4 - Binary Notation</strong></p>
+          <p>IP Addresses</p>
+          <p>Octet:             1st         2nd         3rd         4th</p>
+          <p>Binary:         1100 0000 . 1010 1000 . 0000 1010 . 0010 0111</p>
+          <p>Decimal:           192    .    168    .     10    .     39</p>
+          <p><strong>IPv4 Address: 192.168.10.39</strong></p>
+
+          <p>This addition takes place for each octet, which results in a decimal representation of the IPv4 address. The subnet mask is calculated in the same way.</p>
+
+          <p><strong>IPv4 - Decimal to Binary</strong></p>
+          <p>IP Addresses</p>
+          <p>Values:         128  64  32  16  8  4  2  1</p>
+          <p>Binary:           1   1   1   1  1  1  1  1</p>
+
+          <div class="table-container">
+            <table border="1" style="width: 100%;">
+                  <tr>
+                      <th>Octet</th>
+                      <th>Values</th>
+                      <th>Sum</th>
+                  </tr>
+                  <tr>
+                      <td>1st</td>
+                      <td>128 + 64 + 32 + 16 + 8 + 4 + 2 + 1</td>
+                      <td>= 255</td>
+                  </tr>
+                  <tr>
+                      <td>2nd</td>
+                      <td>128 + 64 + 32 + 16 + 8 + 4 + 2 + 1</td>
+                      <td>= 255</td>
+                  </tr>
+                  <tr>
+                      <td>3rd</td>
+                      <td>128 + 64 + 32 + 16 + 8 + 4 + 2 + 1</td>
+                      <td>= 255</td>
+                  </tr>
+                  <tr>
+                      <td>4th</td>
+                      <td>0 + 0 + 0 + 0 + 0 + 0 + 0 + 0</td>
+                      <td>= 0</td>
+                  </tr>
+              </table>
+          </div>
+
+          <p><strong>Subnet Mask</strong></p>
+          <p>IP Addresses</p>
+          <p>Octet:             1st         2nd         3rd         4th</p>
+          <p>Binary:         1111 1111 . 1111 1111 . 1111 1111 . 0000 0000</p>
+          <p>Decimal:           255    .    255    .    255    .     0</p>
+
+          <p><strong>IPv4 Address: 192.168.10.39</strong></p>
+          <p><strong>Subnet Mask: 255.255.255.0</strong></p>
+
+          <p><strong>CIDR</strong></p>
+          <p>Classless Inter-Domain Routing (CIDR) is a flexible method of representing IP addresses that replaces the traditional method of assigning network classes (A, B, C, D, E). CIDR allows for more efficient allocation of IP address spaces by specifying a subnet mask that is based on the number of bits used for the network portion of the address. Instead of having fixed classes, CIDR enables subnetting to be more granular, allowing networks to be split into any number of subnets. The CIDR suffix specifies the number of bits in the network portion of the address, shown as a "/<number>" after the IP address.</p>
+
+          <p>Let’s use an example to better understand CIDR:</p>
+
+          <p><strong>IPv4 Address: 192.168.10.39</strong></p>
+          <p><strong>Subnet Mask: 255.255.255.0</strong></p>
+
+          <p>Now, to represent the CIDR notation, we start by looking at the binary representation of the IPv4 address and the subnet mask:</p>
+
+          <div>
+              <table border="1">
+                  <tr>
+                      <th>Octet</th>
+                      <th>1st</th>
+                      <th>2nd</th>
+                      <th>3rd</th>
+                      <th>4th</th>
+                  </tr>
+                  <tr>
+                      <td>Binary</td>
+                      <td>1111 1111</td>
+                      <td>1111 1111</td>
+                      <td>1111 1111</td>
+                      <td>0000 0000</td>
+                  </tr>
+                  <tr>
+                      <td>Decimal</td>
+                      <td>255</td>
+                      <td>255</td>
+                      <td>255</td>
+                      <td>0</td>
+                  </tr>
+              </table>
+          </div>
+
+          <p>In CIDR notation, we count the number of 1's in the subnet mask. In this case, we have 24 ones in the first three octets (255.255.255) and 0 ones in the last octet (0). Therefore, the CIDR notation for the IP address 192.168.10.39 with a subnet mask of 255.255.255.0 is:</p>
+
+          <p><strong>CIDR: 192.168.10.39/24</strong></p>
+
+          <p>This means that the first 24 bits of the address represent the network portion, and the remaining 8 bits are available for the host addresses within that network.</p>
+
 
       </div>
       <!-- Toggle Button for Solution -->
