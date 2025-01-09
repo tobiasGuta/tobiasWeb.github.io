@@ -4563,6 +4563,173 @@ select:focus, input[type="range"]:focus {
           </div>
           <p><strong>Step 4: Answer</strong></p>
           <p>The <strong>broadcast address of the 2nd subnet</strong> is: <strong>10.200.20.15</strong></p>
+
+
+          <h3>MAC Addresses</h3>
+            <p>Each host in a network has a unique 48-bit (6 octets) Media Access Control (MAC) address, which is represented in hexadecimal format. The MAC address is the physical address assigned to network interfaces. Different standards exist for different types of MAC addresses:</p>
+          
+            <ul>
+              <li>Ethernet (IEEE 802.3)</li>
+              <li>Bluetooth (IEEE 802.15)</li>
+              <li>WLAN (IEEE 802.11)</li>
+            </ul>
+          
+            <p>Since the MAC address addresses the physical connection (e.g., network card, Bluetooth, WLAN adapter), each network card is assigned a unique MAC address by the manufacturer. Though it is generally hardcoded into the hardware, it can be temporarily changed.</p>
+          
+            <p>Example of a MAC address:</p>
+            <table border="1">
+              <tr>
+                <th>Representation</th>
+                <th>1st Octet</th>
+                <th>2nd Octet</th>
+                <th>3rd Octet</th>
+                <th>4th Octet</th>
+                <th>5th Octet</th>
+                <th>6th Octet</th>
+              </tr>
+              <tr>
+                <td>Hex</td>
+                <td>DE</td>
+                <td>AD</td>
+                <td>BE</td>
+                <td>EF</td>
+                <td>13</td>
+                <td>37</td>
+              </tr>
+              <tr>
+                <td>Binary</td>
+                <td>1101 1110</td>
+                <td>1010 1101</td>
+                <td>1011 1110</td>
+                <td>1110 1111</td>
+                <td>0001 0011</td>
+                <td>0011 0111</td>
+              </tr>
+            </table>
+          
+            <p>Each packet that is delivered across the network must have its destination address (MAC) to ensure it reaches the correct device. The MAC address consists of 6 bytes. The first three bytes, known as the Organization Unique Identifier (OUI), are assigned to the manufacturer. The second three bytes, known as the Individual Address Part, are assigned to the device by the manufacturer.</p>
+          
+            <p>MAC addresses are used when devices are on the same subnet. If they are on different subnets, the packet will be directed to the MAC address of the router or default gateway. The Address Resolution Protocol (ARP) helps map IP addresses to MAC addresses for proper routing.</p>
+          
+            <strong>Reserved MAC Address Ranges</strong>
+            <ul>
+              <li>02:00:00:00:00:00</li>
+              <li>06:00:00:00:00:00</li>
+              <li>0A:00:00:00:00:00</li>
+              <li>0E:00:00:00:00:00</li>
+            </ul>
+          
+            <p>The last two bits in the first octet of a MAC address also serve a crucial role. These bits determine if the address is Unicast (0) or Multicast (1).</p>
+          
+            <p><strong>Unicast:</strong> A packet is sent to one specific host.</p>
+            <table border="1">
+              <tr>
+                <th>Representation</th>
+                <th>1st Octet</th>
+                <th>2nd Octet</th>
+                <th>3rd Octet</th>
+                <th>4th Octet</th>
+                <th>5th Octet</th>
+                <th>6th Octet</th>
+              </tr>
+              <tr>
+                <td>Hex</td>
+                <td>DE</td>
+                <td>AD</td>
+                <td>BE</td>
+                <td>EF</td>
+                <td>13</td>
+                <td>37</td>
+              </tr>
+            </table>
+          
+            <p><strong>Multicast:</strong> A packet is sent once to all hosts on the network, and each device decides whether to accept it. The multicast address has a fixed format:</p>
+            <table border="1">
+              <tr>
+                <th>Representation</th>
+                <th>1st Octet</th>
+                <th>2nd Octet</th>
+                <th>3rd Octet</th>
+                <th>4th Octet</th>
+                <th>5th Octet</th>
+                <th>6th Octet</th>
+              </tr>
+              <tr>
+                <td>Hex</td>
+                <td>01</td>
+                <td>00</td>
+                <td>5E</td>
+                <td>EF</td>
+                <td>13</td>
+                <td>37</td>
+              </tr>
+            </table>
+          
+            <p><strong>Broadcast:</strong> The broadcast address sends data to all devices on the network.</p>
+            <table border="1">
+              <tr>
+                <th>Representation</th>
+                <th>1st Octet</th>
+                <th>2nd Octet</th>
+                <th>3rd Octet</th>
+                <th>4th Octet</th>
+                <th>5th Octet</th>
+                <th>6th Octet</th>
+              </tr>
+              <tr>
+                <td>Hex</td>
+                <td>FF</td>
+                <td>FF</td>
+                <td>FF</td>
+                <td>FF</td>
+                <td>FF</td>
+                <td>FF</td>
+              </tr>
+            </table>
+          
+            <strong>Global vs Locally Administrated MAC Addresses</strong>
+            <p>The second-to-last bit in the first octet of a MAC address helps determine whether the address is a globally unique address (assigned by IEEE) or locally administrated (set by the user).</p>
+          
+            <table border="1">
+              <tr>
+                <th>Global OUI</th>
+                <th>Locally Administrated</th>
+              </tr>
+              <tr>
+                <td>DC AD BE EF 13 37</td>
+                <td>DE AD BE EF 13 37</td>
+              </tr>
+            </table>
+          
+            <strong>Address Resolution Protocol (ARP)</strong>
+            <p>ARP is used to resolve the mapping of an IP address to its corresponding MAC address within a local network. This protocol helps devices communicate directly using MAC addresses instead of IP addresses. When a device needs to communicate with another device, it sends an ARP request to ask for the MAC address corresponding to an IP address. The device that owns the IP address responds with its MAC address.</p>
+          
+            <p>ARP Request: A device broadcasts a request asking "Who has this IP?"<br>
+            ARP Reply: The device with the requested IP address replies with its MAC address.</p>
+          
+            <p><strong>ARP Spoofing</strong><br>
+            ARP Spoofing or ARP cache poisoning is an attack that manipulates the ARP cache of devices on the network. It associates an attacker's MAC address with the IP address of a legitimate device, allowing the attacker to intercept or manipulate traffic. Tools like Ettercap or Cain & Abel can be used for ARP spoofing.</p>
+          
+            <p>Example of ARP Spoofing (captured traffic):</p>
+            <table border="1">
+              <tr>
+                <th>MAC Addresses</th>
+              </tr>
+              <tr>
+                <td>10.129.12.100 -> 10.129.12.101 ARP 60  10.129.12.100 is at AA:AA:AA:AA:AA:AA</td>
+              </tr>
+              <tr>
+                <td>10.129.12.100 -> 10.129.12.255 ARP 60  Who has 10.129.12.101?</td>
+              </tr>
+              <tr>
+                <td>10.129.12.101 -> 10.129.12.100 ARP 60  10.129.12.101 is at BB:BB:BB:BB:BB:BB</td>
+              </tr>
+              <tr>
+                <td>10.129.12.100 -> 10.129.12.101 ARP 60  10.129.12.100 is at AA:AA:AA:AA:AA:AA</td>
+              </tr>
+            </table>
+          
+            <p>ARP spoofing can be mitigated by using secure protocols like IPSec, SSL, firewalls, and intrusion detection systems.</p>
       </div>
       <!-- Toggle Button for Solution -->
       <button class="solution-button" onclick="toggleSolution('room17', event)">Show Solution</button>
