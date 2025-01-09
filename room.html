@@ -4176,7 +4176,175 @@ select:focus, input[type="range"]:focus {
 
           <p>This means that the first 24 bits of the address represent the network portion, and the remaining 8 bits are available for the host addresses within that network.</p>
 
+          <h3>Subnetting</h3>
 
+          <p>Subnetting is the process of splitting a large block of IP addresses into smaller, manageable blocks called subnets. Imagine you have a huge warehouse, and you want to divide it into smaller sections for different departments. Each section will have its own entrance, labeled clearly. Similarly, subnetting helps to divide a large IP range into smaller, logical segments within a network.</p>
+
+          <h4>Why Subnetting?</h4>
+          <ul>
+              <li><strong>Efficient IP Utilization:</strong> Avoid wasting IP addresses.</li>
+              <li><strong>Improved Network Management:</strong> Makes it easier to manage smaller networks.</li>
+              <li><strong>Enhanced Security:</strong> Controls traffic between subnets.</li>
+              <li><strong>Reduces Congestion:</strong> Limits broadcast traffic within each subnet.</li>
+          </ul>
+
+          <p>When subnetting, you can determine the following parameters for a network:</p>
+          <ul>
+            <li>Network Address</li>
+            <li>Broadcast Address</li>
+            <li>First Host Address</li>
+            <li>Last Host Address</li>
+            <li>Number of Usable Hosts</li>
+          </ul>
+
+          <p><strong>Example: IPv4 Address 192.168.12.160/26</strong></p>
+          <p>Let’s break it down:</p>
+          <table>
+            <tr>
+              <th>Details</th>
+              <th>1st Octet</th>
+              <th>2nd Octet</th>
+              <th>3rd Octet</th>
+              <th>4th Octet</th>
+              <th>Decimal</th>
+            </tr>
+            <tr>
+              <td>IPv4 Address</td>
+              <td>1100 0000</td>
+              <td>1010 1000</td>
+              <td>0000 1100</td>
+              <td>1010 0000</td>
+              <td>192.168.12.160/26</td>
+            </tr>
+            <tr>
+              <td>Subnet Mask</td>
+              <td>1111 1111</td>
+              <td>1111 1111</td>
+              <td>1111 1111</td>
+              <td>1100 0000</td>
+              <td>255.255.255.192</td>
+            </tr>
+          </table>
+
+          <p>The subnet mask is used as a "template" to determine which portion of the IP address identifies the network and which identifies the host. In this example, the first 26 bits represent the network part, and the remaining 6 bits represent the host part.</p>
+
+          <p><strong>Finding the Network Address</strong></p>
+          <p>The network address is derived by setting all bits in the host part to 0:</p>
+          <table>
+            <tr>
+              <th>Details</th>
+              <th>1st Octet</th>
+              <th>2nd Octet</th>
+              <th>3rd Octet</th>
+              <th>4th Octet</th>
+              <th>Decimal</th>
+            </tr>
+            <tr>
+              <td>Network Address</td>
+              <td>1100 0000</td>
+              <td>1010 1000</td>
+              <td>0000 1100</td>
+              <td>1000 0000</td>
+              <td>192.168.12.128</td>
+            </tr>
+          </table>
+
+          <p><strong>Finding the Broadcast Address</strong></p>
+          <p>The broadcast address is derived by setting all bits in the host part to 1:</p>
+          <table>
+            <tr>
+              <th>Details</th>
+              <th>1st Octet</th>
+              <th>2nd Octet</th>
+              <th>3rd Octet</th>
+              <th>4th Octet</th>
+              <th>Decimal</th>
+            </tr>
+            <tr>
+              <td>Broadcast Address</td>
+              <td>1100 0000</td>
+              <td>1010 1000</td>
+              <td>0000 1100</td>
+              <td>1011 1111</td>
+              <td>192.168.12.191</td>
+            </tr>
+          </table>
+
+          <p><strong>Usable IP Addresses</strong></p>
+          <p>All other addresses between the network and broadcast addresses are usable for devices:</p>
+          <ul>
+            <li>First Usable IP: 192.168.12.129</li>
+            <li>Last Usable IP: 192.168.12.190</li>
+            <li>Total Usable Hosts: 62 (64 total minus network and broadcast addresses)</li>
+          </ul>
+
+          <p><strong>Subnetting into Smaller Networks</strong></p>
+          <p>Now, let’s divide this subnet into 4 smaller subnets. To achieve this:</p>
+          <ul>
+            <li>We increase the subnet mask by 2 bits (from /26 to /28).</li>
+            <li>This reduces the number of usable hosts per subnet from 62 to 14 (16 total minus network and broadcast addresses).</li>
+          </ul>
+
+          <table>
+            <tr>
+              <th>Subnet No.</th>
+              <th>Network Address</th>
+              <th>First Host</th>
+              <th>Last Host</th>
+              <th>Broadcast Address</th>
+              <th>CIDR</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>192.168.12.128</td>
+              <td>192.168.12.129</td>
+              <td>192.168.12.142</td>
+              <td>192.168.12.143</td>
+              <td>/28</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>192.168.12.144</td>
+              <td>192.168.12.145</td>
+              <td>192.168.12.158</td>
+              <td>192.168.12.159</td>
+              <td>/28</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>192.168.12.160</td>
+              <td>192.168.12.161</td>
+              <td>192.168.12.174</td>
+              <td>192.168.12.175</td>
+              <td>/28</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>192.168.12.176</td>
+              <td>192.168.12.177</td>
+              <td>192.168.12.190</td>
+              <td>192.168.12.191</td>
+              <td>/28</td>
+            </tr>
+          </table>
+
+          <p><strong>Mental Subnetting Tips</strong></p>
+          <p>Subnetting can seem complex, but understanding these principles can make it easier:</p>
+          <ul>
+            <li>Identify which octet changes based on the subnet mask.</li>
+            <li>Remember powers of 2 for calculating host counts.</li>
+            <li>Use modulo operation to simplify calculations.</li>
+            <li>Subtract network and broadcast addresses from the total hosts to get usable IPs.</li>
+          </ul>
+
+          <p>Example:</p>
+          <ul>
+            <li>For 192.168.1.1/25, only the fourth octet changes.</li>
+            <li>Usable IP range: 192.168.1.1–192.168.1.126.</li>
+            <li>Next range starts at 192.168.1.128 (network address).</li>
+          </ul>
+          
+          
       </div>
       <!-- Toggle Button for Solution -->
       <button class="solution-button" onclick="toggleSolution('room17', event)">Show Solution</button>
