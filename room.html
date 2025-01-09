@@ -4144,8 +4144,8 @@ select:focus, input[type="range"]:focus {
 
           <p>Now, to represent the CIDR notation, we start by looking at the binary representation of the IPv4 address and the subnet mask:</p>
 
-          <div>
-              <table border="1">
+          <div class="table-container">
+            <table border="1" style="width: 100%;">
                   <tr>
                       <th>Octet</th>
                       <th>1st</th>
@@ -4199,7 +4199,8 @@ select:focus, input[type="range"]:focus {
 
           <p><strong>Example: IPv4 Address 192.168.12.160/26</strong></p>
           <p>Let’s break it down:</p>
-          <table>
+          <div class="table-container">
+            <table border="1" style="width: 100%;">
             <tr>
               <th>Details</th>
               <th>1st Octet</th>
@@ -4224,13 +4225,14 @@ select:focus, input[type="range"]:focus {
               <td>1100 0000</td>
               <td>255.255.255.192</td>
             </tr>
-          </table>
-
+            </table>
+          </div>
           <p>The subnet mask is used as a "template" to determine which portion of the IP address identifies the network and which identifies the host. In this example, the first 26 bits represent the network part, and the remaining 6 bits represent the host part.</p>
 
           <p><strong>Finding the Network Address</strong></p>
           <p>The network address is derived by setting all bits in the host part to 0:</p>
-          <table>
+          <div class="table-container">
+            <table border="1" style="width: 100%;">
             <tr>
               <th>Details</th>
               <th>1st Octet</th>
@@ -4247,11 +4249,12 @@ select:focus, input[type="range"]:focus {
               <td>1000 0000</td>
               <td>192.168.12.128</td>
             </tr>
-          </table>
-
+            </table>
+          </div>
           <p><strong>Finding the Broadcast Address</strong></p>
           <p>The broadcast address is derived by setting all bits in the host part to 1:</p>
-          <table>
+          <div class="table-container">
+            <table border="1" style="width: 100%;">
             <tr>
               <th>Details</th>
               <th>1st Octet</th>
@@ -4268,8 +4271,8 @@ select:focus, input[type="range"]:focus {
               <td>1011 1111</td>
               <td>192.168.12.191</td>
             </tr>
-          </table>
-
+            </table>
+          </div>
           <p><strong>Usable IP Addresses</strong></p>
           <p>All other addresses between the network and broadcast addresses are usable for devices:</p>
           <ul>
@@ -4285,7 +4288,8 @@ select:focus, input[type="range"]:focus {
             <li>This reduces the number of usable hosts per subnet from 62 to 14 (16 total minus network and broadcast addresses).</li>
           </ul>
 
-          <table>
+          <div class="table-container">
+            <table border="1" style="width: 100%;">
             <tr>
               <th>Subnet No.</th>
               <th>Network Address</th>
@@ -4326,8 +4330,8 @@ select:focus, input[type="range"]:focus {
               <td>192.168.12.191</td>
               <td>/28</td>
             </tr>
-          </table>
-
+            </table>
+          </div>
           <p><strong>Mental Subnetting Tips</strong></p>
           <p>Subnetting can seem complex, but understanding these principles can make it easier:</p>
           <ul>
