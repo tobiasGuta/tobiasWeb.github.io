@@ -4347,8 +4347,222 @@ select:focus, input[type="range"]:focus {
             <li>Usable IP range: 192.168.1.1–192.168.1.126.</li>
             <li>Next range starts at 192.168.1.128 (network address).</li>
           </ul>
+          <br>
+
+          <h3>Challenge</h3>
+          <p><Strong>1:</Strong> What is the decimal representation of the subnet mask from the following CIDR: 10.200.20.0/27</p>
+          <p><strong>Step 1: Understand CIDR Notation</strong></p>
+          <p>
+            CIDR notation (e.g., <strong>/27</strong>) specifies the number of bits in the subnet mask that are set to 
+            <strong>1</strong> (network bits).
+          </p>
+          <p>
+            <strong>/27</strong> means that the first 27 bits of the subnet mask are set to <strong>1</strong>, while the 
+            remaining <strong>(32 - 27 = 5)</strong> bits are set to <strong>0</strong>. This gives us the binary 
+            representation of the subnet mask.
+          </p>
+
+          <p><strong>Step 2: Write the Subnet Mask in Binary</strong></p>
+          <p>
+            IPv4 addresses have 32 bits, divided into <strong>four octets</strong> (8 bits each). For <strong>/27</strong>, 
+            the binary representation of the subnet mask looks like this:
+          </p>
+          <ul>
+            <li>First 27 bits set to 1: <code>11111111 11111111 11111111 11100000</code></li>
+            <li>Remaining 5 bits set to 0: <code>00000</code></li>
+          </ul>
+
+          <p><strong>Step 3: Convert Binary to Decimal</strong></p>
+          <p>Now, we split the binary subnet mask into its four octets and convert each to decimal:</p>
+          <ul>
+            <li><strong>First Octet:</strong> <code>11111111</code> = <strong>255</strong></li>
+            <li><strong>Second Octet:</strong> <code>11111111</code> = <strong>255</strong></li>
+            <li><strong>Third Octet:</strong> <code>11111111</code> = <strong>255</strong></li>
+            <li>
+              <strong>Fourth Octet:</strong> <code>11100000</code> = <strong>224</strong> (in binary, 
+              <code>11100000 = 128 + 64 + 32 = 224</code>)
+            </li>
+          </ul>
+
+          <p><strong>Step 4: Combine the Decimal Values</strong></p>
+          <p>
+            The subnet mask in decimal notation is: <strong>255.255.255.224</strong>
+          </p>
+
+          <p><strong>Step 5: Explanation</strong></p>
+          <p>
+            The <strong>/27</strong> CIDR indicates that <strong>27 bits</strong> are reserved for the network, and the 
+            remaining <strong>5 bits</strong> are for hosts. In this case:
+          </p>
+          <ul>
+            <li><strong>Subnet Mask:</strong> <code>255.255.255.224</code></li>
+            <li>
+              <strong>Usable Host Range:</strong> Since 5 bits are left for hosts, there are 
+              <code>2<sup>5</sup> = 32</code> total IP addresses in the subnet. Of these:
+              <ul>
+                <li>1 address is used for the <strong>network address</strong>.</li>
+                <li>1 address is used for the <strong>broadcast address</strong>.</li>
+                <li><strong>30 usable IP addresses</strong> for devices in this subnet.</li>
+              </ul>
+            </li>
+          </ul>
+          <br>
+
+          <p><Strong>2: </Strong>What is the broadcast address of the following CIDR: 10.200.20.0/27</p>
+          <p><strong>Step 1: Understand the Problem</strong></p>
+          <p>
+            A <strong>broadcast address</strong> is the last address in a subnet, where all host bits are set to <strong>1</strong>. The CIDR <strong>/27</strong> means:
+          </p>
+          <ul>
+            <li><strong>Network address:</strong> 10.200.20.0/27 (first address in the subnet)</li>
+            <li><strong>Subnet mask:</strong> 255.255.255.224 (from previous explanation)</li>
+          </ul>
+
+          <p><strong>Step 2: Calculate Total Addresses</strong></p>
+          <p>The subnet size is determined by the number of host bits:</p>
+          <ul>
+            <li>CIDR <strong>/27</strong> means <strong>32 - 27 = 5</strong> host bits.</li>
+            <li>Total IP addresses = <code>2<sup>5</sup> = 32</code></li>
+          </ul>
+
+          <p><strong>Step 3: Find the Broadcast Address</strong></p>
+          <p>The broadcast address is the last IP address in the subnet. Start from the network address and count all IP addresses in the range.</p>
+          <ul>
+            <li><strong>Network Address:</strong> 10.200.20.0</li>
+            <li><strong>Subnet Range:</strong> Since there are 32 total IPs, the range is from 10.200.20.0 to 10.200.20.31.</li>
+            <li><strong>Broadcast Address:</strong> The last address in this range is 10.200.20.31.</li>
+          </ul>
+
+          <p><strong>Step 4: Explanation</strong></p>
+          <ul>
+            <li><strong>Network Address:</strong> 10.200.20.0</li>
+            <li><strong>Broadcast Address:</strong> 10.200.20.31</li>
+            <li><strong>Usable IPs:</strong> 10.200.20.1 to 10.200.20.30 (30 usable IPs for devices).</li>
+          </ul><br>
+
+          <p><strong>3: </strong>Split the network 10.200.20.0/27 into 4 subnets and submit the network address of the 3rd subnet</p>
+          <p><strong>Step 1: Understand the Problem</strong></p>
+          <p>
+            We are given the CIDR <strong>10.200.20.0/27</strong> and need to split it into <strong>4 subnets</strong>. The current subnet mask is <strong>255.255.255.224</strong>.
+          </p>
+
+          <p><strong>Step 2: How to Split the Network</strong></p>
+          <p>
+            We need to borrow bits from the host part of the subnet to create 4 subnets. To do this, we borrow <strong>2 bits</strong> from the host part, as <code>2<sup>2</sup> = 4</code>.
+            This changes the subnet mask from <strong>/27</strong> to <strong>/29</strong> (27 + 2 = 29).
+          </p>
+          <p>Each new subnet will have:</p>
+          <ul>
+            <li>Total IP addresses per subnet: <code>2<sup>3</sup> = 8</code></li>
+            <li>Usable IP addresses per subnet: 8 - 2 = 6 (network and broadcast addresses are not usable)</li>
+          </ul>
+
+          <p><strong>Step 3: Calculate New Subnets</strong></p>
+          <p>Starting from the network address <strong>10.200.20.0</strong>, the 4 subnets are:</p>
           
+          <div class="table-container">
+            <table border="1" style="width: 100%;">
+            <tr>
+              <th>Subnet No.</th>
+              <th>Network Address</th>
+              <th>First Host</th>
+              <th>Last Host</th>
+              <th>Broadcast Address</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>10.200.20.0/29</td>
+              <td>10.200.20.1</td>
+              <td>10.200.20.6</td>
+              <td>10.200.20.7</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>10.200.20.8/29</td>
+              <td>10.200.20.9</td>
+              <td>10.200.20.14</td>
+              <td>10.200.20.15</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>10.200.20.16/29</td>
+              <td>10.200.20.17</td>
+              <td>10.200.20.22</td>
+              <td>10.200.20.23</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>10.200.20.24/29</td>
+              <td>10.200.20.25</td>
+              <td>10.200.20.30</td>
+              <td>10.200.20.31</td>
+            </tr>
+            </table>
+          </div>
+          <p><strong>Step 4: Answer</strong></p>
+          <p>The <strong>network address of the 3rd subnet</strong> is: <strong>10.200.20.16/29</strong></p><br>
+
+          <p><Strong>4: </Strong> Split the network 10.200.20.0/27 into 4 subnets and submit the broadcast address of the 2nd subnet</p>
+          <p><strong>Step 1: Understand the Problem</strong></p>
+          <p>
+            We are given the CIDR <strong>10.200.20.0/27</strong> and need to split it into <strong>4 subnets</strong>. The current subnet mask is <strong>255.255.255.224</strong>.
+          </p>
+
+          <p><strong>Step 2: How to Split the Network</strong></p>
+          <p>
+            We need to borrow bits from the host part of the subnet to create 4 subnets. To do this, we borrow <strong>2 bits</strong> from the host part, as <code>2<sup>2</sup> = 4</code>.
+            This changes the subnet mask from <strong>/27</strong> to <strong>/29</strong> (27 + 2 = 29).
+          </p>
+          <p>Each new subnet will have:</p>
+          <ul>
+            <li>Total IP addresses per subnet: <code>2<sup>3</sup> = 8</code></li>
+            <li>Usable IP addresses per subnet: 8 - 2 = 6 (network and broadcast addresses are not usable)</li>
+          </ul>
+
+          <p><strong>Step 3: Calculate New Subnets</strong></p>
+          <p>Starting from the network address <strong>10.200.20.0</strong>, the 4 subnets are:</p>
           
+          <div class="table-container">
+            <table border="1" style="width: 100%;">
+            <tr>
+              <th>Subnet No.</th>
+              <th>Network Address</th>
+              <th>First Host</th>
+              <th>Last Host</th>
+              <th>Broadcast Address</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>10.200.20.0/29</td>
+              <td>10.200.20.1</td>
+              <td>10.200.20.6</td>
+              <td>10.200.20.7</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>10.200.20.8/29</td>
+              <td>10.200.20.9</td>
+              <td>10.200.20.14</td>
+              <td>10.200.20.15</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>10.200.20.16/29</td>
+              <td>10.200.20.17</td>
+              <td>10.200.20.22</td>
+              <td>10.200.20.23</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>10.200.20.24/29</td>
+              <td>10.200.20.25</td>
+              <td>10.200.20.30</td>
+              <td>10.200.20.31</td>
+            </tr>
+            </table>
+          </div>
+          <p><strong>Step 4: Answer</strong></p>
+          <p>The <strong>broadcast address of the 2nd subnet</strong> is: <strong>10.200.20.15</strong></p>
       </div>
       <!-- Toggle Button for Solution -->
       <button class="solution-button" onclick="toggleSolution('room17', event)">Show Solution</button>
