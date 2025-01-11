@@ -229,7 +229,7 @@
     white-space: normal; /* Allow text to wrap instead of being cut off */
     overflow: hidden; /* Hide content that overflows the container */
     text-overflow: ellipsis; /* Show an ellipsis (...) for truncated content */
-    max-height: 120px; /* Set a max height to prevent long content from breaking the layout */
+    max-height: 120px; /* Prevent long content from breaking the layout */
 }
 
 .author {
@@ -319,6 +319,7 @@
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
                 <span class="author">By ${item.author}</span>
+                <p class="blog-snippet">${truncateContent(contentSnippet,300)}</p>
                 <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
