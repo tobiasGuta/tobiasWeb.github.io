@@ -110,11 +110,13 @@
 
 
         projects-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    width: 100%; /* Ensure it's taking full width */
+}
+
 
         /* Media Queries */
         @media (max-width: 768px) {
@@ -192,7 +194,9 @@
         }
 
         .blog-item img {
-    display: none;
+    max-width: 100px; /* Adjust width */
+    max-height: 100px; /* Adjust height */
+    object-fit: cover; /* Ensure proper aspect ratio */
 }
 
 
