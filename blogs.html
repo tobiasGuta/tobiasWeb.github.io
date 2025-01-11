@@ -471,6 +471,12 @@ function truncateContent(content, maxLength) {
     return content;
 }
 
+// Clean HTML content
+function cleanContent(content) {
+    const doc = new DOMParser().parseFromString(content, 'text/html');
+    return doc.body.textContent || "";
+}
+
         // Call the functions to fetch and display the feeds
         fetchEFFFeed();
         fetchprivacyguidesFeed();
