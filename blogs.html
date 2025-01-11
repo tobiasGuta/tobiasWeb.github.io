@@ -286,7 +286,7 @@
         const parser = new RSSParser();
 
         // Function to truncate content for snippets (e.g., show only 200 characters)
-        function truncateContent(content, maxLength = 500) {
+        function truncateContent(content, maxLength = 1000) {
             if (content.length > maxLength) {
                 return content.substring(0, maxLength) + '...';
             }
@@ -313,7 +313,7 @@
 
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 500)}</p>
+                <p class="blog-snippet">${truncateContent(contentSnippet,1000)}</p>
                 <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
@@ -345,7 +345,7 @@ async function fetchprivacyguidesFeed() {
 
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 500)}</p>
+                <p class="blog-snippet">${truncateContent(contentSnippet, 1000)}</p>
                 <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
@@ -383,7 +383,7 @@ async function fetchprotonFeed() {
 
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 500)}</p>
+                <p class="blog-snippet">${truncateContent(contentSnippet, 1000)}</p>
                 <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
@@ -421,7 +421,7 @@ async function fetchrestoreprivacyFeed() {
 
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 500)}</p>
+                <p class="blog-snippet">${truncateContent(contentSnippet, 1000)}</p>
                 <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
@@ -452,7 +452,7 @@ async function torFeed() {
             const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
 
             // Truncate content to 500 characters or less
-            const truncatedContent = truncateContent(contentSnippet, 500);
+            const truncatedContent = truncateContent(contentSnippet, 1000);
 
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
