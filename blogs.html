@@ -111,10 +111,11 @@
 
         projects-container {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap;  /* Ensures items wrap when they don't fit */
     gap: 20px;
     justify-content: center;
-    width: 100%; /* Ensure it's taking full width */
+    flex-direction: row;  /* Default, ensures horizontal alignment */
+    width: 100%;
 }
 
 
