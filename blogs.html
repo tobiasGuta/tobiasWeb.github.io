@@ -420,24 +420,30 @@ async function fetchrestoreprivacyFeed() {
     }
 }
 
-// Fetch and display the RSS feed from tor
 async function torFeed() {
     try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fblog.torproject.org%2Ffeed&api_key=efngde8qbt0vx9rzitqmahve9bxz7izkrzeorzt3`;
-        const response = await fetch(apiUrl);
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fblog.torproject.org%2Ffeed`;
+        const response = await fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                // Add your domain in the Referer header
+                'Referer': 'https://whoistob1as.me/'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
+        console.log(data);
 
-        console.log(data); // Log the entire response to check its structure
-
+        // Render the blog posts
         const blogContainer = document.getElementById('TorPosts');
         let output = '<ul class="blog-list">';
-
         data.items.forEach(item => {
-            console.log(item); // Log the whole item to see the structure and content
-            
-            // Fallback if contentSnippet is not available
-            const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
-
+            const contentSnippet = item.contentSnippet || item.description || 'No snippet available';
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
                 <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
@@ -447,10 +453,12 @@ async function torFeed() {
 
         output += '</ul>';
         blogContainer.innerHTML = output;
+
     } catch (error) {
         console.error('Error fetching tor RSS feed:', error);
     }
 }
+
 
 // Simple truncation function to limit the length of the content
 function truncateContent(content, maxLength) {
