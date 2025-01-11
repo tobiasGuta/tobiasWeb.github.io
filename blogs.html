@@ -422,7 +422,7 @@ async function fetchrestoreprivacyFeed() {
 
 async function torFeed() {
     try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fblog.torproject.org%2Ffeed`;
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fblog.torproject.org%2Ffeed&api_key=efngde8qbt0vx9rzitqmahve9bxz7izkrzeorzt3`;
         const response = await fetch(apiUrl, {
             method: 'GET',
             headers: {
