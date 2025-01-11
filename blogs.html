@@ -285,7 +285,13 @@
         // Initialize RSS parser
         const parser = new RSSParser();
 
-        // Function to truncate content for snippets (e.g., show only 200 characters)
+        // Simple truncation function to limit the length of the content
+function truncateContent(content, maxLength) {
+    if (content.length > maxLength) {
+        return content.substring(0, maxLength) + '...';
+    }
+    return content;
+}
         
 
         // Fetch and display the RSS feed from EFF
