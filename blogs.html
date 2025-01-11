@@ -234,6 +234,17 @@
             max-height: 120px;      /* Set a max height to prevent long content from breaking the layout */
         }
 
+
+        .read-more {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #2AF7A5;
+            color: #333;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
     </style>
 </head>
 <body>
@@ -298,6 +309,7 @@
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
                 <p class="blog-snippet">${truncateContent(contentSnippet,300)}</p>
+                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
 
@@ -329,6 +341,7 @@ async function fetchprivacyguidesFeed() {
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
                 <p class="blog-snippet">${truncateContent(contentSnippet, 300)}</p>
+                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
 
@@ -366,6 +379,7 @@ async function fetchprotonFeed() {
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
                 <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
+                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
 
@@ -403,6 +417,7 @@ async function fetchrestoreprivacyFeed() {
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
                 <p class="blog-snippet">${truncateContent(contentSnippet, 300)}</p>
+                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
 
@@ -432,11 +447,12 @@ async function torFeed() {
             const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
 
             // Truncate content to 500 characters or less
-            const truncatedContent = truncateContent(contentSnippet, 100);
+            const truncatedContent = truncateContent(contentSnippet, 350);
 
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
                 <p class="blog-snippet">${truncatedContent}</p>
+                <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
 
