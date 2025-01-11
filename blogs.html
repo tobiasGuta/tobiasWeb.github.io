@@ -286,12 +286,12 @@
         const parser = new RSSParser();
 
         // Simple truncation function to limit the length of the content
-function truncateContent(content, maxLength) {
-    if (content.length > maxLength) {
-        return content.substring(0, maxLength) + '...';
-    }
-    return content;
-}
+        function truncateContent(content, maxLength) {
+            if (content.length > maxLength) {
+                return content.substring(0, maxLength) + '...';
+            }
+            return content;
+        }
         
 
         // Fetch and display the RSS feed from EFF
@@ -443,7 +443,7 @@ async function torFeed() {
 
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 300)}</p>
+                <p class="blog-snippet">${truncateContent(contentSnippet, 350)}</p>
                 <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
