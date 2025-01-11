@@ -229,7 +229,7 @@
     white-space: normal; /* Allow text to wrap instead of being cut off */
     overflow: hidden; /* Hide content that overflows the container */
     text-overflow: ellipsis; /* Show an ellipsis (...) for truncated content */
-    max-height: 120px; /* Prevent long content from breaking the layout */
+    max-height: 120px; /* Set a max height to prevent long content from breaking the layout */
 }
 
 .author {
@@ -240,8 +240,8 @@
 }
 
 .read-more {
-    display: inline-block; /* Ensures 'Read More' takes up a new line */
-    margin-top: 10px;
+    display: block; /* Makes 'Read More' appear on a new line */
+    margin-top: 10px; /* Adds space between the content and the link */
     padding: 8px 15px;
     background-color: #2AF7A5;
     color: #333;
