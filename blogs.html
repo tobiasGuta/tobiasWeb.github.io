@@ -420,45 +420,37 @@ async function fetchrestoreprivacyFeed() {
     }
 }
 
+// Fetch and display the RSS feed from Tor
 async function torFeed() {
-    try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fblog.torproject.org%2Ffeed&api_key=efngde8qbt0vx9rzitqmahve9bxz7izkrzeorzt3`;
-        const response = await fetch(apiUrl, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                // Add your domain in the Referer header
-                'Referer': 'https://whoistob1as.me/'
-            }
-        });
+            try {
+                const apiUrl = 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fblog.torproject.org%2Ffeed&api_key=efngde8qbt0vx9rzitqmahve9bxz7izkrzeorzt3';
+                const response = await fetch(apiUrl);
+                const data = await response.json();
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+                console.log(data); // Log the entire response to check its structure
+                
+                const blogContainer = document.getElementById('TorPosts');
+                let output = '<ul class="blog-list">';
+                
+                    data.items.forEach(item => {
+            console.log(item); // Log the whole item to see the structure and content
+            
+            // Fallback if contentSnippet is not available
+            const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
 
-        const data = await response.json();
-        console.log(data);
-
-        // Render the blog posts
-        const blogContainer = document.getElementById('TorPosts');
-        let output = '<ul class="blog-list">';
-        data.items.forEach(item => {
-            const contentSnippet = item.contentSnippet || item.description || 'No snippet available';
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
+                <p class="blog-snippet">${truncateContent(contentSnippet, 500)}</p>
                 <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
 
         output += '</ul>';
         blogContainer.innerHTML = output;
-
     } catch (error) {
-        console.error('Error fetching tor RSS feed:', error);
+        console.error('Error fetching privacyguides Tor feed:', error);
     }
 }
-
 
 // Simple truncation function to limit the length of the content
 function truncateContent(content, maxLength) {
