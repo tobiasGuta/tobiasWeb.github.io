@@ -286,7 +286,7 @@
         const parser = new RSSParser();
 
         // Function to truncate content for snippets (e.g., show only 200 characters)
-        function truncateContent(content, maxLength = 1000) {
+        function truncateContent(content, maxLength = 300) {
             if (content.length > maxLength) {
                 return content.substring(0, maxLength) + '...';
             }
