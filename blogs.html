@@ -405,6 +405,7 @@ async function fetchrestoreprivacyFeed() {
 
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
+                <span class="author">By ${item.author}</span>
                 <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
