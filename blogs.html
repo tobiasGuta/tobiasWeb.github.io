@@ -447,7 +447,7 @@ async function torFeed() {
             const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
 
             // Truncate content to 500 characters or less
-            const truncatedContent = truncateContent(contentSnippet, 200);
+            const truncatedContent = truncateContent(contentSnippet, 100);
 
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
