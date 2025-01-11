@@ -313,7 +313,7 @@
 
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
-                <p class="blog-snippet">${truncateContent(contentSnippet, 500)}</p>
+                <p class="blog-snippet">${truncateContent(contentSnippet, 200)}</p>
                 <a href="${item.link}" target="_blank" class="read-more">Read More</a>
             </li>`;
         });
@@ -452,7 +452,7 @@ async function torFeed() {
             const contentSnippet = item.contentSnippet || item.description || 'No snippet available'; 
 
             // Truncate content to 500 characters or less
-            const truncatedContent = truncateContent(contentSnippet, 500);
+            const truncatedContent = truncateContent(contentSnippet, 200);
 
             output += `<li class="blog-item">
                 <a href="${item.link}" target="_blank" class="blog-title">${item.title}</a>
@@ -467,21 +467,6 @@ async function torFeed() {
         console.error('Error fetching Tor feed:', error);
     }
 }
-
-// Simple truncation function to limit the length of the content
-function truncateContent(content, maxLength) {
-    if (content.length > maxLength) {
-        return content.substring(0, maxLength) + '...';
-    }
-    return content;
-}
-
-// Clean HTML content
-function cleanContent(content) {
-    const doc = new DOMParser().parseFromString(content, 'text/html');
-    return doc.body.textContent || "";
-}
-
         // Call the functions to fetch and display the feeds
         fetchEFFFeed();
         fetchprivacyguidesFeed();
