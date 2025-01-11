@@ -16,7 +16,9 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            overflow: hidden; /* Disables scrolling entirely */
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+            overflow-y: auto; /* Allow vertical scrolling */
+            height: 100vh; /* Ensure the body takes up the full height of the viewport */
         }
         .background-container {
             position: fixed; /* Cover the entire viewport */
