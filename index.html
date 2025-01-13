@@ -292,6 +292,19 @@ nav a:hover::after {
             animation: pulse 1s infinite; /* Apply your pulse animation */
         }
 
+        .icon-container {
+            margin-top: 20px;
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)); /* Responsive columns */
+            gap: 5px; /* Space between icons */
+            justify-items: center; /* Center icons in each cell */
+        }
+        
+        .icon {
+            font-size: 50px;
+        }
+
         /* Media Query for responsive design */
         @media (max-width: 768px) {
     html, body {
@@ -499,6 +512,13 @@ nav a:hover::after {
             <p>📢 Sharing the Knowledge: <br>On my profile, I share what I’m learning—tools, techniques, and insights I pick up along the way—because I believe in growing together with the cybersecurity community.</p>
             <p>🌐 Why Cybersecurity? <br>I thrive on solving puzzles and protecting what matters most in the digital space. It’s a field where learning never stops, and I’m here for it.</p>
             <p>💼 What I’m Looking For: <br>I’m eager to apply my skills in a collaborative environment, solve complex cybersecurity challenges, and contribute to innovative projects. I’m also excited to grow through hands-on experience and mentorship from industry experts.</p>
+            <h2>Skills</h2>
+            <div class="icon-container">
+                <i class="fab fa-python icon" style="color: #3776AB;"></i>
+                <i class="fab fa-git icon" style="color: #F05033;"></i>
+                <i class="fas fa-database icon" style="color: #4DB33D;"></i>
+                <i class="fab fa-linux icon" style="color: #FCC624;"></i>
+            </div>   
         </section>
 
         <!-- Post Section -->
