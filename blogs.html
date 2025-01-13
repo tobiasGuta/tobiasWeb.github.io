@@ -93,10 +93,28 @@
             transition: color 0.3s, box-shadow 0.3s; /* Smooth transition for color and shadow */
         }
 
+        /* Normal link hover (for navigation button) */
         nav a:hover {
-            color: #2AF7A5;
-            animation: pulse 1s infinite;
+            color: #2AF7A5; /* Change text color to #2AF7A5 */
+            animation: pulse 1s infinite; /* Apply pulse effect */
             box-shadow: 0 0 10px #2AF7A5, 0 0 20px #2AF7A5, 0 0 30px #2AF7A5; /* Glowing effect */
+            border: 2px solid #2AF7A5; /* Border appears only when hovering */
+        }
+
+        /* Pulse animation for hacker vibes */
+        @keyframes pulse {
+            0% { 
+                transform: scale(1);
+                opacity: 1; 
+            }
+            50% { 
+                transform: scale(1.1); 
+                opacity: 0.8; 
+            }
+            100% { 
+                transform: scale(1); 
+                opacity: 1; 
+            }
         }
 
         ul {
