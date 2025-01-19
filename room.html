@@ -1983,11 +1983,68 @@ select:focus, input[type="range"]:focus {
             226 Directory send OK.<br>
             ftp> 
           </div>
-      </div>
+          <p>But let's get an overview of the vsFTPd status:</p>
+          <div class="terminal">
+            <span class="prompt">$</span> ftp> status<br>
+            Connected and logged into targetip.<br>
+            No proxy connection.<br>
+            Gate ftp: off, server (none), port ftpgate.<br>
+            Passive mode: on; fallback to active mode: on.<br>
+            Mode: stream; Type: binary; Form: non-print; Structure: file.<br>
+            Verbose: on; Bell: off; Prompting: on; Globbing: on.<br>
+            Store unique: off; Receive unique: off.<br>
+            Preserve modification times: on.<br>
+            Case: off; CR stripping: on.<br>
+            Ntrans: off.<br>
+            Nmap: off.<br>
+            Hash mark printing: off; Mark count: 1024; Progress bar: on.<br>
+            Get transfer rate throttle: off; maximum: 0; increment 1024.<br>
+            Put transfer rate throttle: off; maximum: 0; increment 1024.<br>
+            Socket buffer sizes: send 16384, receive 131072.<br>
+            Use of PORT cmds: on.<br>
+            Use of EPSV/EPRT cmds for IPv4: on.<br>
+            Use of EPSV/EPRT cmds for IPv6: on.<br>
+            Command line editing: on.<br>
+            Version: tnftp 20230507<br>
+            ftp>
+          </div>
+          <p>vsFTPd Detailed Output:</p>
+          <div class="terminal">
+            <span class="prompt">$</span> ftp> debug<br>
+            Debugging on (debug=1).
+            ftp> 
+          </div>
+          <br>
+          <div class="terminal">
+            <span class="prompt">$</span> ftp> trace<br>
+            Packet tracing on.<br>
+            ftp> 
+          </div>
+          <br>
+          <div class="terminal">
+            <span class="prompt">$</span> ftp> ls<br>
+            ftp: setsockopt SO_DEBUG (ignored): Permission denied<br>
+            ---> EPSV<br>
+            229 Entering Extended Passive Mode (|||44279|)<br>
+            229 Entering Extended Passive Mode (|||44279|)<br>
+            ---> LIST<br>
+            150 Here comes the directory listing.<br>
+            226 Directory send OK.
+          </div>
+          <p>Let's see if <Strong>write_enable</Strong> is set to yes:</p>
+          <div class="terminal">
+            <span class="prompt">$</span> ftp> put myfile <br>
+          local: myfile remote: myfile<br>
+          229 Entering Extended Passive Mode (|||40849|)<br>
+          550 Permission denied.<br>
+          </div>
 
+
+          
+      </div>
       <!-- Toggle Button for Solution -->
       <button class="solution-button" onclick="toggleSolution('room19', event)">Show Solution</button>
-  </div>
+      </div>
 </div>
 
 <script>
