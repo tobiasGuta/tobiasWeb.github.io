@@ -2136,8 +2136,137 @@ select:focus, input[type="range"]:focus {
             226 Directory send OK.<br>
             ftp> 
           </div>
-      
-      
+          <p><strong>This setting is really helpful for preventing local usernames from being revealed.</strong> With the usernames, we could attack services like FTP.</p>
+
+          <p>In order to download a file, it needs to have the appropriate permissions, for example, <code>755</code> for <code>secret.txt</code>.</p>
+
+          <p>By doing this, we will be able to download the file:</p>
+          <div class="terminal">
+            <span class="prompt"></span> ftp> ls<br>
+            229 Entering Extended Passive Mode (|||61543|)<br>
+            150 Here comes the directory listing.<br>
+            -rwxr-xr-x    1 ftp      ftp            23 Jan 19 14:50 secret.txt<br>
+            226 Directory send OK.<br>
+            ftp> get secret.txt<br>
+            local: secret.txt remote: secret.txt<br>
+            229 Entering Extended Passive Mode (|||8676|)<br>
+            150 Opening BINARY mode data connection for secret.txt (23 bytes).<br>
+            100% |***********************************|    23      547.82 KiB/s    00:00 ETA<br>
+            226 Transfer complete.<br>
+            23 bytes received in 00:00 (29.20 KiB/s)<br>
+            ftp>
+          </div>
+          <p><Strong>NOTE: Always review your permissions.</Strong></p>
+          <p>If we want to upload a file, we need to give permission (chmod 777) to the directory /home/ftpuser.</p>
+          <div class="terminal">
+            <span class="prompt"></span> ftp> put anonfile.txt <br>
+            local: anonfile.txt remote: anonfile.txt<br>
+            229 Entering Extended Passive Mode (|||64652|)<br>
+            150 Ok to send data.<br>
+                 0        0.00 KiB/s <br>
+            226 Transfer complete.<br>
+            ftp> ls<br>
+            229 Entering Extended Passive Mode (|||60414|)<br>
+            150 Here comes the directory listing.<br>
+            -rw-------    1 ftp      ftp             0 Jan 19 17:36 anonfile.txt<br>
+            -rwxr-xr-x    1 ftp      ftp            23 Jan 19 14:50 secret.txt<br>
+            226 Directory send OK.<br>
+            ftp>             
+          </div>
+          <p><Strong>NOTE: always review your permission </Strong></p>
+          <p>Now, let's footprint these services:</p>
+          <div class="terminal">
+            <span class="prompt"></span> sudo nmap -sV -p21 -sC -A 192.168.217.131<br>
+            Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-19 12:43 EST<br>
+            Nmap scan report for 192.168.217.131<br>
+            Host is up (0.0013s latency).<br>
+            <br>
+            PORT   STATE SERVICE VERSION<br>
+            21/tcp open  ftp     vsftpd 3.0.5<br>
+            | ftp-syst: <br>
+            |   STAT: <br>
+            | FTP server status:<br>
+            |      Connected to ::ffff:192.168.217.ip<br>
+            |      Logged in as ftp<br>
+            |      TYPE: ASCII<br>
+            |      No session bandwidth limit<br>
+            |      Session timeout in seconds is 300<br>
+            |      Control connection is plain text<br>
+            |      Data connections will be plain text<br>
+            |      At session startup, client count was 2<br>
+            |      vsFTPd 3.0.5 - secure, fast, stable<br>
+            |_End of status<br>
+            | ftp-anon: Anonymous FTP login allowed (FTP code 230)<br>
+            | drwxrwxr-x    2 ftp      ftp          4096 Jan 19 17:40 3<br>
+            | -rw-------    1 ftp      ftp             0 Jan 19 17:36 anonfile.txt<br>
+            | -rwxr-xr-x    1 ftp      ftp            23 Jan 19 14:50 secret.txt<br>
+            | drwxrwxr-x    2 ftp      ftp          4096 Jan 19 17:40 testing<br>
+            | drwxrwxr-x    2 ftp      ftp          4096 Jan 19 17:40 testing1<br>
+            |_drwxrwxr-x    2 ftp      ftp          4096 Jan 19 17:40 testing2<br>
+          </div>
+          <p>The ftp-syst, for example, executes the STAT command, which displays information about the FTP server status. This includes configurations as well as the version of the FTP server. Nmap also provides the ability to trace the progress of NSE scripts at the network level if we use the --script-trace option in our scans.</p>
+          <div class="terminal">
+            <span class="prompt"></span> sudo nmap -sV -p21 -sC -A 192.168.217.131 --script-trace<br>
+            <br>
+            Starting Nmap 7.80 ( https://nmap.org ) at 2021-09-19 13:54 CEST        <br>                                                                                                                                           
+            NSOCK INFO [11.4640s] nsock_trace_handler_callback(): Callback: CONNECT SUCCESS for EID 8 [10.129.14.136:21]      <br>                             
+            NSOCK INFO [11.4640s] nsock_trace_handler_callback(): Callback: CONNECT SUCCESS for EID 16 [10.129.14.136:21]     <br>        
+            NSOCK INFO [11.4640s] nsock_trace_handler_callback(): Callback: CONNECT SUCCESS for EID 24 [10.129.14.136:21]<br>
+            NSOCK INFO [11.4640s] nsock_trace_handler_callback(): Callback: CONNECT SUCCESS for EID 32 [10.129.14.136:21]<br>
+            NSOCK INFO [11.4640s] nsock_read(): Read request from IOD #1 [10.129.14.136:21] (timeout: 7000ms) EID 42<br>
+            NSOCK INFO [11.4640s] nsock_read(): Read request from IOD #2 [10.129.14.136:21] (timeout: 9000ms) EID 50<br>
+            NSOCK INFO [11.4640s] nsock_read(): Read request from IOD #3 [10.129.14.136:21] (timeout: 7000ms) EID 58<br>
+            NSOCK INFO [11.4640s] nsock_read(): Read request from IOD #4 [10.129.14.136:21] (timeout: 11000ms) EID 66<br>
+            NSE: TCP 10.10.14.4:54226 > 10.129.14.136:21 | CONNECT<br>
+            NSE: TCP 10.10.14.4:54228 > 10.129.14.136:21 | CONNECT<br>
+            NSE: TCP 10.10.14.4:54230 > 10.129.14.136:21 | CONNECT<br>
+            NSE: TCP 10.10.14.4:54232 > 10.129.14.136:21 | CONNECT<br>
+            NSOCK INFO [11.4660s] nsock_trace_handler_callback(): Callback: READ SUCCESS for EID 50 [10.129.14.136:21] (41 bytes): 220 Welcome to HTB-Academy FTP service...<br>
+            NSOCK INFO [11.4660s] nsock_trace_handler_callback(): Callback: READ SUCCESS for EID 58 [10.129.14.136:21] (41 bytes): 220 Welcome to HTB-Academy FTP service...<br>
+            NSE: TCP 10.10.14.4:54228 < 10.129.14.136:21 | 220 Welcome to HTB-Academy FTP service.<br>
+          </div>
+          <p>The scan history shows that four different parallel scans are running against the service, with various timeouts. For the NSE scripts, we see that our local machine uses other output ports (54226, 54228, 54230, 54232) and first initiates the connection with the CONNECT command. From the first response from the server, we can see that we are receiving the banner from the server to our second NSE script (54228) from the target FTP server. </p>
+          <p>Service Interaction using nc</p>
+          <div class="terminal">
+            <span class="prompt"></span> nc -nv 192.168.217.131 21      <br>                      
+            (UNKNOWN) [192.168.217.131] 21 (ftp) open<br>
+            220 (vsFTPd 3.0.5)
+          </div>
+
+          <div class="terminal">
+            <span class="prompt"></span> telnet 192.168.217.131 21 <br>
+            Trying 192.168.217.131...<br>
+            Connected to 192.168.217.131.<br>
+            Escape character is '^]'.<br>
+            220 (vsFTPd 3.0.5)
+          </div>
+          <p>in some case FTP server runs with TLS/SSL encryption. Because then we need a client that can handle TLS/SSL. For this, we can use the client openssl and communicate with the FTP server. The good thing about using openssl is that we can see the SSL certificate, which can also be helpful.</p>
+          <div class="terminal">
+            <span class="prompt"></span> openssl s_client -connect 10.129.14.136:21 -starttls ftp<br>
+            <br>
+            CONNECTED(00000003)        <br>                                                                              
+            Can't use SSL_get_servername       <br>                 
+            depth=0 C = US, ST = California, L = Sacramento, O = Inlanefreight, OU = Dev, CN = master.inlanefreight.htb, emailAddress = admin@inlanefreight.htb<br>
+            verify error:num=18:self signed certificate<br>
+            verify return:1<br>
+            <br>
+            depth=0 C = US, ST = California, L = Sacramento, O = Inlanefreight, OU = Dev, CN = master.inlanefreight.htb, emailAddress = admin@inlanefreight.htb<br>
+            verify return:1<br>
+            ---                   <br>                              
+            Certificate chain<br>
+             0 s:C = US, ST = California, L = Sacramento, O = Inlanefreight, OU = Dev, CN = master.inlanefreight.htb, emailAddress = admin@inlanefreight.htb<br>
+             <br>
+             i:C = US, ST = California, L = Sacramento, O = Inlanefreight, OU = Dev, CN = master.inlanefreight.htb, emailAddress = admin@inlanefreight.htb<br>
+            ---<br>
+             
+            Server certificate<br>
+            
+            -----BEGIN CERTIFICATE-----<br>
+            
+            MIIENTCCAx2gAwIBAgIUD+SlFZAWzX5yLs2q3ZcfdsRQqMYwDQYJKoZIhvcNAQEL<br>
+            ...SNIP...
+          </div>
+          <p>This is because the SSL certificate allows us to recognize the hostname, for example, and in most cases also an email address for the organization or company. In addition, if the company has several locations worldwide, certificates can also be created for specific locations, which can also be identified using the SSL certificate.</p>
         </div>
       <!-- Toggle Button for Solution -->
       <button class="solution-button" onclick="toggleSolution('room19', event)">Show Solution</button>
