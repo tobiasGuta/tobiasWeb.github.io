@@ -1938,6 +1938,23 @@ select:focus, input[type="range"]:focus {
   </div>
 </div>
 
+<!-- Room 19 -->
+<div class="room-section">
+  <h2 onclick="toggleContent('room19')"> Fingerprinting <i class="fas fa-fingerprint"></i> </h2>
+  <div id="room19" class="collapsible-content">
+      <img src="reconhacker.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+      <p><strong>Description:</strong> Fingerprinting is the process of identifying and gathering detailed information about a target system, such as its operating system, services, software versions, and hardware.</p>
+      <p><strong>Challenge Approach:</strong> we'll explore how we can fingerprint different services like FTP, SMB, and more.</p>
+
+      <div class="solution-section" id="solution-room2" style="display: none;">
+          <p><strong>Info:</strong> FTP (File Transfer Protocol) is a standard network protocol used to transfer files between a client and a server over a TCP/IP network. FTP is commonly used for uploading and downloading files to and from web servers.</p>          
+      </div>
+
+      <!-- Toggle Button for Solution -->
+      <button class="solution-button" onclick="toggleSolution('room19', event)">Show Solution</button>
+  </div>
+</div>
+
 <script>
   function toggleContent(room) {
       var content = document.getElementById(room);
