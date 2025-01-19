@@ -1960,6 +1960,29 @@ select:focus, input[type="range"]:focus {
             ftp: Login failed<br>
             ftp>
           </div>
+          <p>In this case, it doesn't allow logging in as anonymous. Let's change some settings to allow me to log in as an anonymous user.</p>
+          <div class="terminal">
+            <span class="prompt">$</span> ftp targetip<br>    
+            Connected to targetip.<br>   
+            220 (vsFTPd 3.0.5)<br>   
+            Name (targetip:bigbrooklyn): Anonymous<br>   
+            331 Please specify the password.<br>   
+            Password: <br>   
+            230 Login successful.<br>   
+            Remote system type is UNIX.<br>   
+            Using binary mode to transfer files.<br>   
+            ftp> 
+          </div>
+          <p>In this case, it allows logging in as an anonymous user.</p>
+          <p>We always have to make sure that <Strong>anonymous_enable=NO</Strong> is set to NO </p>
+          <p>If we enumerate FTP, in my case, we are not going to find anything."</p>
+          <div class="terminal">
+            <span class="prompt">$</span> ftp> ls<br>
+            229 Entering Extended Passive Mode (|||6859|)<br>
+            150 Here comes the directory listing.<br>
+            226 Directory send OK.<br>
+            ftp> 
+          </div>
       </div>
 
       <!-- Toggle Button for Solution -->
