@@ -1975,7 +1975,7 @@ select:focus, input[type="range"]:focus {
           </div>
           <p>In this case, it allows logging in as an anonymous user.</p>
           <p>We always have to make sure that <Strong>anonymous_enable=NO</Strong> is set to NO </p>
-          <p>If we enumerate FTP, in my case, we are not going to find anything."</p>
+          <p>If we enumerate FTP, in my case, we are not going to find anything.</p>
           <div class="terminal">
             <span class="prompt">$</span> ftp> ls<br>
             229 Entering Extended Passive Mode (|||6859|)<br>
@@ -1983,7 +1983,7 @@ select:focus, input[type="range"]:focus {
             226 Directory send OK.<br>
             ftp> 
           </div>
-          <p>But let's get an overview of the vsFTPd status:</p>
+          <p>let's get an overview of the vsFTPd status:</p>
           <div class="terminal">
             <span class="prompt">$</span> ftp> status<br>
             Connected and logged into targetip.<br>
@@ -2038,10 +2038,107 @@ select:focus, input[type="range"]:focus {
           229 Entering Extended Passive Mode (|||40849|)<br>
           550 Permission denied.<br>
           </div>
+          <p>This is not the case, so let's change some configuration in the FTP so I can read files from a different user:</p>
+          <pre><code>sudo nano /etc/vsftpd.conf</code></pre>
 
+          <p><strong>Allow Directory Listing:</strong></p>
+          <p>Ensure that anonymous users are allowed to list files:</p>
+          <pre><code>list_enable=YES</code></pre>
 
-          
-      </div>
+          <p><strong>Set the Directory for Anonymous Access:</strong></p>
+          <p>If you want to restrict anonymous users to a specific directory (e.g., /home/ftpuser/ or a subdirectory of it), set <code>anon_root</code>:</p>
+          <pre><code>anon_root=/home/ftpuser/</code></pre>
+
+          <p><strong>Make Files Readable but Not Writable by Anonymous Users:</strong></p>
+          <p>You need to allow anonymous users to read the files uploaded by <code>ftpuser</code>, but not modify or upload their own files. To do this, ensure the following:</p>
+          <pre><code>anon_world_readable_only=YES</code></pre>
+
+          <p><strong>Allow Anonymous Users to Read, but Not Write:</strong></p>
+          <p>Make sure that write access is disabled for anonymous users. You can enable this if you want anonymous uploads, but in this case, we don’t want them to upload files:</p>
+          <pre><code>anon_upload_enable=NO</code></pre>
+
+          <p><strong>Restart the Service:</strong></p>
+          <pre><code>sudo systemctl restart vsftpd</code></pre>
+
+          <p>After this, we need to give the proper permissions for the <code>ftpuser</code> directory:</p>
+
+          <p><strong>Ensure Correct Ownership of /home/ftpuser/:</strong></p>
+          <p>The <code>ftpuser</code> should own the directory where files are being uploaded, and the group should be <code>ftp</code> (or <code>www-data</code>, depending on your setup). You can check the ownership with:</p>
+          <pre><code>sudo chown ftpuser:ftp /home/ftpuser/</code></pre>
+
+          <p><strong>Set Permissions for /home/ftpuser/:</strong></p>
+          <p>For anonymous users to read files, the directory permissions need to be set to allow read access to everyone, but write access only to <code>ftpuser</code>:</p>
+          <pre><code>sudo chmod 755 /home/ftpuser/</code></pre>
+
+          <p>This allows:</p>
+          <ul>
+            <li><code>ftpuser</code> to read, write, and execute in /home/ftpuser/.</li>
+            <li>Anonymous users to read the files but not upload or delete files.</li>
+          </ul>
+
+          <p><strong>Ensure File Permissions Are Correct for Files Uploaded by ftpuser:</strong></p>
+          <p>Any files uploaded by <code>ftpuser</code> should be readable by anonymous users. You should ensure that the files have the correct permissions (644 for most cases):</p>
+          <pre><code>sudo chmod 644 /home/ftpuser/*</code></pre>
+
+          <p><strong>Now, let's test the configuration:</strong></p>
+          <p>As you can see on the server, I have a <code>secret.txt</code> file. Let's see if anonymous users can access this file on the FTP server:</p>
+          <img src="secretserverkey.png" alt="Room 1 Demonstration" style="max-width: 100%; height: auto;">
+          <div class="terminal">
+            <span class="prompt">$</span> ftp> ls<br>
+            229 Entering Extended Passive Mode (|||22372|)<br>
+            150 Here comes the directory listing.<br>
+            -rw-r--r--    1 1001     1001           23 Jan 19 14:50 secret.txt<br>
+            226 Directory send OK.<br>
+            ftp>
+          </div>
+          <p>We were able to see this file on the FTP server. Can we read it though?</p>
+          <div class="terminal">
+            <span class="prompt">$</span> ftp> more secret.txt<br>
+            this is my private key<br>
+            ftp>
+          </div>
+          <p>Yes, we can actually read it. Let's change this so anonymous users are able to list the file but not read its content:</p>
+
+          <pre><code>sudo chmod 600 /home/ftpuser/secret.txt</code></pre>
+
+          <p><strong>Explanation of <code>chmod 600</code>:</strong></p>
+          <ul>
+            <li><strong>6</strong> means read and write permissions for the owner (ftpuser).</li>
+            <li><strong>0</strong> means no permissions for the group and others (which includes anonymous users).</li>
+          </ul>
+
+          <p>With these permissions, only ftpuser will be able to read or modify the file, and anonymous users will not have access to it.</p>
+
+          <p>Now, let's try reading the file again:</p>
+          <div class="terminal">
+            <span class="prompt">$</span> ftp> more secret.txt<br>
+            Failed to open file.<br>
+            ftp> 
+          </div>
+          <p>we don't have permission to read this file, and they can't download it either.</p>
+          <div class="terminal">
+            <span class="prompt">$</span> ftp> get secret.txt<br>
+            local: secret.txt remote: secret.txt<br>
+            229 Entering Extended Passive Mode (|||14602|)<br>
+            550 Failed to open file.<br>
+            ftp> 
+          </div>
+          <p>As you can see, the anonymous user can see the ID 1001, which is the UID and GID representation of the service:</p>
+          <div class="terminal">
+            <span class="prompt"></span> -rw-------    1 1001     1001           23 Jan 19 14:50 secret.txt 
+          </div>
+          <p>Now, let's make it harder to identify with which rights these files are written and uploaded. We can do this by changing <Strong>hide_ids=YES</Strong></p>
+          <div class="terminal">
+            <span class="prompt"></span> ftp> ls<br>
+            229 Entering Extended Passive Mode (|||36026|)<br>
+            150 Here comes the directory listing.<br>
+            -rw-------    1 ftp      ftp            23 Jan 19 14:50 secret.txt<br>
+            226 Directory send OK.<br>
+            ftp> 
+          </div>
+      
+      
+        </div>
       <!-- Toggle Button for Solution -->
       <button class="solution-button" onclick="toggleSolution('room19', event)">Show Solution</button>
       </div>
