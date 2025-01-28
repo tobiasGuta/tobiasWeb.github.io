@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tobias Website</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="icon" href="favicon-16x16.png" type="image/x-icon">
     <link rel="preload" href="ya.webp" as="image" type="image/webp">
     <meta name="description" content="Explore Tobias A's portfolio - showcasing cybersecurity insights, tools, tips, and ctf rooms. Stay updated on threat intelligence and bug bounties.">
@@ -164,14 +165,24 @@ nav a:hover::after {
     margin: 20px;
     background-color: #14161E;
     border-radius: 8px;
-    max-width: 1500px;         /* Increased max-width for an even wider section */
-    width: 100%;               /* Ensures it takes full available width but with a max-width */
+    max-width: 1500px;
+    width: 100%;
+    font-family: 'Roboto', sans-serif; /* Add the professional font here */
 }
 
+/* Hover effect on intro-section */
 .intro-section:hover {
-    border-color: #ccc; /* Green glowing border */
-    box-shadow: 0 0 10px #ccc; /* Glowing effect */
+    border-color: #ccc;
+    box-shadow: 0 0 10px #ccc;
 }
+
+/* Center the text inside each paragraph */
+.intro-section p {
+    text-align: center;
+    margin-bottom: 15px;
+    font-family: 'Roboto', sans-serif; /* Apply the font to paragraphs too */
+}
+
 
 /* Style for h2 */
 h2 {
