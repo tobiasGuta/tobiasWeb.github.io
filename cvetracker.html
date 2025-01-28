@@ -122,6 +122,8 @@
                 const xmlDoc = parser.parseFromString(text, 'text/xml');
 
                 const items = xmlDoc.querySelectorAll('item');
+                feedContainer.innerHTML = '';  // Clear the existing feed before appending new data
+
                 items.forEach(item => {
                     const title = item.querySelector('title').textContent;
                     const link = item.querySelector('link').textContent;
@@ -144,7 +146,11 @@
             }
         }
 
+        // Fetch the feed immediately when the page loads
         fetchRSSFeed();
+
+        // Set an interval to fetch the feed every 15 minutes (900,000 milliseconds)
+        setInterval(fetchRSSFeed, 900000); // 15 minutes in milliseconds
     </script>
 </body>
 </html>
