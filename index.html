@@ -37,6 +37,10 @@
     height: 310px;
     object-fit: cover; /* Ensures the image covers the entire space without distortion */
     object-position: 70% 15%;  /* Focuses more on top to middle */
+    border: 2px solid transparent; /* Transparent border */
+    box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 30px; /* Optional: to round the corners */
+    width: 1840px;
 }
 
 
@@ -64,7 +68,7 @@
 
         /* Navigation links styling */
         a i {
-    margin-right: 8px; /* Add some space between the icon and the text */
+    margin-right: 20px; /* Add some space between the icon and the text */
 }
 
 nav a {
@@ -81,6 +85,7 @@ nav a {
     overflow: hidden;
     outline: none; /* Remove the default outline (browser specific) */
     transition: color 0.3s, box-shadow 0.3s; /* Smooth transition for color and shadow */
+    margin-top: 50px; /* Adds space from the top */
 }
 
 /* Normal link hover (for navigation button) */
@@ -88,24 +93,25 @@ nav a:hover {
     color: #2AF7A5; /* Change text color to #2AF7A5 */
     animation: pulse 1s infinite; /* Apply pulse effect */
     box-shadow: 0 0 10px #2AF7A5, 0 0 20px #2AF7A5, 0 0 30px #2AF7A5; /* Glowing effect */
-    border: 2px solid #2AF7A5; /* Border appears only when hovering */
+    border: 1px solid #2AF7A5; /* Border appears only when hovering */
 }
 
 /* Pulse animation for hacker vibes */
 @keyframes pulse {
     0% { 
-        transform: scale(1);
+        transform: scale(1); /* Original size */
         opacity: 1; 
     }
     50% { 
-        transform: scale(1.1); 
+        transform: scale(1.05); /* Slightly reduced scale for smaller pulse */
         opacity: 0.8; 
     }
     100% { 
-        transform: scale(1); 
+        transform: scale(1); /* Back to normal size */
         opacity: 1; 
     }
 }
+
 
 
 
@@ -349,7 +355,10 @@ h2 {
 
     .profile-header .cover-photo {
         height: 310px; /* Adjust height for smaller screens */
+        width: 385px;
         object-position: 40% 50%; /* Focus more on the top-to-middle, but slightly adjusted for smaller screens */
+        box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.1); /* Creates a subtle border-like shadow effect */
+        border-radius: 20px; /* Optional: to round the corners */
     }
 
     body {
@@ -443,7 +452,7 @@ h2 {
 
     nav a {
         font-size: 0.8em;
-        padding: 10px 20px;
+        padding: 10px 0px;
         margin: 5px 0;
         width: 100%;
         text-align: center;
