@@ -416,6 +416,7 @@ h2 {
         max-width: 100%;
         box-sizing: border-box;
         overflow: hidden; /* Prevent overflow within content */
+        margin-top: -50px;
     }
 
     .intro-section, .posts-box {
@@ -428,6 +429,8 @@ h2 {
         border: 2px solid #ccc;
         border-radius: 30px;
         width: 100%;
+
+
     }
     
 
@@ -439,6 +442,7 @@ h2 {
         overflow: hidden;
         word-wrap: break-word; /* Ensure long words break */
         white-space: normal; /* Allow text to wrap */
+        
     }
 
     /* Force images and media to stay within boundaries */
@@ -446,12 +450,14 @@ h2 {
         max-width: 100%;
         height: auto;
         display: block;
+        
     }
 
     /* Prevent flex items from overflowing */
     .intro-section, .posts-box {
         display: flex;
         flex-direction: column; /* Ensure vertical stacking */
+
     }
 
     .intro-section > *, .posts-box > * {
