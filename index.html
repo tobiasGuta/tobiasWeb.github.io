@@ -43,26 +43,35 @@
 }
 
 
+.profile-header {
+    position: relative; /* Ensure relative positioning for absolute positioning within */
+}
+
 .profile-header .profile-info {
     position: absolute;
-    top: 200px;
-    left: 20px;
+    top: 50%; /* Vertically center the profile-info */
+    left: 50%; /* Horizontally center the profile-info */
+    transform: translate(-50%, -50%); /* Adjust the centering */
     display: flex;
+    flex-direction: column; /* Stack elements vertically */
     align-items: center;
+    justify-content: center; /* Center content horizontally */
     color: #2AF7A5; /* Bright green */
     z-index: 2; /* Ensures profile info stays above the nav */
+    margin-top: 50px; /* Add top margin for spacing */
 }
 
 .profile-header .profile-info .profile-picture {
     border-radius: 50%;
     width: 120px;
     height: 120px;
-    margin-right: 20px;
+    margin-bottom: 10px; /* Space between picture and name */
 }
 
 .profile-header .profile-info h1, 
 .profile-header .profile-info p {
     color: white;
+    margin: 0; /* Remove default margin around h1 */
 }
 
         /* Navigation links styling */
@@ -170,6 +179,7 @@ nav a:hover::after {
     position: relative;
     transition: all 0.3s ease-in-out;
     margin: 20px;
+    margin-top: -150px; /* Move the section up by 20px */
     background-color: #14161E;
     border-radius: 8px;
     max-width: 1500px;
@@ -205,6 +215,7 @@ nav a:hover::after {
     color: #00FF00; /* Retaining the green color for the title */
     margin-bottom: 20px;
 }
+
 
 /* Style for h2 */
 h2 {
@@ -278,59 +289,69 @@ h2 {
         }
 
         /* Connect Section */
-        .connect-wrapper {
-            flex-shrink: 0; /* Prevent shrinking */
-            margin-top: auto; /* Push to the bottom of the page */
-            text-align: center;
-            padding: 20px;
-        }
+.connect-wrapper {
+    flex-shrink: 0;
+    margin-top: -200px; /* Add margin at the top for better separation */
+    text-align: center;
+    padding: 20px;
+}
 
-        /* Social navigation links */
-        .social-nav a {
-            background-color: transparent; /* Transparent background */
-            color: white; /* White text by default */
-            border: none; /* No border initially */
-            padding: 10px 20px; /* Match main nav padding */
-            border-radius: 5px;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.9em; /* Match font size */
-            cursor: pointer;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            outline: none; /* Remove the default outline (browser specific) */
-            transition: color 0.3s, box-shadow 0.3s; /* Smooth transition for color and shadow */
-        }
+/* Social navigation links */
+.social-nav {
+    display: flex;
+    justify-content: center; /* Center social links horizontally */
+    gap: 15px; /* Adjust space between links */
+    flex-wrap: wrap; /* Allow links to wrap on smaller screens */
+}
 
-        .social-nav a:hover {
-            color: #2AF7A5; /* Change text color to #2AF7A5 */
-            animation: pulse 1s infinite; /* Apply pulse effect */
-            box-shadow: 0 0 10px #2AF7A5, 0 0 20px #2AF7A5, 0 0 30px #2AF7A5; /* Glowing effect */
-            border: 2px solid #2AF7A5; /* Border appears only when hovering */
-        }
+/* Social navigation links */
+.social-nav a {
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 12px 25px; /* Slightly increase padding for better clickable area */
+    border-radius: 5px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1em; /* Slightly larger text for better visibility */
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    outline: none;
+    transition: color 0.3s, box-shadow 0.3s;
+    text-decoration: none; /* Ensure no underlines on links */
+}
 
-        /* Social navigation bottom glow */
-        .social-nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px; /* Thinner glow line */
-            background-color: #2AF7A5;
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-            transform-origin: bottom right;
-        }
+/* Hover effects */
+.social-nav a:hover {
+    color: #2AF7A5;
+    animation: pulse 1s infinite;
+    box-shadow: 0 0 10px #2AF7A5, 0 0 20px #2AF7A5, 0 0 30px #2AF7A5;
+    border: 2px solid #2AF7A5;
+}
 
-        .social-nav a:hover::after {
-            transform: scaleX(1);
-            transform-origin: bottom left;
-            animation: pulse 1s infinite; /* Apply your pulse animation */
-        }
+/* Social navigation bottom glow */
+.social-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #2AF7A5;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: bottom right;
+}
+
+.social-nav a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+    animation: pulse 1s infinite;
+}
 
         .icon-container {
-            margin-top: 20px;
+            margin-top: 10px;
             margin-bottom: 30px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)); /* Responsive columns */
