@@ -482,18 +482,29 @@ h2 {
         box-sizing: border-box;
     }
 
+    /* Center the connect-wrapper content */
     .connect-wrapper {
-        padding: 20px;
-        width: 100%;
-        box-sizing: border-box;
-        overflow: hidden;
+        display: flex; /* Switch to flex for small screens */
+        flex-direction: column; /* Stack content vertically */
+        justify-content: center; /* Center vertically */
+        align-items: center; /* Center horizontally */
+        margin-top: -100px;
+        min-height: 200px; /* Ensure enough space for content */
     }
 
+    /* Social nav links styling for small screens */
+    .social-nav {
+        flex-direction: column; /* Stack links vertically */
+        align-items: center; /* Center the links horizontally */
+        justify-content: center; /* Center vertically */
+        width: 100%; /* Make sure the links take up full width */
+    }
+
+    /* Social Nav Links for small screens */
     .social-nav a {
-        padding: 8px 140px;
-
+        font-size: 1em; /* Adjust font size for better readability on small screens */
+        padding: 15px 140px; /* Increase padding for better touch targets */
     }
-
     /* Post title and description adjustments */
     .post-item h3 {
         font-size: 16px;
