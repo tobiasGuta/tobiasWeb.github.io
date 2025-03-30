@@ -10,121 +10,69 @@
     <link rel="preload" href="ya.webp" as="image" type="image/webp">
     <meta name="description" content="Explore Tobias A's portfolio - showcasing cybersecurity insights, tools, tips, and ctf rooms. Stay updated on threat intelligence and bug bounties.">
     <style>
-        /* Global Styles */
-        body {
-            font-family: 'Press Start 2P', sans-serif !important; /* Force the custom font */
-            margin: 0;
-            padding: 0;
-            background-color: #14161E; /* Dark gray-blue */
-            color: #2AF7A5; /* Bright green */
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh; /* Ensures body stretches full height */
-        }
 
-        /* Profile Header */
-        .profile-header {
+* {
+    box-sizing: border-box;
+}
+
+/* Global Styles */
+body {
+    font-family: 'Press Start 2P', sans-serif !important;
+    margin: 0;
+    padding: 0;
+    background-color: #14161E;
+    color: #2AF7A5;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Profile Header */
+.profile-header {
     position: relative;
     width: 100%;
     height: 310px;
-    color: #2AF7A5; /* Bright green */
-    z-index: 1; /* Ensures the profile header stays below the nav */
+    color: #2AF7A5;
+    z-index: 1;
 }
 
 .profile-header .cover-photo {
     width: 100%;
-    height: 310px;
-    object-fit: cover; /* Ensures the image covers the entire space without distortion */
-    object-position: 70% 15%;  /* Focuses more on top to middle */
-    border: 2px solid transparent; /* Transparent border */
-    box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.1);
-    border-radius: 30px; /* Optional: to round the corners */
-    width: 1460px;
-}
-
-
-.profile-header {
-    position: relative; /* Ensure relative positioning for absolute positioning within */
+    height: 310px; /* Default height */
+    object-fit: cover;
+    object-position: center;
+    border-radius: 30px;
+    max-width: 100%;
 }
 
 .profile-header .profile-info {
     position: absolute;
-    top: 50%; /* Vertically center the profile-info */
-    left: 50%; /* Horizontally center the profile-info */
-    transform: translate(-50%, -50%); /* Adjust the centering */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
+    flex-direction: column;
     align-items: center;
-    justify-content: center; /* Center content horizontally */
-    color: #2AF7A5; /* Bright green */
-    z-index: 2; /* Ensures profile info stays above the nav */
-    margin-top: 50px; /* Add top margin for spacing */
+    justify-content: center;
+    color: #2AF7A5;
+    z-index: 2;
+    margin-top: 50px;
 }
 
-.profile-header .profile-info .profile-picture {
+.profile-info .profile-picture {
     border-radius: 50%;
     width: 120px;
     height: 120px;
-    margin-bottom: 10px; /* Space between picture and name */
+    margin-bottom: 10px;
 }
 
-.profile-header .profile-info h1, 
-.profile-header .profile-info p {
+.profile-info h1, 
+.profile-info p {
     color: white;
-    margin: 0; /* Remove default margin around h1 */
+    margin: 0;
 }
 
-        /* Navigation links styling */
-        a i {
-    margin-right: 20px; /* Add some space between the icon and the text */
-}
-
-nav a {
-    background-color: transparent; /* Transparent background */
-    color: white; /* White text by default */
-    border: none; /* No border initially */
-    padding: 15px 25px; /* Smaller padding */
-    border-radius: 10px;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.9em; /* Smaller font size */
-    cursor: pointer;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    outline: none; /* Remove the default outline (browser specific) */
-    transition: color 0.3s, box-shadow 0.3s; /* Smooth transition for color and shadow */
-    margin-top: 10px !important; /* Force margin-top to apply */
-}
-
-
-/* Normal link hover (for navigation button) */
-nav a:hover {
-    color: #2AF7A5; /* Change text color to #2AF7A5 */
-    animation: pulse 1s infinite; /* Apply pulse effect */
-    box-shadow: 0 0 10px #2AF7A5, 0 0 20px #2AF7A5, 0 0 30px #2AF7A5; /* Glowing effect */
-    border: 1px solid #2AF7A5; /* Border appears only when hovering */
-}
-
-/* Pulse animation for hacker vibes */
-@keyframes pulse {
-    0% { 
-        transform: scale(1); /* Original size */
-        opacity: 1; 
-    }
-    50% { 
-        transform: scale(1.05); /* Slightly reduced scale for smaller pulse */
-        opacity: 0.8; 
-    }
-    100% { 
-        transform: scale(1); /* Back to normal size */
-        opacity: 1; 
-    }
-}
-
-
-
-
-/* Navigation styling (positioning and layout) */
+/* Navigation Styling */
 nav {
     display: flex;
     justify-content: center;
@@ -132,208 +80,31 @@ nav {
 }
 
 nav a {
-    margin: 0 6px; /* Even smaller margin between buttons */
-    display: flex;
-    align-items: center;
-    position: relative;
-    text-decoration: none;
-    font-family: 'Press Start 2P', sans-serif !important; /* Force the custom font */
-}
-
-/* Bottom glow effect (for navigation) */
-nav a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px; /* Thinner glow line */
-    background-color: #2AF7A5;
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-    transform-origin: bottom right;
-}
-
-/* Hover effect with pulse for navigation button */
-nav a:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-    animation: pulse 1s infinite; /* Apply your pulse animation */
-}
-
-
-        /* Main Content Layout */
-.main-content {
-    display: flex;
-    justify-content: center; /* Centers the content horizontally */
-    align-items: center;     /* Centers the content vertically */
-    margin: 100px;
-    flex-grow: 1;             /* Allow the main content to take available space */
-    height: 100vh;            /* Ensure the container takes up the full height of the viewport */
-    margin-top: 150px;
-}
-
-/* Intro Section */
-.intro-section {
-    border: 2px solid transparent;
-    padding: 20px;
-    position: relative;
-    transition: all 0.3s ease-in-out;
-    margin: 20px;
-    margin-top: -150px; /* Move the section up by 20px */
-    background-color: #14161E;
-    border-radius: 8px;
-    max-width: 1500px;
-    width: 100%;
-    font-family: 'Roboto', sans-serif; /* Use Roboto for the body */
-    line-height: 1.6; /* Improved line spacing for readability */
-    color: #D3D3D3; /* Light color for better contrast against dark background */
-}
-
-/* Hover effect on intro-section */
-.intro-section:hover {
-    border-color: #ccc;
-    box-shadow: 0 0 10px #ccc;
-}
-
-/* Center the text inside each paragraph */
-.intro-section p {
-    text-align: center;
-    margin-bottom: 20px; /* More spacing between paragraphs */
-    font-family: 'Lato', sans-serif; /* Use Lato for the paragraph text */
-    font-weight: 400; /* Light weight for better readability */
-    font-size: 18px; /* Slightly larger font for better legibility */
-    color: #F0F0F0; /* Lighter color for the paragraph text */
-    line-height: 1.8; /* Adequate line height for comfortable reading */
-}
-
-/* Optional: Heading style to make it stand out */
-.intro-section h2 {
-    font-family: 'Lato', sans-serif; /* Professional heading font */
-    font-weight: 700; /* Bold for headings */
-    font-size: 26px; /* Larger heading size */
-    text-align: center;
-    color: #00FF00; /* Retaining the green color for the title */
-    margin-bottom: 20px;
-
-}
-
-
-/* Style for h2 */
-h2 {
-    font-size: 24px;
-    color: #00FF00;
-    margin-bottom: 20px;
-    text-align: center; /* Horizontally centers the text */
-}
-
-
-
-
-
-        p {
-            font-size: 16px;
-            line-height: 1.6;
-            color: #ccc;
-            margin-bottom: 10px;
-        }
-
-        /* Post Section */
-        .posts-box {
-            border: 2px solid transparent;
-            padding: 20px;
-            position: relative;
-            transition: all 0.3s ease-in-out;
-            margin: 20px;
-            background-color: #14161E;
-            border-radius: 8px;
-        }
-
-        .posts-box:hover {
-            border-color: #ccc; /* Green glowing border */
-            box-shadow: 0 0 10px #ccc; /* Glowing effect */
-        }
-
-        .post-item {
-            padding: 15px;
-            border-bottom: 1px solid #333;
-            margin-bottom: 10px;
-            background-color: #14161E;
-            border-radius: 5px;
-            transition: box-shadow 0.3s ease-in-out;
-        }
-
-        .post-item:hover {
-            box-shadow: 0 0 10px rgb(204, 204, 204); /* Glowing effect */
-        }
-
-        h3 {
-            font-size: 20px;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-        }
-
-        p {
-            font-size: 16px;
-            line-height: 1.6;
-            color: #ccc;
-        }
-
-        a {
-            color: #00FF00;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        /* Connect Section */
-.connect-wrapper {
-    flex-shrink: 0;
-    margin-top: -150px; /* Add margin at the top for better separation */
-    text-align: center;
-    padding: 20px;
-}
-
-/* Social navigation links */
-.social-nav {
-    display: flex;
-    justify-content: center; /* Center social links horizontally */
-    gap: 15px; /* Adjust space between links */
-    flex-wrap: wrap; /* Allow links to wrap on smaller screens */
-}
-
-/* Social navigation links */
-.social-nav a {
     background-color: transparent;
     color: white;
     border: none;
-    padding: 12px 25px; /* Slightly increase padding for better clickable area */
-    border-radius: 5px;
+    padding: 15px 25px;
+    border-radius: 10px;
     font-family: 'Press Start 2P', cursive;
-    font-size: 1em; /* Slightly larger text for better visibility */
+    font-size: 0.9em;
     cursor: pointer;
     text-align: center;
     position: relative;
     overflow: hidden;
     outline: none;
     transition: color 0.3s, box-shadow 0.3s;
-    text-decoration: none; /* Ensure no underlines on links */
+    margin-top: 10px !important;
+    text-decoration: none;
 }
 
-/* Hover effects */
-.social-nav a:hover {
+nav a:hover {
     color: #2AF7A5;
     animation: pulse 1s infinite;
     box-shadow: 0 0 10px #2AF7A5, 0 0 20px #2AF7A5, 0 0 30px #2AF7A5;
-    border: 2px solid #2AF7A5;
+    border: 1px solid #2AF7A5;
 }
 
-/* Social navigation bottom glow */
-.social-nav a::after {
+nav a::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -346,232 +117,245 @@ h2 {
     transform-origin: bottom right;
 }
 
-.social-nav a:hover::after {
+nav a:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
-    animation: pulse 1s infinite;
 }
 
-        .icon-container {
-            margin-top: 10px;
-            margin-bottom: 30px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)); /* Responsive columns */
-            gap: 5px; /* Space between icons */
-            justify-items: center; /* Center icons in each cell */
-        }
-        
-        .icon {
-            font-size: 50px;
-        }
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
 
-        /* Media Query for responsive design */
+/* Main Content Layout */
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 100px;
+    flex-grow: 1;
+    height: 100vh;
+    margin-top: 150px;
+}
+
+/* Intro Section */
+.intro-section {
+    border: 2px solid transparent;
+    padding: 20px;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+    margin: 20px;
+    margin-top: -150px; /* Move the section up slightly */
+    background-color: #14161E;
+    border-radius: 8px;
+    max-width: 100%; /* Ensure it doesn't overflow horizontally */
+    width: 100%; /* Ensure full width */
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: #D3D3D3;
+}
+
+.intro-section:hover {
+    border-color: #ccc;
+    box-shadow: 0 0 10px #ccc; /* You may want to reduce this box-shadow on small screens */
+}
+
+.intro-section p {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: #F0F0F0;
+    line-height: 1.8;
+}
+
+.intro-section h2 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    text-align: center;
+    color: #00FF00;
+    margin-bottom: 20px;
+}
+
+/* Connect Section */
+.connect-wrapper {
+    flex-shrink: 0;
+    margin-top: -150px;
+    text-align: center;
+    padding: 20px;
+}
+
+.social-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.social-nav a {
+    background-color: transparent;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1em;
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+}
+
+.social-nav a:hover {
+    color: #2AF7A5;
+    animation: pulse 1s infinite;
+    box-shadow: 0 0 10px #2AF7A5, 0 0 20px #2AF7A5, 0 0 30px #2AF7A5;
+    border: 2px solid #2AF7A5;
+}
+
+.icon-container {
+    margin-top: 10px;
+    margin-bottom: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    gap: 5px;
+    justify-items: center;
+}
+
+.icon {
+    font-size: 50px;
+}
+
+/* Responsive Styles for Small Screens */
 @media (max-width: 768px) {
-    html, body {
-        width: 100%;
-        overflow-x: hidden; /* Prevent horizontal scrolling */
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box; /* Ensure everything uses border-box */
-        font-family: 'Press Start 2P', sans-serif !important; /* Force the custom font */
+    body {
+        font-size: 14px; /* Reduce font size for better readability */
+    }
+
+    .profile-header {
+        height: 220px; /* Reduce height for smaller screens */
     }
 
     .profile-header .cover-photo {
-        height: 310px; /* Adjust height for smaller screens */
-        width: 400px;
-        border: 2px solid transparent; /* Transparent border */
-        object-position: 40% 30%; /* Focus more on the top-to-middle, but slightly adjusted for smaller screens */
-        border-radius: 30px; /* Optional: to round the corners */
-    }
-
-    body {
-        font-size: 14px;
-        padding: 5px;
-        width: 100%;
-        overflow-x: hidden; /* Ensure no horizontal scrolling */
+        height: 220px; /* Adjust cover photo height */
+        width: 100%; /* Make it fully responsive */
+        border-radius: 15px; /* Reduce border radius */
     }
 
     .profile-header .profile-info {
-        top: 150px;
-        left: 10px;
-        flex-direction: column; /* Stack elements vertically */
-        align-items: center;
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
-        margin-left: 200px;
+        top: 60%;
+        margin-top: 20px; /* Adjust positioning */
     }
 
     .profile-header .profile-info .profile-picture {
-        width: 80px;
-        height: 80px; /* Smaller size for smaller screens */
-        margin-right: 0; /* No horizontal space needed for stacked layout */
-        margin-bottom: 20px; /* Add spacing between stacked items */
-        margin-top: 60px;
+        width: 90px;
+        height: 90px; /* Reduce profile picture size */
     }
 
-    .main-content {
-        display: flex;
-        flex-direction: column;
-        margin: 0.10px;
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
-        overflow: hidden; /* Prevent overflow within content */
-        margin-top: -50px;
-    }
-
-    .intro-section, .posts-box {
-        width: 100%;
-        padding: 10px;
-        margin: 0;
-        box-sizing: border-box;
-        overflow: hidden; /* Ensure nothing overflows */
-        word-wrap: break-word; /* Break long words */
-        border: 2px solid #ccc;
-        border-radius: 30px;
-        width: 100%;
-
-
-    }
-    
-
-    /* Prevent any child elements from causing overflow */
-    .intro-section * , .posts-box * {
-        max-width: 100%;
-        width: 100%;
-        box-sizing: border-box;
-        overflow: hidden;
-        word-wrap: break-word; /* Ensure long words break */
-        white-space: normal; /* Allow text to wrap */
-        
-    }
-
-    /* Force images and media to stay within boundaries */
-    .intro-section img, .posts-box img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-        
-    }
-
-    /* Prevent flex items from overflowing */
-    .intro-section, .posts-box {
-        display: flex;
-        flex-direction: column; /* Ensure vertical stacking */
-
-    }
-
-    .intro-section > *, .posts-box > * {
-        flex-shrink: 0;  /* Prevent shrinking */
-        flex-grow: 0;    /* Prevent growing */
-    }
-
-    /* Navigation adjustments */
     nav {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        padding: 0;
-        margin-top: 25px;
+        flex-direction: column; /* Stack navigation items vertically */
+        padding: 5px 0;
     }
 
     nav a {
         font-size: 0.8em;
-        padding: 10px 0px;
-        margin: 10px 0;
-        width: 100%;
-        text-align: center;
-        box-sizing: border-box;
+        padding: 10px 15px; /* Reduce padding for buttons */
+        margin: 5px 0; /* Add vertical spacing */
     }
 
-    /* Center the connect-wrapper content */
-    .connect-wrapper {
-        display: flex; /* Switch to flex for small screens */
+    .main-content {
         flex-direction: column; /* Stack content vertically */
-        justify-content: center; /* Center vertically */
-        align-items: center; /* Center horizontally */
-        margin-top: -100px;
-        min-height: 200px; /* Ensure enough space for content */
+        margin: 40px 10px; /* Reduce margin */
     }
 
-    /* Social nav links styling for small screens */
-    .social-nav {
-        flex-direction: column; /* Stack links vertically */
-        align-items: center; /* Center the links horizontally */
-        justify-content: center; /* Center vertically */
-        width: 100%; /* Make sure the links take up full width */
-    }
-
-    /* Social Nav Links for small screens */
-    .social-nav a {
-        font-size: 1em; /* Adjust font size for better readability on small screens */
-        padding: 15px 140px; /* Increase padding for better touch targets */
-    }
-    /* Post title and description adjustments */
-    .post-item h3 {
-        font-size: 16px;
-    }
-
-    .post-item p {
-        font-size: 14px;
-    }
-
-    /* Handle any further nested containers or child elements */
-    .intro-section > *, .posts-box > * {
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
-    }
-
-    /* Add responsive adjustments to the .icon-container */
-    .icon-container {
-        justify-content: center; /* Center the icons on small screens */
-        gap: 10px;               /* Adjust the gap for smaller screens */
-        flex-wrap: wrap;         /* Allow icons to wrap when needed */
-        margin-top: 10px;
-    }
-
-    /* Ensure icon size scales on smaller screens */
-    .icon-container img {
-        width: 35px;             /* Adjusted icon size */
-        height: 35px;            /* Ensure icons are square */
-        margin-bottom: 10px;
-    }
-
-    /* Adjust .intro-section padding and margin on very small screens */
     .intro-section {
-        padding: 15px;           /* Reduced padding for small screens */
-        margin: 10px 0;          /* Adjusted margin */
+        margin: 10px; /* Less margin on smaller screens */
+        padding: 15px; /* Reduce padding to prevent overflow */
+        box-shadow: none; /* Remove box-shadow for small screens */
     }
 
-    /* Optional: Adjust h2 heading for smaller screens */
-    h2 {
-        font-size: 20px;         /* Smaller font size on small screens */
-        margin-bottom: 15px;     /* Adjusted margin */
+    .intro-section:hover {
+        border-color: #ccc;
+        box-shadow: none; /* Remove box-shadow on hover for small screens */
     }
 
-    /* Ensure the content is scrollable if needed */
-    .intro-section, .posts-box {
-        overflow-y: auto;        /* Allow scrolling in case of long content */
-        max-height: 80vh;        /* Limit height to prevent overflow */
+    .social-nav {
+        flex-wrap: wrap; /* Allow social links to wrap */
+        gap: 10px;
     }
 
-    /* Ensure the About and Skills sections have proper wrapping and don't get cut off */
-    .intro-section p {
-        word-wrap: break-word;   /* Ensure long text breaks properly */
-        white-space: normal;     /* Allow text to wrap instead of overflowing */
+    .icon {
+        font-size: 35px; /* Reduce icon size */
     }
 
-    /* Ensure the layout doesn't get cut off */
-    .intro-section, .posts-box {
-        overflow: auto;
+    .connect-wrapper {
+        margin-top: 280px; /* Adjust separation */
+    }
+}
+
+/* iPad Pro / Tablets Portrait */
+@media (max-width: 1024px) and (orientation: portrait) {
+    .profile-header .cover-photo {
+        width: 100vw; /* Make it full width of the viewport */
+        height: 260px; /* Adjust height */
+        object-fit: cover; /* Ensure it covers the area */
+        object-position: center;
+        border-radius: 20px;
+    }
+
+    .profile-header {
+        width: 100%; /* Ensure the header takes up the full screen */
+        height: 260px;
+    }
+
+    /* Connect Section */
+    .connect-wrapper {
+        flex-shrink: 0;
+        margin-top: -300px;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .main-content {
+        margin: 10px 10px;
+        flex-direction: column;
+    }
+
+}
+
+/* iPad Pro / Tablets Landscape */
+@media (max-width: 1024px) and (orientation: landscape) {
+    .profile-header .cover-photo {
+        width: 100vw;  /* Use 100% of the viewport width */
+        height: 260px; /* Consistent height in landscape mode */
+        object-fit: cover;
+        object-position: center;
+        border-radius: 20px;
+    }
+
+    .profile-header {
+        width: 100%;
+        height: 260px; /* Ensures header height adjusts properly */
+    }
+
+    /* Optional: Adjust profile-info positioning if needed */
+    .profile-header .profile-info {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .main-content {
+        margin: 50px 10px;
+        flex-direction: column;
     }
 }
 
 
-    
     </style>
 </head>
 <body>
