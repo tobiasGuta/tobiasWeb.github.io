@@ -245,6 +245,26 @@ nav a:hover::after {
     font-size: 50px;
 }
 
+
+/* For extra small screens (e.g., mobile phones) */
+@media (max-width: 480px) {
+
+    body {
+        font-family: 'Press Start 2P', sans-serif !important;
+    }
+
+    .main-content {
+        margin: 30px 10px;    /* Less margin on very small screens */
+        padding-top: 500px;   /* Adjust padding-top accordingly */
+        
+    }
+
+    .connect-wrapper {
+    margin-top: 550px; /* Adjust margin-top to give space between .main-content and .connect-wrapper */
+    padding: 20px;    /* Optional padding for better spacing */
+    }
+}
+
 /* Responsive Styles for Small Screens */
 @media (max-width: 768px) {
     body {
@@ -348,26 +368,6 @@ nav a:hover::after {
         padding: 20px;    /* Optional padding for better spacing */
         }
 }
-
-/* For extra small screens (e.g., mobile phones) */
-@media (max-width: 480px) {
-
-    body {
-        font-family: 'Press Start 2P', sans-serif !important;
-    }
-
-    .main-content {
-        margin: 30px 10px;    /* Less margin on very small screens */
-        padding-top: 500px;   /* Adjust padding-top accordingly */
-        
-    }
-
-    .connect-wrapper {
-    margin-top: 500px; /* Adjust margin-top to give space between .main-content and .connect-wrapper */
-    padding: 20px;    /* Optional padding for better spacing */
-    }
-}
-
 
 
     </style>
