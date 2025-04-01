@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tobias Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <meta name="description" content="Explore Tobias A's portfolio - showcasing cybersecurity insights, tools, tips, and CTF rooms. Stay updated on threat intelligence and bug bounties.">
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            font-family: 'Press Start 2P', sans-serif !important;
+            background-color: #14161E;
+            color: #e0e0e0;
+            padding: 0 10px;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            color: #2AF7A5;
+        }
+
+        .back-button-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .back-button {
+            background-color: transparent;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: color 0.3s, box-shadow 0.3s;
+        }
+
+        .back-button:hover {
+            color: #2AF7A5;
+            animation: pulse 1s infinite;
+            box-shadow: 0 0 10px #2AF7A5, 0 0 20px #2AF7A5, 0 0 30px #2AF7A5;
+            border: 2px solid #2AF7A5;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .post {
+            cursor: pointer;
+            padding: 15px;
+            border: 2px solid #2AF7A5;
+            margin-bottom: 15px;
+            background: #1e1f29;
+            transition: all 0.3s ease-in-out;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        h4 {
+            color: #2AF7A5;
+        }
+
+        .post:hover {
+            background: #252836;
+        }
+
+        .post.expanded {
+            background: #2b2d42;
+            padding: 40px;
+            width: calc(100% - 40px); /* Keep the width responsive */
+            max-width: 100vw; /* Ensure the width doesn't exceed the viewport width */
+            height: auto;
+            transform: none;
+            box-shadow: 0 10px 25px rgba(42, 247, 165, 0.3);
+            z-index: 10;
+            position: relative;
+            overflow: hidden;
+            margin: 20px 0; /* Add margin for gap between posts */
+            box-sizing: border-box;
+        }
+
+        .post-content {
+            display: none;
+            margin-top: 15px;
+            font-size: 1.1em;
+            color: #fff;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .post.expanded .post-content {
+            display: block;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            color: #2AF7A5;
+            display: none;
+        }
+
+        .post.expanded .close-btn {
+            display: block;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <h1>Learning Hub</h1>
+
+    <div class="back-button-container">
+        <button class="back-button" onclick="window.location.href='index.html'">
+            <i class="fas fa-home"></i> Intro
+        </button>
+    </div>
+
+    <h2>Latest Posts</h2>
+    
+    <div class="post" onclick="togglePost(this)">
+        <span class="close-btn" onclick="closePost(event, this)">✖</span>
+        <h3>Post 1: Cybersecurity Tips</h3>
+        <div class="post-content">
+            <p>Always use strong, unique passwords and enable two-factor authentication...</p>
+        </div>
+    </div>
+
+    <div class="post" onclick="togglePost(this)">
+        <h3>The OSI Model and Its Security Concerns</h3>
+        <div class="post-content">
+            <p>The OSI Model (Open Systems Interconnection Model) is a conceptual framework that standardizes how network devices communicate. It has seven layers, each serving a specific role in data transmission.</p>
+            
+            <!-- Adding an Image -->
+            <img src="osi.png" alt="OSI Model Layers" style="width: 100%; max-width: 1650px; border-radius: 10px;">
+
+            <h4>1. Physical Layer (Layer 1)</h4>
+            <p><strong>Function:</strong> Deals with the physical connection between devices. It defines cables, radio waves, and hardware transmission.</p>
+            <p><strong>Devices/Technologies:</strong> Ethernet cables, fiber optics, hubs, repeaters.</p>
+            <p><strong>Security Concern:</strong> Physical tampering, wiretapping, jamming attacks.</p>
+    
+            <h4>2. Data Link Layer (Layer 2)</h4>
+            <p><strong>Function:</strong> Handles error detection, framing, and MAC addressing. It ensures that data flows correctly between devices on the same network.</p>
+            <p><strong>Devices/Technologies:</strong> Switches, MAC addresses, ARP (Address Resolution Protocol).</p>
+            <p><strong>Security Concern:</strong> MAC spoofing, VLAN hopping attacks.</p>
+    
+            <h4>3. Network Layer (Layer 3)</h4>
+            <p><strong>Function:</strong> Determines the best path for data to travel. Uses logical addressing (IP addresses).</p>
+            <p><strong>Devices/Technologies:</strong> Routers, IP addressing (IPv4, IPv6), ICMP (ping).</p>
+            <p><strong>Security Concern:</strong> IP spoofing, DDoS attacks, route hijacking.</p>
+    
+            <h4>4. Transport Layer (Layer 4)</h4>
+            <p><strong>Function:</strong> Ensures complete data transfer using segmentation and reassembly. Manages TCP (connection-oriented) and UDP (connectionless) communication.</p>
+            <p><strong>Devices/Technologies:</strong> Firewalls, TCP, UDP, ports.</p>
+            <p><strong>Security Concern:</strong> Port scanning, SYN flood attacks.</p>
+    
+            <h4>5. Session Layer (Layer 5)</h4>
+            <p><strong>Function:</strong> Establishes, maintains, and terminates communication sessions between devices.</p>
+            <p><strong>Devices/Technologies:</strong> APIs, sockets, NetBIOS.</p>
+            <p><strong>Security Concern:</strong> Session hijacking, MITM (Man-in-the-Middle) attacks.</p>
+    
+            <h4>6. Presentation Layer (Layer 6)</h4>
+            <p><strong>Function:</strong> Formats, encrypts, and compresses data for the application layer.</p>
+            <p><strong>Devices/Technologies:</strong> SSL/TLS, encryption standards (AES, RSA).</p>
+            <p><strong>Security Concern:</strong> SSL/TLS vulnerabilities (e.g., downgrade attacks), insecure encryption.</p>
+    
+            <h4>7. Application Layer (Layer 7)</h4>
+            <p><strong>Function:</strong> Interfaces with the end user. It includes protocols for web browsing, email, and file transfer.</p>
+            <p><strong>Devices/Technologies:</strong> HTTP/S, FTP, DNS, SMTP.</p>
+            <p><strong>Security Concern:</strong> SQL injection, cross-site scripting (XSS), phishing.</p>
+    
+            <h4>Real-World Example (Penetration Testing Perspective)</h4>
+            <p><strong>Layer 1:</strong> Ensure there’s no unauthorized access to physical network devices.</p>
+            <p><strong>Layer 2:</strong> Look for MAC spoofing or ARP poisoning opportunities.</p>
+            <p><strong>Layer 3:</strong> Check for open ports and IP vulnerabilities.</p>
+            <p><strong>Layer 4:</strong> Perform a SYN flood attack to test resilience.</p>
+            <p><strong>Layer 5-7:</strong> Exploit web vulnerabilities like SQL injection, XSS, or weak SSL configurations.</p>
+        </div>
+    </div>
+
+    <div class="post" onclick="togglePost(this)">
+        <span class="close-btn" onclick="closePost(event, this)">✖</span>
+        <h3>Post 3: How to Build Automated Tools</h3>
+        <div class="post-content">
+            <p>Automating cybersecurity tasks can save time and improve efficiency. Python is a great language for this...</p>
+        </div>
+    </div>
+
+    <script>
+        function togglePost(post) {
+            let allPosts = document.querySelectorAll(".post");
+
+            allPosts.forEach(p => {
+                if (p !== post) {
+                    p.classList.remove("expanded");
+                }
+            });
+
+            post.classList.toggle("expanded");
+        }
+
+        function closePost(event, closeButton) {
+            event.stopPropagation();
+            let post = closeButton.parentElement;
+            post.classList.remove("expanded");
+        }
+    </script>
+
+</body>
+</html>
