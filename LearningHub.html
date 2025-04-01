@@ -82,6 +82,7 @@
             width: calc(100% - 40px); /* Keep the width responsive */
             max-width: 100vw; /* Ensure the width doesn't exceed the viewport width */
             height: auto;
+            min-height: 600px; /* Set a minimum height for bigger appearance */
             transform: none;
             box-shadow: 0 10px 25px rgba(42, 247, 165, 0.3);
             z-index: 10;
@@ -89,6 +90,7 @@
             overflow: hidden;
             margin: 20px 0; /* Add margin for gap between posts */
             box-sizing: border-box;
+            transition: height 0.3s ease; /* Smooth transition for height change */
         }
 
         .post-content {
@@ -96,8 +98,8 @@
             margin-top: 15px;
             font-size: 1.1em;
             color: #fff;
-            max-height: 300px;
             overflow-y: auto;
+            max-height: 500px;
         }
 
         .post.expanded .post-content {
@@ -203,6 +205,7 @@
     <div class="post" onclick="togglePost(this)">
         <h3>Understanding the TCP/IP Model</h3>
         <div class="post-content">
+            <img src="tcpIP.png" alt="OSI Model Layers" style="width: 30%; max-width: 1650px; border-radius: 10px;">
             <p>So, we’ve all heard about the <strong>TCP/IP Model</strong>, but what exactly is it, and why should we care about it? Well, it’s basically the backbone of how the internet works. Without it, you wouldn’t be able to binge-watch Netflix, scroll through Instagram, or even check your email!</p>
     
             <h4>What is the TCP/IP Model?</h4>
@@ -286,6 +289,8 @@
             <li><strong>Application Layer:</strong> Finally, you could use a tool like Hydra to brute-force login forms, or perform an HTTP flood using LOIC to check the server's resilience against DDoS attacks.</li>
         </ul>
 
+        <img src="tcpipattackdefense.png" alt="OSI Model Layers" style="width: 100%; max-width: 1650px; border-radius: 10px;">
+
         <h4>Defensive Measures Summary:</h4>
         <p>Penetration testing helps us identify vulnerabilities, but it’s crucial to implement the right defenses at each layer of the TCP/IP model:</p>
         <ul>
@@ -294,6 +299,8 @@
             <li><strong>Transport Layer:</strong> SYN cookies, firewall filtering, rate limiting.</li>
             <li><strong>Application Layer:</strong> WAF, CDN, rate limiting, CAPTCHAs.</li>
         </ul>
+
+
         </div>
     </div>
 
