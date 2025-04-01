@@ -144,6 +144,21 @@
             display: block;
         }
 
+        table {
+            width: 95%;
+            border-collapse: collapse;
+            background: #14161E;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #2AF7A5;
+            text-align: left;
+        }
+        th {
+            background-color: #333;
+            color: white;
+        }
+
     </style>
 </head>
 
@@ -233,6 +248,43 @@
 
             <h4>Comparison of the OSI Model and TCP/IP Model</h4>
             <img src="osiandtcpmodel.png" alt="OSI Model Layers" style="width: 100%; max-width: 1650px; border-radius: 10px;">
+            
+            <h4>Network Protocols</h4>
+        <p>Protocols are predefined rules that govern how data is formatted, transmitted, and processed to enable seamless communication between devices in a network. These protocols function across various layers within network models, each designed to manage specific data types and communication requirements.</p>
+
+        <h4>Key Network Protocols</h4>
+        <p>Network protocols define the rules for data exchange across networks, ensuring efficient and structured communication. Each protocol operates at a specific layer of the OSI model, managing different aspects of data transmission.</p>
+
+        <table>
+            <tr>
+                <th>Protocol</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><strong>HTTP (Hypertext Transfer Protocol)</strong></td>
+                <td>Enables the transfer of web pages and online content. It functions at the Application Layer, allowing communication between browsers and web servers.</td>
+            </tr>
+            <tr>
+                <td><strong>FTP (File Transfer Protocol)</strong></td>
+                <td>Facilitates file transfers between systems, also operating at the Application Layer. It provides a method for uploading and downloading files from remote servers.</td>
+            </tr>
+            <tr>
+                <td><strong>SMTP (Simple Mail Transfer Protocol)</strong></td>
+                <td>Manages email transmission. As an Application Layer protocol, it ensures emails are sent from one server to another, reaching their intended recipients.</td>
+            </tr>
+            <tr>
+                <td><strong>TCP (Transmission Control Protocol)</strong></td>
+                <td>Provides reliable, connection-oriented communication with error checking and data recovery. Operating at the Transport Layer, it guarantees ordered and complete data delivery.</td>
+            </tr>
+            <tr>
+                <td><strong>UDP (User Datagram Protocol)</strong></td>
+                <td>Offers fast, connectionless communication without error recovery. Operating at the Transport Layer, it is ideal for applications prioritizing speed over reliability, such as streaming and gaming.</td>
+            </tr>
+            <tr>
+                <td><strong>IP (Internet Protocol)</strong></td>
+                <td>Handles packet addressing and routing across networks, ensuring data reaches the correct destination. It operates at the Internet Layer, guiding data through interconnected networks.</td>
+            </tr>
+        </table>
 
         </div>
     </div>
@@ -337,6 +389,14 @@
         
         <h4>Comparison of the OSI Model and TCP/IP Model</h4>
         <img src="osiandtcpmodel.png" alt="OSI Model Layers" style="width: 100%; max-width: 1650px; border-radius: 10px;">
+
+        <h4>Functions of the Models</h4>
+        <p>In real world networking, the TCP/IP model serves as the foundation for data transmission, widely utilized in diverse network infrastructures. Conversely, the OSI model, though not directly implemented, acts as a vital conceptual guide. It simplifies the intricacies of network communication, offering a structured perspective on how different components interact. Together, these models create a holistic understanding, connecting theoretical principles with practical execution in networking.</p>
+
+        
+
+
+
 
         </div>
     </div>
