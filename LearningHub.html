@@ -136,7 +136,9 @@
     <div class="post" onclick="togglePost(this)">
         <h3>The OSI Model and Its Security Concerns</h3>
         <div class="post-content">
+            <p>This is my undertanding of the OSI model</p>
             <p>The OSI Model (Open Systems Interconnection Model) is a conceptual framework that standardizes how network devices communicate. It has seven layers, each serving a specific role in data transmission.</p>
+            
             
             <!-- Adding an Image -->
             <img src="osi.png" alt="OSI Model Layers" style="width: 100%; max-width: 1650px; border-radius: 10px;">
@@ -182,6 +184,17 @@
             <p><strong>Layer 3:</strong> Check for open ports and IP vulnerabilities.</p>
             <p><strong>Layer 4:</strong> Perform a SYN flood attack to test resilience.</p>
             <p><strong>Layer 5-7:</strong> Exploit web vulnerabilities like SQL injection, XSS, or weak SSL configurations.</p>
+
+            <h4>OSI Model in Network Defense</h4>
+            <p><strong>Layer 1:</strong> Use of fiber-optic cables to prevent eavesdropping.</p>
+            <p><strong>Layer 2:</strong> How VLAN segmentation can prevent internal threats.</p>
+            <p><strong>Layer 3:</strong> IP filtering, firewalls, and VPNs for protecting routing.</p>
+            <p><strong>Layer 4:</strong> Use of rate limiting, firewalls, and load balancing to protect from DoS attacks.</p>
+            <p><strong>Layer 5:</strong> SSL/TLS encryption to protect session integrity.</p>
+            <p><strong>Layer 6:</strong> Data encryption for protecting sensitive information.</p>
+            <p><strong>Layer 7:</strong> Implement Web Application Firewalls and strong input validation.</p>
+
+            <img src="osilayerattacks.png" alt="OSI Model Layers" style="width: 100%; max-width: 1650px; border-radius: 10px;">
         </div>
     </div>
 
