@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,13 +26,23 @@
         h1 {
             color: #2AF7A5;
         }
-
-        .back-button-container {
-            text-align: center;
-            margin-top: 50px;
+        
+        /* Make sure the container uses flex to align items horizontally */
+        .container {
+            display: flex;             /* Ensure flex layout */
+            justify-content: center;   /* Center items horizontally */
+            align-items: center;       /* Vertically center items */
+            gap: 15px;                 /* Add space between the button and link */
+            margin-top: 50px;           /* Top margin to push the container down */
         }
 
-        .back-button {
+        /* Back button container - just a style wrapper */
+        .back-button-container {
+            margin: 0;                 /* Reset any margins */
+        }
+
+        /* Style for both the button and the link (medium button) */
+        .back-button, .medium-button {
             background-color: transparent;
             color: white;
             border: none;
@@ -40,20 +51,33 @@
             font-size: 1.2em;
             cursor: pointer;
             transition: color 0.3s, box-shadow 0.3s;
+            text-decoration: none;  /* Removes underline from the link */
+            display: flex;           /* Flexbox for centering icon and text */
+            align-items: center;     /* Vertically center the icon and text */
+            justify-content: center; /* Horizontally center icon and text */
         }
 
-        .back-button:hover {
+        /* Hover effect for both the button and the medium link */
+        .back-button:hover, .medium-button:hover {
             color: #2AF7A5;
             animation: pulse 1s infinite;
             box-shadow: 0 0 10px #2AF7A5, 0 0 20px #2AF7A5, 0 0 30px #2AF7A5;
             border: 2px solid #2AF7A5;
         }
 
+        /* Pulse animation for hover effect */
         @keyframes pulse {
             0% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.1); opacity: 0.8; }
             100% { transform: scale(1); opacity: 1; }
         }
+
+        /* Make sure the link inside the nav has no underline */
+        nav a {
+            color: inherit;  /* Use inherited text color */
+            text-decoration: none;  /* Remove underline */
+        }
+
 
         .post {
             cursor: pointer;
@@ -127,11 +151,20 @@
 
     <h1>Learning Hub</h1>
 
-    <div class="back-button-container">
-        <button class="back-button" onclick="window.location.href='index.html'">
-            <i class="fas fa-home"></i> Intro
-        </button>
-    </div>
+    <div class="container">
+        <div class="back-button-container">
+            <button class="back-button" onclick="window.location.href='index.html'">
+                <i class="fas fa-home"></i> Intro
+            </button>
+        </div>
+    
+        <nav>
+            <a href="https://medium.com/@vgqxjb" target="_blank" class="medium-button">
+                <i class="fab fa-medium"></i> Medium
+            </a>
+        </nav>
+    </div>    
+
 
     <h2>Latest Posts</h2>
 
