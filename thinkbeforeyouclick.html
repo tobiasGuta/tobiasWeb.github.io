@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Critical Update Alert - Please Read</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .update-dialog {
+            width: 450px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: none;
+            position: relative;
+            text-align: center;
+        }
+        .update-header {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .update-subtitle {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .update-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 40px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .update-btn:hover {
+            background-color: #45a049;
+        }
+        .progress-bar-container {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin-top: 20px;
+            height: 10px;
+        }
+        .progress-bar {
+            width: 0;
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 5px;
+        }
+        /* Fake alert box styles */
+        .fake-update-header {
+            font-size: 22px;
+            font-weight: bold;
+            color: #0078D4; /* Windows blue color */
+            margin-bottom: 10px;
+        }
+        .fake-update-text {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Update Dialog Box -->
+    <div class="update-dialog" id="updateDialog">
+        <div class="fake-update-header">Critical Security Update Available</div>
+        <div class="fake-update-text">
+            <p><strong> Before proceeding, Your software requires an important security update. This is critical to protect your system from vulnerabilities.</strong></p>
+            <p>For your safety, please download and install the update.</p>
+        </div>
+        <button class="update-btn" id="updateBtn">Install Update Now</button>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+
+    <script>
+        // Simulate a system delay to make the update appear after a short period
+        setTimeout(function() {
+            document.getElementById("updateDialog").style.display = "block"; // Show the update box
+        }, 3000); // Wait 3 seconds before showing the "update"
+
+        // Handle the "Install Update Now" button click
+        document.getElementById("updateBtn").onclick = function() {
+            // Start the progress bar to simulate a download
+            let progress = 0;
+            let progressBar = document.getElementById("progressBar");
+
+            let interval = setInterval(function() {
+                progress += 10;
+                progressBar.style.width = progress + "%";
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    alert("Warning: This is a demonstration. Malicious files can be hidden behind fake updates. Always download from trusted sources.");
+                    
+                    // Simulate a harmless download after the "update"
+                    var link = document.createElement("a");
+                    link.href = "data:text/plain,This is a harmless demonstration file to educate users.";
+                    link.download = "safe_update.txt";
+                    link.click();
+                }
+            }, 500); // Update the progress bar every 500ms
+        };
+    </script>
+</body>
+</html>
