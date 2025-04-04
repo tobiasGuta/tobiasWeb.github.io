@@ -883,6 +883,61 @@ kali@kali:~$ lsb_release -a
             <p>We can also manipulate the WebSocket handshake, which is responsible for establishing the connection. Capturing and modifying this handshake may be necessary to access a broader attack surface. Some attacks can cause the connection to drop, so it's important to be able to re-establish it as needed. Tokens or other sensitive data in the original handshake request may become stale and need to be refreshed for continued access or successful exploitation.</p>
             <img src="websockethandshake.png" alt="OSI Model Layers" style="width: 90%; height: 400px; border-radius: 10px;">
 
+            <h4>Manipulate the WebSocket handshake using Burp Repeater</h4>
+            <ul>
+                <li>Send a WebSocket message to Burp Repeater as already described.</li>
+                <li>In Burp Repeater, click on the pencil icon next to the WebSocket URL. This opens a wizard that lets you attach to an existing connected WebSocket, clone a connected WebSocket, or reconnect to a disconnected WebSocket.</li>
+                <li>If you choose to clone a connected WebSocket or reconnect to a disconnected WebSocket, the wizard will display full details of the WebSocket handshake request. You can edit these details as needed before the handshake is executed.</li>
+                <li>When you click "Connect", Burp will attempt to carry out the configured handshake and display the result. If a new WebSocket connection is successfully established, you can then use it to send new messages in Burp Repeater.</li>
+            </ul>
+
+            <h4>WebSockets security vulnerabilities</h4>
+            <ul>
+                <li>If user input sent over a WebSocket is processed insecurely by the server, it can lead to vulnerabilities such as SQL injection or XML External Entity (XXE) injection.</li>
+                <li>Some vulnerabilities triggered through WebSockets may not provide immediate feedback, requiring out-of-band (OAST) techniques to detect them.</li>
+                <li>If attacker-controlled data is transmitted via WebSockets to other users, it could lead to client-side vulnerabilities such as cross-site scripting (XSS).</li>
+            </ul>
+            
+            <h4>collaborative whiteboard application (Example)</h4>
+            <p>Suppose a collaborative whiteboard application uses WebSockets to send drawing actions from users' browsers to the server. When a user draws a shape, a WebSocket message like the following is sent:</p>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+    
+                <div class="terminal-body">
+{"action":"draw","shape":"rectangle","color":"blue"}
+                </div>
+            </div>
+            <p>The server then broadcasts this message to all connected clients, and the action is rendered in their browsers like this:</p>
+
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+    
+                <div class="terminal-body">
+&lt;div class=&quot;shape&quot; data-shape=&quot;rectangle&quot; style=&quot;background-color: blue;&quot;&gt;&lt;/div&gt;
+                </div>
+            </div>
+            <p>Now, if the server fails to validate or sanitize the incoming data, an attacker could exploit this by sending a malicious payload like:</p>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+            
+                <div class="terminal-body">
+{"action":"draw","shape":"&lt;img src=x onerror='alert(1)'&gt;","color":"red"}
+                </div>
+            </div>
+            <p>This could result in a client-side XSS vulnerability if the payload is rendered directly in the DOM.</p>
+
         </div>
     </div>
 
