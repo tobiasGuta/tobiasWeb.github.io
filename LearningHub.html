@@ -847,6 +847,24 @@ kali@kali:~$ lsb_release -a
         </div>
     </div>
 
+    <div class="post" onclick="togglePost(this)">
+        <h3>WebSockets</h3>
+        <div class="post-content">
+            <h4>What is a WebSockets?</h4>
+            <p>WebSockets are a modern communication protocol that facilitates full duplex, real time data exchange between a client (typically a web browser) and a server. Unlike traditional HTTP requests, which follow a request-response model, WebSockets maintain an open connection, allowing both parties to send and receive data instantly over a single, persistent channel.</p>
+
+            <p>WebSockets are widely used in modern web applications to facilitate real time communication, often transmitting sensitive data such as authentication tokens or user inputs. While WebSockets differ from traditional HTTP requests by maintaining a persistent, full duplex connection, many of the same security vulnerabilities such as cross-site WebSocket hijacking, sqli, XXE, SSRF, CSRF, insecure authentication, or lack of input validation can still occur if not properly mitigated.</p>
+            
+
+            <h4>Manipulating WebSocket traffic</h4>
+            <ul>
+                <li>Intercept and modify WebSocket messages.</li>
+                <li>Replay and generate new WebSocket messages.</li>
+                <li>Manipulate WebSocket connections.</li>
+            </ul>
+        </div>
+    </div>
+
     <script>
         function togglePost(post) {
             let allPosts = document.querySelectorAll(".post");
