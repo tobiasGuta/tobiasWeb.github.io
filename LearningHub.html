@@ -1031,6 +1031,30 @@ Upgrade: websocket
             </ul>
 
             <p>In short, once the attacker slides into that connection, the damage depends on how much the app trusts whoever’s on the other end of the WebSocket.</p>
+            
+            <h4>Best Practices for Securing WebSocket Connections</h4>
+
+            <p>WebSocket connections are super useful for building real-time features like chat apps, live notifications, or multiplayer games. But if you do not secure them properly, they can become a serious weakness. Here are some important tips that every developer or security student should follow when working with WebSocket technology:</p>
+
+            <ul>
+            <li><strong>Use wss instead of ws</strong> This ensures your WebSocket connection is encrypted using transport layer security, just like how HTTPS protects regular web traffic. It keeps your data safe from attackers who are monitoring the network.</li>
+
+            <li><strong>Do not let users control the WebSocket URL</strong> Always set the WebSocket server address in your code. If users can change it or if the app builds it using user input, that could be used to launch attacks or connect to dangerous servers.</li>
+
+            <li><strong>Protect the handshake with proper validation</strong> During the initial handshake, the app should check for a real token or some kind of unique value that proves the request is coming from your own site. Cookies alone are not enough.</li>
+
+            <li><strong>Always validate data from the WebSocket</strong> Whether the message is coming from the client or the server, treat it as untrusted. Sanitize and validate everything to protect against injection attacks like cross-site scripting or database injections.</li>
+
+            <li><strong>Make sure users are really authenticated</strong> Only allow WebSocket connections from users who are logged in with a valid session. You can use tokens that expire quickly to make this more secure and avoid session abuse.</li>
+
+            <li><strong>Check the origin header on the server side</strong> Even though WebSockets do not follow the same origin policy like regular web requests, you can still inspect the origin during the handshake and block any requests that do not come from your domain.</li>
+
+            <li><strong>Log everything related to WebSocket traffic</strong> Track who is connecting, what messages are being sent, and when. This can help you catch suspicious activity early and investigate if anything goes wrong.</li>
+            </ul>
+
+            <p>The main idea is simple. Do not treat WebSocket connections as safe by default. You should treat them like any other part of your application where data is coming and going. If you are writing code, testing security, or reviewing an app, always ask yourself how someone could abuse the connection and how you would stop them.</p>
+
+        
         </div>
     </div>
 
