@@ -827,7 +827,7 @@ kali@kali:~$ lsb_release -a
                 <li><strong>Fake Progress Bars</strong> – To add legitimacy, attackers include fake download animations to make the update seem real.</li>
             </ul>
 
-            <h4>Real-Life Examples of Fake Update Attacks</h4>
+            <h4>Real Life Examples of Fake Update Attacks</h4>
             <ul>
                 <li><strong>Fake Chrome & Edge Updates</strong> – Attackers send pop-ups urging users to “update their browser,” but instead, they deliver Trojans that steal sensitive data.</li>
                 <li><strong>Windows Security Update Scams</strong> – Users are tricked into downloading a supposed “critical patch” that is actually ransomware.</li>
@@ -851,7 +851,7 @@ kali@kali:~$ lsb_release -a
         <h3>WebSockets</h3>
         <div class="post-content">
             <h4>What is a WebSockets?</h4>
-            <p>WebSockets are a modern communication protocol that facilitates full duplex, real time data exchange between a client (typically a web browser) and a server. Unlike traditional HTTP requests, which follow a request-response model, WebSockets maintain an open connection, allowing both parties to send and receive data instantly over a single, persistent channel.</p>
+            <p>WebSockets are a modern communication protocol that facilitates full duplex, real time data exchange between a client (typically a web browser) and a server. Unlike traditional HTTP requests, which follow a request response model, WebSockets maintain an open connection, allowing both parties to send and receive data instantly over a single, persistent channel.</p>
 
             <p>WebSockets are widely used in modern web applications to facilitate real time communication, often transmitting sensitive data such as authentication tokens or user inputs. While WebSockets differ from traditional HTTP requests by maintaining a persistent, full duplex connection, many of the same security vulnerabilities such as cross-site WebSocket hijacking, sqli, XXE, SSRF, CSRF, insecure authentication, or lack of input validation can still occur if not properly mitigated.</p>
             
@@ -943,6 +943,94 @@ kali@kali:~$ lsb_release -a
                 Your browser does not support the video tag.
             </video>
 
+            <h4>Digging Deeper into WebSocket Vulnerabilities</h4>
+
+            <p>Some of the trickiest WebSocket security issues don’t show up until you start messing with the initial handshake the part where the WebSocket connection is first set up. These aren’t your average bugs; they usually come from deeper design problems in how the app is built. Here’s what that looks like in practice:</p>
+            <ul>
+                <li><strong>Overtrusting HTTP headers:</strong> Some apps rely too heavily on headers like <strong>X-Forwarded-For</strong> to make security decisions, which can be spoofed or manipulated by an attacker. Not a good look.</li>
+                <li><strong>Weak session handling:</strong> Since WebSocket communication is tied to the session from the initial handshake, any flaws in how that session is managed can create gaps for exploitation. If the handshake session isn’t locked down, neither is your WebSocket traffic.</li>
+                <li><strong>Risky custom headers:</strong> Developers sometimes add their own HTTP headers for functionality but without proper validation, those custom headers can expose a bigger attack surface than expected.</li>
+            </ul>
+
+
+            <p>Some WebSocket security flaws happen when a hacker tricks your browser into connecting to a WebSocket server from a sketchy site they control. This kind of attack is called <strong>Cross-Site WebSocket Hijacking (CSWH)</strong>, and yeah, it’s as shady as it sounds.</p>
+
+            <p>Here’s how it works: the attacker uses a vulnerability called <strong>CSRF (Cross-Site Request Forgery)</strong> during the WebSocket handshake. That’s basically the part where your browser says, “Hey, can I start chatting with this server?” If that handshake isn’t properly locked down, the attacker can piggyback off your session without your knowledge.</p>
+
+            <p>The consequences? Pretty serious. They can:</p>
+
+            <ul>
+                <li>Act like <em>you</em> and perform privileged actions (like sending messages, making changes, etc.).</li>
+                <li>Access sensitive info that’s only meant for your eyes.</li>
+            </ul>
+
+            <p>So even if you’re logged in and doing everything right, a poorly secured WebSocket handshake could let someone else ride your session like a free Uber.</p>
+        
+            <p>Imagine you’re logged into your favorite online app let’s say a student portal. It uses WebSockets to keep your data up to date in real time, like grades or messages. Now picture this: you visit a random website made by an attacker, and without you even knowing, that site secretly opens a connection to your student portal’s server using WebSockets.</p>
+
+            <p>This kind of attack happens when the app uses only your browser’s cookies to check if you're logged in, without any extra security checks like CSRF tokens. Because of that, the server just assumes the connection is legit since your cookies are still valid.</p>
+
+            <p>Here’s what the attacker can do with this trick:</p>
+
+            <ul>
+                <li>Set up their own fake site to quietly talk to the real WebSocket server while you're logged in.</li>
+                <li>Send any messages they want to the server, pretending to be you.</li>
+                <li>Actually receive responses back from the server yep, they get full two way access.</li>
+            </ul>
+
+            <p>This is worse than normal CSRF, where the attacker can only send requests. With this, they can also read what comes back, which could include your private messages, profile info, or anything else the app sends through WebSockets.</p>
+
+            <p>Bottom line: if the app doesn’t use strong protection like CSRF tokens or custom headers during the handshake, it’s like letting someone else take over your group project messages without even logging in.</p>
+
+            <p><strong>How These Attacks Actually Start</strong></p>
+
+            <p>this kind of WebSocket attack basically works the same way as a classic CSRF vulnerability, just with a WebSocket twist. If you want to pull it off (or prevent it, if you're on the defense side), you first need to look at how the app kicks off its WebSocket connections — that’s called the handshake.</p>
+
+            <p>Your goal is to check if those handshake requests are properly protected. In other words, is the app doing anything to make sure the request is really coming from the right user and not some sketchy site?</p>
+
+            <p>Here’s what usually signals a weak spot:</p>
+
+            <ul>
+            <li>The handshake only uses browser cookies to know who you are.</li>
+            <li>No CSRF tokens or other random values are added to the request to prove it came from the real site.</li>
+            </ul>
+
+            <p>If you see a WebSocket handshake that’s just running off cookies with no extra security checks, that’s a green light for attackers. They can trick a browser into starting that handshake from a totally different site, and the server won’t even notice the difference.</p>
+        
+            <p>Here’s an example of a WebSocket handshake request that looks vulnerable to a CSRF style attack. The only thing identifying the user is a session cookie — there are no extra tokens or custom headers that verify the request actually came from the real website:</p>
+
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+            
+                <div class="terminal-body">
+
+GET /gradesocket HTTP/1.1
+Host: studentportal.edu
+Sec-WebSocket-Version: 13
+Connection: keep-alive, Upgrade
+Cookie: sessionid=Abc123SuperSecretSession
+Upgrade: websocket
+
+                </div>
+            </div>
+            
+
+            <p>Notice how the session is handled just through the <code>sessionid</code> cookie. That’s risky — if a user visits a sketchy site while logged in, the attacker could hijack this handshake and interact with the server as if they were the user.</p>
+            <p><strong>What Happens After a Successful WebSocket Hijack?</strong></p>
+
+            <p>If the WebSocket handshake is open to CSRF, what the attacker does next really depends on how the app uses WebSockets. It’s all about what kind of features are exposed through that connection. Once they’re in, the attacker can do stuff like:</p>
+
+            <ul>
+            <li>Send fake WebSocket messages to act like the user  making changes, posting content, or triggering actions they shouldn't be able to.</li>
+            <li>Ask for sensitive info through the WebSocket and read the responses  stuff like private messages, personal data, or account details.</li>
+            <li>Just chill and wait  if the app sends real time updates over WebSockets, the attacker might not even need to do anything. They can just listen in and collect whatever comes through.</li>
+            </ul>
+
+            <p>In short, once the attacker slides into that connection, the damage depends on how much the app trusts whoever’s on the other end of the WebSocket.</p>
         </div>
     </div>
 
