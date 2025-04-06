@@ -1059,6 +1059,22 @@ Upgrade: websocket
         </div>
     </div>
 
+    <div class="post" onclick="togglePost(this)">
+        <h3>JSON Web Token attacks and vulnerabilities</h3>
+        <div class="post-content">
+            <p>JSON Web Tokens (JWTs) are a popular way to securely transmit data between systems using JSON format. They're commonly used for authorization, since they can be digitally signed making them verifiable and trustworthy when used properly. But if you mess up the implementation, they can become a serious security risk. This write-up breaks down the technical side of JWT vulnerabilities and common attack vectors.</p>
+
+            <img src="jwt.png" alt="OSI Model Layers" style="width: 30%; height: 300px; border-radius: 10px;">
+            <h4>What are JWTs?</h4>
+            <p>Think of a JWT (JSON Web Token) as a secure ID card for your application. It’s a way for systems to send information back and forth, but in a format that’s encrypted and verified to prevent tampering. It’s like a way to prove that you are who you say you are without having to keep all the info on the server.</p>
+            <h4>how it works:</h4>
+            <p><strong>What it holds:</strong> A JWT can carry information about a user. For example, it might say, "This is user X, and they’re allowed to access these resources." It’s mostly used to handle authentication (proving you're logged in), sessions (keeping track of your login state), and access control (deciding which parts of the app you can use).</p>
+            <p><strong>No need to store everything on the server:</strong> With traditional methods, servers would keep track of everything about a user's session. With JWTs, the data is stored in the token itself and sent with each request. This means less server load and no need to constantly query the database.</p>
+            <p><strong>Why it’s great for distributed systems:</strong> If your app needs to talk to multiple servers (like in microservices), JWTs are perfect because they let each server independently verify the user's identity without needing to talk to each other.</p>
+
+        </div>
+    </div>
+
     <script>
         function togglePost(post) {
             let allPosts = document.querySelectorAll(".post");
