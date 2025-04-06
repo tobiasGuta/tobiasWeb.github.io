@@ -1067,11 +1067,172 @@ Upgrade: websocket
             <img src="jwt.png" alt="OSI Model Layers" style="width: 30%; height: 300px; border-radius: 10px;">
             <h4>What are JWTs?</h4>
             <p>Think of a JWT (JSON Web Token) as a secure ID card for your application. It’s a way for systems to send information back and forth, but in a format that’s encrypted and verified to prevent tampering. It’s like a way to prove that you are who you say you are without having to keep all the info on the server.</p>
-            <h4>how it works:</h4>
+            <h4>How it works?</h4>
             <p><strong>What it holds:</strong> A JWT can carry information about a user. For example, it might say, "This is user X, and they’re allowed to access these resources." It’s mostly used to handle authentication (proving you're logged in), sessions (keeping track of your login state), and access control (deciding which parts of the app you can use).</p>
             <p><strong>No need to store everything on the server:</strong> With traditional methods, servers would keep track of everything about a user's session. With JWTs, the data is stored in the token itself and sent with each request. This means less server load and no need to constantly query the database.</p>
             <p><strong>Why it’s great for distributed systems:</strong> If your app needs to talk to multiple servers (like in microservices), JWTs are perfect because they let each server independently verify the user's identity without needing to talk to each other.</p>
 
+            <h4>JWT format</h4>
+            <p>A JWT consists of 3 parts: a header, a payload, and a signature. These are each separated by a dot.</p>
+
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+            
+                <div class="terminal-body">
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                </div>
+            </div>
+
+            <p><strong>📘 Breakdown</strong></p>
+            <p>1. Header (Base64-encoded JSON)</p>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+            
+                <div class="terminal-body">
+
+{
+    "alg": "HS256",
+    "typ": "JWT"
+}
+                </div>
+            </div>
+            <p>This says: "I'm a JWT and I use HMAC-SHA256 to sign."</p>
+            <p>2. Payload (Base64-encoded JSON)</p>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+            
+                <div class="terminal-body">
+
+{
+    "sub": "1234567890",
+    "name": "John Doe",
+    "iat": 1516239022
+}
+                </div>
+            </div>
+            <p>This is your claims set. sub is the subject (usually a user ID), name is a custom claim, and iat is the issue time.</p>
+            <p>3. Signature</p>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+            
+                <div class="terminal-body">
+
+HMACSHA256(
+    base64UrlEncode(header) + "." + base64UrlEncode(payload),
+    your-256-bit-secret
+)                      
+                </div>
+            </div>
+            <p>This ensures that the token hasn’t been tampered with. If the signature doesn’t match, the token is toast.</p>
+            <p>Anyone who gets their hands on a JWT can decode and inspect its contents no special tools needed. That means the real line of defense isn’t hiding the data; it’s the cryptographic signature that ensures the token hasn’t been tampered with. Without verifying that signature, you’re basically trusting data that could’ve been forged in five seconds.</p>
+            <h4>🧠 JWT Signature</h4>
+            <p>When a server generates a JWT, it creates a signature by cryptographically hashing the token's header and payload using a secret signing key. This key is known only to the server and is essential to maintaining the token’s integrity.</p>
+            <p>The signature acts as a tamper evident seal. Since it’s directly derived from the content of the header and payload, even the slightest change like altering a single character will produce a completely different signature. As a result, the token will fail verification.</p>
+            <p>Without access to the server’s secret signing key, it’s computationally infeasible to generate a valid signature for a modified token. This is what makes the signature the cornerstone of trust in any JWT-based system.</p>
+
+            <h4>What is the impact of JWT attacks?</h4>
+            <p>If an attacker is able to forge a valid JWT, they gain the ability to:</p>
+            <ul>
+                <li><strong>Escalate Privileges:</strong> The attacker can modify the payload to elevate their own access level, potentially gaining administrative or elevated user rights within the system.</li>
+                <li><strong>Impersonate Users:</strong> By tampering with the payload, the attacker could impersonate legitimate users, gaining unauthorized access to their accounts, and performing actions as if they were that user.</li>
+                <li><strong>Take Full Control of Accounts:</strong> In the worst case scenario, the attacker can fully compromise a user’s account by forging a token that grants them complete control, bypassing authentication mechanisms altogether.</li>
+            </ul>
+            <h3>How do vulnerabilities to JWT attacks arise?</h3>
+            <h4>1. Insecure or Weak Secret Key</h4>
+            <ul>
+            <li><strong>Explanation:</strong> If the secret key used to sign the JWT is weak, easily guessable, or hardcoded, attackers can brute-force or guess it to generate their own valid signatures.</li>
+            <li><strong>How it Happens:</strong> Using weak keys like common phrases, predictable strings, or small-sized keys makes the token signing process vulnerable to attacks.</li>
+            <li><strong>Mitigation:</strong> Use long, random, and complex keys stored securely (e.g., environment variables, hardware security modules).</li>
+            </ul>
+
+            <h4>2. Incorrect or Missing Signature Verification</h4>
+            <ul>
+            <li><strong>Explanation:</strong> Failure to properly validate the JWT's signature is a critical mistake. If the server does not verify the signature before trusting the data, attackers can alter the payload and still be accepted as valid.</li>
+            <li><strong>How it Happens:</strong> If signature verification is disabled or incorrectly implemented (e.g., using `alg=none`), attackers can tamper with the token without being detected.</li>
+            <li><strong>Mitigation:</strong> Always verify the signature using the server’s secret key, and never trust tokens that don’t pass this check.</li>
+            </ul>
+
+            <h4>3. Using `alg=none` (Algorithm None)</h4>
+            <ul>
+            <li><strong>Explanation:</strong> If the JWT algorithm is set to `none`, the token is not signed at all, making it possible for an attacker to modify the payload without any signature verification.</li>
+            <li><strong>How it Happens:</strong> Some JWT libraries might default to `alg=none` if the algorithm is not specified, which can be exploited if not properly configured.</li>
+            <li><strong>Mitigation:</strong> Explicitly set a secure signing algorithm (e.g., `HS256` or `RS256`) and ensure that the server rejects tokens with `alg=none`.</li>
+            </ul>
+
+            <h4>4. JWT Expiration (`exp`) Not Set</h4>
+            <ul>
+            <li><strong>Explanation:</strong> Without an expiration time, JWTs can be valid indefinitely, giving attackers unlimited time to exploit a compromised token.</li>
+            <li><strong>How it Happens:</strong> Tokens without an expiration (`exp` claim) don’t expire, allowing attackers to reuse them even after a prolonged period.</li>
+            <li><strong>Mitigation:</strong> Always set a reasonable expiration time for tokens, and ensure the server rejects expired tokens.</li>
+            </ul>
+
+            <h4>5. Token Storage Vulnerabilities</h4>
+            <ul>
+            <li><strong>Explanation:</strong> Storing JWTs in insecure locations (e.g., local storage or session storage in the browser) increases the risk of cross-site scripting (XSS) attacks or other client-side vulnerabilities that could allow an attacker to steal tokens.</li>
+            <li><strong>How it Happens:</strong> Storing tokens in places that are easily accessible to client-side JavaScript or in cookies without proper flags (like `HttpOnly` and `Secure`) exposes them to theft.</li>
+            <li><strong>Mitigation:</strong> Store JWTs securely, ideally in HTTP-only, Secure cookies, or use secure storage mechanisms that protect tokens from XSS.</li>
+            </ul>
+
+            <h4>6. Token Leakage Over Insecure Channels</h4>
+            <ul>
+            <li><strong>Explanation:</strong> If JWTs are transmitted over an insecure channel (like HTTP instead of HTTPS), they can be intercepted by attackers in a **man-in-the-middle (MITM)** attack.</li>
+            <li><strong>How it Happens:</strong> Sending tokens over HTTP rather than HTTPS allows attackers to sniff the traffic and steal tokens.</li>
+            <li><strong>Mitigation:</strong> Always use HTTPS to encrypt communication between the client and server, protecting JWTs from being intercepted.</li>
+            </ul>
+
+            <h4>7. JWT Claims Misuse</h4>
+            <ul>
+            <li><strong>Explanation:</strong> The claims within the payload, such as `sub` (subject) or `role`, should not be trusted as the sole indicator of the user’s privileges without verifying them against the server's data.</li>
+            <li><strong>How it Happens:</strong> If an attacker can modify the payload (e.g., change the `role` claim to `admin`), the server may wrongly grant them higher privileges.</li>
+            <li><strong>Mitigation:</strong> Always verify claims against server-side data to ensure they haven’t been tampered with.</li>
+            </ul>
+
+            <h4>8. Lack of Audience or Issuer Verification</h4>
+            <ul>
+            <li><strong>Explanation:</strong> Not verifying the `aud` (audience) and `iss` (issuer) claims makes it easier for attackers to forge tokens with arbitrary data.</li>
+            <li><strong>How it Happens:</strong> Some systems may only validate the signature and ignore these claims, which opens the door for attackers to impersonate other systems or users.</li>
+            <li><strong>Mitigation:</strong> Ensure proper validation of the `aud` and `iss` claims to confirm that the token is intended for your application and comes from a trusted source.</li>
+            </ul>
+            <h4>Exploiting Weaknesses in JWT Signature Verification</h4>
+            <p>Servers, by default, do not retain any information about the JWTs they generate. Each token is designed to be self-contained, carrying all the necessary data within itself. While this design provides benefits, it also introduces a critical issue: the server has no knowledge of the original token's content or its signature. As a result, if the server fails to properly verify the token’s signature, an attacker could easily manipulate the contents of the token without being detected.</p>
+            <p>For Example:</p>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+            
+                <div class="terminal-body">
+
+{
+    "sub": "1234567890",
+    "name": "John Doe",
+    "iat": 1516239022,
+    "isAdmin": false
+}                   
+                </div>
+            </div>
+            <p>If the server uses the name to track sessions, changing this value could allow an attacker to impersonate other users who are currently logged in. Likewise, if the isAdmin flag is used to control access, an attacker could exploit this to escalate their privileges and gain unauthorized admin rights.</p>
+            <p>JWT libraries usually offer two separate functions: one for verifying the token's authenticity and another for simply decoding its contents. For example, in the Node.js library jsonwebtoken, there’s verify() to validate the token and decode() to read its data without checking the signature.</p>
+            <p>Sometimes, developers mistakenly use the decode() method instead of verify(), which means the application never checks the token’s signature. As a result, it essentially trusts any token, even if it’s been tampered with.</p>
         </div>
     </div>
 
