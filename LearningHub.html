@@ -1233,6 +1233,91 @@ HMACSHA256(
             <p>If the server uses the name to track sessions, changing this value could allow an attacker to impersonate other users who are currently logged in. Likewise, if the isAdmin flag is used to control access, an attacker could exploit this to escalate their privileges and gain unauthorized admin rights.</p>
             <p>JWT libraries usually offer two separate functions: one for verifying the token's authenticity and another for simply decoding its contents. For example, in the Node.js library jsonwebtoken, there’s verify() to validate the token and decode() to read its data without checking the signature.</p>
             <p>Sometimes, developers mistakenly use the decode() method instead of verify(), which means the application never checks the token’s signature. As a result, it essentially trusts any token, even if it’s been tampered with.</p>
+            <h4>Accepting Tokens Without a Signature</h4>
+            <p>JWT tokens contain a header that includes an alg parameter, which specifies the algorithm used to sign the token. This tells the server which algorithm it should use to verify the token's signature.</p>
+            <h3>Example JWT header:</h3>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+            
+                <div class="terminal-body">
+
+{
+    "alg": "HS256",
+    "typ": "JWT"
+}                  
+                </div>
+            </div>
+            <p>The issue arises because the server relies on the alg parameter to determine how to validate the token. If the alg parameter is manipulated, the server could end up trusting a token that hasn't been properly verified. Essentially, an attacker can influence how the server determines whether a token is valid, potentially tricking it into accepting an unsigned or improperly signed token.</p>
+            <p>While JWTs can be signed with various algorithms, they can also be created without a signature at all, leading to an "unsecured JWT." In this case, the alg is set to none, meaning no signature is used to validate the token. Although servers should reject tokens that lack a signature due to the obvious security risks, attackers can sometimes bypass these checks by using simple obfuscation techniques, such as changing capitalization or using different encodings. This makes it difficult for the server to identify and filter out unsecured JWTs.</p>
+            <h4>Brute-forcing</h4>
+            <p>Certain signing algorithms, like HS256 (HMAC + SHA-256), rely on a standalone, arbitrary string as the secret key. This key acts similarly to a password, and it’s essential that it’s not easily guessable or susceptible to brute-force attacks. If an attacker manages to figure out this secret, they can generate their own JWTs with any combination of header and payload, then re sign them with a valid signature using the secret.</p>
+            <p>When building JWT based applications, developers can sometimes make critical mistakes, such as forgetting to update default or placeholder secrets. They might even copy code examples from online sources without changing the hardcoded secret included in those snippets. If this happens, it can be relatively easy for an attacker to brute-force the server's secret and gain the ability to create valid JWTs.</p>
+            <p>hashcat can be used to brute-force secret keys.</p>
+            <h4>How Hashcat Can Be Used to Brute-Force JWT Secret Keys:</h4>
+            <ul>
+            <li><strong>JWT Signing Algorithm (e.g., HS256):</strong> In the case of the HS256 algorithm (HMAC + SHA-256), the secret key is used to sign the JWT. If an attacker knows the structure of the JWT (the header and payload) but does not have the secret, they can use tools like Hashcat to attempt to guess the secret key.</li>
+            <li><strong>Brute-Force Attack:</strong> With Hashcat, an attacker can use brute-force techniques to try all possible combinations of a secret key. This would involve testing different strings against the hash to see if they generate the correct signature for a given JWT. The process typically involves extracting the JWT signature and comparing it against various possible combinations of secret keys until a match is found.</li>
+            <li><strong>Attack Modes:</strong> Hashcat supports various attack modes like dictionary, brute-force, hybrid, and rule-based attacks, which can be tailored to fit different scenarios and hash types.</li>
+            <li><strong>Use of Wordlists:</strong> If an attacker has some idea about the structure of the secret (e.g., it could be a common word or phrase), they can use a wordlist attack to try common passwords or phrases.</li>
+            <li><strong>Distributed Cracking:</strong> Hashcat supports distributed cracking, which can significantly speed up the brute-force process by using multiple GPUs or systems to share the workload.</li>
+            <li><strong>Example Scenario:</strong> If a developer leaves the secret key in the code or uses a weak key (e.g., "password123"), an attacker could use Hashcat to try these simple or default keys quickly, leading to the compromise of the JWT and any associated accounts or systems.</li>
+            </ul>
+
+            <h3>Requirements</h3>
+            <p><strong>1: </strong>You need a valid, signed JWT from the target server</p>
+            <p><strong>2: </strong>Wordlist of well-known secrets</p>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+            
+                <div class="terminal-body">
+hashcat -a 0 -m 16500 jwt wordlist               
+                </div>
+            </div>
+            <p>Hashcat takes the JWT's header and payload, then signs them using each secret from the wordlist. It compares the generated signature with the original signature from the server. If a match is found, Hashcat displays the discovered secret, along with additional relevant details, in the following format:</p>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+            
+                <div class="terminal-body">
+jwt:identified-secret              
+                </div>
+            </div>
+            <p>Once you have identified the secret key, you can use it to generate a valid signature for any JWT header and payload that you like. </p>
+            <h4>Burp Suite:</h4>
+            <h4>Modifying JWTs</h4>
+            <ul>
+            <li>Right-click the request containing the JWT and select <strong>Send to Repeater</strong>.</li>
+            <li>In the request panel, navigate to the <strong>JSON Web Token</strong> tab.</li>
+            <li>Modify the JSON data as needed in the <strong>Header</strong> and <strong>Payload</strong> sections.</li>
+            <li>Click <strong>Sign</strong>. A new dialog will appear.</li>
+            <li>In the dialog, choose the correct signing key and click <strong>OK</strong>. The JWT will be re-signed to reflect the updated header and payload values. If you haven’t added a signing key yet, follow the steps below.</li>
+            </ul>
+
+            <h4>Adding a JWT Signing Key</h4>
+            <ul>
+            <li>Go to the <strong>JWT Editor Keys</strong> tab.</li>
+            <li>Click the button for the type of key you wish to add (e.g., <strong>New Symmetric Key</strong>). A new dialog will open.</li>
+            <li>In the dialog, input the new key:
+                <ul>
+                <li>Click <strong>Generate</strong> to create a new key.</li>
+                <li>Alternatively, paste an existing key into the dialog.</li>
+                <li>Edit the key as needed.</li>
+                </ul>
+            </li>
+            <li>Click <strong>OK</strong> to save the key.</li>
+            </ul>
+
         </div>
     </div>
 
