@@ -1375,9 +1375,68 @@ jwt:identified-secret
             </ul>
 
             <p>🔐 <strong>Pro Tip:</strong> When performing this attack manually, you may also need to update the <code>kid</code> header parameter to match the <code>kid</code> of your embedded key. The JWT Editor handles this automatically during the attack.</p>
+            <h4>Abusing the jku Header to Inject Self-Signed JWTs</h4>
+            <p>Instead of embedding a public key directly into the JWT header using the jwk parameter, some servers rely on the jku (JSON Web Key Set URL) parameter. This field allows the JWT to specify a URL where the server can fetch a JWK Set a collection of public keys used to verify the token's signature. If the server blindly trusts this source, it becomes a powerful vector for abuse.</p>
+        
+            <h5>What’s a JWK Set?</h5>
+            <p>A JWK Set is simply a JSON structure that contains an array of public keys (JWKs). Here’s a simplified example of a JWK Set:</p>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+            
+                <div class="terminal-body">
+    {
+        "keys": [
+        {
+            "kty": "RSA",
+            "kid": "malicious-key-id",
+            "e": "AQAB",
+            "n": "attacker-controlled-modulus"
+        },
+        {
+            "kty": "RSA",
+            "kid": "backup-key",
+            "e": "AQAB",
+            "n": "some-other-key"
+        }
+    ]
+}     
+                </div>
+            </div>
+            <p>These sets are often hosted at predictable URLs like https://example.com/.well-known/jwks.json.</p>
+            <h5>The Attack Strategy</h5>
+            <p>If the server doesn't restrict or validate where it fetches the key set from, an attacker can:</p>
+            <ul>
+                <li>Host their own malicious JWK Set on a server they control.</li>
+                <li>Sign a forged JWT with a private key that matches a public key in that set.</li>
+                <li>Set the <code>jku</code> header to point to their own key set URL.</li>
+                <li>Send the token to the server, which will fetch the attacker's key set and verify the forged signature.</li>
+            </ul>
+            <p>This effectively lets the attacker authenticate as any user or even escalate to admin if the JWT's payload is crafted correctly.</p>
+            <h5>Real-World Example:</h5>
+            <p>Suppose you're targeting an app that accepts jku values pointing to external domains. You generate your RSA key pair, create a JWK Set from the public key, and host it at:</p>
+            <code>https://yourusername.github.io/.well-known/jwks.json</code>
+            <p>Then, you generate a JWT with an admin claim, sign it using your private key, and include this header:</p>
 
-        
-        
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+            
+                <div class="terminal-body">
+{
+    "alg": "RS256",
+    "jku": "https://yourusername.github.io/.well-known/jwks.json",
+    "kid": "malicious-key-id"
+}                          
+                </div>
+            </div>
+            <p>If the server fetches that key set without validating the domain or enforcing HTTPS strictness, it might accept your token as legit even though it’s self-signed.</p>
         </div>
     </div>
 
