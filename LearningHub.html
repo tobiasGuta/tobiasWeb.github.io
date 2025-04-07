@@ -1310,14 +1310,24 @@ jwt:identified-secret
             <li>Click the button for the type of key you wish to add (e.g., <strong>New Symmetric Key</strong>). A new dialog will open.</li>
             <li>In the dialog, input the new key:
                 <ul>
-                <li>Click <strong>Generate</strong> to create a new key.</li>
-                <li>Alternatively, paste an existing key into the dialog.</li>
-                <li>Edit the key as needed.</li>
+                    <li>Click <strong>Generate</strong> to create a new key.</li>
+                    <li>Alternatively, paste an existing key into the dialog.</li>
+                    <li>Edit the key as needed.</li>
                 </ul>
             </li>
             <li>Click <strong>OK</strong> to save the key.</li>
             </ul>
 
+            <h4>JWT Header Parameter Injections – A Closer Look</h4>
+            <p>According to the JWS (JSON Web Signature) specification, the only required field in a JWT (JSON Web Token) header is the alg parameter, which defines the cryptographic algorithm used to sign the token. However, in real world applications, JWT headers also known as JOSE headers often include additional fields. Some of these are particularly interesting from a security standpoint, especially because they can be influenced by the end user</p>
+            <p>Here are a few commonly used JWT header parameters that can be exploited if not properly validated:</p>
+            <ul>
+                <li><strong>jwk (JSON Web Key):</strong> This parameter embeds a public key directly into the JWT header as a JSON object. If accepted without validation, it allows the attacker to specify which key the server should use to verify the signature.</li>
+                <li><Strong>jku (JSON Web Key Set URL):</Strong>This parameter provides a URL that points to a JSON Web Key Set (JWKS). A vulnerable server might fetch a malicious key set from an attacker-controlled domain and use one of those keys to validate the token.</li>
+                <li><Strong>kid (Key ID):</Strong> This parameter helps the server select the correct key from a set of possible keys. Attackers can manipulate kid to influence which key the server uses, potentially matching it with a key they control.</li>
+            </ul>
+            <p>In each case, these header fields give the attacker an opportunity to influence the key selection process during signature verification. If the server does not enforce strict validation such as checking the source of a jku, verifying the integrity of a jwk, or constraining acceptable kid values it may end up accepting a forged token.</p>
+            <p>JWT header injection attacks exploit weak assumptions in how a server selects and trusts cryptographic keys. For developers and penetration testers alike, it's crucial to understand these parameters, audit their usage, and ensure robust validation mechanisms are in place to prevent unauthorized access.</p>
         </div>
     </div>
 
