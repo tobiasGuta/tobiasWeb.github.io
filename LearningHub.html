@@ -1328,6 +1328,56 @@ jwt:identified-secret
             </ul>
             <p>In each case, these header fields give the attacker an opportunity to influence the key selection process during signature verification. If the server does not enforce strict validation such as checking the source of a jku, verifying the integrity of a jwk, or constraining acceptable kid values it may end up accepting a forged token.</p>
             <p>JWT header injection attacks exploit weak assumptions in how a server selects and trusts cryptographic keys. For developers and penetration testers alike, it's crucial to understand these parameters, audit their usage, and ensure robust validation mechanisms are in place to prevent unauthorized access.</p>
+            <h4>Injecting Self-Signed JWTs via the jwk Header Parameter</h4>
+            <p>The JSON Web Signature (JWS) specification defines an optional header parameter called jwk (JSON Web Key), which allows a public key to be embedded directly within the JWT itself. While this feature is intended to enable flexible key distribution, it can also introduce a dangerous attack vector when not properly validated.</p>
+            <h5>What is a JWK?</h5>
+            <p>A JWK (JSON Web Key) is a standardized format for representing cryptographic keys as JSON objects. It allows for easy serialization and exchange of public keys in web-based environments. Here’s an example of what a JWK might look like:</p>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+            
+                <div class="terminal-body">
+{
+    "kty": "RSA",
+    "n": "....",   // Modulus
+    "e": "AQAB"   // Exponent
+}      
+                </div>
+            </div>
+            <p>When a jwk is embedded in the JWT header, it essentially tells the server, "Use this public key to verify the token’s signature." This is where things can go wrong.</p>
+            <h5>The Attack: Self-Signed JWT Injection</h5>
+            <p>If a server accepts and trusts the jwk parameter without proper validation, an attacker can craft a malicious JWT with a self-signed signature signed using their own private key and include the matching public key in the jwk field. If the server blindly uses that key to verify the token, it will accept the forged token as legitimate.</p>
+            <h5>This allows an attacker to:</h5>
+            <ul>
+                <li>Bypass authentication.</li>
+                <li>Escalate privileges.</li>
+                <li>Access protected resources as if they were an authenticated user.</li>
+            </ul>
+            <h5>Why This Works</h5>
+            <p>The attack exploits a fundamental trust flaw: the server is relying on a key that comes from the untrusted user. Without verifying the origin or authenticity of the embedded jwk, the server is vulnerable to signature forgery.</p>
+            <p>In a secure JWT implementation, servers should verify token signatures using a whitelisted set of trusted public keys, ideally stored securely on the server side. However, in some misconfigured systems, the server may naively accept any public key embedded within the JWT header specifically through the optional jwk (JSON Web Key) parameter.</p>
+            <h4>Testing the Vulnerability Using Burp Suite & JWT Editor</h4>
+            <p>Step-by-Step:</p>
+            <ul>
+                <li>Install the JWT Editor extension in Burp Suite (via BApp Store).</li>
+                <li>Navigate to <strong>JWT Editor Keys</strong> in the main tab bar.</li>
+                <li>Click <strong>"Generate New RSA Key"</strong> to create a custom key pair.</li>
+                <li>Send a request containing a JWT (captured from the application) to <strong>Burp Repeater</strong>.</li>
+                <li>In Repeater, switch to the <strong>JSON Web Token</strong> view (enabled by the extension).</li>
+                <li>Modify the token payload to include something malicious e.g., changing <code>"role": "user"</code> to <code>"role": "admin"</code>.</li>
+                <li>Click <strong>"Attack"</strong>, then choose <strong>"Embedded JWK"</strong>.</li>
+                <li>When prompted, select the RSA key you generated earlier.</li>
+                <li>Send the request and observe the response.</li>
+                <li>If the server accepts your self-signed token, it confirms the presence of the vulnerability.</li>
+            </ul>
+
+            <p>🔐 <strong>Pro Tip:</strong> When performing this attack manually, you may also need to update the <code>kid</code> header parameter to match the <code>kid</code> of your embedded key. The JWT Editor handles this automatically during the attack.</p>
+
+        
+        
         </div>
     </div>
 
