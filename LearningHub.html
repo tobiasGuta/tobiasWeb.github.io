@@ -1297,11 +1297,11 @@ jwt:identified-secret
             <h4>Burp Suite:</h4>
             <h4>Modifying JWTs</h4>
             <ul>
-            <li>Right-click the request containing the JWT and select <strong>Send to Repeater</strong>.</li>
-            <li>In the request panel, navigate to the <strong>JSON Web Token</strong> tab.</li>
-            <li>Modify the JSON data as needed in the <strong>Header</strong> and <strong>Payload</strong> sections.</li>
-            <li>Click <strong>Sign</strong>. A new dialog will appear.</li>
-            <li>In the dialog, choose the correct signing key and click <strong>OK</strong>. The JWT will be re-signed to reflect the updated header and payload values. If you haven’t added a signing key yet, follow the steps below.</li>
+                <li>Right-click the request containing the JWT and select <strong>Send to Repeater</strong>.</li>
+                <li>In the request panel, navigate to the <strong>JSON Web Token</strong> tab.</li>
+                <li>Modify the JSON data as needed in the <strong>Header</strong> and <strong>Payload</strong> sections.</li>
+                <li>Click <strong>Sign</strong>. A new dialog will appear.</li>
+                <li>In the dialog, choose the correct signing key and click <strong>OK</strong>. The JWT will be re-signed to reflect the updated header and payload values. If you haven’t added a signing key yet, follow the steps below.</li>
             </ul>
 
             <h4>Adding a JWT Signing Key</h4>
@@ -1442,9 +1442,41 @@ jwt:identified-secret
                 <source src="abusingjkuheader.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-        
-        
-        
+            <h4>🔐 Tampering with JWTs Using the kid Field</h4>
+            <p>In many web applications, servers rely on multiple cryptographic keys to sign and verify data. To help decide which key to use, JWTs often include a kid (Key ID) field in their header. This tells the server, "Hey, use this specific key to validate me."</p>
+            <p>Most of the time, the server keeps its verification keys in a JWK Set basically a structured list of keys. The server matches the kid in your token with the corresponding key in its list. But here’s the catch: there’s no strict format for what a kid should look like. It can literally be any string the developer decides sometimes a database ID, sometimes even the name of a local file.</p>
+            <p>Now, if the server isn’t properly validating the kid value and it's vulnerable to path traversal, an attacker can exploit that. Instead of referencing a legit key, they can point the kid to a file somewhere else on the server's filesystem.</p>
+            <h5>🧪 Example Header</h5>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+            
+                <div class="terminal-body">
+{
+    "kid": "../../path/to/file",
+    "typ": "JWT",
+    "alg": "HS256",
+    "k": "asGsADas3421dfh9DGN_AFDFDbasfd8_anfjkvc"
+}                                      
+                </div>
+            </div>
+            <p>Here, the attacker is trying to get the server to load a key from a different location possibly even a file the attacker knows the contents of.</p>
+            <h5>🎯 Why This Matters</h5>
+            <p>If the server supports symmetric algorithms like HS256, the situation becomes dangerous fast. Unlike asymmetric methods, where a public and private key are separate, symmetric algorithms use the same secret to both sign and verify.</p>
+            <h5>This means that:</h5>
+            <ul>
+                <li>If an attacker knows what’s inside the target file,</li>
+                <li>And that file is used as the secret (because the attacker pointed the kid there),</li>
+                <li>Then they can sign their own token using that same secret and it will verify as legit.</li>
+            </ul>
+            <h5>🧨 Simple Exploit: Using /dev/null</h5>
+            <p>On Unix-based systems, /dev/null is a file that always returns nothing. If a server reads this as the key, it’s basically using an empty string as the secret.</p>
+            <p>So if you generate a JWT signed using an empty string as the secret, and the kid points to /dev/null, it could get accepted by the server.</p>
+            <h5>💡 Side Note</h5>
+            <p>If you’re using the JWT Editor extension in Burp, you can’t sign tokens with an empty string directly. But there’s a known workaround: using a Base64-encoded null byte instead will bypass this limitation and still work for this kind of test.</p>
         </div>
     </div>
 
