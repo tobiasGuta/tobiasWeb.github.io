@@ -1375,6 +1375,7 @@ jwt:identified-secret
             </ul>
 
             <p>🔐 <strong>Pro Tip:</strong> When performing this attack manually, you may also need to update the <code>kid</code> header parameter to match the <code>kid</code> of your embedded key. The JWT Editor handles this automatically during the attack.</p>
+            
             <h4>Abusing the jku Header to Inject Self-Signed JWTs</h4>
             <p>Instead of embedding a public key directly into the JWT header using the jwk parameter, some servers rely on the jku (JSON Web Key Set URL) parameter. This field allows the JWT to specify a URL where the server can fetch a JWK Set a collection of public keys used to verify the token's signature. If the server blindly trusts this source, it becomes a powerful vector for abuse.</p>
         
@@ -1437,6 +1438,13 @@ jwt:identified-secret
                 </div>
             </div>
             <p>If the server fetches that key set without validating the domain or enforcing HTTPS strictness, it might accept your token as legit even though it’s self-signed.</p>
+            <video controls style="width: 90%; height: 400px; border-radius: 10px;">
+                <source src="abusingjkuheader.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        
+        
+        
         </div>
     </div>
 
