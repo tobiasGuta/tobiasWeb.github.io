@@ -1486,6 +1486,87 @@ jwt:identified-secret
         </div>
     </div>
 
+    <div class="post" onclick="togglePost(this)">
+        <h3>My Approach to Securing a Jump Box: Best Practices for Beginners</h3>
+        <div class="post-content">
+            <img src="jumbox.png" alt="OSI Model Layers" style="width: 40%; max-width: 1650px; border-radius: 10px;">
+            <ol>
+                <li>
+                  <strong>Minimal System Configuration</strong>
+                  <ul>
+                    <li>Install only essential tools, such as SSH, RDP, or VPN clients. Avoid any unnecessary services or applications to reduce the attack surface.</li>
+                    <li>Use security focused OS configurations for example, using a minimal install of Linux or a Windows Server with security options enabled.</li>
+                    <li>Disable unnecessary services</li>
+                    <li>Remove unused package</li>
+                    <li>Ensure that the OS and any installed software are regularly updated with the latest patches to protect against known vulnerabilities.</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Access Control & Authentication</strong>
+                  <ul>
+                    <li>Enforce the use of SSH keys for Linux/Unix-based jump boxes instead of passwords. For Windows, use certificate-based authentication for RDP.</li>
+                    <li>Disable password-based logins both SSH and RDP to mitigate brute force attacks.</li>
+                    <li>Require multi factor authentication (MFA) for all access to the jump box.</li>
+                    <li>Ensure only authorized administrators have access. Use role-based access control (RBAC) to limit permissions.</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Network Security</strong>
+                  <ul>
+                    <li>Only allow access to the jump box from trusted IPs or networks.</li>
+                    <li>Place the jump box behind a strict firewall to control both inbound and outbound traffic.</li>
+                    <li>Ensure the jump box is placed in a dedicated security zone, to isolate it from the internal network, limiting exposure.</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Logging and Monitoring</strong>
+                  <ul>
+                    <li>Enable detailed access and session logging to monitor who accesses the jump box and what actions are taken.</li>
+                    <li>Forward logs to a centralized logging system for example SIEM like Splunk for real-time analysis and to detect any abnormal activities.</li>
+                    <li>If possible, enable session recording for administrative access to allow for post-event analysis in case of security incidents.</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Security Software and Hardening</strong>
+                  <ul>
+                    <li>Install and configure intrusion detection software like Snort to monitor the integrity of the system and alert on unusual activities.</li>
+                    <li>Install and configure trusted endpoint protection software to monitor for malicious activity on the jump box.</li>
+                    <li>For Linux systems, disable direct root login. Enforce the use of sudo for administrative actions.</li>
+                    <li>Implement automatic session timeouts and lockout policies after a certain period of inactivity or after failed login attempts to protect against unauthorized access.</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Encryption</strong>
+                  <ul>
+                    <li>Ensure that all connections to the jump box use encryption.</li>
+                    <li>Encrypt the jump box’s disk with full disk encryption.</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Backup and Disaster Recovery</strong>
+                  <ul>
+                    <li>Perform regular backups of the jump box configuration, critical files, and logs. Store backups securely and separately from the production environment to avoid data loss during an incident.</li>
+                    <li>Periodically test the backup and restore process to ensure it works effectively in case of failure or compromise.</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Session Management</strong>
+                  <ul>
+                    <li>Limit the number of simultaneous administrative sessions to reduce the attack surface and prevent misuse.</li>
+                    <li>Ensure the jump box is used exclusively for management and administrative tasks.</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Periodic Security Audits and Penetration Testing</strong>
+                  <ul>
+                    <li>Regularly audit the security posture of the jump box by conducting vulnerability scans and penetration testing. This helps identify potential weaknesses and ensures the system remains secure over time.</li>
+                  </ul>
+                </li>
+              </ol>              
+            
+        </div>
+    </div>
+
     <script>
         function togglePost(post) {
             let allPosts = document.querySelectorAll(".post");
