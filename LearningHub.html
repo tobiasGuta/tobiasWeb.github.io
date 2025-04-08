@@ -1477,6 +1477,10 @@ jwt:identified-secret
             <p>So if you generate a JWT signed using an empty string as the secret, and the kid points to /dev/null, it could get accepted by the server.</p>
             <h5>💡 Side Note</h5>
             <p>If you’re using the JWT Editor extension in Burp, you can’t sign tokens with an empty string directly. But there’s a known workaround: using a Base64-encoded null byte instead will bypass this limitation and still work for this kind of test.</p>
+            <video controls style="width: 90%; height: 400px; border-radius: 10px;">
+                <source src="bypassing-jwt.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
     </div>
 
