@@ -1567,6 +1567,164 @@ jwt:identified-secret
         </div>
     </div>
 
+    <div class="post" onclick="togglePost(this)">
+        <h3>Encryption</h3>
+        <div class="post-content">
+            <ul>
+                <li><strong>Ciphertext</strong> – The scrambled version of your original data after it’s been encrypted. Basically, the unreadable result of encryption.</li>
+                <li><strong>Cipher</strong> – A formula or method used to lock (encrypt) or unlock (decrypt) data. Modern ones are math-heavy, but old-school ones like Caesar ciphers are just simple shifts.</li>
+                <li><strong>Plaintext</strong> – The raw, readable info before it gets encrypted. Could be a message, image, file — anything.</li>
+                <li><strong>Encryption</strong> – The process of turning plain data into unreadable ciphertext using a cipher.</li>
+                <li><strong>Encoding</strong> – Just a way to change how data looks (like Base64), not secure. It’s meant to be reversed easily.</li>
+                <li><strong>Key</strong> – A crucial piece of info that lets you decrypt ciphertext and get back to the original data.</li>
+                <li><strong>Passphrase</strong> – Like a strong password that protects your key. It doesn’t do the encryption itself, but it guards the thing that does.</li>
+                <li><strong>Asymmetric encryption</strong> – Uses a pair of keys: one for encrypting, one for decrypting. You don’t need to share the private one.</li>
+                <li><strong>Symmetric encryption</strong> – Uses the same key to lock and unlock the data. Fast, but you’ve got to keep that key safe.</li>
+                <li><strong>Brute force</strong> – A trial-and-error attack where every possible key or password is tried until something works.</li>
+                <li><strong>Cryptanalysis</strong> – Breaking encryption by finding flaws in the math or logic behind the cipher. Smarter than brute force.</li>
+              </ul>
+              
+              <p>Cryptography has its own version of the CIA triad, not just Confidentiality and Integrity, but also Authenticity. It’s everywhere. The site you’re reading this on? It's using an encrypted connection right now. You don’t directly interact with cryptography, but it silently secures almost everything you do online, from messaging to banking.</p>
+              <p>Cryptography is essential in every layer of tech because it's what protects sensitive data from bad actors. Industries that handle critical info, like restaurants processing card payments or hospitals storing medical records, are legally required to follow strict encryption standards. Why? Because your data isn’t just data to attackers, it’s a goldmine.</p>
+              <h4>Types of Encryption</h4>
+              <p>There are two main types of encryption: symmetric and asymmetric.</p>
+              <p><strong>Symmetric encryption(AES)</strong> uses the same key to both encrypt and decrypt data. For example, if User A wants to send an encrypted message to User B, they both need to have access to the same secret key. That key must be shared securely ahead of time, if someone else gets it, the whole system is compromised.</p>
+              <p>Think of it like a locked box: both people need the same key to lock it and unlock it.</p>
+              <p><strong>Asymmetric encryption</strong>uses a pair of keys: a public key and a private key. One is used to encrypt, and the other is used to decrypt.</p>
+              <p>For example, if User A wants to send a secure message to User B, they would encrypt it using User B's public key. Only User B can decrypt it using their private key.</p>
+              <p>Public keys are meant to be shared openly, they don’t need to be kept secret. This system ensures that only the intended recipient (who holds the private key) can read the message.</p>
+              <p>On the flip side, if User A encrypts the message with their private key, anyone can decrypt it using User A’s public key, this doesn’t keep it secret, but it proves the message came from User A, because only they have the private key. That’s how digital signatures work.</p>
+              <p>In asymmetric encryption, if you encrypt something with your private key, it’s used to prove your identity, that’s digital signing (aka authenticity).</p>
+              <p>If you encrypt something with the recipient’s public key, only their private key can decrypt it, that’s confidentiality.</p>
+              <h4>key variables that you need to know about for RSA are p, q, m, n, e, d, and c.</h4>
+              <p>“p” and “q” are large prime numbers, “n” is the product of p and q.</p>
+              <p>The public key is n and e, the private key is n and d.</p>
+              <p>“m” is used to represent the message (in plaintext) and “c” represents the ciphertext (encrypted text).</p>
+              <h4>🔐 How Asymmetric Encryption Helps Set Up Symmetric Encryption</h4>
+
+            <h4>💡 What It Means:</h4>
+            <p>Asymmetric encryption (public/private key stuff) is <strong>slow</strong>. Symmetric encryption (shared key stuff) is <strong>fast</strong>.</p>
+            <p>So instead of encrypting everything with asymmetric encryption, we just use it at the start, to securely share a secret key that will be used for symmetric encryption.</p>
+
+            <h4>🧠 Think of it like this:</h4>
+            <p>You and I want to talk securely. Here's what happens:</p>
+            <ul>
+            <li>🔓 I send you my public key.</li>
+            <li>🔐 You create a random secret key (for symmetric encryption).</li>
+            <li>📦 You encrypt that secret key with my public key, then send it to me.</li>
+            <li>🗝️ I use my private key to decrypt that message and get the secret key.</li>
+            <li>🚀 Now we both have the same symmetric key, and we switch to fast symmetric encryption for everything after.</li>
+            </ul>
+
+            <h4>🧠 Understanding Key Exchange — A Fresh Metaphor</h4>
+
+            <p>Think of symmetric encryption like a secret language only you and your friend understand. But first, you need to teach them the language without anyone else overhearing.</p>
+
+            <p>You ask your friend to send you a special kind of mailbox — one that locks when closed and can only be unlocked by them. You drop your "secret language guide" into that mailbox and send it back.</p>
+
+            <p>They open it with their special key, read the guide, and now you're both fluent in this secret language.</p>
+
+            <h4>🔑 How It Maps to Cryptography:</h4>
+            <ul>
+            <li>The <strong>secret language</strong> = symmetric encryption key</li>
+            <li>The <strong>locking mailbox</strong> = public key</li>
+            <li>The <strong>special key to open it</strong> = private key</li>
+            </ul>
+
+            <p>Now that you both speak the same encrypted language, you can talk back and forth super fast without worrying about anyone spying. You only used asymmetric encryption once, just to deliver the language securely.</p>
+
+
+            <h4>⚡ Why This Is Common:</h4>
+            <p>It’s literally how HTTPS (the padlock on your browser) works. Every time you connect to a secure website:</p>
+            <ul>
+            <li>Your browser and the website do an asymmetric handshake to agree on a symmetric key.</li>
+            <li>Then all your data is encrypted using symmetric encryption because it’s fast and efficient.</li>
+            </ul>
+
+            <p>Asymmetric crypto is used to <strong>securely exchange a shared secret</strong>. That secret becomes the key for symmetric encryption, which handles the actual data transfer. Best of both worlds.</p>
+            <h4>💾 What’s a Digital Signature?</h4>
+            <p>A digital signature is like a cryptographic autograph, it proves that <strong>you</strong> (and not someone pretending to be you) created or approved a message or file.</p>
+
+            <h4>🔐 How It Works:</h4>
+            <p>It uses <strong>asymmetric encryption</strong> (public/private key pairs), but in reverse compared to encryption.</p>
+            <ul>
+            <li>You sign a file or message using your <strong>private key</strong>.</li>
+            <li>Anyone can verify that signature using your <strong>public key</strong>.</li>
+            <li>If the signature is valid, it confirms:</li>
+            <ul>
+                <li>✅ The file/message came from you (authenticity).</li>
+                <li>✅ The contents haven’t been altered (integrity).</li>
+            </ul>
+            </ul>
+
+            <h4>🔑 Why This Is Legit:</h4>
+            <ul>
+            <li>Only <strong>you</strong> have access to your private key.</li>
+            <li>Your <strong>public key</strong> is shared openly for verification.</li>
+            <li>If someone tries to tamper with the file or impersonate you, the signature won’t validate.</li>
+            </ul>
+
+            <h4>🧠 Metaphor:</h4>
+            <p>Imagine writing a note and sealing it with a unique wax stamp that only you own. Anyone who sees the stamp can say:</p>
+            <p><em>"Yep, this came from them, and no one tampered with it."</em></p>
+
+            <p>That’s exactly what a digital signature does, in the world of files and data.</p>
+
+            <h4>🔐 Diffie-Hellman Explained with a Secret Drink Mix</h4>
+
+            <p>Two people, Sender and Receiver, want to agree on a shared secret over a public channel. They can't directly share their secret ingredients, but they still want to end up with the same final result: a private drink mix. Here's how they pull it off:</p>
+
+            <h4>🥤 Step 1: Agree on a Base Drink</h4>
+            <p>
+            Both Sender and Receiver publicly say:
+            </p>
+            <ul>
+            <li>“Let’s use lemonade as our base.”</li>
+            </ul>
+            <p>
+            Everyone can hear this, it’s public and safe to share.
+            </p>
+
+            <h4>🌿 Step 2: Pick Secret Ingredients</h4>
+            <ul>
+            <li>Sender secretly chooses mint.</li>
+            <li>Receiver secretly chooses ginger.</li>
+            </ul>
+            <p>
+            These are their private secrets and are never shared directly.
+            </p>
+
+            <h4>🧪 Step 3: Mix and Exchange</h4>
+            <ul>
+            <li>Sender mixes lemonade + mint, sends it to Receiver.</li>
+            <li>Receiver mixes lemonade + ginger, sends it to Sender.</li>
+            </ul>
+            <p>
+            Each person now has the other's partial mix, but not the full recipe.
+            </p>
+
+            <h4>🧬 Step 4: Final Remix</h4>
+            <ul>
+            <li>Sender adds their mint into the mix received from Receiver.</li>
+            <li>Receiver adds their ginger into the mix received from Sender.</li>
+            </ul>
+            <p>
+            Now they both have the exact same drink: lemonade + mint + ginger.
+            </p>
+
+            <h4>✅ What It Represents</h4>
+            <ul>
+            <li><strong>Lemonade</strong> = Public value (e.g., a shared number)</li>
+            <li><strong>Mint/Ginger</strong> = Private secrets (chosen by each party)</li>
+            <li><strong>Final Drink</strong> = Shared secret key (used for symmetric encryption)</li>
+            </ul>
+
+            <p>
+            This is the magic of Diffie-Hellman: you build a shared secret without ever actually sending it. An eavesdropper hears only the public stuff, not enough to recreate the final key.
+            </p>
+        </div>
+    </div>
+
     <script>
         function togglePost(post) {
             let allPosts = document.querySelectorAll(".post");
