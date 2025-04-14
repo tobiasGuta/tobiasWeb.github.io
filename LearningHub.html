@@ -1884,9 +1884,45 @@ jwt:identified-secret
                 <li>A different PID. (Remember that the PID will always be PID 4)</li>
                 <li>Not running in Session 0</li>
             </ul>
-            
-                
 
+            <h4>🔍 What Is smss.exe?</h4>
+            <p>smss.exe stands for Session Manager Subsystem, a critical component of the Windows NT family. It's the first user-mode process initiated by the kernel during the system's startup sequence. Its primary function is to set up the environment for user sessions and manage essential system processes.​</p>
+            <h5>⚙️ Key Functions of smss.exe</h5>
+            <ul>
+                <li>This process starts the kernel and user modes of the Windows subsystem</li>
+                <li>Smss.exe starts csrss.exe (Windows subsystem) and wininit.exe in Session 0</li>
+                <li>Session Initialization: smss.exe initializes system sessions by setting up environment variables and creating DOS device mappings.​</li>
+                <li>Subsystem Startup: It starts essential subsystems, including the kernel-mode part of the Win32 subsystem (win32k.sys) and user-mode components like csrss.exe.​</li>
+                <li>Process Management: smss.exe is responsible for launching critical processes such as wininit.exe for system initialization and winlogon.exe for handling user logins.</li>
+                <li>Session Management: For each new user session, smss.exe creates a new instance to manage that session, ensuring isolation and stability across multiple user environments.</li>
+            </ul>
+            <p>Any other subsystem listed in the Required value of HKLM\System\CurrentControlSet\Control\Session Manager\Subsystems is also launched.</p>
+            <h5>🛡️ Security Considerations</h5>
+            <p>Given its integral role, smss.exe is a target for malicious actors who may attempt to disguise malware under its name. To verify its legitimacy:​</p>
+            <ul>
+                <li>File Location: Ensure smss.exe resides in the C:\Windows\System32 directory.</li>
+                <li>Digital Signature: Check that the file is digitally signed by Microsoft.​​</li>
+            </ul>
+            <p>Any deviation from these could indicate a potential security threat.</p>
+            <h5>🧠 Why It Matters</h5>
+            <p>Understanding smss.exe is crucial for system administrators and cybersecurity professionals. Its proper functioning ensures the stability and security of the Windows operating system. Monitoring this process can help detect anomalies and prevent potential system compromises.</p>
+            <h5>What is normal?</h5>
+            <img src="smss.png" alt="OSI Model Layers" style="width: 30%; max-width: 1200px; border-radius: 10px;">
+            <ul>
+                <li>Image Path:  %SystemRoot%\System32\smss.exe</li>
+                <li>Parent Process:  System</li>
+                <li>Number of Instances:  One master instance and child instance per session. The child instance exits after creating the session.​</li>
+                <li>User Account:  Local System​</li>
+                <li>Start Time:  Within seconds of boot time for the master instance</li>
+            </ul>
+            <h5>What is unusual?</h5>
+            <ul>
+                <li>A different parent process other than System (4)</li>
+                <li>The image path is different from C:\Windows\System32</li>
+                <li>More than one running process. (children self-terminate and exit after each new session)​</li>
+                <li>The running User is not the SYSTEM user​</li>
+                <li>Unexpected registry entries for Subsystem</li>
+            </ul>
 
 
 
