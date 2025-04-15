@@ -1966,24 +1966,25 @@ jwt:identified-secret
               </ul>
               
               <ul>
-                <li><strong>What’s Unusual?</strong></li>
-                <li>If the parent process is something other than <code>smss.exe</code></li>
-                <li>If the file path isn’t exactly <code>C:\Windows\System32</code></li>
-                <li>If there are tiny spelling mistakes in the filename (like <code>csrsss.exe</code>) meant to trick users</li>
-                <li>If it’s running as a user other than <code>SYSTEM</code></li>
+                    <li><strong>What’s Unusual?</strong></li>
+                    <li>If the parent process is something other than <code>smss.exe</code></li>
+                    <li>If the file path isn’t exactly <code>C:\Windows\System32</code></li>
+                    <li>If there are tiny spelling mistakes in the filename (like <code>csrsss.exe</code>) meant to trick users</li>
+                    <li>If it’s running as a user other than <code>SYSTEM</code></li>
               </ul>
               <h4>🧠 Understanding <code>wininit.exe</code></h4>
                 <ul>
-                <li><strong>wininit.exe</strong> stands for <em>Windows Initialization</em>.</li>
-                <li>It’s a system-level process that kicks in very early during boot, right after <code>smss.exe</code> runs and exits.</li>
-                <li>It’s responsible for starting other key processes in <strong>Session 0</strong>, including:
-                    <ul>
+                    <li><strong>wininit.exe</strong> stands for <em>Windows Initialization</em>.</li>
+                    <li>It’s a system-level process that kicks in very early during boot, right after <code>smss.exe</code> runs and exits.</li>
+                    <li>It’s responsible for starting other key processes in <strong>Session 0</strong>, including:
+                </ul>
+
+                <ul>
                     <li><code>services.exe</code> – manages all Windows services</li>
                     <li><code>lsass.exe</code> – handles local security policies and login authentication</li>
                     <li><code>lsaiso.exe</code> – only appears if <strong>Credential Guard</strong> is enabled (it protects secrets like credentials and encryption keys)</li>
-                    </ul>
-                </li>
-                <li>Once <code>wininit.exe</code> runs, it stays active in the background as part of the OS's core runtime.</li>
+                </ul>
+                    <li>Once <code>wininit.exe</code> runs, it stays active in the background as part of the OS's core runtime.</li>
                 </ul>
                 <img src="wininit.png" alt="OSI Model Layers" style="width: 70%; max-width: 1630px; border-radius: 10px;">
 
@@ -2046,6 +2047,174 @@ jwt:identified-secret
                 <li>Multiple instances of <code>services.exe</code></li>
                 <li>The process not running under the <strong>SYSTEM</strong> account</li>
                 </ul>
+
+                <h4>🧠 Understanding svchost.exe (Service Host)</h4>
+                <ul>
+                <li><strong>🛠️ What It Is:</strong> <code>svchost.exe</code> stands for “Service Host.” It’s a key Windows process used to load and run system services. Instead of each service launching its own executable, multiple services are grouped and run together inside shared <code>svchost.exe</code> processes.</li>
+
+                <li><strong>🧩 How Services Are Run:</strong> These services are DLL-based (not .exe files). To know which DLL is tied to which service, you can look at the registry:
+                    <br><code>HKLM\SYSTEM\CurrentControlSet\Services\[ServiceName]\Parameters\ServiceDLL</code></li>
+
+                <li><strong>🔍 Example - DCOMLaunch:</strong> If you inspect the DCOMLaunch service, you’ll find a path to its DLL in the <code>ServiceDLL</code> registry key. This is how Windows knows what to load for that service.</li>
+
+                <li><strong>🖥️ Viewing in Process Hacker:</strong> In tools like Process Hacker, you can find a specific <code>svchost.exe</code> process (by its PID), right-click it, go to properties, and view which service and DLL it’s running. You’ll also see its command-line arguments, including the <code>-k</code> parameter.</li>
+
+                <li><strong>🔑 The <code>-k</code> Flag:</strong> This parameter is a group name (like <code>-k DcomLaunch</code>). Windows uses this to bundle similar services under the same process, keeping the system more efficient. This grouping is controlled via the registry and is visible in the binary path.</li>
+
+                <li><strong>📈 Windows 10+ Behavior:</strong> Starting with Windows 10 version 1703, if your system has more than 3.5 GB RAM, most services get their own dedicated <code>svchost.exe</code> process to isolate them and improve security.</li>
+
+                <li><strong>🧪 Example - LSM:</strong> Just like DCOMLaunch, other services like LSM will also have their own <code>ServiceDLL</code> path. Each one is different and points to the correct DLL for that service.</li>
+
+                <li><strong>🚨 Security Risks:</strong> Because <code>svchost.exe</code> is always running (and multiple copies of it), malware authors often exploit it. They might:
+                    <ul>
+                        <li>Name their malware <code>svchost.exe</code> or use lookalikes like <code>scvhost.exe</code></li>
+                        <li>Load malicious DLLs through fake services</li>
+                        <li>Hide rogue processes among the legit ones</li>
+                    </ul>
+                    Always be on the lookout for slight misspellings or unusual behavior.
+                </li>
+
+                <li><strong>✅ What’s Normal:</strong>
+                    <ul>
+                        <li><strong>Image Path:</strong> <code>%SystemRoot%\System32\svchost.exe</code></li>
+                        <li><strong>Parent Process:</strong> <code>services.exe</code></li>
+                        <li><strong>Instances:</strong> Many (expected)</li>
+                        <li><strong>User Account:</strong> Varies – could be <code>SYSTEM</code>, <code>Network Service</code>, <code>Local Service</code>, or even the logged-in user</li>
+                        <li><strong>Start Time:</strong> Right after boot for core services; more instances launch as needed</li>
+                    </ul>
+                    <img src="svchost.png" alt="OSI Model Layers" style="width: 50%; max-width: 1630px; border-radius: 10px;">
+                </li>
+
+                <li><strong>🚩 What’s Suspicious:</strong>
+                    <ul>
+                        <li>Has a parent process that isn’t <code>services.exe</code></li>
+                        <li>Running from any location other than <code>C:\Windows\System32</code></li>
+                        <li>Misspelled filenames like <code>svhost.exe</code> or <code>scvhost.exe</code></li>
+                        <li>No <code>-k</code> parameter in its command line</li>
+                    </ul>
+                </li>
+                </ul>
+
+
+                <h4>🔐 Understanding lsass.exe (Local Security Authority Subsystem Service)</h4>
+                <ul>
+                <li><strong>🔒 What It Does:</strong> <code>lsass.exe</code> is a critical Windows process that handles all things related to security on your machine. It:
+                    <ul>
+                    <li>Authenticates users logging in</li>
+                    <li>Manages password changes</li>
+                    <li>Generates security tokens (used by apps to determine access rights)</li>
+                    <li>Logs activity in the Windows Security Log</li>
+                    </ul>
+                </li>
+
+                <li><strong>🧬 Token Creation:</strong> It builds access tokens for major components like:
+                    <ul>
+                    <li><strong>SAM</strong> – Security Account Manager (local user credentials)</li>
+                    <li><strong>Active Directory</strong> – For domain-based credentials and permissions</li>
+                    <li><strong>NETLOGON</strong> – Manages secure communication with domain controllers</li>
+                    </ul>
+                </li>
+
+                <li><strong>📁 Auth Packages Location:</strong> The authentication methods it uses are listed in the registry here:<br>
+                    <code>HKLM\System\CurrentControlSet\Control\Lsa</code>
+                </li>
+
+                <li><strong>🚨 Why It’s Targeted:</strong> Attackers love going after <code>lsass.exe</code> because it holds the keys to the kingdom credentials. Tools like <code>Mimikatz</code> can extract passwords or hashes from its memory. Hackers either:
+                    <ul>
+                    <li>Dump memory directly</li>
+                    <li>Create fake processes named <code>lsass.exe</code> (or with slight misspellings like <code>lsas.exe</code>) to sneak past defenders</li>
+                    </ul>
+                </li>
+
+                <li><strong>🧠 Normal Behavior:</strong>
+                    <ul>
+                    <li><strong>Image Path:</strong> <code>%SystemRoot%\System32\lsass.exe</code></li>
+                    <li><strong>Parent Process:</strong> <code>wininit.exe</code></li>
+                    <li><strong>Number of Instances:</strong> Only ONE should ever be running</li>
+                    <li><strong>User Account:</strong> Runs as <code>SYSTEM</code></li>
+                    <li><strong>Start Time:</strong> Just seconds after Windows boots up</li>
+                    </ul>
+                </li>
+                <img src="lsass.png" alt="OSI Model Layers" style="width: 50%; max-width: 1630px; border-radius: 10px;">
+
+                <li><strong>🛑 Red Flags (Unusual Signs):</strong>
+                    <ul>
+                    <li>Parent process isn’t <code>wininit.exe</code></li>
+                    <li>Running from any location other than <code>C:\Windows\System32</code></li>
+                    <li>Multiple <code>lsass.exe</code> instances</li>
+                    <li>Slightly misspelled process name</li>
+                    <li>Not running as SYSTEM</li>
+                    </ul>
+                </li>
+                </ul>
+
+                <h4>🔑 Understanding winlogon.exe (Windows Logon Process)</h4>
+                <ul>
+                <li><strong>🔐 What It Does:</strong> <code>winlogon.exe</code> handles the secure attention sequence. This is the key combo <strong>Control plus Alt plus Delete</strong> that users press to log into Windows. It ensures that the login screen cannot be spoofed by malware.</li>
+
+                <li><strong>👤 User Profile Loading:</strong> Once login is successful, this process loads the user's profile. It loads <code>NTUSER.DAT</code> into <code>HKEY_CURRENT_USER</code> in the registry. After that, <code>userinit.exe</code> takes over and starts the user's shell, usually <code>explorer.exe</code>.</li>
+
+                <li><strong>🖥️ Other Responsibilities:</strong> <code>winlogon.exe</code> also takes care of locking the screen, starting the screensaver, and monitoring session activity. If a user locks the screen or leaves it idle, this process is what kicks in.</li>
+
+                <li><strong>🚀 How It Starts:</strong> The process is launched early in the boot sequence by <code>smss.exe</code>, which also starts <code>csrss.exe</code>. After starting these two, <code>smss.exe</code> exits, which is why most tools do not show a parent process for <code>winlogon.exe</code>.</li>
+
+                <li><strong>🧠 Normal Behavior:</strong>
+                    <ul>
+                    <li><strong>Image Path:</strong> <code>%SystemRoot%\System32\winlogon.exe</code></li>
+                    <li><strong>Parent Process:</strong> Technically launched by <code>smss.exe</code>, but tools may not show it</li>
+                    <li><strong>Number of Instances:</strong> One or more, depending on active user sessions</li>
+                    <li><strong>User Account:</strong> Runs as <code>Local System</code></li>
+                    <li><strong>Start Time:</strong> First instance starts within seconds of booting, new ones can appear when users connect via Remote Desktop or use Fast User Switching</li>
+                    </ul>
+                </li>
+                <img src="winlogon1.png" alt="OSI Model Layers" style="width: 50%; max-width: 1630px; border-radius: 10px;">
+
+                <li><strong>🛑 Unusual Signs:</strong>
+                    <ul>
+                    <li>The process shows a parent other than <code>smss.exe</code> (which should exit right after launching it)</li>
+                    <li>File path is not <code>C:\Windows\System32</code></li>
+                    <li>Name is misspelled to blend in with legit processes</li>
+                    <li>It is not running as <code>SYSTEM</code></li>
+                    <li>The shell registry value points to anything other than <code>explorer.exe</code></li>
+                    </ul>
+                </li>
+                </ul>
+
+                <h4>🗂️ Understanding explorer.exe (Windows Explorer)</h4>
+                <ul>
+                <li><strong>💼 What It Does:</strong> <code>explorer.exe</code> is the process that powers the Windows graphical interface. It handles file browsing, folder windows, the Start Menu, the Taskbar, and the desktop itself. If you see your icons or open “This PC,” that’s all managed by this process.</li>
+
+                <li><strong>🧩 How It Starts:</strong> After a user logs in, <code>winlogon.exe</code> triggers <code>userinit.exe</code>, which reads the Shell registry key located at:<br>
+                <code>HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\Shell</code><br>
+                That key usually points to <code>explorer.exe</code>. <code>userinit.exe</code> then launches it and exits, so technically, <code>explorer.exe</code> has no visible parent process afterward.</li>
+
+                <li><strong>🔗 Child Processes:</strong> <code>explorer.exe</code> often spawns many child processes like file managers, settings panels, or apps launched through the Start Menu or shortcuts.</li>
+
+                <li><strong>🧠 Normal Behavior:</strong>
+                    <ul>
+                    <li><strong>Image Path:</strong> <code>%SystemRoot%\explorer.exe</code></li>
+                    <li><strong>Parent Process:</strong> Created by <code>userinit.exe</code>, which exits immediately</li>
+                    <li><strong>Number of Instances:</strong> One or more for each user logged in with an interactive session</li>
+                    <li><strong>User Account:</strong> Matches the logged-in user</li>
+                    <li><strong>Start Time:</strong> Starts when the user first logs in and their desktop environment loads</li>
+                    </ul>
+                </li>
+                <img src="explorer.png" alt="OSI Model Layers" style="width: 50%; max-width: 1630px; border-radius: 10px;">
+
+                <li><strong>🚨 Unusual Signs:</strong>
+                    <ul>
+                    <li>The process has a visible parent (should not, because <code>userinit.exe</code> exits)</li>
+                    <li>File path is not <code>C:\Windows\explorer.exe</code></li>
+                    <li>Running under an unknown or suspicious user account</li>
+                    <li>Misspelled names like <code>exporer.exe</code> or <code>explorrer.exe</code></li>
+                    <li>Unexpected outbound network activity (Explorer normally should not be making network connections)</li>
+                    </ul>
+                </li>
+                </ul>
+
+
+
+
 
 
               
