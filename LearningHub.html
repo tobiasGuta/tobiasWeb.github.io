@@ -2294,6 +2294,57 @@ jwt:identified-secret
             </ul>
 
             <p><strong>Important:</strong> Do not mix memory dumps from bare-metal and virtual machines during your analysis. The structure and format can vary significantly, which may break your tools or cause inaccurate results.</p>
+            <h4>Understanding Plugin Names in Volatility 3</h4>
+
+            <p>In previous versions of Volatility, plugins had a simple naming structure. You would just use the plugin name by itself and it would work across different OS profiles.</p>
+
+            <p>With Volatility 3, that changes. You now need to specify the operating system before the plugin name. This is because Volatility 3 no longer uses profiles to distinguish between OS types. Each operating system has a very different memory layout, so Volatility separates plugins by OS to keep everything accurate and modular.</p>
+
+            <p>Here is what that looks like in action:</p>
+
+            <ul>
+            <li><code>windows.info</code></li>
+            <li><code>linux.pslist</code></li>
+            <li><code>mac.check_syscalls</code></li>
+            </ul>
+
+            <p>The format is simple: <code>[os].[plugin]</code></p>
+
+            <h4>Operating System Prefixes You Can Use</h4>
+
+            <ul>
+            <li><code>windows</code></li>
+            <li><code>linux</code></li>
+            <li><code>mac</code></li>
+            </ul>
+
+            <p>Volatility 3 includes a solid selection of built in plugins for each OS, and there are also third party plugins available if you want to extend functionality.</p>
+
+            <h4>Identifying the Operating System from a Memory Dump</h4>
+
+            <p>Volatility 2 comes preloaded with profiles for many versions of Windows, ranging from Windows XP to Windows 10.</p>
+            
+            <p>When working with memory dumps, it can be tricky to figure out what operating system the dump came from, especially if you were not the one who created it. Sometimes you are given a memory file with no context at all. That is where the <code>imageinfo</code> plugin comes in. This plugin analyzes the memory file and gives you a list of possible operating system profiles that best match the dump.</p>
+            
+            <p>This step is only necessary if you are using Volatility 2. Volatility 3 does not use profiles anymore, which makes things easier. Instead, you just tell Volatility 3 what operating system you are working with directly in the plugin name.</p>
+            
+            <p><strong>Note:</strong> The <code>imageinfo</code> plugin does not always give accurate results. It provides suggestions based on what it finds in the memory dump, but you should test a few options to be sure.</p>
+            
+            <h4>Getting System Information with Volatility 3</h4>
+            
+            <p>If you want to get details about the system that generated the memory dump in Volatility 3, you can use one of the following plugins depending on the operating system:</p>
+            
+            <ul>
+              <li><code>windows.info</code></li>
+              <li><code>linux.info</code></li>
+              <li><code>mac.info</code></li>
+            </ul>
+            
+            <p>These plugins return general information about the host system from the memory dump.</p>
+            
+            <p><strong>Example Command:</strong></p>
+            <code>python3 vol.py -f &lt;file&gt; windows.info</code>
+            
 
 
 
