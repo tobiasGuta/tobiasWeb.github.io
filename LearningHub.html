@@ -2072,8 +2072,7 @@ jwt:identified-secret
             post.classList.remove("expanded");
         }
     
-        // Handle auto-toggle from URL hash (e.g. #post-1)
-        window.addEventListener('DOMContentLoaded', () => {
+        function handleHashToggle() {
             const hash = window.location.hash;
             if (hash) {
                 const targetPost = document.querySelector(hash);
@@ -2082,6 +2081,11 @@ jwt:identified-secret
                     targetPost.scrollIntoView({ behavior: "smooth", block: "start" });
                 }
             }
+        }
+    
+        // When page fully loads (covers all DOM + assets)
+        window.addEventListener('load', () => {
+            handleHashToggle();
     
             // Prevent inner content from collapsing the post
             document.querySelectorAll(".post-content").forEach(content => {
@@ -2090,7 +2094,11 @@ jwt:identified-secret
                 });
             });
         });
+    
+        // Listen to hash changes (e.g., clicking internal links or back/forward navigation)
+        window.addEventListener('hashchange', handleHashToggle);
     </script>
+    
 
 </body>
 </html>
