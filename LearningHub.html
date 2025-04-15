@@ -2345,6 +2345,98 @@ jwt:identified-secret
             <p><strong>Example Command:</strong></p>
             <code>python3 vol.py -f &lt;file&gt; windows.info</code>
             
+            <h4>Understanding Process and Network Plugins in Volatility</h4>
+
+            <p>Volatility provides several plugins to help you analyze processes and network activity in memory dumps. Each plugin uses a different method, and understanding these can help detect hidden or malicious activity that may try to avoid detection.</p>
+
+            <p>The simplest way to view active and terminated processes is by using the <code>pslist</code> plugin. This tool reads from a memory list that tracks all running tasks, similar to what you see in the task manager. It includes both active and previously closed processes along with their end times.</p>
+
+            <code>python3 vol.py -f &lt;file&gt; windows.pslist</code>
+
+            <p>However, some types of malware try to hide by removing themselves from this list. Rootkits often use this trick. When this happens, <code>pslist</code> will not show those hidden processes. That is where the <code>psscan</code> plugin comes in. Instead of reading a tracked list, <code>psscan</code> searches the memory for structures that look like process objects. This method helps uncover hidden tasks, though it may also include a few results that are not real processes.</p>
+
+            <code>python3 vol.py -f &lt;file&gt; windows.psscan</code>
+
+            <p>The <code>pstree</code> plugin is another option for viewing processes. It uses the same method as <code>pslist</code> but displays the process tree based on parent and child relationships. This structure is helpful for understanding what processes were running and how they were connected when the memory was captured.</p>
+
+            <code>python3 vol.py -f &lt;file&gt; windows.pstree</code>
+
+            <p>Once you understand the running processes, the next step is checking for network activity. The <code>netstat</code> plugin searches memory for any data related to active network connections at the time of the dump. It is helpful for identifying how the machine was communicating with others.</p>
+
+            <code>python3 vol.py -f &lt;file&gt; windows.netstat</code>
+
+            <p>That said, this plugin can be unreliable with older versions of Windows. If <code>netstat</code> fails or misses important data, you can use external tools like <code>bulk_extractor</code> to pull network artifacts or even generate a PCAP file from the memory. This method may reveal network traces that Volatility alone cannot see. Visit <a class="link" href="https://tools.kali.org/forensics/bulk-extractor" target="_blank">bulk extractor</a> for more info.</p>
+
+            <p>Finally, the <code>dlllist</code> plugin shows all the DLLs loaded by each process at the time of capture. This information is useful when you suspect a specific malicious DLL and want to verify its presence within memory.</p>
+
+            <code>python3 vol.py -f &lt;file&gt; windows.dlllist</code>
+
+            <h4>Using Volatility for Threat Hunting and Detection</h4>
+
+            <p>Volatility includes many plugins that help with detecting malware and spotting strange behavior inside a system memory image. These tools are essential for anyone looking to perform threat hunting or digital forensics.</p>
+
+            <p>Before diving into this part, it helps to understand how attackers try to avoid being seen. Knowing about common malware tactics and evasion methods will make this process much more effective.</p>
+
+            <p>One of the most powerful tools for spotting code injection is the <code>malfind</code> plugin. It searches memory for regions where something may have been injected into a running process. It shows the process ID, memory offset, and gives you a view of the data in Hex, Ascii, and Disassembly format. This can reveal injected executables or shellcode that do not exist as normal files on disk.</p>
+
+            <p>This plugin looks for memory marked as executable and writable or regions with no linked file. These conditions are often signs of injected code. When <code>malfind</code> finds something suspicious, it may start with an MZ header which points to a Windows executable or contain raw shellcode that needs deeper inspection.</p>
+
+            <code>python3 vol.py -f &lt;file&gt; windows.malfind</code>
+
+            <p>Another powerful tool is <code>yarascan</code>. This plugin lets you scan the memory image using YARA rules. You can match patterns, strings, and conditions that signal known malware behaviors. It works by passing in a YARA rule file or writing the rules directly in the command.</p>
+
+            <code>python3 vol.py -f &lt;file&gt; windows.yarascan</code>
+
+            <p>There are more plugins available that focus on hunting and detection.</p>
+
+            <h4>Advanced Memory Forensics and Evasion Techniques</h4>
+
+            <p>When you begin to analyze advanced malware behavior in memory, things can get complex quickly. This is especially true when malware starts messing with system objects like drivers or uses techniques like function hooking. If you are not already familiar with these tricks, it can be hard to follow what is going on. Adversaries that use rootkits and similar threats often try to hide their presence deep within the system. That means as an analyst, you will need to explore things like device drivers, synchronization objects such as mutexes, and even functions that have been modified or redirected.</p>
+
+            <p>One of the key evasion techniques to understand is hooking. Attackers can modify the way the operating system normally functions by intercepting system calls. There are five major methods used for this:</p>
+
+            <ul>
+            <li>SSDT Hooks</li>
+            <li>IRP Hooks</li>
+            <li>IAT Hooks</li>
+            <li>EAT Hooks</li>
+            <li>Inline Hooks</li>
+            </ul>
+
+            <p> SSDT hooking. It is one of the more common techniques used by malware and is relatively easy to check with the built-in plugins Volatility provides.</p>
+
+            <p>The <code>ssdt</code> plugin looks for signs of hooking inside the System Service Descriptor Table. This table is what the Windows kernel uses to keep track of core system functions. If a rootkit is active, it might change this table to point some functions to its own code instead of the real system functions. While some software may use hooking for legitimate reasons, it is your job as an analyst to determine what is normal and what is not.</p>
+
+            <code>python3 vol.py -f &lt;file&gt; windows.ssdt</code>
+
+            <p>Malware also hides itself using kernel drivers. There are two plugins in Volatility that can help detect malicious drivers.</p>
+
+            <p>The <code>modules</code> plugin lists all kernel modules that were loaded when the memory was captured. This is useful for spotting known malware or suspicious drivers. But if the file is inactive or hidden, this plugin might not catch it.</p>
+
+            <code>python3 vol.py -f &lt;file&gt; windows.modules</code>
+
+            <p>The <code>driverscan</code> plugin scans the memory for any drivers present at the time the memory image was taken. It can catch drivers that the <code>modules</code> plugin might have missed. Use this after doing a basic investigation with the modules plugin to dig deeper.</p>
+
+            <code>python3 vol.py -f &lt;file&gt; windows.driverscan</code>
+
+            <p>Sometimes <code>driverscan</code> will not return anything. But if you do not see useful results with the modules plugin, it is worth a try.</p>
+
+            <p>Here are more plugins that can help when searching for advanced threats inside memory:</p>
+
+            <ul>
+            <li>modscan</li>
+            <li>driverirp</li>
+            <li>callbacks</li>
+            <li>idt</li>
+            <li>apihooks</li>
+            <li>moddump</li>
+            <li>handles</li>
+            </ul>
+
+            <p>Keep in mind that some of these plugins only work with Volatility two or need to be installed from other sources. To really get the most out of Volatility, you might need to explore custom or third-party plugins.</p>
+
+
+
 
 
 
