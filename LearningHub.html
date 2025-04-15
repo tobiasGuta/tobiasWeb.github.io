@@ -227,7 +227,7 @@
 
     <h2>Latest Posts</h2>
 
-    <div class="post" onclick="togglePost(this)">
+    <div id="post1" class="post" onclick="togglePost(this)">
         <h3>The OSI Model and Its Security Concerns</h3>
         <div class="post-content">
             <p>This is my undertanding of the OSI model</p>
@@ -333,7 +333,7 @@
         </div>
     </div>
 
-    <div class="post" onclick="togglePost(this)">
+    <div id="post2" class="post" onclick="togglePost(this)">
         <h3>Understanding the TCP/IP Model</h3>
         <div class="post-content">
             <img src="tcpIP.png" alt="OSI Model Layers" style="width: 30%; max-width: 1650px; border-radius: 10px;">
@@ -445,7 +445,7 @@
         </div>
     </div>
 
-    <div class="post" onclick="togglePost(this)">
+    <div id="post3" class="post" onclick="togglePost(this)">
         <h3>Transmission in Networking</h3>
         <div class="post-content">
             <h4>Transmission in Networking</h4>
@@ -487,7 +487,7 @@
         </div>
     </div>
 
-    <div class="post" onclick="togglePost(this)">
+    <div id="post4" class="post" onclick="togglePost(this)">
         <h3>Understanding the Differences Between Exploitation & Post-Exploitation</h3>
         <div class="post-content">
             
@@ -510,7 +510,7 @@
         </div>
     </div>
 
-    <div class="post" onclick="togglePost(this)">
+    <div id="post5" class="post" onclick="togglePost(this)">
         <h3>Linux System Enumeration</h3>
         <div class="post-content">
             
@@ -809,7 +809,7 @@ kali@kali:~$ lsb_release -a
         </div>
     </div>
 
-    <div class="post" onclick="togglePost(this)">
+    <div id="post6" class="post" onclick="togglePost(this)">
         <h3>Think Before You Click (Security tips)</h3>
         <div class="post-content">
             <h4>A Click Can Cost You Everything</h4>
@@ -847,7 +847,7 @@ kali@kali:~$ lsb_release -a
         </div>
     </div>
 
-    <div class="post" onclick="togglePost(this)">
+    <div id="post7" class="post" onclick="togglePost(this)">
         <h3>WebSockets</h3>
         <div class="post-content">
             <h4>What is a WebSockets?</h4>
@@ -1059,7 +1059,7 @@ Upgrade: websocket
         </div>
     </div>
 
-    <div class="post" onclick="togglePost(this)">
+    <div id="post8" class="post" onclick="togglePost(this)">
         <h3>JSON Web Token attacks and vulnerabilities</h3>
         <div class="post-content">
             <p>JSON Web Tokens (JWTs) are a popular way to securely transmit data between systems using JSON format. They're commonly used for authorization, since they can be digitally signed making them verifiable and trustworthy when used properly. But if you mess up the implementation, they can become a serious security risk. This write-up breaks down the technical side of JWT vulnerabilities and common attack vectors.</p>
@@ -1486,7 +1486,7 @@ jwt:identified-secret
         </div>
     </div>
 
-    <div class="post" onclick="togglePost(this)">
+    <div id="post9" class="post" onclick="togglePost(this)">
         <h3>My Approach to Securing a Jump Box: Best Practices for Beginners</h3>
         <div class="post-content">
             <img src="jumbox.png" alt="OSI Model Layers" style="width: 40%; max-width: 1650px; border-radius: 10px;">
@@ -1567,7 +1567,7 @@ jwt:identified-secret
         </div>
     </div>
 
-    <div class="post" onclick="togglePost(this)">
+    <div id="post10" class="post" onclick="togglePost(this)">
         <h3>Encryption</h3>
         <div class="post-content">
             <ul>
@@ -1725,7 +1725,7 @@ jwt:identified-secret
         </div>
     </div>
 
-    <div class="post" onclick="togglePost(this)">
+    <div id="post11" class="post" onclick="togglePost(this)">
         <h3>Windows operating system and understand what normal behaviour is</h3>
         <div class="post-content">
             <img src="windowsprotection.png" alt="OSI Model Layers" style="width: 30%; max-width: 1200px; border-radius: 10px;">
@@ -1874,7 +1874,7 @@ jwt:identified-secret
             </li>
             </ul>
             <h5>Now, what is normal behaviour for this process?</h5>
-            <img src="system.png" alt="OSI Model Layers" style="width: 30%; max-width: 1200px; border-radius: 10px;">
+            <img src="system.png" alt="OSI Model Layers" style="width: 70%; max-width: 1630px; border-radius: 10px;">
             <p>Image Path: C:\Windows\system32\ntoskrnl.exe (NT OS Kernel)</p>
             <p>Parent Process: System Idle Process (0)</p>
             <h5>What is unusual behaviour for this process?</h5>
@@ -1907,7 +1907,7 @@ jwt:identified-secret
             <h5>🧠 Why It Matters</h5>
             <p>Understanding smss.exe is crucial for system administrators and cybersecurity professionals. Its proper functioning ensures the stability and security of the Windows operating system. Monitoring this process can help detect anomalies and prevent potential system compromises.</p>
             <h5>What is normal?</h5>
-            <img src="smss.png" alt="OSI Model Layers" style="width: 30%; max-width: 1200px; border-radius: 10px;">
+            <img src="smss.png" alt="OSI Model Layers" style="width: 70%; max-width: 1630px; border-radius: 10px;">
             <ul>
                 <li>Image Path:  %SystemRoot%\System32\smss.exe</li>
                 <li>Parent Process:  System</li>
@@ -1923,31 +1923,124 @@ jwt:identified-secret
                 <li>The running User is not the SYSTEM user​</li>
                 <li>Unexpected registry entries for Subsystem</li>
             </ul>
+            <h2>🧠 What is <code>csrss.exe</code>?</h2>
+            <p>
+            <code>csrss.exe</code>, short for <strong>Client/Server Runtime Subsystem</strong>, is one of the first and most essential user-mode processes that launches when Windows boots up. 
+            Think of it as a system-level coordinator that handles a bunch of behind-the-scenes stuff needed for the OS to run smoothly.
+            </p>
+            <p>
+            It used to manage both the graphical UI and the command-line interface in early Windows, but now it’s mainly focused on:
+            </p>
+            <ul>
+            <li>🧩 Spinning up and managing <strong>processes and threads</strong></li>
+            <li>🖥️ Controlling <strong>console windows</strong> (like the Command Prompt)</li>
+            <li>🛑 Helping with <strong>shutdown procedures</strong></li>
+            </ul>
 
+            <h2>🔧 What It Does Today</h2>
+            <p>Modern Windows systems rely on <code>csrss.exe</code> to:</p>
+            <ul>
+            <li>🔹 <strong>Start New Apps</strong>: It handles the low-level stuff needed when you launch a new process.</li>
+            <li>🔹 <strong>Keep Console Windows Alive</strong>: Every command-line window you open depends on <code>csrss.exe</code> to function.</li>
+            <li>🔹 <strong>Support Multi-User Sessions</strong>: Each user session runs its own instance of <code>csrss.exe</code>, which helps keep things isolated and stable.</li>
+            <li>🔹 <strong>Shutdown Cleanly</strong>: It helps Windows wrap everything up cleanly during system shutdown.</li>
+            </ul>
+            <h5>What is normal?</h5>
+            <p>Session 0 (PID 392)</p>
+            <img src="csrss-session0.png" alt="OSI Model Layers" style="width: 70%; max-width: 1630px; border-radius: 10px;">
+            <p>Session 1 (PID 512)</p>
+            <img src="csrss-session1.png" alt="OSI Model Layers" style="width: 70%; max-width: 1630px; border-radius: 10px;">
+            <p>Remember, these processes are spawned by smss.exe, which self-terminates itself.</p>
+            <ul>
+                <li><strong>Image Path:</strong> Should be <code>C:\Windows\System32\csrss.exe</code>. If it’s somewhere else, that’s suspicious.</li>
+                <li><strong>Parent Process:</strong> It’s normally started by <code>smss.exe</code>, which then exits right after.</li>
+                <li><strong>Number of Instances:</strong> Usually two or more, one for Session 0 and one for Session 1, with more added as needed.</li>
+                <li><strong>User Account:</strong> Runs under the <code>SYSTEM</code> account, not a regular user.</li>
+                <li><strong>Start Time:</strong> The first instances start within seconds after the system boots. More might appear as new user sessions are created.</li>
+              </ul>
+              
+              <ul>
+                <li><strong>What’s Unusual?</strong></li>
+                <li>If the parent process is something other than <code>smss.exe</code></li>
+                <li>If the file path isn’t exactly <code>C:\Windows\System32</code></li>
+                <li>If there are tiny spelling mistakes in the filename (like <code>csrsss.exe</code>) meant to trick users</li>
+                <li>If it’s running as a user other than <code>SYSTEM</code></li>
+              </ul>
+              <h4>🧠 Understanding <code>wininit.exe</code></h4>
+                <ul>
+                <li><strong>wininit.exe</strong> stands for <em>Windows Initialization</em>.</li>
+                <li>It’s a system-level process that kicks in very early during boot, right after <code>smss.exe</code> runs and exits.</li>
+                <li>It’s responsible for starting other key processes in <strong>Session 0</strong>, including:
+                    <ul>
+                    <li><code>services.exe</code> – manages all Windows services</li>
+                    <li><code>lsass.exe</code> – handles local security policies and login authentication</li>
+                    <li><code>lsaiso.exe</code> – only appears if <strong>Credential Guard</strong> is enabled (it protects secrets like credentials and encryption keys)</li>
+                    </ul>
+                </li>
+                <li>Once <code>wininit.exe</code> runs, it stays active in the background as part of the OS's core runtime.</li>
+                </ul>
+                <img src="wininit.png" alt="OSI Model Layers" style="width: 70%; max-width: 1630px; border-radius: 10px;">
 
+                <h4>✅ What’s Considered Normal?</h4>
+                <ul>
+                <li><strong>Image Path:</strong> Should be <code>C:\Windows\System32\wininit.exe</code></li>
+                <li><strong>Parent Process:</strong> Created by <code>smss.exe</code>, which terminates right after</li>
+                <li><strong>Number of Instances:</strong> Only one should be running</li>
+                <li><strong>User Account:</strong> Runs under <code>SYSTEM</code></li>
+                <li><strong>Start Time:</strong> Launches just seconds after the system boots up</li>
+                </ul>
 
+                <h4>🚩 What’s Suspicious?</h4>
+                <ul>
+                <li>The parent process is something other than <code>smss.exe</code></li>
+                <li>The file path is not exactly <code>C:\Windows\System32</code></li>
+                <li>The filename is subtly misspelled (like <code>winlnit.exe</code> with an “L” instead of an “I”)</li>
+                <li>Multiple instances are running</li>
+                <li>It’s running under a user that is not <code>SYSTEM</code></li>
+                </ul>
 
+              
         </div>
     </div>
 
     <script>
         function togglePost(post) {
+            // Don't re-toggle if it's already expanded
+            if (post.classList.contains("expanded")) return;
+    
             let allPosts = document.querySelectorAll(".post");
-
+    
             allPosts.forEach(p => {
-                if (p !== post) {
-                    p.classList.remove("expanded");
-                }
+                p.classList.remove("expanded");
             });
-
-            post.classList.toggle("expanded");
+    
+            post.classList.add("expanded");
         }
-
+    
         function closePost(event, closeButton) {
             event.stopPropagation();
             let post = closeButton.parentElement;
             post.classList.remove("expanded");
         }
+    
+        // Handle auto-toggle from URL hash (e.g. #post-1)
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash;
+            if (hash) {
+                const targetPost = document.querySelector(hash);
+                if (targetPost && targetPost.classList.contains("post")) {
+                    togglePost(targetPost);
+                    targetPost.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+            }
+    
+            // Prevent inner content from collapsing the post
+            document.querySelectorAll(".post-content").forEach(content => {
+                content.addEventListener("click", event => {
+                    event.stopPropagation();
+                });
+            });
+        });
     </script>
 
 </body>
