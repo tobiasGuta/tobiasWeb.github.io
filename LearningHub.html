@@ -2365,6 +2365,10 @@ jwt:identified-secret
 
             <code>python3 vol.py -f &lt;file&gt; windows.netstat</code>
 
+            <p>If you want to analyze and dump memory for a specific process by its PID—for example, a suspicious one like <code>evil.exe</code>—you can use the following Volatility command:</p>
+
+            <pre><code>vol.py -f &lt;memory_dump&gt; -o /path/to/output/ windows.memmap.Memmap --pid &lt;suspicious_PID&gt; --dump</code></pre>
+
             <p>That said, this plugin can be unreliable with older versions of Windows. If <code>netstat</code> fails or misses important data, you can use external tools like <code>bulk_extractor</code> to pull network artifacts or even generate a PCAP file from the memory. This method may reveal network traces that Volatility alone cannot see. Visit <a class="link" href="https://tools.kali.org/forensics/bulk-extractor" target="_blank">bulk extractor</a> for more info.</p>
 
             <p>Finally, the <code>dlllist</code> plugin shows all the DLLs loaded by each process at the time of capture. This information is useful when you suspect a specific malicious DLL and want to verify its presence within memory.</p>
