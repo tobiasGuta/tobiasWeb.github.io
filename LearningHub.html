@@ -203,6 +203,15 @@
             overflow-y: auto;
         }
 
+        code {
+            background-color: #f4f4f4;
+            color: #d63384;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
     </style>
 </head>
 
@@ -1923,11 +1932,8 @@ jwt:identified-secret
                 <li>The running User is not the SYSTEM user​</li>
                 <li>Unexpected registry entries for Subsystem</li>
             </ul>
-            <h2>🧠 What is <code>csrss.exe</code>?</h2>
-            <p>
-            <code>csrss.exe</code>, short for <strong>Client/Server Runtime Subsystem</strong>, is one of the first and most essential user-mode processes that launches when Windows boots up. 
-            Think of it as a system-level coordinator that handles a bunch of behind-the-scenes stuff needed for the OS to run smoothly.
-            </p>
+            <h4>🧠 What is <code>csrss.exe</code>?</h4>
+            <p><code>csrss.exe</code>, short for <strong>Client/Server Runtime Subsystem</strong>, is one of the first and most essential user-mode processes that launches when Windows boots up. Think of it as a system-level coordinator that handles a bunch of behind-the-scenes stuff needed for the OS to run smoothly.</p>
             <p>
             It used to manage both the graphical UI and the command-line interface in early Windows, but now it’s mainly focused on:
             </p>
@@ -1937,7 +1943,7 @@ jwt:identified-secret
             <li>🛑 Helping with <strong>shutdown procedures</strong></li>
             </ul>
 
-            <h2>🔧 What It Does Today</h2>
+            <h5>🔧 What It Does Today</h5>
             <p>Modern Windows systems rely on <code>csrss.exe</code> to:</p>
             <ul>
             <li>🔹 <strong>Start New Apps</strong>: It handles the low-level stuff needed when you launch a new process.</li>
@@ -1981,7 +1987,7 @@ jwt:identified-secret
                 </ul>
                 <img src="wininit.png" alt="OSI Model Layers" style="width: 70%; max-width: 1630px; border-radius: 10px;">
 
-                <h4>✅ What’s Considered Normal?</h4>
+                <h5>✅ What’s Considered Normal?</h5>
                 <ul>
                 <li><strong>Image Path:</strong> Should be <code>C:\Windows\System32\wininit.exe</code></li>
                 <li><strong>Parent Process:</strong> Created by <code>smss.exe</code>, which terminates right after</li>
@@ -1990,7 +1996,7 @@ jwt:identified-secret
                 <li><strong>Start Time:</strong> Launches just seconds after the system boots up</li>
                 </ul>
 
-                <h4>🚩 What’s Suspicious?</h4>
+                <h5>🚩 What’s Suspicious?</h5>
                 <ul>
                 <li>The parent process is something other than <code>smss.exe</code></li>
                 <li>The file path is not exactly <code>C:\Windows\System32</code></li>
@@ -1998,6 +2004,49 @@ jwt:identified-secret
                 <li>Multiple instances are running</li>
                 <li>It’s running under a user that is not <code>SYSTEM</code></li>
                 </ul>
+
+                <h4>🧠 What is <code>services.exe</code>?</h4>
+                <ul>
+                <li><strong>services.exe</strong> is the Service Control Manager, responsible for managing all Windows services on the system</li>
+                <li>It is launched by <code>wininit.exe</code> during the early stages of the boot process</li>
+                <li>This process handles how services are started, stopped, or configured</li>
+                <li>It also loads device drivers that are set to start automatically</li>
+                <li>When a user logs in successfully, it updates the Last Known Good Configuration in the registry, which helps the system recover if it fails to boot later</li>
+                <li><code>services.exe</code> is the parent of several key processes such as
+                    <ul>
+                    <li><code>svchost.exe</code> which runs many background services</li>
+                    <li><code>spoolsv.exe</code> which manages printing tasks</li>
+                    <li><code>msmpeng.exe</code> which is used by Windows Defender</li>
+                    <li><code>dllhost.exe</code> which manages COM and DCOM objects</li>
+                    </ul>
+                </li>
+                </ul>
+
+                <h5>🔧 Interacting with Services</h5>
+                <ul>
+                <li>Windows includes a command-line tool called <code>sc.exe</code> to manage services directly</li>
+                <li>Use it to start, stop, or configure services from the terminal</li>
+                <li>For example, you can run <code>sc query</code> to see a list of all services</li>
+                <li>All configuration data for services is stored in the registry at <code>HKLM\System\CurrentControlSet\Services</code></li>
+                </ul>
+
+                <h5>✅ What is Normal</h5>
+                <ul>
+                <li>Image path should be <code>C:\Windows\System32\services.exe</code></li>
+                <li>Parent process should be <code>wininit.exe</code></li>
+                <li>Only one instance should be running</li>
+                <li>It should be running under the <strong>SYSTEM</strong> user account</li>
+                </ul>
+
+                <h5>🚩 What is Suspicious</h5>
+                <ul>
+                <li>A parent process that is not <code>wininit.exe</code></li>
+                <li>An image path that is not in <code>C:\Windows\System32</code></li>
+                <li>Misspellings in the process name that try to mimic the real one</li>
+                <li>Multiple instances of <code>services.exe</code></li>
+                <li>The process not running under the <strong>SYSTEM</strong> account</li>
+                </ul>
+
 
               
         </div>
