@@ -2675,8 +2675,29 @@ be returned. This option is not available when /sq is true.
 [SNIP]
                 </div>
             </div>
-            <p><strong>Note :</strong> You can get more information about using this tool further but visiting the online help documentation <a class="link" href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/wevtutil">wevtutil</p>
-                
+            <p>Note : You can get more information about using this tool further but visiting the online help documentation <a class="link" href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/wevtutil">wevtutil</a></p>
+            <h5>How many log names are in the machine?</h5>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="terminal-body">
+wevtutil el | Measure-Object | Select-Object -ExpandProperty Count
+                </div>
+            </div>
+            <h5>What option would you use to provide a path to a log file?</h5>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="terminal-body">
+/lf:true
+                </div>
+            </div>
 
             
                                                 
