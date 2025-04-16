@@ -2574,6 +2574,111 @@ jwt:identified-secret
                             <p>
                             If you ever need to view logs from a different system, just right-click on <strong>Event Viewer (Local)</strong> and select <strong>Connect to Another Computer</strong>.
                             </p>
+            <h4>wevtutil.exe</h4>
+            <p>
+                Let’s start by checking out <strong>wevtutil.exe</strong>. This is a built-in Windows utility that lets you interact directly with event logs. You can use it to pull log data, check details about log providers, clear logs, export them to a file, or even manage event manifests.
+            </p>
+
+            <p>
+                Like most command-line tools, you can view its help menu to learn how to use it properly. Just open Command Prompt and type: <code>wevtutil.exe /?</code>. This will show you all available options and usage examples.
+            </p>
+
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="terminal-body">
+PS C:\> wevtutil.exe /?
+Windows Events Command Line Utility.
+                    
+Enables you to retrieve information about event logs and publishers, install
+and uninstall event manifests, run queries, and export, archive, and clear logs.
+                    
+Usage:
+                    
+You can use either the short (for example, ep /uni) or long (for example,
+enum-publishers /unicode) version of the command and option names. Commands,
+options and option values are not case-sensitive.
+                    
+Variables are noted in all upper-case.
+                    
+wevtutil COMMAND [ARGUMENT [ARGUMENT] ...] [/OPTION:VALUE [/OPTION:VALUE] ...]
+                    
+Commands:
+                    
+el | enum-logs          List log names.
+gl | get-log            Get log configuration information.
+sl | set-log            Modify configuration of a log.
+ep | enum-publishers    List event publishers.
+gp | get-publisher      Get publisher configuration information.
+im | install-manifest   Install event publishers and logs from manifest.
+um | uninstall-manifest Uninstall event publishers and logs from manifest.
+qe | query-events       Query events from a log or log file.
+gli | get-log-info      Get log status information.
+epl | export-log        Export a log.
+al | archive-log        Archive an exported log.
+cl | clear-log          Clear a log.
+                </div>
+            </div>
+            <p>In this example, the <strong>ep</strong> command is used, which stands for <em>enum-publishers</em>. It’s one of the available functions within the <strong>wevtutil.exe</strong> tool and is used to list all the event log publishers on the system.</p>
+                
+            <p>Below is a list of commonly used options that can be paired with the Windows Events Utility to perform various tasks.</p>
+            
+            <p>
+                Take note of the line at the bottom of the previous screenshot that follows this format: <code>wevtutil COMMAND /?</code>. This structure is used to pull up help documentation for a specific command within <strong>wevtutil.exe</strong>. It gives you a breakdown of the command's syntax, available parameters, and examples of how it can be used.
+            </p>
+                
+            <p>
+                For instance, if you want to learn more about the <code>qe</code> command, which stands for <em>query-events</em>, you would type <code>wevtutil qe /?</code>. This will display detailed guidance on how to use <code>qe</code> to search through event logs, including how to apply filters, specify which log to search, and format the output.
+            </p>
+                
+            <p>
+                This approach is super helpful when you’re working with advanced functionality or need to script interactions with event logs. It ensures you’re using the commands correctly and making the most of what the tool offers.
+            </p>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="terminal-body">
+PS C:\> wevtutil.exe qe /?
+Read events from an event log, log file or using structured query.
+                    
+Usage:
+                    
+wevtutil { qe | query-events } -PATH- [/OPTION:VALUE [/OPTION:VALUE] ...]
+                    
+-PATH-
+By default, you provide a log name for the -PATH- parameter. However, if you use
+the /lf option, you must provide the path to a log file for the -PATH- parameter.
+If you use the /sq parameter, you must provide the path to a file containing a
+structured query.
+                    
+Options:
+                    
+You can use either the short (for example, /f) or long (for example, /format)
+version of the option names. Options and their values are not case-sensitive.
+                    
+/{lf | logfile}:[true|false]
+If true, -PATH- is the full path to a log file.
+                    
+/{sq | structuredquery}:[true|false]
+If true, -PATH- is the full path to a file that contains a structured query.
+                    
+/{q | query}:VALUE
+VALUE is an XPath query to filter events read. If not specified, all events will
+be returned. This option is not available when /sq is true.
+
+[SNIP]
+                </div>
+            </div>
+            <p><strong>Note :</strong> You can get more information about using this tool further but visiting the online help documentation <a class="link" href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/wevtutil">wevtutil</p>
+                
+
+            
                                                 
         </div>
     </div>
