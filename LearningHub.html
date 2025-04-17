@@ -2698,9 +2698,133 @@ wevtutil el | Measure-Object | Select-Object -ExpandProperty Count
 /lf:true
                 </div>
             </div>
+            <h5>Get-WinEvent</h5>
+            <p>This cmdlet lets you pull events from both standard event logs and event tracing log files, whether the logs are on your machine or a remote system. It's versatile and supports pulling logs from different sources all at once. You can narrow down results using advanced filters like XPath expressions, structured XML, or hash tables. It's basically the go-to for serious event log analysis in PowerShell.</p>
+            <p>Please refer to the Get-Help information online at <a class="link" href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.diagnostics/get-winevent?view=powershell-5.1">Get-WinEvent</a></p>
+            <h5>Get all logs from a computer</h5>
+            <p>We are collecting all event logs from the local machine. The list begins with the classic logs and continues with the newer Windows Event logs. Some logs may have a RecordCount of zero or might not return any value at all.</p>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="terminal-body">
+PS C:\> Get-WinEvent -ListLog *
 
-            
-                                                
+LogMode   MaximumSizeInBytes RecordCount LogName
+-------   ------------------ ----------- -------
+Circular            20971520        1285 Application
+Circular            20971520           0 HardwareEvents
+Circular             1052672           0 Internet Explorer
+Circular            20971520           0 Key Management Service
+Circular            20971520       28270 Security
+Circular            20971520       24271 System
+Circular            15728640         623 Windows PowerShell
+Circular            20971520             ForwardedEvents
+Circular            10485760           0 Microsoft-AppV-Client/Admin
+Circular            10485760           0 Microsoft-AppV-Client/Operational
+Circular            10485760           0 Microsoft-AppV-Client/Virtual Applications
+Circular             1052672        1830 Microsoft-Client-Licensing-Platform/Admin
+Circular             1052672             Microsoft-Management-UI/Admin
+Circular             1052672           0 Microsoft-Rdms-UI/Admin
+Circular             1052672           0 Microsoft-Rdms-UI/Operational
+Circular             1052672           0 Microsoft-User Experience Virtualization-Agent Driver/Operational
+Circular             1052672           0 Microsoft-User Experience Virtualization-App Agent/Operational
+Circular             1052672           0 Microsoft-User Experience Virtualization-IPC/Operational
+Circular             1052672           0 Microsoft-User Experience Virtualization-SQM Uploader/Operational
+Circular             1052672           0 Microsoft-Windows-AAD/Operational
+Circular             1052672          30 Microsoft-Windows-All-User-Install-Agent/Admin
+Circular             1052672           0 Microsoft-Windows-AllJoyn/Operational
+Circular             1052672           0 Microsoft-Windows-AppHost/Admin
+Circular             1052672           0 Microsoft-Windows-AppID/Operational
+Circular             1052672           0 Microsoft-Windows-ApplicabilityEngine/Operational
+Circular             1052672           0 Microsoft-Windows-Application Server-Applications/Admin
+Circular             1052672           0 Microsoft-Windows-Application Server-Applications/Operational
+Circular             1052672           0 Microsoft-Windows-Application-Experience/Program-Compatibility-Assistant
+Circular             1052672           0 Microsoft-Windows-Application-Experience/Program-Compatibility-Troubleshooter
+Circular             1052672           0 Microsoft-Windows-Application-Experience/Program-Inventory
+
+[SNIP]
+                </div>
+            </div>
+            <h5>Get event log providers and log names</h5>   
+            <p>This command retrieves a list of event log providers along with the logs they write to. The "Name" field represents the provider, while "LogLinks" shows the corresponding event logs where their events are recorded.</p>                       
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="terminal-body">
+PS C:\> Get-WinEvent -ListProvider *
+
+
+Name     : .NET Runtime
+LogLinks : {Application}
+Opcodes  : {}
+Tasks    : {}
+                    
+Name     : .NET Runtime Optimization Service
+LogLinks : {Application}
+Opcodes  : {}
+Tasks    : {}
+                    
+Name     : Application
+LogLinks : {Application}
+Opcodes  : {}
+Tasks    : {Devices
+           , Disk
+           , Printers
+           , Services
+           ...}
+                    
+Name     : Application Error
+LogLinks : {Application}
+Opcodes  : {}
+Tasks    : {}
+                    
+Name     : Application Hang
+LogLinks : {Application}
+Opcodes  : {}
+Tasks    : {}
+                    
+Name     : Application Management
+LogLinks : {Application}
+Opcodes  : {}
+Tasks    : {}
+                </div>
+            </div>
+            <h5>Log filtering</h5>
+            <p>Log filtering lets you narrow down and choose specific events from an event log. You can apply filters using the Where-Object cmdlet to target only the events that match certain conditions. Here's how it works:</p>
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="terminal-body">
+PS C:\> Get-WinEvent -LogName Application | Where-Object { $_.ProviderName -Match 'WLMS' }
+
+
+ProviderName: WLMS
+                 
+TimeCreated                     Id LevelDisplayName Message
+-----------                     -- ---------------- -------
+12/21/2020 4:23:47 AM          100
+12/18/2020 3:18:57 PM          100
+12/15/2020 8:50:22 AM          100
+12/15/2020 8:48:34 AM          101
+12/15/2020 8:18:34 AM          100
+12/15/2020 7:48:34 AM          100
+12/14/2020 7:12:18 PM          101
+12/14/2020 6:42:18 PM          100
+12/14/2020 6:12:18 PM          100
+12/14/2020 6:09:09 PM          101
+12/14/2020 5:39:08 PM          100
+12/14/2020 5:09:08 PM          100
+                </div>
+            </div>
         </div>
     </div>
 
